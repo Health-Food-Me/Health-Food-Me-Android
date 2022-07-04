@@ -1,0 +1,25 @@
+def hasLibraryPlugin = pluginManager.hasPlugin("com.android.library")
+def hasApplicationPlugin = pluginManager.hasPlugin("com.android.application")
+
+if (hasLibraryPlugin || hasApplicationPlugin) {
+    android {
+        compileSdk = 32
+        buildToolsVersion = "30.0.3"
+        defaultConfig {
+            targetSdk = 32
+            minSdk = 26
+            if (hasLibraryPlugin) {
+                consumerProguardFiles("consumer-rules.pro")
+            }
+            testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        }
+
+        compileOptions {
+            sourceCompatibility = JavaVersion.VERSION_11
+            targetCompatibility = JavaVersion.VERSION_11
+        }
+        kotlinOptions {
+            jvmTarget = JavaVersion.VERSION_11
+        }
+    }
+}
