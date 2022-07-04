@@ -1,0 +1,78 @@
+[versions]
+androidStudioGradlePlugin = "7.2.1"
+
+# AndroiX
+fragment = "1.4.1"
+lifecycle = "2.4.1"
+room = "2.4.2"
+navigation = "2.4.1"
+
+# 3rd-party
+coil = "2.1.0"
+dagger = "2.42"
+kotlin = "1.6.21"
+kotlin-coroutine = "1.6.3"
+okhttp = "4.9.3"
+retrofit = "2.9.0"
+gson = "2.8.9"
+
+[libraries]
+plugin-androidGradle = { module = "com.android.tools.build:gradle", version.ref = "androidStudioGradlePlugin" }
+plugin-kotlin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
+plugin-hilt = { module = "com.google.dagger:hilt-android-gradle-plugin", version.ref = "dagger" }
+plugin-navArgs = { module = "androidx.navigation:navigation-safe-args-gradle-plugin", version.ref = "navigation" }
+
+# AndroidX
+androidX-arch-coreTesting = "androidx.arch.core:core-testing:2.1.0"
+androidX-appcompat = "androidx.appcompat:appcompat:1.4.2"
+androidX-core-ktx = "androidx.core:core-ktx:1.8.0"
+androidX-lifecycle-viewModel = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycle" }
+androidX-lifecycle-runtimeTesting = { module = "androidx.lifecycle:lifecycle-runtime-testing", version.ref = "lifecycle" }
+androidX-lifecycle-java8 = { module = "androidx.lifecycle:lifecycle-common-java8", version.ref = "lifecycle" }
+androidX-recyclerview = "androidx.recyclerview:recyclerview:1.2.1"
+androidX-room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
+androidX-room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
+androidX-room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
+androidX-room-testing = { module = "androidx.room:room-testing", version.ref = "room" }
+androidX-splashScreen = "androidx.core:core-splashscreen:1.0.0-beta02"
+androidX-test-junit = "androidx.test.ext:junit:1.1.3"
+androidX-security = "androidx.security:security-crypto:1.0.0"
+androidX-navigationFragment = { module = "androidx.navigation:navigation-fragment-ktx", version.ref = "navigation" }
+androidX-navigationUI = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "navigation" }
+# 3rd-party
+## retrofit
+retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
+## Dagger
+dagger = { module = "com.google.dagger:dagger", version.ref = "dagger" }
+dagger-compiler = { module = "com.google.dagger:dagger-compiler", version.ref = "dagger" }
+dagger-hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "dagger" }
+dagger-hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "dagger" }
+## Kotlin
+kotlin-coroutine-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlin-coroutine" }
+kotlin-coroutine-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlin-coroutine" }
+kotlin-coroutine-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlin-coroutine" }
+kotlin-serialization = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.3"
+## etc
+coil-core = { module = "io.coil-kt:coil", version.ref = "coil" }
+okhttp = { module = "com.squareup.okhttp3:okhttp", version.ref = "okhttp" }
+okhttp-bom = { module = "com.squareup.okhttp3:okhttp-bom", version.ref = "okhttp" }
+okhttp-loggingInterceptor = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "okhttp" }
+timber = "com.jakewharton.timber:timber:5.0.1"
+leakCanary = "com.squareup.leakcanary:leakcanary-android:2.6"
+lottie = "com.airbnb.android:lottie:3.6.0"
+kotlin-serialization-converter = "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0"
+
+junit = "junit:junit:4.13.2"
+
+[plugins]
+androidApplication = { id = "com.android.application", version.ref = "androidStudioGradlePlugin" }
+androidLibrary = { id = "com.android.library", version.ref = "androidStudioGradlePlugin" }
+kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlinJvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+kotlinKapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
+
+[bundles]
+androidx = [ "androidX-arch-coreTesting", "androidX-appcompat", "androidX-core-ktx", "androidX-lifecycle-viewModel", "androidX-lifecycle-runtimeTesting", "androidX-lifecycle-java8", "androidX-recyclerview", "androidX-room-runtime", "androidX-room-ktx", "androidX-room-testing", "androidX-splashScreen", "androidX-test-junit", "androidX-security", "androidX-navigationFragment", "androidX-navigationUI" ]
+kotlin = [ "kotlin-coroutine-core", "kotlin-coroutine-android", "kotlin-coroutine-test", "kotlin-serialization" ]
+dagger = [ "dagger", "dagger-hilt-android" ]
+compiler = [ "androidX-room-compiler", "dagger-compiler", "dagger-hilt-compiler" ]
