@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="org.helfoome">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -12,7 +14,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.HealthFoodMe"
+        android:usesCleartextTraffic="true"
         tools:targetApi="32">
+
+        <!-- leakcanary 안드로이드 12 부터 버전충돌 문제 해결 -->
+        <activity-alias
+            android:name="leakcanary.internal.activity.LeakLauncherActivity"
+            android:exported="false"
+            android:targetActivity="leakcanary.internal.activity.LeakActivity" />
+
         <activity
             android:name=".presentation.MainActivity"
             android:exported="true">
