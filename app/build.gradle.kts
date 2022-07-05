@@ -4,6 +4,7 @@ plugins {
     kotlin("android")
     kotlin("kapt")
     kotlin("plugin.serialization") version "1.6.10"
+    id("org.jlleitschuh.gradle.ktlint") version "10.2.0"
     id("androidx.navigation.safeargs.kotlin")
     id("dagger.hilt.android.plugin")
 }
@@ -49,4 +50,16 @@ dependencies {
     implementation(libs.kotlin.serialization.converter)
     implementation(libs.junit)
     kapt(libs.bundles.compiler)
+}
+
+ktlint {
+    android.set(true)
+    coloredOutput.set(true)
+    verbose.set(true)
+    outputToConsole.set(true)
+    disabledRules.set(setOf("max-line-length", "no-wildcard-imports", "import-ordering"))
+    reporters {
+        reporter(org.jlleitschuh.gradle.ktlint.reporter.ReporterType.PLAIN)
+        reporter(org.jlleitschuh.gradle.ktlint.reporter.ReporterType.CHECKSTYLE)
+    }
 }
