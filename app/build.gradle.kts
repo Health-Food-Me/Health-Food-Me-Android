@@ -28,6 +28,7 @@ android {
 
     buildFeatures {
         dataBinding = true
+        viewBinding = true
     }
 
     namespace = "org.helfoome"
