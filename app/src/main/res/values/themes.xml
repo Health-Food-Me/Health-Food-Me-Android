@@ -40,4 +40,14 @@
         <item name="android:textColor">@color/red_500</item>
         <item name="android:textSize">10sp</item>
     </style>
+
+    <style name="TabItem.RestaurantTab.TextAppearance" parent="">
+        <item name="android:fontFamily">@font/notosanskr_b</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="CircleImageView.Radius.8.Style" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">8%</item>
+    </style>
 </resources>

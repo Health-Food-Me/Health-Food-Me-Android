@@ -20,6 +20,7 @@
     <color name="yellow_600">#9CC300</color>
 
     <color name="green_50">#D6E8E0</color>
+    <color name="green_300">#A7D000</color>
     <color name="green_500">#0CAE3D</color>
     <color name="green_700">#318D64</color>
 
@@ -27,10 +28,11 @@
     <color name="blue_200">#ADB3BC</color>
     <color name="blue_700">#007AFF</color>
 
+    <color name="gray_50">#EFEFEF</color>
     <color name="gray_100">#E3E3E3</color>
     <color name="gray_500">#9A9A9A</color>
     <color name="gray_550">#999999</color>
-    <color name="gray_700">#666666</color>
+    <color name="gray_600">#666666</color>
     <color name="gray_800">#222222</color>
     <color name="gray_900">#191600</color>
 </resources>
