@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Health-Food-Me</string>
+    <string name="main_search">식당, 음식 검색</string>
 </resources>

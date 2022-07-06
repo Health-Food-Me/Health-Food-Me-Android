@@ -21,6 +21,7 @@
     <color name="blue_100">#D1D5DB</color>
     <color name="blue_200">#ADB3BC</color>
     <color name="blue_700">#007AFF</color>
+    <color name="gray_400">#CECECE</color>
     <color name="gray_500">#9A9A9A</color>
     <color name="gray_700">#666666</color>
     <color name="gray_800">#222222</color>
