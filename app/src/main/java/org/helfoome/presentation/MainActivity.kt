@@ -20,7 +20,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
         binding.viewModel = viewModel
         binding.lifecycleOwner = this@MainActivity
 
-        initLayout()
+        initView()
         addListeners()
         addObservers()
     }
@@ -30,7 +30,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
         behavior.addBottomSheetCallback(bottomSheetCallback)
     }
 
-    private fun initLayout() {
+    private fun initView() {
         behavior = BottomSheetBehavior.from(binding.bottomSheet)
     }
 
