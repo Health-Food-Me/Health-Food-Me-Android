@@ -49,6 +49,8 @@ dependencies {
     implementation(libs.lottie)
     implementation(libs.kotlin.serialization.converter)
     implementation(libs.junit)
+    implementation(libs.navermap)
+    implementation(libs.googlegms)
     kapt(libs.bundles.compiler)
 }
 
