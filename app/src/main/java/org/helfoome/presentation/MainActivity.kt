@@ -69,13 +69,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
 
     private val bottomSheetCallback = object : BottomSheetBehavior.BottomSheetCallback() {
         override fun onStateChanged(bottomSheet: View, newState: Int) {
-            when (newState) {
-                BottomSheetBehavior.STATE_EXPANDED -> {
-                    // TODO 스크롤에 따른 뷰 변화 구현하기
-                }
-                else -> {
-                }
-            }
+            viewModel.setExpendedBottomSheetDialog(newState == BottomSheetBehavior.STATE_EXPANDED)
         }
 
         override fun onSlide(bottomSheetView: View, slideOffset: Float) {

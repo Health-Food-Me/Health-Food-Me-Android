@@ -10,12 +10,17 @@
         <variable
             name="restaurant"
             type="org.helfoome.domain.entity.RestaurantInfo" />
+
+        <variable
+            name="viewModel"
+            type="org.helfoome.presentation.MainViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_dialog"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/rectangle_white_top_radius_15"
+        android:background="@{context.getDrawable(viewModel.isExpandedDialog() == true ? R.drawable.rectangle_white : R.drawable.rectangle_white_top_radius_15)}"
         android:descendantFocusability="beforeDescendants">
 
         <androidx.constraintlayout.widget.Guideline
@@ -29,8 +34,8 @@
             android:id="@+id/layout_toolbar"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:visibility="gone"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            app:visibility="@{viewModel.isExpandedDialog()}">
 
             <androidx.appcompat.widget.AppCompatImageButton
                 android:id="@+id/btn_back"
@@ -81,6 +86,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:visibility="@{viewModel.isExpandedDialog() != true}"
             tools:visibility="gone" />
 
         <ImageView
@@ -104,6 +110,7 @@
             android:src="@drawable/selector_btn_scrap"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/iv_restaurant_image"
+            app:visibility="@{viewModel.isExpandedDialog() != true}"
             tools:visibility="gone" />
 
         <TextView

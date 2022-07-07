@@ -10,6 +10,8 @@ import javax.inject.Inject
 class MainViewModel @Inject constructor() : ViewModel() {
     private var _selectedRestaurant = MutableLiveData<RestaurantInfo>()
     val selectedRestaurant get() = _selectedRestaurant
+    private var _isExpandedDialog = MutableLiveData<Boolean>()
+    val isExpandedDialog get() = _isExpandedDialog
 
     init {
         // TODO 지도 뷰 구현 후 마커 클릭 시 해당 함수 호출하는 것으로 변경 예정
@@ -30,5 +32,9 @@ class MainViewModel @Inject constructor() : ViewModel() {
             time = "월요일 09:00 ~ 20:00",
             number = "02-123-123"
         )
+    }
+
+    fun setExpendedBottomSheetDialog(isExpended: Boolean) {
+        isExpandedDialog.value = isExpended
     }
 }
