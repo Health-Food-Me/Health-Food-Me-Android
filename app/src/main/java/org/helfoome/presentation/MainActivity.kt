@@ -29,8 +29,8 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
         binding.lifecycleOwner = this@MainActivity
 
         initView()
-        addListeners()
-        addObservers()
+        initListeners()
+        initObservers()
     }
 
     override fun onStart() {
@@ -49,14 +49,14 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
         }
     }
 
-    private fun addListeners() {
+    private fun initListeners() {
         binding.layoutRestaurantDialog.btnScrap.setOnClickListener {
             it.isSelected = !it.isSelected
             // TODO 스크랩 상태값 업데이트 api 요청
         }
     }
 
-    private fun addObservers() {
+    private fun initObservers() {
         viewModel.selectedRestaurant.observe(this) {
             behavior.state = BottomSheetBehavior.STATE_COLLAPSED
         }

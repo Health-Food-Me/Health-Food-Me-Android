@@ -16,7 +16,7 @@ class RestaurantMenuTabFragment : BindingFragment<FragmentMenuBinding>(R.layout.
         super.onViewCreated(view, savedInstanceState)
 
         initView()
-        addObservers()
+        initObservers()
     }
 
     private fun initView() {
@@ -39,7 +39,7 @@ class RestaurantMenuTabFragment : BindingFragment<FragmentMenuBinding>(R.layout.
         )
     }
 
-    private fun addObservers() {
+    private fun initObservers() {
         viewModel.menu.observe(viewLifecycleOwner) { menuList ->
             restaurantMenuAdapter.setData(menuList)
         }
