@@ -86,10 +86,10 @@
                     android:id="@+id/tv_gram_per_person"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/notosanskr_r"
                     android:text="@{String.format(context.getString(R.string.restaurant_detail_gram_per_person_format), menu.gramPerPerson)}"
                     android:textColor="@color/gray_550"
                     android:textSize="8sp"
-                    android:fontFamily="@font/notosanskr_r"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:text="1인분 (50g)" />

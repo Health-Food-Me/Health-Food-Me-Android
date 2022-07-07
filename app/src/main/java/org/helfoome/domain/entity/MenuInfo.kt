@@ -11,5 +11,5 @@ data class MenuInfo(
     val calorie: Int,
     val gramPerPerson: Int,
     val isHealfoomePick: Boolean = false,
-    val isGeneralMenu: Boolean = false
+    val isGeneralMenu: Boolean = false,
 )

@@ -22,19 +22,19 @@ class RestaurantMenuTabFragment : BindingFragment<FragmentMenuBinding>(R.layout.
     private fun initView() {
         binding.menuList.adapter = restaurantMenuAdapter
         binding.layoutMenuTab.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-                override fun onTabSelected(tab: TabLayout.Tab?) {
-                    when (tab?.position) {
-                        0 -> restaurantMenuAdapter.setMenuCardViewType(RestaurantMenuAdapter.MenuCardViewType.MENU_VIEW_TYPE)
-                        else -> restaurantMenuAdapter.setMenuCardViewType(RestaurantMenuAdapter.MenuCardViewType.NUTRIENT_VIEW_TYPE)
-                    }
-                }
-
-                override fun onTabUnselected(tab: TabLayout.Tab?) {
-                }
-
-                override fun onTabReselected(tab: TabLayout.Tab?) {
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                when (tab?.position) {
+                    0 -> restaurantMenuAdapter.setMenuCardViewType(RestaurantMenuAdapter.MenuCardViewType.MENU_VIEW_TYPE)
+                    else -> restaurantMenuAdapter.setMenuCardViewType(RestaurantMenuAdapter.MenuCardViewType.NUTRIENT_VIEW_TYPE)
                 }
             }
+
+            override fun onTabUnselected(tab: TabLayout.Tab?) {
+            }
+
+            override fun onTabReselected(tab: TabLayout.Tab?) {
+            }
+        }
 
         )
     }

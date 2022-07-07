@@ -34,9 +34,7 @@ class RestaurantMenuAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             }
             else -> {
                 val binding =
-                    ItemMenuNutrientBinding.inflate(LayoutInflater.from(parent.context),
-                        parent,
-                        false)
+                    ItemMenuNutrientBinding.inflate(LayoutInflater.from(parent.context), parent, false)
                 MenuNutrientViewHolder(binding)
             }
         }
