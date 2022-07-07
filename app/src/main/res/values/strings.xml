@@ -20,4 +20,10 @@
     <string name="restaurant_detail_fat">지방</string>
     <string name="restaurant_detail_nutrient">영양정보</string>
 
+    <string-array name="restaurant_detail_tab_titles">
+        <item>@string/restaurant_detail_tab_item_menu</item>
+        <item>@string/restaurant_detail_tab_item_how_to_eat_out</item>
+        <item>@string/restaurant_detail_tab_item_review</item>
+    </string-array>
+
 </resources>

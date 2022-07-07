@@ -20,16 +20,10 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
     private val viewModel: MainViewModel by viewModels()
     private lateinit var behavior: BottomSheetBehavior<NestedScrollView>
     private val restaurantDetailAdapter = RestaurantTabAdapter(this)
-    private val tabTitles = arrayOf(
-        R.string.restaurant_detail_tab_item_menu,
-        R.string.restaurant_detail_tab_item_how_to_eat_out,
-        R.string.restaurant_detail_tab_item_review,
-    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding.viewModel = viewModel
-        binding.lifecycleOwner = this@MainActivity
 
         initView()
         initListeners()
@@ -47,7 +41,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
         with(binding.layoutRestaurantDialog) {
             vpRestaurantDetail.adapter = restaurantDetailAdapter
             TabLayoutMediator(layoutRestaurantTabMenu, vpRestaurantDetail) { tab, position ->
-                tab.text = getString(tabTitles[position])
+                tab.text = resources.getStringArray(R.array.restaurant_detail_tab_titles)[position]
             }.attach()
 
             tvNumber.paintFlags = tvNumber.paintFlags or Paint.UNDERLINE_TEXT_FLAG

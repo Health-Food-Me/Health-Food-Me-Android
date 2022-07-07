@@ -8,8 +8,15 @@ import org.helfoome.databinding.ItemMenuNutrientBinding
 import org.helfoome.domain.entity.MenuInfo
 
 class RestaurantMenuAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    private lateinit var inflater: LayoutInflater
     private var menuCardViewType = MenuCardViewType.MENU_VIEW_TYPE
-    private var menuList = listOf<MenuInfo>()
+    private val _menuList = mutableListOf<MenuInfo>()
+    var menuList: List<MenuInfo> = _menuList
+        set(value) {
+            _menuList.clear()
+            _menuList.addAll(value)
+            notifyDataSetChanged()
+        }
 
     class MenuViewHolder(private val binding: ItemMenuBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -26,15 +33,18 @@ class RestaurantMenuAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        if (!::inflater.isInitialized)
+            inflater = LayoutInflater.from(parent.context)
+
         return when (viewType) {
             MenuCardViewType.MENU_VIEW_TYPE.ordinal -> {
                 val binding =
-                    ItemMenuBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+                    ItemMenuBinding.inflate(inflater, parent, false)
                 MenuViewHolder(binding)
             }
             else -> {
                 val binding =
-                    ItemMenuNutrientBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+                    ItemMenuNutrientBinding.inflate(inflater, parent, false)
                 MenuNutrientViewHolder(binding)
             }
         }
@@ -58,11 +68,6 @@ class RestaurantMenuAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
 
     override fun getItemCount(): Int = menuList.size
-
-    fun setData(menuList: List<MenuInfo>) {
-        this.menuList = menuList
-        notifyDataSetChanged()
-    }
 
     enum class MenuCardViewType {
         MENU_VIEW_TYPE, NUTRIENT_VIEW_TYPE

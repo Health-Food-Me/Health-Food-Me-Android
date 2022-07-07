@@ -1,17 +1,19 @@
 package org.helfoome.presentation
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import org.helfoome.domain.entity.RestaurantInfo
+import org.helfoome.util.Event
 import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor() : ViewModel() {
-    private var _selectedRestaurant = MutableLiveData<RestaurantInfo>()
+    private val _selectedRestaurant = MutableLiveData<RestaurantInfo>()
     val selectedRestaurant get() = _selectedRestaurant
-    private var _isExpandedDialog = MutableLiveData<Boolean>()
-    val isExpandedDialog get() = _isExpandedDialog
+    private val _isExpandedDialog = MutableLiveData<Event<Boolean>>()
+    val isExpandedDialog: LiveData<Event<Boolean>> get() = _isExpandedDialog
 
     init {
         // TODO 지도 뷰 구현 후 마커 클릭 시 해당 함수 호출하는 것으로 변경 예정
@@ -35,6 +37,6 @@ class MainViewModel @Inject constructor() : ViewModel() {
     }
 
     fun setExpendedBottomSheetDialog(isExpended: Boolean) {
-        isExpandedDialog.value = isExpended
+        _isExpandedDialog.value = Event(isExpended)
     }
 }
