@@ -1,5 +1,7 @@
 package org.helfoome.presentation
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
@@ -50,9 +52,15 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
     }
 
     private fun initListeners() {
-        binding.layoutRestaurantDialog.btnScrap.setOnClickListener {
-            it.isSelected = !it.isSelected
-            // TODO 스크랩 상태값 업데이트 api 요청
+        with(binding.layoutRestaurantDialog) {
+            btnScrap.setOnClickListener {
+                it.isSelected = !it.isSelected
+                // TODO 스크랩 상태값 업데이트 api 요청
+            }
+
+            tvNumber.setOnClickListener {
+                startActivity(Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + tvNumber.text)));
+            }
         }
     }
 
