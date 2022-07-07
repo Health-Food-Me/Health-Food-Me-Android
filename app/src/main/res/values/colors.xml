@@ -28,8 +28,9 @@
     <color name="blue_200">#ADB3BC</color>
     <color name="blue_700">#007AFF</color>
 
-    <color name="gray_50">#EFEFEF</color>
-    <color name="gray_100">#E3E3E3</color>
+    <color name="gray_50">#F2F2F2</color>
+    <color name="gray_100">#EFEFEF</color>
+    <color name="gray_200">#E3E3E3</color>
     <color name="gray_500">#9A9A9A</color>
     <color name="gray_550">#999999</color>
     <color name="gray_600">#666666</color>

@@ -5,15 +5,23 @@ import android.view.View
 import androidx.activity.viewModels
 import androidx.core.widget.NestedScrollView
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import org.helfoome.R
 import org.helfoome.databinding.ActivityMainBinding
+import org.helfoome.presentation.restaurant.RestaurantTabAdapter
 import org.helfoome.util.binding.BindingActivity
 
 @AndroidEntryPoint
 class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main) {
     private val viewModel: MainViewModel by viewModels()
     private lateinit var behavior: BottomSheetBehavior<NestedScrollView>
+    private val restaurantDetailAdapter = RestaurantTabAdapter(this)
+    private val tabTitles = arrayOf(
+        R.string.restaurant_detail_tab_item_menu,
+        R.string.restaurant_detail_tab_item_how_to_eat_out,
+        R.string.restaurant_detail_tab_item_review,
+    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,6 +40,13 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
 
     private fun initView() {
         behavior = BottomSheetBehavior.from(binding.bottomSheet)
+
+        with(binding.layoutRestaurantDialog) {
+            vpRestaurantDetail.adapter = restaurantDetailAdapter
+            TabLayoutMediator(layoutRestaurantTabMenu, vpRestaurantDetail) { tab, position ->
+                tab.text = getString(tabTitles[position])
+            }.attach()
+        }
     }
 
     private fun addListeners() {

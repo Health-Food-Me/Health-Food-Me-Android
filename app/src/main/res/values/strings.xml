@@ -10,6 +10,7 @@
     <string name="restaurant_detail_price_format">%d원</string>
     <string name="restaurant_detail_navi_meter_format">%dm</string>
     <string name="restaurant_detail_gram_format">%dg</string>
+    <string name="restaurant_detail_gram_per_person_format">1인분 (%dg)</string>
 
     <string name="restaurant_detail_tab_item_menu">메뉴</string>
     <string name="restaurant_detail_tab_item_how_to_eat_out">외식 대처법</string>
@@ -18,5 +19,6 @@
     <string name="restaurant_detail_carb">탄수화물</string>
     <string name="restaurant_detail_protein">단백질</string>
     <string name="restaurant_detail_fat">지방</string>
+    <string name="restaurant_detail_nutrient">영양정보</string>
 
 </resources>
