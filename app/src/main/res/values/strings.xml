@@ -6,7 +6,6 @@
 
     <!-- Restaurant Detail -->
     <string name="restaurant_detail_score_format">(️%s)</string>
-    <string name="restaurant_detail_number_format"><u>%s</u></string>
     <string name="restaurant_detail_price_format">%d원</string>
     <string name="restaurant_detail_navi_meter_format">%dm</string>
     <string name="restaurant_detail_gram_format">%dg</string>

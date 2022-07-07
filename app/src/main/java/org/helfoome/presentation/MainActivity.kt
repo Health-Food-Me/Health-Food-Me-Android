@@ -1,6 +1,7 @@
 package org.helfoome.presentation
 
 import android.content.Intent
+import android.graphics.Paint
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
@@ -48,6 +49,8 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
             TabLayoutMediator(layoutRestaurantTabMenu, vpRestaurantDetail) { tab, position ->
                 tab.text = getString(tabTitles[position])
             }.attach()
+
+            tvNumber.paintFlags = tvNumber.paintFlags or Paint.UNDERLINE_TEXT_FLAG
         }
     }
 

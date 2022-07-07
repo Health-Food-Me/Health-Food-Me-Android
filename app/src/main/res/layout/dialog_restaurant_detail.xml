@@ -304,7 +304,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:fontFamily="@font/notosanskr_m"
-            android:text="@{String.format(context.getString(R.string.restaurant_detail_number_format), restaurant.number)}"
+            android:text="@{restaurant.number}"
             android:textColor="@color/gray_600"
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="@id/iv_call"
