@@ -35,6 +35,7 @@
                     app:tabBackground="@drawable/selector_menu_tab_item_background"
                     app:tabIndicatorHeight="0dp"
                     app:tabMinWidth="78dp"
+                    app:tabRippleColor="@android:color/transparent"
                     app:tabSelectedTextColor="@color/gray_800"
                     app:tabTextAppearance="@style/TabItem.MenuTab.TextAppearance"
                     app:tabTextColor="@color/gray_550">
