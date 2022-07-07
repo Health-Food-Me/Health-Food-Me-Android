@@ -6,11 +6,11 @@ import org.helfoome.data.local.entity.SearchData
 @Dao
 interface SearchDao {
     @Query("SELECT * FROM search_data_table")
-    fun getAll(): List<SearchData>
+    suspend fun getAll(): List<SearchData>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun insert(searchData: SearchData)
+    suspend fun insert(searchData: SearchData)
 
     @Delete
-    fun delete(searchData: SearchData)
+    suspend fun delete(searchData: SearchData)
 }
