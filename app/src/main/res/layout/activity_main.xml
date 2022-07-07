@@ -17,7 +17,7 @@
         tools:context=".presentation.MainActivity">
 
         <androidx.core.widget.NestedScrollView
-            android:id="@+id/bottom_sheet"
+            android:id="@+id/sv_bottom_sheet"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fillViewport="true"

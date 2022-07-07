@@ -42,7 +42,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
     }
 
     private fun initView() {
-        behavior = BottomSheetBehavior.from(binding.bottomSheet)
+        behavior = BottomSheetBehavior.from(binding.svBottomSheet)
 
         with(binding.layoutRestaurantDialog) {
             vpRestaurantDetail.adapter = restaurantDetailAdapter
