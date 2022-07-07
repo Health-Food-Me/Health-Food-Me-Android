@@ -58,6 +58,10 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                 // TODO 스크랩 상태값 업데이트 api 요청
             }
 
+            btnScrapToolbar.setOnClickListener {
+                it.isSelected = !it.isSelected
+            }
+
             tvNumber.setOnClickListener {
                 startActivity(Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + tvNumber.text)));
             }
