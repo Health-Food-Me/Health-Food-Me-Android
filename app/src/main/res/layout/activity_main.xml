@@ -28,9 +28,10 @@
 
             <ImageButton
                 android:id="@+id/ib_hamburger"
-                android:layout_width="55dp"
-                android:layout_height="52dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:background="@drawable/rectangle_white_radius_14"
+                android:padding="20dp"
                 android:src="@drawable/rp_green_hambuger"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -38,15 +39,17 @@
 
             <EditText
                 android:id="@+id/et_search"
-                android:layout_width="270dp"
-                android:layout_height="52dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:background="@drawable/rectangle_white_radius_14"
                 android:drawableEnd="@drawable/ic_search"
+                android:drawablePadding="124dp"
                 android:fontFamily="@font/notosanskr_r"
                 android:hint="@string/main_search"
                 android:inputType="text"
-                android:padding="16dp"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="15dp"
                 android:textColor="@color/gray_400"
                 android:textSize="15sp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -72,83 +75,59 @@
                 app:singleSelection="true">
 
                 <com.google.android.material.chip.Chip
+                    style="@style/Base.Widget.MaterialComponents.Chip.Style"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/notosanskr_r"
                     android:text="샐러드"
-                    android:textColor="@color/black"
-                    android:textSize="14sp"
-                    app:chipBackgroundColor="@color/white"
                     app:chipIcon="@drawable/ic_sandwitch" />
 
                 <com.google.android.material.chip.Chip
+                    style="@style/Base.Widget.MaterialComponents.Chip.Style"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/notosanskr_r"
                     android:text="포케"
-                    android:textColor="@color/black"
-                    android:textSize="14sp"
-                    app:chipBackgroundColor="@color/white"
                     app:chipIcon="@drawable/ic_sandwitch" />
 
                 <com.google.android.material.chip.Chip
+                    style="@style/Base.Widget.MaterialComponents.Chip.Style"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/notosanskr_r"
                     android:text="샌드위치"
-                    android:textColor="@color/black"
-                    android:textSize="14sp"
-                    app:chipBackgroundColor="@color/white"
                     app:chipIcon="@drawable/ic_sandwitch" />
 
                 <com.google.android.material.chip.Chip
+                    style="@style/Base.Widget.MaterialComponents.Chip.Style"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/notosanskr_r"
                     android:text="샤브샤브"
-                    android:textColor="@color/black"
-                    android:textSize="14sp"
-                    app:chipBackgroundColor="@color/white"
                     app:chipIcon="@drawable/ic_sandwitch" />
 
                 <com.google.android.material.chip.Chip
+                    style="@style/Base.Widget.MaterialComponents.Chip.Style"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/notosanskr_r"
                     android:text="보쌈"
-                    android:textColor="@color/black"
-                    android:textSize="14sp"
-                    app:chipBackgroundColor="@color/white"
                     app:chipIcon="@drawable/ic_sandwitch" />
 
                 <com.google.android.material.chip.Chip
+                    style="@style/Base.Widget.MaterialComponents.Chip.Style"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/notosanskr_r"
                     android:text="고깃집"
-                    android:textColor="@color/black"
-                    android:textSize="14sp"
-                    app:chipBackgroundColor="@color/white"
                     app:chipIcon="@drawable/ic_sandwitch" />
 
                 <com.google.android.material.chip.Chip
+                    style="@style/Base.Widget.MaterialComponents.Chip.Style"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/notosanskr_r"
                     android:text="덮밥"
-                    android:textColor="@color/black"
-                    android:textSize="14sp"
-                    app:chipBackgroundColor="@color/white"
                     app:chipIcon="@drawable/ic_sandwitch" />
 
                 <com.google.android.material.chip.Chip
+                    style="@style/Base.Widget.MaterialComponents.Chip.Style"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/notosanskr_r"
                     android:text="키토김밥"
-                    android:textColor="@color/black"
-                    android:textSize="14sp"
-                    app:chipBackgroundColor="@color/white"
                     app:chipIcon="@drawable/ic_sandwitch" />
 
             </com.google.android.material.chip.ChipGroup>

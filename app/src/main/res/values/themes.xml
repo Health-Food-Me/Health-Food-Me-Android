@@ -14,4 +14,12 @@
         <!-- Customize your theme here. -->
         <item name="android:includeFontPadding">false</item>
     </style>
+
+    <style name="Base.Widget.MaterialComponents.Chip.Style" parent="">
+        <item name="android:fontFamily">@font/notosanskr_r</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">14sp</item>
+        <item name="chipBackgroundColor">@color/white</item>
+    </style>
+
 </resources>
