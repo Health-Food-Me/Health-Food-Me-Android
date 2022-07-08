@@ -1,3 +1,8 @@
+import org.jetbrains.kotlin.konan.properties.Properties
+
+val properties = Properties()
+properties.load(project.rootProject.file("local.properties").inputStream())
+
 plugins {
     id("com.android.application")
     id("kotlin-parcelize")
@@ -14,6 +19,7 @@ android {
         applicationId = "org.helfoome"
         versionCode = 1
         versionName = "1.0"
+        buildConfigField("String", "NAVER_API_MAP_KEY", properties.getProperty("NAVER_API_MAP_KEY"))
     }
 
     buildTypes {
@@ -49,6 +55,8 @@ dependencies {
     implementation(libs.lottie)
     implementation(libs.kotlin.serialization.converter)
     implementation(libs.junit)
+    implementation(libs.navermap)
+    implementation(libs.googlegms)
     kapt(libs.bundles.compiler)
 }
 
