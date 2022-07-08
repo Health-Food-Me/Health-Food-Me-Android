@@ -6,7 +6,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
-import androidx.core.widget.NestedScrollView
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
@@ -18,7 +18,7 @@ import org.helfoome.util.binding.BindingActivity
 @AndroidEntryPoint
 class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main) {
     private val viewModel: MainViewModel by viewModels()
-    private lateinit var behavior: BottomSheetBehavior<NestedScrollView>
+    private lateinit var behavior: BottomSheetBehavior<ConstraintLayout>
     private val restaurantDetailAdapter = RestaurantTabAdapter(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,7 +37,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
 
     private fun initView() {
         behavior = BottomSheetBehavior.from(binding.svBottomSheet)
-        behavior.isDraggable = false
+        behavior.state = BottomSheetBehavior.STATE_COLLAPSED
 
         with(binding.layoutRestaurantDialog) {
             vpRestaurantDetail.adapter = restaurantDetailAdapter
@@ -51,7 +51,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
 
     private fun initListeners() {
         with(binding.layoutRestaurantDialog) {
-            layoutDialog.setOnClickListener {
+            layoutAppBar.setOnClickListener {
                 if (behavior.state == BottomSheetBehavior.STATE_COLLAPSED) behavior.state = BottomSheetBehavior.STATE_EXPANDED
             }
 
@@ -88,6 +88,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
     private val bottomSheetCallback = object : BottomSheetBehavior.BottomSheetCallback() {
         override fun onStateChanged(bottomSheet: View, newState: Int) {
             viewModel.setExpendedBottomSheetDialog(newState == BottomSheetBehavior.STATE_EXPANDED)
+            behavior.isDraggable = newState != BottomSheetBehavior.STATE_EXPANDED
         }
 
         override fun onSlide(bottomSheetView: View, slideOffset: Float) {
