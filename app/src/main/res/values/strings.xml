@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Health-Food-Me</string>
+    <string name="login_logo">헬푸미</string>
+    <string name="login_description">샐러드부터 일반식까지\n 다이어터를 위한 식당 추천 지도앱</string>
 </resources>
