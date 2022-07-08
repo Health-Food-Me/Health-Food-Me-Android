@@ -37,6 +37,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
 
     private fun initView() {
         behavior = BottomSheetBehavior.from(binding.svBottomSheet)
+        behavior.isDraggable = false
 
         with(binding.layoutRestaurantDialog) {
             vpRestaurantDetail.adapter = restaurantDetailAdapter
@@ -50,6 +51,14 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
 
     private fun initListeners() {
         with(binding.layoutRestaurantDialog) {
+            layoutDialog.setOnClickListener {
+                if (behavior.state == BottomSheetBehavior.STATE_COLLAPSED) behavior.state = BottomSheetBehavior.STATE_EXPANDED
+            }
+
+            btnBack.setOnClickListener {
+                behavior.state = BottomSheetBehavior.STATE_COLLAPSED
+            }
+
             btnScrap.setOnClickListener {
                 it.isSelected = !it.isSelected
                 // TODO 스크랩 상태값 업데이트 api 요청
