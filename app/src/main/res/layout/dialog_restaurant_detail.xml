@@ -211,7 +211,8 @@
             android:layout_marginEnd="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/tv_restaurant_name"
-            app:layout_constraintTop_toBottomOf="@id/tv_restaurant_score">
+            app:layout_constraintTop_toBottomOf="@id/tv_restaurant_score"
+            app:visibility="@{viewModel.isExpandedDialog().peekContent() != true}">
 
             <TextView
                 android:id="@+id/tv_first_hashtag"
