@@ -12,5 +12,6 @@ class HFMApplication : Application() {
         if (BuildConfig.DEBUG) {
             Timber.plant(HFMDebugTree())
         }
+        FlipperInitializer.init(this)
     }
 }

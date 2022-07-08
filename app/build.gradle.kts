@@ -49,6 +49,8 @@ dependencies {
     implementation(libs.lottie)
     implementation(libs.kotlin.serialization.converter)
     implementation(libs.junit)
+    debugImplementation(libs.bundles.flipper)
+    debugImplementation(libs.flipper.network)
     kapt(libs.bundles.compiler)
 }
 
