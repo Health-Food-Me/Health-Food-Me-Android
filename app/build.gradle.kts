@@ -24,6 +24,7 @@ android {
         buildConfigField("String", "NAVER_CLIENT_NAME", properties.getProperty("NAVER_CLIENT_NAME"))
         buildConfigField("String", "KAKAO_APP_KEY", properties.getProperty("KAKAO_APP_KEY"))
         buildConfigField("String", "KAKAO_NATIVE_KEY", properties.getProperty("KAKAO_NATIVE_KEY"))
+        buildConfigField("String", "NAVER_API_MAP_KEY", properties.getProperty("NAVER_API_MAP_KEY"))
     }
 
     buildTypes {
@@ -61,6 +62,8 @@ dependencies {
     implementation(libs.junit)
     implementation(libs.naverlogin)
     implementation(libs.kakaologin)
+    implementation(libs.navermap)
+    implementation(libs.googlegms)
     kapt(libs.bundles.compiler)
 }
 

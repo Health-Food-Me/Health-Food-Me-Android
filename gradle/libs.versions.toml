@@ -63,6 +63,8 @@ lottie = "com.airbnb.android:lottie:3.6.0"
 kotlin-serialization-converter = "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0"
 naverlogin = "com.navercorp.nid:oauth:5.1.1"
 kakaologin = "com.kakao.sdk:v2-user:2.11.0"
+navermap = "com.naver.maps:map-sdk:3.15.0"
+googlegms = "com.google.android.gms:play-services-location:20.0.0"
 
 junit = "junit:junit:4.13.2"
 
