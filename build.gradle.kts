@@ -9,6 +9,7 @@ buildscript {
         classpath(libs.plugin.kotlin)
         classpath(libs.plugin.hilt)
         classpath(libs.plugin.navArgs)
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.10")
     }
 }
 
@@ -16,6 +17,7 @@ allprojects {
     repositories {
         google()
         mavenCentral()
+        maven { setUrl("https://devrepo.kakao.com/nexus/content/groups/public/") }
     }
 }
 

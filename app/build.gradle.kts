@@ -1,3 +1,8 @@
+import org.jetbrains.kotlin.konan.properties.Properties
+
+val properties = Properties()
+properties.load(project.rootProject.file("local.properties").inputStream())
+
 plugins {
     id("com.android.application")
     id("kotlin-parcelize")
@@ -14,6 +19,11 @@ android {
         applicationId = "org.helfoome"
         versionCode = 1
         versionName = "1.0"
+        buildConfigField("String", "NAVER_CLIENT_ID", properties.getProperty("NAVER_CLIENT_ID"))
+        buildConfigField("String", "NAVER_CLIENT_SECRET", properties.getProperty("NAVER_CLIENT_SECRET"))
+        buildConfigField("String", "NAVER_CLIENT_NAME", properties.getProperty("NAVER_CLIENT_NAME"))
+        buildConfigField("String", "KAKAO_APP_KEY", properties.getProperty("KAKAO_APP_KEY"))
+        buildConfigField("String", "KAKAO_NATIVE_KEY", properties.getProperty("KAKAO_NATIVE_KEY"))
     }
 
     buildTypes {
@@ -49,6 +59,8 @@ dependencies {
     implementation(libs.lottie)
     implementation(libs.kotlin.serialization.converter)
     implementation(libs.junit)
+    implementation(libs.naverlogin)
+    implementation(libs.kakaologin)
     kapt(libs.bundles.compiler)
 }
 
