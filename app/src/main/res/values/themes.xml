@@ -15,11 +15,57 @@
         <item name="android:includeFontPadding">false</item>
     </style>
 
+    <style name="Button.Basic.Style" parent="">
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:minWidth">0dp</item>
+        <item name="android:minHeight">0dp</item>
+    </style>
+
+    <style name="Button.Navigation.Style" parent="Button.Basic.Style">
+        <item name="android:padding">16dp</item>
+        <item name="android:layout_width">48dp</item>
+    </style>
+
+    <style name="TextView.Hashtag.Style" parent="">
+        <item name="android:layout_height">22dp</item>
+        <item name="android:paddingHorizontal">10dp</item>
+        <item name="android:background">@drawable/rectangle_border_radius_10</item>
+        <item name="android:backgroundTint">#FFEAEA</item>
+        <item name="android:textAppearance">@style/TextView.Hashtag.TextAppearance</item>
+        <item name="android:gravity">center_vertical|start</item>
+    </style>
+
+    <style name="TextView.Hashtag.TextAppearance" parent="">
+        <item name="android:fontFamily">@font/notosanskr_m</item>
+        <item name="android:textColor">@color/red_500</item>
+        <item name="android:textSize">10sp</item>
+    </style>
+
+    <style name="TabItem.RestaurantTab.TextAppearance" parent="">
+        <item name="android:fontFamily">@font/notosanskr_b</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="TabItem.MenuTab.TextAppearance" parent="">
+        <item name="android:fontFamily">@font/notosanskr_m</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="TextView.Nutrient.TextAppearance" parent="">
+        <item name="android:fontFamily">@font/notosanskr_b</item>
+        <item name="android:textColor">@color/gray_800</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="CircleImageView.Radius.8.Style" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">8%</item>
+    </style>
+
     <style name="Base.Widget.MaterialComponents.Chip.Style" parent="">
         <item name="android:fontFamily">@font/notosanskr_r</item>
         <item name="android:textColor">@color/black</item>
         <item name="android:textSize">14sp</item>
         <item name="chipBackgroundColor">@color/white</item>
     </style>
-
 </resources>
