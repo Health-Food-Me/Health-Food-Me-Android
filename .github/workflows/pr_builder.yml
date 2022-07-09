@@ -31,6 +31,12 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 11
+          
+      - name: Change gradlew permissions
+        run: chmod +x ./gradlew
+        
+      - name: Touch local properties
+        run: touch local.properties
 
       - name: Access NAVER_API_MAP_KEY
         env:
