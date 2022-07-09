@@ -19,7 +19,7 @@
 
 <br>
 
-## 🥕🥕🥕 ****Specification****
+## 🥕🥕🥕 *****Specification*****
 | Architecture | Clean Architecture, MVVM |
 |:---|:---|
 | Design Pattern | Repository Pattern, Adapter Pattern,  Delegation Pattern, Observer Pattern |
@@ -34,19 +34,19 @@
 
 <br>
 
-## 🍋🍋🍋🍋 *Code Convention*
+## 🍋🍋🍋🍋 *****Code Convention*****
 
 [월클 헬푸미 안드팀의 코드 컨벤션이 궁금하다면? click ✔️](https://github.com/Health-Food-Me/Health-Food-Me-Android/wiki/2.-Android-Coding-Convention)
 
 <br>
 
-## 🥑🥑🥑🥑🥑 *Git Convention*
+## 🥑🥑🥑🥑🥑 *****Git Convention*****
 
 [월클 헬푸미 안드팀의 깃 컨벤션이 궁금하다면? click ✔️](https://github.com/Health-Food-Me/Health-Food-Me-Android/wiki/1.-Git-%EC%82%AC%EC%9A%A9%EB%B2%95)
 
 <br>
 
-## 🍑🍑🍑🍑🍑🍑 *Foldering*
+## 🍑🍑🍑🍑🍑🍑 *****Foldering*****
 
 ```
 📂 org.helfoome
