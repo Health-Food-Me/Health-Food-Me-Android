@@ -13,7 +13,6 @@ import com.naver.maps.map.overlay.OverlayImage
 import android.content.Intent
 import android.graphics.Paint
 import android.net.Uri
-import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
 import androidx.core.widget.NestedScrollView
@@ -41,8 +40,34 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
         initObservers()
         requirePermission()
     }
-    
-     override fun onStart() {
+
+    private fun requirePermission() {
+        val locationPermissionRequest = registerForActivityResult(
+            ActivityResultContracts.RequestMultiplePermissions()
+        ) { permissions ->
+            when {
+                permissions.getOrDefault(Manifest.permission.ACCESS_FINE_LOCATION, false) -> {
+                    initNaverMap()
+                }
+                permissions.getOrDefault(Manifest.permission.ACCESS_COARSE_LOCATION, false) -> {
+                    initNaverMap()
+                }
+                else -> {
+                    initNaverMap()
+                    Toast.makeText(this, "위치 권한이 없어 현재 위치를 알 수 없습니다.", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+
+        locationPermissionRequest.launch(
+            arrayOf(
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            )
+        )
+    }
+
+    override fun onStart() {
         super.onStart()
         behavior.addBottomSheetCallback(bottomSheetCallback)
     }
@@ -96,30 +121,31 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
         override fun onSlide(bottomSheetView: View, slideOffset: Float) {
         }
 
-    private fun requirePermission() {
-        val locationPermissionRequest = registerForActivityResult(
-            ActivityResultContracts.RequestMultiplePermissions()
-        ) { permissions ->
-            when {
-                permissions.getOrDefault(Manifest.permission.ACCESS_FINE_LOCATION, false) -> {
-                    initNaverMap()
-                }
-                permissions.getOrDefault(Manifest.permission.ACCESS_COARSE_LOCATION, false) -> {
-                    initNaverMap()
-                }
-                else -> {
-                    initNaverMap()
-                    Toast.makeText(this, "위치 권한이 없어 현재 위치를 알 수 없습니다.", Toast.LENGTH_SHORT).show()
+        private fun requirePermission() {
+            val locationPermissionRequest = registerForActivityResult(
+                ActivityResultContracts.RequestMultiplePermissions()
+            ) { permissions ->
+                when {
+                    permissions.getOrDefault(Manifest.permission.ACCESS_FINE_LOCATION, false) -> {
+                        initNaverMap()
+                    }
+                    permissions.getOrDefault(Manifest.permission.ACCESS_COARSE_LOCATION, false) -> {
+                        initNaverMap()
+                    }
+                    else -> {
+                        initNaverMap()
+                        Toast.makeText(this@MainActivity, "위치 권한이 없어 현재 위치를 알 수 없습니다.", Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
-        }
 
-        locationPermissionRequest.launch(
-            arrayOf(
-                Manifest.permission.ACCESS_FINE_LOCATION,
-                Manifest.permission.ACCESS_COARSE_LOCATION
+            locationPermissionRequest.launch(
+                arrayOf(
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                )
             )
-        )
+        }
     }
 
     private fun initNaverMap() {
