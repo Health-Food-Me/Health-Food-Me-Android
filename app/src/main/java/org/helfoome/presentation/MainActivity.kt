@@ -2,7 +2,6 @@ package org.helfoome.presentation
 
 import android.Manifest
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.add
 import androidx.fragment.app.commit
@@ -47,11 +46,16 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
         requirePermission()
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int,
-                                            permissions: Array<String>,
-                                            grantResults: IntArray) {
-        if (locationSource.onRequestPermissionsResult(requestCode, permissions,
-                grantResults)) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
+        if (locationSource.onRequestPermissionsResult(
+                requestCode, permissions,
+                grantResults
+            )
+        ) {
             if (!locationSource.isActivated) { // 권한 거부됨
                 naverMap.locationTrackingMode = LocationTrackingMode.None
             }
