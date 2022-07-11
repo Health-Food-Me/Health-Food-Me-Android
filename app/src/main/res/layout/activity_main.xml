@@ -25,7 +25,7 @@
                 android:name="com.naver.maps.map.MapFragment"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
-
+            <!--                app:navermap_locationButtonEnabled="true"-->
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/layout_search"
@@ -36,33 +36,32 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <ImageButton
-                    android:id="@+id/ib_hamburger"
+                    android:id="@+id/btn_hamburger"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/rectangle_white_radius_14"
                     android:padding="20dp"
-                    android:src="@drawable/rp_green_hambuger"
+                    android:src="@drawable/ic_hambuger"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <EditText
-                    android:id="@+id/et_search"
+                <TextView
+                    android:id="@+id/tv_search"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:background="@drawable/rectangle_white_radius_14"
-                    android:drawableEnd="@drawable/ic_search"
                     android:drawablePadding="124dp"
                     android:fontFamily="@font/notosanskr_r"
                     android:hint="@string/main_search"
-                    android:inputType="text"
                     android:paddingHorizontal="16dp"
                     android:paddingVertical="15dp"
                     android:textColor="@color/gray_400"
                     android:textSize="15sp"
+                    app:drawableEndCompat="@drawable/ic_search"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/ib_hamburger"
+                    app:layout_constraintStart_toEndOf="@id/btn_hamburger"
                     app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -87,56 +86,56 @@
                         style="@style/Base.Widget.MaterialComponents.Chip.Style"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="샐러드"
+                        android:text="@string/main_chip_group_salad"
                         app:chipIcon="@drawable/ic_sandwitch" />
 
                     <com.google.android.material.chip.Chip
                         style="@style/Base.Widget.MaterialComponents.Chip.Style"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="포케"
+                        android:text="@string/main_chip_group_poke"
                         app:chipIcon="@drawable/ic_sandwitch" />
 
                     <com.google.android.material.chip.Chip
                         style="@style/Base.Widget.MaterialComponents.Chip.Style"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="샌드위치"
+                        android:text="@string/main_chip_group_sandwich"
                         app:chipIcon="@drawable/ic_sandwitch" />
 
                     <com.google.android.material.chip.Chip
                         style="@style/Base.Widget.MaterialComponents.Chip.Style"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="샤브샤브"
+                        android:text="@string/main_chip_group_shabu"
                         app:chipIcon="@drawable/ic_sandwitch" />
 
                     <com.google.android.material.chip.Chip
                         style="@style/Base.Widget.MaterialComponents.Chip.Style"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="보쌈"
+                        android:text="@string/main_chip_group_bosam"
                         app:chipIcon="@drawable/ic_sandwitch" />
 
                     <com.google.android.material.chip.Chip
                         style="@style/Base.Widget.MaterialComponents.Chip.Style"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="고깃집"
+                        android:text="@string/main_chip_group_meat"
                         app:chipIcon="@drawable/ic_sandwitch" />
 
                     <com.google.android.material.chip.Chip
                         style="@style/Base.Widget.MaterialComponents.Chip.Style"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="덮밥"
+                        android:text="@string/main_chip_group_ricebowl"
                         app:chipIcon="@drawable/ic_sandwitch" />
 
                     <com.google.android.material.chip.Chip
                         style="@style/Base.Widget.MaterialComponents.Chip.Style"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="키토김밥"
+                        android:text="@string/main_chip_group_quito"
                         app:chipIcon="@drawable/ic_sandwitch" />
 
                 </com.google.android.material.chip.ChipGroup>
@@ -155,17 +154,27 @@
                 app:layout_constraintBottom_toTopOf="@id/fab_location"
                 app:layout_constraintEnd_toEndOf="parent" />
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
+            <com.naver.maps.map.widget.LocationButtonView
                 android:id="@+id/fab_location"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="20dp"
+                android:src="@drawable/ic_currentposition"
                 android:layout_marginBottom="39dp"
-                android:backgroundTint="@color/white"
-                app:borderWidth="0dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:srcCompat="@drawable/ic_currentposition" />
+                app:layout_constraintEnd_toEndOf="parent" />
+
+<!--            <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+<!--                android:id="@+id/fab_location"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginEnd="20dp"-->
+<!--                android:layout_marginBottom="39dp"-->
+<!--                android:backgroundTint="@color/white"-->
+<!--                android:src="@drawable/ic_currentposition"-->
+<!--                app:borderWidth="0dp"-->
+<!--                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                app:layout_constraintEnd_toEndOf="parent" />-->
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
