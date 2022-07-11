@@ -2,7 +2,6 @@ package org.helfoome.presentation
 
 import android.Manifest
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.add
 import androidx.fragment.app.commit
@@ -13,17 +12,18 @@ import com.naver.maps.map.overlay.OverlayImage
 import android.content.Intent
 import android.graphics.Paint
 import android.net.Uri
-import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
 import androidx.core.widget.NestedScrollView
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.tabs.TabLayoutMediator
+import com.naver.maps.map.util.FusedLocationSource
 import dagger.hilt.android.AndroidEntryPoint
 import org.helfoome.R
 import org.helfoome.databinding.ActivityMainBinding
 import org.helfoome.presentation.restaurant.RestaurantTabAdapter
 import org.helfoome.util.binding.BindingActivity
+import org.helfoome.util.showToast
 
 @AndroidEntryPoint
 class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main), OnMapReadyCallback {
@@ -31,18 +31,63 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
     private lateinit var behavior: BottomSheetBehavior<NestedScrollView>
     private val restaurantDetailAdapter = RestaurantTabAdapter(this)
     private lateinit var naverMap: NaverMap
+    private lateinit var locationSource: FusedLocationSource
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding.viewModel = viewModel
 
+        locationSource = FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE)
+
+        binding.viewModel = viewModel
         initView()
         initListeners()
         initObservers()
+        initNaverMap()
         requirePermission()
     }
-    
-     override fun onStart() {
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
+        if (locationSource.onRequestPermissionsResult(
+                requestCode, permissions,
+                grantResults
+            )
+        ) {
+            if (!locationSource.isActivated) { // 권한 거부됨
+                naverMap.locationTrackingMode = LocationTrackingMode.None
+            }
+            return
+        }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+    }
+
+    private fun requirePermission() {
+        val locationPermissionRequest = registerForActivityResult(
+            ActivityResultContracts.RequestMultiplePermissions()
+        ) { permissions ->
+            when {
+                permissions.getOrDefault(Manifest.permission.ACCESS_FINE_LOCATION, false) -> {
+                }
+                permissions.getOrDefault(Manifest.permission.ACCESS_COARSE_LOCATION, false) -> {
+                }
+                else -> {
+                    showToast("위치 권한이 없어 현재 위치를 알 수 없습니다.")
+                }
+            }
+        }
+
+        locationPermissionRequest.launch(
+            arrayOf(
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            )
+        )
+    }
+
+    override fun onStart() {
         super.onStart()
         behavior.addBottomSheetCallback(bottomSheetCallback)
     }
@@ -95,31 +140,6 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
 
         override fun onSlide(bottomSheetView: View, slideOffset: Float) {
         }
-
-    private fun requirePermission() {
-        val locationPermissionRequest = registerForActivityResult(
-            ActivityResultContracts.RequestMultiplePermissions()
-        ) { permissions ->
-            when {
-                permissions.getOrDefault(Manifest.permission.ACCESS_FINE_LOCATION, false) -> {
-                    initNaverMap()
-                }
-                permissions.getOrDefault(Manifest.permission.ACCESS_COARSE_LOCATION, false) -> {
-                    initNaverMap()
-                }
-                else -> {
-                    initNaverMap()
-                    Toast.makeText(this, "위치 권한이 없어 현재 위치를 알 수 없습니다.", Toast.LENGTH_SHORT).show()
-                }
-            }
-        }
-
-        locationPermissionRequest.launch(
-            arrayOf(
-                Manifest.permission.ACCESS_FINE_LOCATION,
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            )
-        )
     }
 
     private fun initNaverMap() {
@@ -136,6 +156,9 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
 
     override fun onMapReady(map: NaverMap) {
         naverMap = map
+        locationSource = FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE)
+        naverMap.locationSource = locationSource
+        binding.fabLocation.map = naverMap
 
         val marker = Marker()
         marker.position = LatLng(37.5670135, 126.9783740)
@@ -150,5 +173,9 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
         val initialPosition = LatLng(37.5670135, 126.9783740)
         val cameraUpdate = CameraUpdate.scrollTo(initialPosition)
         naverMap.moveCamera(cameraUpdate)
+    }
+
+    companion object {
+        private const val LOCATION_PERMISSION_REQUEST_CODE = 1000
     }
 }
