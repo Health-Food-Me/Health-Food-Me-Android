@@ -4,6 +4,8 @@
     <!-- Format -->
     <string name="format_hashtag">#%s</string>
 
+    <string name="main_search">식당, 음식 검색</string>
+
     <!-- Restaurant Detail -->
     <string name="restaurant_detail_score_format">(️%s)</string>
     <string name="restaurant_detail_price_format">%d원</string>
@@ -25,5 +27,4 @@
         <item>@string/restaurant_detail_tab_item_how_to_eat_out</item>
         <item>@string/restaurant_detail_tab_item_review</item>
     </string-array>
-
 </resources>
