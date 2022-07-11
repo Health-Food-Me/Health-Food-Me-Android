@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "978280628900",
+    "project_id": "health-food-me",
+    "storage_bucket": "health-food-me.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:978280628900:android:105e4adce2b2a75e6bdc31",
+        "android_client_info": {
+          "package_name": "org.helfoome"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "978280628900-qhf2c4ltcl71e4reod89n3mlan5p1q58.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "org.helfoome",
+            "certificate_hash": "e9b9c853aadf200a39b6b58e5ed972a9b219bbb5"
+          }
+        },
+        {
+          "client_id": "978280628900-kfsuvo3gup6am81g4epdi2ofa2mp9cu9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDC4CY-sprmXKUGmMN1B4CyuD00j8ndgzo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "978280628900-kfsuvo3gup6am81g4epdi2ofa2mp9cu9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
