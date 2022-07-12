@@ -93,7 +93,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
     }
 
     private fun initView() {
-        behavior = BottomSheetBehavior.from(binding.svBottomSheet)
+        behavior = BottomSheetBehavior.from(binding.layoutBottomSheet)
         behavior.state = BottomSheetBehavior.STATE_COLLAPSED
 
         with(binding.layoutRestaurantDialog) {

@@ -179,7 +179,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/sv_bottom_sheet"
+            android:id="@+id/layout_bottom_sheet"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fillViewport="true"
