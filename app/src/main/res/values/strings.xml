@@ -1,10 +1,7 @@
 <resources>
     <string name="app_name">Health-Food-Me</string>
-
-    <!-- Format -->
-    <string name="format_hashtag">#%s</string>
-
-    <string name="main_search">식당, 음식 검색</string>
+    <string name="login_logo">헬푸미</string>
+    <string name="login_description">샐러드부터 일반식까지\n다이어터를 위한 식당 추천 지도앱</string>
 
     <!-- Main Chip Group -->
     <string name="main_chip_group_salad">샐러드</string>
@@ -15,6 +12,15 @@
     <string name="main_chip_group_meat">고깃집</string>
     <string name="main_chip_group_ricebowl">덮밥</string>
     <string name="main_chip_group_quito">키토김밥</string>
+
+    <!-- Login Text -->
+    <string name="login_text_kakao">카카오 계정으로 로그인</string>
+    <string name="login_text_naver">네이버 계정으로 로그인</string>
+
+    <!-- Format -->
+    <string name="format_hashtag">#%s</string>
+
+    <string name="main_search">식당, 음식 검색</string>
 
     <!-- Restaurant Detail -->
     <string name="restaurant_detail_score_format">(️%s)</string>

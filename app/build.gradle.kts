@@ -21,6 +21,11 @@ android {
         applicationId = "org.helfoome"
         versionCode = 1
         versionName = "1.0"
+        buildConfigField("String", "NAVER_CLIENT_ID", properties.getProperty("NAVER_CLIENT_ID"))
+        buildConfigField("String", "NAVER_CLIENT_SECRET", properties.getProperty("NAVER_CLIENT_SECRET"))
+        buildConfigField("String", "NAVER_CLIENT_NAME", properties.getProperty("NAVER_CLIENT_NAME"))
+        buildConfigField("String", "KAKAO_APP_KEY", properties.getProperty("KAKAO_APP_KEY"))
+        buildConfigField("String", "KAKAO_NATIVE_KEY", properties.getProperty("KAKAO_NATIVE_KEY"))
         buildConfigField("String", "NAVER_API_MAP_KEY", properties.getProperty("NAVER_API_MAP_KEY"))
     }
 
@@ -57,6 +62,8 @@ dependencies {
     implementation(libs.lottie)
     implementation(libs.kotlin.serialization.converter)
     implementation(libs.junit)
+    implementation(libs.kakaologin)
+    implementation(libs.naverlogin)
     implementation(libs.navermap)
     implementation(libs.googlegms)
     implementation(platform(libs.firebase.bom))
