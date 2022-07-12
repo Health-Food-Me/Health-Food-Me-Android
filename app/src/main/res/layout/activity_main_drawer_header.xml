@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.navigation.NavigationView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nv_header"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="start">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/tv_welcome"
+            style="@style/TextView.Drawer.TextAppearance_16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="64dp"
+            android:text="@string/main_drawer_welcome"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/btn_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:src="@drawable/ic_edit"
+            app:layout_constraintBottom_toBottomOf="@id/tv_welcome"
+            app:layout_constraintStart_toEndOf="@id/tv_welcome"
+            app:layout_constraintTop_toTopOf="@id/tv_welcome" />
+
+        <View
+            android:id="@+id/vi_first"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="36dp"
+            android:background="@color/gray_200"
+            app:layout_constraintTop_toBottomOf="@id/tv_welcome" />
+
+        <TextView
+            android:id="@+id/tv_scrap"
+            style="@style/TextView.Drawer.TextAppearance_15"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="24dp"
+            android:text="@string/main_drawer_scrap"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/vi_first" />
+
+        <TextView
+            android:id="@+id/tv_review"
+            style="@style/TextView.Drawer.TextAppearance_15"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:text="@string/main_drawer_review"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_scrap" />
+
+        <View
+            android:id="@+id/vi_second"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="24dp"
+            android:background="@color/gray_200"
+            app:layout_constraintTop_toBottomOf="@id/tv_review" />
+
+        <TextView
+            android:id="@+id/tv_report"
+            style="@style/TextView.Drawer.TextAppearance_15"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="24dp"
+            android:text="@string/main_drawer_report"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/vi_second" />
+
+        <TextView
+            android:id="@+id/tv_modify_report"
+            style="@style/TextView.Drawer.TextAppearance_15"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:text="@string/main_drawer_modify_report"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_report" />
+
+        <View
+            android:id="@+id/vi_third"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="24dp"
+            android:background="@color/gray_200"
+            app:layout_constraintTop_toBottomOf="@id/tv_modify_report" />
+
+        <TextView
+            android:id="@+id/tv_setting"
+            style="@style/TextView.Drawer.TextAppearance_16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="24dp"
+            android:text="@string/main_drawer_setting"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/vi_third" />
+
+        <TextView
+            android:id="@+id/tv_logout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginBottom="28dp"
+            android:fontFamily="@font/notosanskr_r"
+            android:text="@string/main_drawer_logout"
+            android:textColor="@color/gray_600"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.navigation.NavigationView>
