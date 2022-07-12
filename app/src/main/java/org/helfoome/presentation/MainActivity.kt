@@ -1,22 +1,22 @@
 package org.helfoome.presentation
 
 import android.Manifest
+import android.content.Intent
+import android.graphics.Paint
+import android.net.Uri
 import android.os.Bundle
+import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.add
 import androidx.fragment.app.commit
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.tabs.TabLayoutMediator
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.*
 import com.naver.maps.map.overlay.Marker
 import com.naver.maps.map.overlay.OverlayImage
-import android.content.Intent
-import android.graphics.Paint
-import android.net.Uri
-import android.view.View
-import androidx.activity.viewModels
-import androidx.core.widget.NestedScrollView
-import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.tabs.TabLayoutMediator
 import com.naver.maps.map.util.FusedLocationSource
 import dagger.hilt.android.AndroidEntryPoint
 import org.helfoome.R
@@ -103,6 +103,13 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
             }.attach()
 
             tvNumber.paintFlags = tvNumber.paintFlags or Paint.UNDERLINE_TEXT_FLAG
+            viewOpeningTime.setText(listOf("화요일 10:00 ~ 22:00",
+                "수요일 10:00 ~ 22:00",
+                "목요일 10:00 ~ 22:00",
+                "금요일 10:00 ~ 22:00",
+                "토요일 10:00 ~ 22:00",
+                "일요일 10:00 ~ 22:00",
+                "월요일 10:00 ~ 22:00"))
         }
     }
 

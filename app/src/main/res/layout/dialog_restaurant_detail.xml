@@ -25,9 +25,9 @@
             android:id="@+id/layout_toolbar"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            tools:visibility="gone"
             app:layout_constraintTop_toTopOf="parent"
-            app:visibility="@{viewModel.isExpandedDialog().peekContent()}">
+            app:visibility="@{viewModel.isExpandedDialog().peekContent()}"
+            tools:visibility="gone">
 
             <androidx.appcompat.widget.AppCompatImageButton
                 android:id="@+id/btn_back"
@@ -285,41 +285,36 @@
                             app:layout_constraintStart_toStartOf="@id/gl_start"
                             app:layout_constraintTop_toBottomOf="@id/iv_location" />
 
-                        <TextView
-                            android:id="@+id/tv_time"
+                        <org.helfoome.presentation.custom.OpeningTimeView
+                            android:id="@+id/view_opening_time"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="16dp"
-                            android:fontFamily="@font/notosanskr_m"
-                            android:text="@{restaurant.time}"
-                            android:textColor="@color/gray_600"
-                            android:textSize="12sp"
-                            app:layout_constraintBottom_toBottomOf="@id/iv_time"
+                            android:layout_marginTop="8dp"
                             app:layout_constraintStart_toEndOf="@id/iv_time"
-                            app:layout_constraintTop_toTopOf="@id/iv_time"
-                            tools:text="월요일 09:00 ~ 20:00" />
+                            app:layout_constraintTop_toBottomOf="@id/tv_location" />
 
                         <ImageView
                             android:id="@+id/iv_call"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="13dp"
                             android:src="@drawable/ic_number"
+                            app:layout_constraintBottom_toBottomOf="@id/tv_number"
                             app:layout_constraintStart_toStartOf="@id/gl_start"
-                            app:layout_constraintTop_toBottomOf="@id/iv_time" />
+                            app:layout_constraintTop_toTopOf="@id/tv_number" />
 
                         <TextView
                             android:id="@+id/tv_number"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="16dp"
+                            android:layout_marginTop="8dp"
                             android:fontFamily="@font/notosanskr_m"
                             android:text="@{restaurant.number}"
                             android:textColor="@color/gray_600"
                             android:textSize="12sp"
-                            app:layout_constraintBottom_toBottomOf="@id/iv_call"
                             app:layout_constraintStart_toEndOf="@id/iv_call"
-                            app:layout_constraintTop_toTopOf="@id/iv_call"
+                            app:layout_constraintTop_toBottomOf="@id/view_opening_time"
                             tools:text="02-123-123" />
 
                         <androidx.appcompat.widget.AppCompatButton
@@ -335,7 +330,6 @@
                             android:textAllCaps="false"
                             android:textColor="@color/red_500"
                             android:textSize="12sp"
-                            app:layout_constraintBottom_toBottomOf="@id/iv_call"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="@id/iv_location"
                             tools:text="589m" />
