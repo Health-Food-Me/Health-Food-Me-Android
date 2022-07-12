@@ -68,7 +68,7 @@
                 app:layout_constraintBottom_toBottomOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <org.helfoome.util.NestedScrollCoordinatorLayout
+        <org.helfoome.util.NestedCoordinatorLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
@@ -392,7 +392,7 @@
                     app:layout_constraintTop_toBottomOf="@id/layout_restaurant_tab_menu" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </org.helfoome.util.NestedScrollCoordinatorLayout>
+        </org.helfoome.util.NestedCoordinatorLayout>
         <!-- TODO 확정된 뷰 나온 이후 속성 수정 필요 -->
         <View
             android:id="@+id/line"

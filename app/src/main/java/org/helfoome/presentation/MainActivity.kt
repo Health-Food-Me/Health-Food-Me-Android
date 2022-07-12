@@ -1,24 +1,26 @@
 package org.helfoome.presentation
 
 import android.Manifest
-import android.os.Bundle
-import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.fragment.app.add
-import androidx.fragment.app.commit
-import com.naver.maps.geometry.LatLng
-import com.naver.maps.map.*
-import com.naver.maps.map.overlay.Marker
-import com.naver.maps.map.overlay.OverlayImage
 import android.content.Intent
 import android.graphics.Paint
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.fragment.app.add
+import androidx.fragment.app.commit
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.tabs.TabLayoutMediator
+import com.naver.maps.geometry.LatLng
+import com.naver.maps.map.CameraUpdate
+import com.naver.maps.map.MapFragment
+import com.naver.maps.map.NaverMap
+import com.naver.maps.map.OnMapReadyCallback
+import com.naver.maps.map.overlay.Marker
+import com.naver.maps.map.overlay.OverlayImage
 import dagger.hilt.android.AndroidEntryPoint
 import org.helfoome.R
 import org.helfoome.databinding.ActivityMainBinding
@@ -41,8 +43,8 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
         initObservers()
         requirePermission()
     }
-    
-     override fun onStart() {
+
+    override fun onStart() {
         super.onStart()
         behavior.addBottomSheetCallback(bottomSheetCallback)
     }
@@ -105,6 +107,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
 
         override fun onSlide(bottomSheetView: View, slideOffset: Float) {
         }
+    }
 
     private fun requirePermission() {
         val locationPermissionRequest = registerForActivityResult(
