@@ -5,6 +5,8 @@ import android.os.Bundle
 import com.navercorp.nid.NaverIdLoginSDK
 import dagger.hilt.android.AndroidEntryPoint
 import org.helfoome.R
+import org.helfoome.data.service.KakaoAuthService
+import org.helfoome.data.service.NaverAuthService
 import org.helfoome.databinding.ActivityLoginBinding
 import org.helfoome.util.binding.BindingActivity
 import javax.inject.Inject
