@@ -192,8 +192,8 @@
             <include
                 android:id="@+id/layout_restaurant_dialog"
                 layout="@layout/dialog_restaurant_detail"
-                bind:restaurant="@{viewModel.selectedRestaurant}"
-                bind:viewModel="@{viewModel}" />
+                bind:viewModel="@{viewModel}"
+                bind:restaurant="@{viewModel.selectedRestaurant}" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
