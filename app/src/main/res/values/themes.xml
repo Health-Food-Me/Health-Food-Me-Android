@@ -68,4 +68,9 @@
         <item name="android:textSize">14sp</item>
         <item name="chipBackgroundColor">@color/white</item>
     </style>
+
+    <style name="ShapeAppearanceOverlay.App.CornerRadius8" parent="">
+        <item name="cornerSize">8dp</item>
+        <item name="cornerFamily">rounded</item>
+    </style>
 </resources>
