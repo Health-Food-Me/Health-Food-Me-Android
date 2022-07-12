@@ -19,7 +19,7 @@
             android:layout_marginTop="226dp"
             android:fontFamily="@font/godo_b"
             android:text="@string/login_logo"
-            android:textColor="@color/green_700"
+            android:textColor="@color/red_500"
             android:textSize="57sp"
             android:textStyle="normal"
             app:layout_constraintEnd_toEndOf="parent"
