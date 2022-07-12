@@ -49,10 +49,8 @@
             android:exported="false"
             android:targetActivity="leakcanary.internal.activity.LeakActivity" />
 
-
         <activity
             android:name=".presentation.MainActivity"
-            android:exported="true" />
+            android:exported="false" />
     </application>
-
 </manifest>
