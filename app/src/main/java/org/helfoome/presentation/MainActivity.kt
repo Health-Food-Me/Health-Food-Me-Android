@@ -120,8 +120,10 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                 startActivity(Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + tvNumber.text)))
             }
 
-            binding.btnHamburger.setOnClickListener {
-                binding.layoutDrawer.openDrawer(binding.layoutDrawerHeader.nvHeader)
+            with(binding) {
+                btnHamburger.setOnClickListener {
+                    layoutDrawer.open()
+                }
             }
         }
     }
