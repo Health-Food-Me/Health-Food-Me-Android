@@ -8,6 +8,6 @@ data class RestaurantInfo(
     val score: String,
     val tags: List<String>,
     val location: String,
-    val time: String, // TODO 서버 응답값 확인 후 변경할 예정
+    val time: List<String>, // TODO 서버 응답값 확인 후 변경할 예정
     val number: String,
 )

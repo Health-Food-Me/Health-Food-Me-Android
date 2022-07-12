@@ -103,13 +103,6 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
             }.attach()
 
             tvNumber.paintFlags = tvNumber.paintFlags or Paint.UNDERLINE_TEXT_FLAG
-            viewOpeningTime.setText(listOf("화요일 10:00 ~ 22:00",
-                "수요일 10:00 ~ 22:00",
-                "목요일 10:00 ~ 22:00",
-                "금요일 10:00 ~ 22:00",
-                "토요일 10:00 ~ 22:00",
-                "일요일 10:00 ~ 22:00",
-                "월요일 10:00 ~ 22:00"))
         }
     }
 

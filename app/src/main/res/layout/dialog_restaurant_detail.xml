@@ -291,6 +291,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="16dp"
                             android:layout_marginTop="8dp"
+                            android:text="@{viewModel.selectedRestaurant.time}"
                             app:layout_constraintStart_toEndOf="@id/iv_time"
                             app:layout_constraintTop_toBottomOf="@id/tv_location" />
 
