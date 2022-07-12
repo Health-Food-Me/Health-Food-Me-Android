@@ -32,6 +32,39 @@ jobs:
                 uses: actions/setup-java@v1
                 with:
                     java-version: 11
+                    
+            - name: Touch local properties
+              run: touch local.properties
+
+            - name: Access NAVER_API_MAP_KEY
+              env:
+                  NAVER_API_MAP_KEY: ${{ secrets.NAVER_API_MAP_KEY }}
+              run: echo "NAVER_API_MAP_KEY=\"$NAVER_API_MAP_KEY\"" >> local.properties
+
+            - name: Access NAVER_CLIENT_ID
+              env:
+                  NAVER_CLIENT_ID: ${{ secrets.NAVER_CLIENT_ID }}
+              run: echo "NAVER_CLIENT_ID=\"$NAVER_CLIENT_ID\"" >> local.properties
+        
+            - name: Access NAVER_CLIENT_SECRET
+              env:
+                  NAVER_CLIENT_SECRET: ${{ secrets.NAVER_CLIENT_SECRET }}
+              run: echo "NAVER_CLIENT_SECRET=\"$NAVER_CLIENT_SECRET\"" >> local.properties
+
+            - name: Access NAVER_CLIENT_NAME
+              env:
+                  NAVER_CLIENT_NAME: ${{ secrets.NAVER_CLIENT_NAME }}
+              run: echo "NAVER_CLIENT_NAME=\"$NAVER_CLIENT_NAME\"" >> local.properties
+        
+            - name: Access KAKAO_APP_KEY
+              env:
+                  KAKAO_APP_KEY: ${{ secrets.KAKAO_APP_KEY }}
+              run: echo "KAKAO_APP_KEY=\"$KAKAO_APP_KEY\"" >> local.properties
+
+            - name: Access KAKAO_NATIVE_KEY
+              env:
+                  KAKAO_NATIVE_KEY: ${{ secrets.KAKAO_NATIVE_KEY }}
+              run: echo "KAKAO_NATIVE_KEY=\"$KAKAO_NATIVE_KEY\"" >> local.properties
 
             -   name: Change gradlew permissions
                 run: chmod +x ./gradlew

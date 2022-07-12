@@ -21,6 +21,8 @@ plugin-androidGradle = { module = "com.android.tools.build:gradle", version.ref 
 plugin-kotlin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 plugin-hilt = { module = "com.google.dagger:hilt-android-gradle-plugin", version.ref = "dagger" }
 plugin-navArgs = { module = "androidx.navigation:navigation-safe-args-gradle-plugin", version.ref = "navigation" }
+plugin-googlegms-service = "com.google.gms:google-services:4.3.13"
+plugin-crashlytics = "com.google.firebase:firebase-crashlytics-gradle:2.9.1"
 
 # AndroidX
 androidX-arch-coreTesting = "androidx.arch.core:core-testing:2.1.0"
@@ -65,6 +67,9 @@ naverlogin = "com.navercorp.nid:oauth:5.1.1"
 kakaologin = "com.kakao.sdk:v2-user:2.11.0"
 navermap = "com.naver.maps:map-sdk:3.15.0"
 googlegms = "com.google.android.gms:play-services-location:20.0.0"
+firebase-bom = "com.google.firebase:firebase-bom:30.2.0"
+firebase-analytics = "com.google.firebase:firebase-analytics-ktx:21.0.0"
+firebase-crashlyticsKtx = "com.google.firebase:firebase-crashlytics-ktx:18.2.11"
 
 junit = "junit:junit:4.13.2"
 

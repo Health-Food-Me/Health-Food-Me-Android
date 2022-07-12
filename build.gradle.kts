@@ -9,6 +9,8 @@ buildscript {
         classpath(libs.plugin.kotlin)
         classpath(libs.plugin.hilt)
         classpath(libs.plugin.navArgs)
+        classpath(libs.plugin.googlegms.service)
+        classpath(libs.plugin.crashlytics)
     }
 }
 

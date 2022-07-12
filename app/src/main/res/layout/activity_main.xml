@@ -164,17 +164,17 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
 
-            <!--            <com.google.android.material.floatingactionbutton.FloatingActionButton-->
-            <!--                android:id="@+id/fab_location"-->
-            <!--                android:layout_width="wrap_content"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:layout_marginEnd="20dp"-->
-            <!--                android:layout_marginBottom="39dp"-->
-            <!--                android:backgroundTint="@color/white"-->
-            <!--                android:src="@drawable/ic_currentposition"-->
-            <!--                app:borderWidth="0dp"-->
-            <!--                app:layout_constraintBottom_toBottomOf="parent"-->
-            <!--                app:layout_constraintEnd_toEndOf="parent" />-->
+<!--            <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+<!--                android:id="@+id/fab_location"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginEnd="20dp"-->
+<!--                android:layout_marginBottom="39dp"-->
+<!--                android:backgroundTint="@color/white"-->
+<!--                android:src="@drawable/ic_currentposition"-->
+<!--                app:borderWidth="0dp"-->
+<!--                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                app:layout_constraintEnd_toEndOf="parent" />-->
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -192,8 +192,8 @@
             <include
                 android:id="@+id/layout_restaurant_dialog"
                 layout="@layout/dialog_restaurant_detail"
-                bind:restaurant="@{viewModel.selectedRestaurant}"
-                bind:viewModel="@{viewModel}" />
+                bind:viewModel="@{viewModel}"
+                bind:restaurant="@{viewModel.selectedRestaurant}" />
 
         </androidx.core.widget.NestedScrollView>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

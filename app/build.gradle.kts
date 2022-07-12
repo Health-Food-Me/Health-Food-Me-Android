@@ -12,6 +12,8 @@ plugins {
     id("org.jlleitschuh.gradle.ktlint") version "10.2.0"
     id("androidx.navigation.safeargs.kotlin")
     id("dagger.hilt.android.plugin")
+    id("com.google.gms.google-services")
+    id("com.google.firebase.crashlytics")
 }
 
 android {
@@ -64,6 +66,9 @@ dependencies {
     implementation(libs.naverlogin)
     implementation(libs.navermap)
     implementation(libs.googlegms)
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.analytics)
+    implementation(libs.firebase.crashlyticsKtx)
     kapt(libs.bundles.compiler)
 }
 
