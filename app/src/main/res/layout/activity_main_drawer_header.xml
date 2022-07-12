@@ -32,7 +32,7 @@
             app:layout_constraintTop_toTopOf="@id/tv_welcome" />
 
         <View
-            android:id="@+id/vi_first"
+            android:id="@+id/line_first"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginTop="36dp"
@@ -48,7 +48,7 @@
             android:layout_marginTop="24dp"
             android:text="@string/main_drawer_scrap"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/vi_first" />
+            app:layout_constraintTop_toBottomOf="@id/line_first" />
 
         <TextView
             android:id="@+id/tv_review"
@@ -62,7 +62,7 @@
             app:layout_constraintTop_toBottomOf="@id/tv_scrap" />
 
         <View
-            android:id="@+id/vi_second"
+            android:id="@+id/line_second"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginTop="24dp"
@@ -78,7 +78,7 @@
             android:layout_marginTop="24dp"
             android:text="@string/main_drawer_report"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/vi_second" />
+            app:layout_constraintTop_toBottomOf="@id/line_second" />
 
         <TextView
             android:id="@+id/tv_modify_report"
@@ -92,7 +92,7 @@
             app:layout_constraintTop_toBottomOf="@id/tv_report" />
 
         <View
-            android:id="@+id/vi_third"
+            android:id="@+id/line_third"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginTop="24dp"
@@ -108,7 +108,7 @@
             android:layout_marginTop="24dp"
             android:text="@string/main_drawer_setting"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/vi_third" />
+            app:layout_constraintTop_toBottomOf="@id/line_third" />
 
         <TextView
             android:id="@+id/tv_logout"
