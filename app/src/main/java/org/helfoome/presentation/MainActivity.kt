@@ -14,11 +14,8 @@ import android.graphics.Paint
 import android.net.Uri
 import android.view.View
 import androidx.activity.viewModels
-import androidx.core.view.GravityCompat
 import androidx.core.widget.NestedScrollView
-import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.navigation.NavigationView
 import com.google.android.material.tabs.TabLayoutMediator
 import com.naver.maps.map.util.FusedLocationSource
 import dagger.hilt.android.AndroidEntryPoint
