@@ -9,7 +9,6 @@ buildscript {
         classpath(libs.plugin.kotlin)
         classpath(libs.plugin.hilt)
         classpath(libs.plugin.navArgs)
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.10")
     }
 }
 
