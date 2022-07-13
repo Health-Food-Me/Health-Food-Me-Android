@@ -28,6 +28,7 @@ import org.helfoome.presentation.drawer.MyReviewActivity
 import org.helfoome.presentation.drawer.MyScrapActivity
 import org.helfoome.presentation.drawer.ProfileModifyActivity
 import org.helfoome.databinding.LogoutDialogBinding
+import org.helfoome.presentation.drawer.SettingActivity
 import org.helfoome.presentation.restaurant.RestaurantTabAdapter
 import org.helfoome.presentation.type.FoodType
 import org.helfoome.util.ChipFactory
@@ -200,6 +201,9 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                 }
                 tvModifyReport.setOnClickListener {
                     sendGmail()
+                }
+                tvSetting.setOnClickListener {
+                    startActivity(Intent(this@MainActivity, SettingActivity::class.java))
                 }
                 tvLogout.setOnClickListener {
                     val layoutInflater = LayoutInflater.from(this@MainActivity)
