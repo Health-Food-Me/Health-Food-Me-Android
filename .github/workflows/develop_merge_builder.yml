@@ -84,13 +84,13 @@ jobs:
                     SLACK_USERNAME: HELFOOME-AOS
                     SLACK_MESSAGE: '에러를 확인해주세요'
 
-            -   name: Upload APK
-                if: ${{ success() }}
-                uses: MeilCli/slack-upload-file@v1
-                with:
-                    slack_token: ${{ secrets.SLACK_READ_WRITE_TOKEN }}
-                    channels: ${{ secrets.SLACK_CHANNEL_DEPOLY }}
-                    file_path: 'app/build/outputs/apk/debug/app-debug.apk'
-                    file_name: 'HealthFoodMe.apk'
-                    file_type: 'apk'
-                    initial_comment: '헬푸미 APK 파일입니다~!'
+#             -   name: Upload APK
+#                 if: ${{ success() }}
+#                 uses: MeilCli/slack-upload-file@v1
+#                 with:
+#                     slack_token: ${{ secrets.SLACK_READ_WRITE_TOKEN }}
+#                     channels: ${{ secrets.SLACK_CHANNEL_DEPOLY }}
+#                     file_path: 'app/build/outputs/apk/debug/app-debug.apk'
+#                     file_name: 'HealthFoodMe.apk'
+#                     file_type: 'apk'
+#                     initial_comment: '헬푸미 APK 파일입니다~!'

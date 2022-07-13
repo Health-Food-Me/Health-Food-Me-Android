@@ -38,4 +38,6 @@
     <color name="gray_600">#666666</color>
     <color name="gray_800">#222222</color>
     <color name="gray_900">#191600</color>
+
+    <color name="gray_600_alpha_80">#CC666666</color>
 </resources>

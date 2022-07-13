@@ -27,6 +27,7 @@
             android:exported="false" />
         <activity
             android:name=".presentation.drawer.ProfileModifyActivity"
+            android:name=".SearchActivity"
             android:exported="false" />
         <activity
             android:name=".presentation.LoginActivity"
