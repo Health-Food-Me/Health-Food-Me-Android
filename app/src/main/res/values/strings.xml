@@ -25,6 +25,17 @@
     <string name="my_scrap_explain_second">다이어터도 즐길 수 있는 식당</string>
     <string name="my_scrap_go_to_scrap">스크랩 하러 가기</string>
 
+    <string-array name="main_chip_group">
+        <item>@string/main_chip_group_salad</item>
+        <item>@string/main_chip_group_poke</item>
+        <item>@string/main_chip_group_sandwich</item>
+        <item>@string/main_chip_group_shabu</item>
+        <item>@string/main_chip_group_bosam</item>
+        <item>@string/main_chip_group_meat</item>
+        <item>@string/main_chip_group_ricebowl</item>
+        <item>@string/main_chip_group_quito</item>
+    </string-array>
+
     <!-- Main Drawer -->
     <string name="main_drawer_welcome">안녕하세요!\n배부른 현우는 행복해요 님\n오늘도 헬푸미하세요</string>
     <string name="main_drawer_scrap">스크랩한 식당</string>
@@ -37,6 +48,12 @@
     <!-- Login Text -->
     <string name="login_text_kakao">카카오 계정으로 로그인</string>
     <string name="login_text_naver">네이버 계정으로 로그인</string>
+
+    <!-- Logout Dialog -->
+    <string name="logout_dialog_caution">정말 로그아웃 하시겠어요?</string>
+    <string name="logout_dialog_caution_description">로그아웃 시 헬푸미의 업데이트 내용을\n 보실 수 없습니다</string>
+    <string name="logout_dialog_yes">네</string>
+    <string name="logout_dialog_no">아니요</string>
 
     <!-- Format -->
     <string name="format_hashtag">#%s</string>
