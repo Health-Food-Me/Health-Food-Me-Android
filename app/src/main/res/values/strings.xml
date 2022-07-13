@@ -13,6 +13,17 @@
     <string name="main_chip_group_ricebowl">덮밥</string>
     <string name="main_chip_group_quito">키토김밥</string>
 
+    <string-array name="main_chip_group">
+        <item>@string/main_chip_group_salad</item>
+        <item>@string/main_chip_group_poke</item>
+        <item>@string/main_chip_group_sandwich</item>
+        <item>@string/main_chip_group_shabu</item>
+        <item>@string/main_chip_group_bosam</item>
+        <item>@string/main_chip_group_meat</item>
+        <item>@string/main_chip_group_ricebowl</item>
+        <item>@string/main_chip_group_quito</item>
+    </string-array>
+
     <!-- Login Text -->
     <string name="login_text_kakao">카카오 계정으로 로그인</string>
     <string name="login_text_naver">네이버 계정으로 로그인</string>

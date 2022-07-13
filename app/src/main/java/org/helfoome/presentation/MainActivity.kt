@@ -18,6 +18,7 @@ import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.add
 import androidx.fragment.app.commit
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.chip.Chip
 import com.google.android.material.tabs.TabLayoutMediator
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.*
@@ -28,11 +29,16 @@ import dagger.hilt.android.AndroidEntryPoint
 import org.helfoome.R
 import org.helfoome.databinding.ActivityMainBinding
 import org.helfoome.presentation.restaurant.RestaurantTabAdapter
+import org.helfoome.presentation.type.FoodType
+import org.helfoome.util.ChipFactory
 import org.helfoome.util.binding.BindingActivity
+import org.helfoome.util.ext.stringListFrom
 import org.helfoome.util.showToast
 
 @AndroidEntryPoint
 class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main), OnMapReadyCallback {
+    private val String.toChip: Chip
+        get() = ChipFactory.create(layoutInflater).also { it.text = this }
     private val viewModel: MainViewModel by viewModels()
     private lateinit var behavior: BottomSheetBehavior<NestedScrollView>
     private val restaurantDetailAdapter = RestaurantTabAdapter(this)
@@ -58,16 +64,47 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
 
         binding.viewModel = viewModel
         initView()
+        initChip()
         initListeners()
         initObservers()
         requirePermission()
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int,
-                                            permissions: Array<String>,
-                                            grantResults: IntArray) {
-        if (locationSource.onRequestPermissionsResult(requestCode, permissions,
-                grantResults)) {
+    private fun provideChipClickListener(chip: Chip) =
+        View.OnClickListener {
+            if(!chip.isChecked)
+                binding.cgFoodTag.clearCheck()
+            else {
+                binding.cgFoodTag.clearCheck()
+                chip.isChecked = true
+            }
+        }
+
+    private fun initChip() {
+        for (i in FoodType.values().indices) {
+            with(binding.cgFoodTag) {
+                addView(
+                    stringListFrom(R.array.main_chip_group)[i].toChip.apply {
+                        setOnClickListener(provideChipClickListener(this))
+                        setChipIconResource(FoodType.values()[i].icon)
+                        setChipIconTintResource(FoodType.values()[i].iconTint)
+                        setChipBackgroundColorResource(FoodType.values()[i].color)
+                    }
+                )
+            }
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
+        if (locationSource.onRequestPermissionsResult(
+                requestCode, permissions,
+                grantResults
+            )
+        ) {
             if (!locationSource.isActivated) { // 권한 거부됨
                 naverMap.locationTrackingMode = LocationTrackingMode.None
             }
