@@ -67,13 +67,13 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingEnd="16dp"
                     android:src="@drawable/ic_search"
-                    app:layout_constraintTop_toTopOf="@id/tv_search"
                     app:layout_constraintBottom_toBottomOf="@id/tv_search"
                     app:layout_constraintEnd_toEndOf="@id/tv_search"
-                    android:paddingEnd="16dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    app:layout_constraintTop_toTopOf="@id/tv_search" />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -88,68 +88,69 @@
 
                 <com.google.android.material.chip.ChipGroup
                     android:id="@+id/cg_food_tag"
+                    android:paddingHorizontal="12dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:singleLine="true"
                     app:singleSelection="true">
 
-                    <com.google.android.material.chip.Chip
-                        style="@style/Base.Widget.MaterialComponents.Chip.Style"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="20dp"
-                        android:text="@string/main_chip_group_salad"
-                        app:chipIcon="@drawable/ic_sandwitch" />
+<!--                    <com.google.android.material.chip.Chip-->
+<!--                        style="@style/Base.Widget.MaterialComponents.Chip.Style"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_marginStart="20dp"-->
+<!--                        android:text="@string/main_chip_group_salad"-->
+<!--                        app:chipIcon="@drawable/ic_salad" />-->
 
-                    <com.google.android.material.chip.Chip
-                        style="@style/Base.Widget.MaterialComponents.Chip.Style"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/main_chip_group_poke"
-                        app:chipIcon="@drawable/ic_sandwitch" />
+<!--                    <com.google.android.material.chip.Chip-->
+<!--                        style="@style/Base.Widget.MaterialComponents.Chip.Style"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text="@string/main_chip_group_poke"-->
+<!--                        app:chipIcon="@drawable/ic_poke" />-->
 
-                    <com.google.android.material.chip.Chip
-                        style="@style/Base.Widget.MaterialComponents.Chip.Style"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/main_chip_group_sandwich"
-                        app:chipIcon="@drawable/ic_sandwitch" />
+<!--                    <com.google.android.material.chip.Chip-->
+<!--                        style="@style/Base.Widget.MaterialComponents.Chip.Style"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text="@string/main_chip_group_sandwich"-->
+<!--                        app:chipIcon="@drawable/ic_sandwich" />-->
 
-                    <com.google.android.material.chip.Chip
-                        style="@style/Base.Widget.MaterialComponents.Chip.Style"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/main_chip_group_shabu"
-                        app:chipIcon="@drawable/ic_sandwitch" />
+<!--                    <com.google.android.material.chip.Chip-->
+<!--                        style="@style/Base.Widget.MaterialComponents.Chip.Style"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text="@string/main_chip_group_shabu"-->
+<!--                        app:chipIcon="@drawable/ic_shabushabu" />-->
 
-                    <com.google.android.material.chip.Chip
-                        style="@style/Base.Widget.MaterialComponents.Chip.Style"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/main_chip_group_bosam"
-                        app:chipIcon="@drawable/ic_sandwitch" />
+<!--                    <com.google.android.material.chip.Chip-->
+<!--                        style="@style/Base.Widget.MaterialComponents.Chip.Style"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text="@string/main_chip_group_bosam"-->
+<!--                        app:chipIcon="@drawable/ic_bossam" />-->
 
-                    <com.google.android.material.chip.Chip
-                        style="@style/Base.Widget.MaterialComponents.Chip.Style"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/main_chip_group_meat"
-                        app:chipIcon="@drawable/ic_sandwitch" />
+<!--                    <com.google.android.material.chip.Chip-->
+<!--                        style="@style/Base.Widget.MaterialComponents.Chip.Style"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text="@string/main_chip_group_meat"-->
+<!--                        app:chipIcon="@drawable/ic_meat" />-->
 
-                    <com.google.android.material.chip.Chip
-                        style="@style/Base.Widget.MaterialComponents.Chip.Style"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/main_chip_group_ricebowl"
-                        app:chipIcon="@drawable/ic_sandwitch" />
+<!--                    <com.google.android.material.chip.Chip-->
+<!--                        style="@style/Base.Widget.MaterialComponents.Chip.Style"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text="@string/main_chip_group_ricebowl"-->
+<!--                        app:chipIcon="@drawable/ic_dupbap" />-->
 
-                    <com.google.android.material.chip.Chip
-                        style="@style/Base.Widget.MaterialComponents.Chip.Style"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="20dp"
-                        android:text="@string/main_chip_group_quito"
-                        app:chipIcon="@drawable/ic_sandwitch" />
+<!--                    <com.google.android.material.chip.Chip-->
+<!--                        style="@style/Base.Widget.MaterialComponents.Chip.Style"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_marginEnd="20dp"-->
+<!--                        android:text="@string/main_chip_group_quito"-->
+<!--                        app:chipIcon="@drawable/ic_sandwitch" />-->
 
                 </com.google.android.material.chip.ChipGroup>
 
@@ -179,24 +180,24 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
 
-<!--            <com.naver.maps.map.widget.LocationButtonView-->
-<!--                android:id="@+id/fab_location"-->
-<!--                android:layout_width="10dp"-->
-<!--                android:layout_height="10dp"-->
-<!--                android:layout_marginEnd="20dp"-->
-<!--                android:layout_marginBottom="16dp"-->
-<!--                app:layout_constraintBottom_toBottomOf="parent"-->
-<!--                app:layout_constraintEnd_toEndOf="parent" />-->
+            <!--            <com.naver.maps.map.widget.LocationButtonView-->
+            <!--                android:id="@+id/fab_location"-->
+            <!--                android:layout_width="10dp"-->
+            <!--                android:layout_height="10dp"-->
+            <!--                android:layout_marginEnd="20dp"-->
+            <!--                android:layout_marginBottom="16dp"-->
+            <!--                app:layout_constraintBottom_toBottomOf="parent"-->
+            <!--                app:layout_constraintEnd_toEndOf="parent" />-->
 
-<!--            <ImageView-->
-<!--                android:id="@+id/fab_location"-->
-<!--                app:layout_constraintEnd_toEndOf="parent"-->
-<!--                app:layout_constraintBottom_toBottomOf="parent"-->
-<!--                android:layout_marginEnd="20dp"-->
-<!--                android:layout_marginBottom="16dp"-->
-<!--                android:src="@drawable/ic_btn_currentposition"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"/>-->
+            <!--            <ImageView-->
+            <!--                android:id="@+id/fab_location"-->
+            <!--                app:layout_constraintEnd_toEndOf="parent"-->
+            <!--                app:layout_constraintBottom_toBottomOf="parent"-->
+            <!--                android:layout_marginEnd="20dp"-->
+            <!--                android:layout_marginBottom="16dp"-->
+            <!--                android:src="@drawable/ic_btn_currentposition"-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content"/>-->
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
