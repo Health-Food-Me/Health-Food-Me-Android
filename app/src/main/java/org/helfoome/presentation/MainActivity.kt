@@ -3,40 +3,30 @@ package org.helfoome.presentation
 import android.Manifest
 import android.app.AlertDialog
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.graphics.Paint
-import android.location.Location
-import android.location.LocationListener
 import android.location.LocationManager
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.Button
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.databinding.DataBindingUtil
-import androidx.core.app.ActivityCompat
-import androidx.core.content.PermissionChecker
-import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.add
 import androidx.fragment.app.commit
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.chip.Chip
-import androidx.constraintlayout.widget.ConstraintLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.kakao.sdk.user.UserApiClient
-import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.*
-import com.naver.maps.map.overlay.Marker
-import com.naver.maps.map.overlay.OverlayImage
 import com.naver.maps.map.util.FusedLocationSource
 import com.navercorp.nid.NaverIdLoginSDK
 import dagger.hilt.android.AndroidEntryPoint
 import org.helfoome.R
-import org.helfoome.databinding.ActivityLoginBinding
 import org.helfoome.databinding.ActivityMainBinding
+import org.helfoome.presentation.drawer.MyReviewActivity
+import org.helfoome.presentation.drawer.MyScrapActivity
+import org.helfoome.presentation.drawer.ProfileModifyActivity
 import org.helfoome.databinding.LogoutDialogBinding
 import org.helfoome.presentation.restaurant.RestaurantTabAdapter
 import org.helfoome.presentation.type.FoodType
@@ -83,7 +73,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
 
     private fun provideChipClickListener(chip: Chip) =
         View.OnClickListener {
-            if(!chip.isChecked)
+            if (!chip.isChecked)
                 binding.cgFoodTag.clearCheck()
             else {
                 binding.cgFoodTag.clearCheck()
@@ -195,30 +185,59 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                 }
             }
 
-            binding.layoutDrawerHeader.tvLogout.setOnClickListener {
-                val layoutInflater = LayoutInflater.from(this@MainActivity)
-                val bind: LogoutDialogBinding = LogoutDialogBinding.inflate(layoutInflater)
-                val alertDialog = AlertDialog.Builder(this@MainActivity)
-                    .setView(bind.root)
-                    .show()
-
-                bind.btnYes.setOnClickListener {
-                    NaverIdLoginSDK.logout()
-                    UserApiClient.instance.logout { error ->
-                        if (error != null) {
-                            Timber.e(error, "로그아웃 실패. SDK에서 토큰 삭제됨")
-                        } else {
-                            Timber.i("로그아웃 성공. SDK에서 토큰 삭제됨")
-                        }
-                    }
-                    startActivity(Intent(this@MainActivity, LoginActivity::class.java))
-                    finish()
+            with(binding.layoutDrawerHeader) {
+                btnEdit.setOnClickListener {
+                    startActivity(Intent(this@MainActivity, ProfileModifyActivity::class.java))
                 }
-                bind.btnNo.setOnClickListener {
-                    alertDialog.dismiss()
+                tvReview.setOnClickListener {
+                    startActivity(Intent(this@MainActivity, MyReviewActivity::class.java))
+                }
+                tvScrap.setOnClickListener {
+                    startActivity(Intent(this@MainActivity, MyScrapActivity::class.java))
+                }
+                tvReport.setOnClickListener {
+                    sendGmail()
+                }
+                tvModifyReport.setOnClickListener {
+                    sendGmail()
+                }
+                tvLogout.setOnClickListener {
+                    val layoutInflater = LayoutInflater.from(this@MainActivity)
+                    val bind: LogoutDialogBinding = LogoutDialogBinding.inflate(layoutInflater)
+                    val alertDialog = AlertDialog.Builder(this@MainActivity)
+                        .setView(bind.root)
+                        .show()
+
+                    bind.btnYes.setOnClickListener {
+                        NaverIdLoginSDK.logout()
+                        UserApiClient.instance.logout { error ->
+                            if (error != null) {
+                                Timber.e(error, "로그아웃 실패. SDK에서 토큰 삭제됨")
+                            } else {
+                                Timber.i("로그아웃 성공. SDK에서 토큰 삭제됨")
+                            }
+                        }
+                        startActivity(Intent(this@MainActivity, LoginActivity::class.java))
+                        finish()
+                    }
+                    bind.btnNo.setOnClickListener {
+                        alertDialog.dismiss()
+                    }
                 }
             }
         }
+    }
+
+    private fun sendGmail() {
+        val emailIntent = Intent(
+            Intent.ACTION_SENDTO,
+            Uri.fromParts(
+                "mailto", "abc@gmail.com", null
+            )
+        )
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Subject")
+        emailIntent.putExtra(Intent.EXTRA_TEXT, "Body")
+        startActivity(Intent.createChooser(emailIntent, "Send email..."))
     }
 
     private fun initObservers() {
