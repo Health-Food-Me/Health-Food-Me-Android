@@ -1,6 +1,8 @@
 package org.helfoome.presentation.search
 
 import android.os.Bundle
+import android.view.KeyEvent
+import android.view.KeyEvent.KEYCODE_ENTER
 import android.view.MotionEvent
 import android.widget.EditText
 import android.widget.Toast
@@ -45,6 +47,7 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
 
         openKeyboard()
         initClickEvent()
+        initKeyListeners()
         initTextChangeEvent()
         observeData()
     }
@@ -97,6 +100,19 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
         }
     }
 
+    private fun initKeyListeners() {
+        with(binding.etSearch) {
+            setOnKeyListener { view, keyCode, event ->
+                if (event.action == KeyEvent.ACTION_DOWN && keyCode == KEYCODE_ENTER) {
+                    closeKeyboard(this)
+                    binding.etSearch.clearFocus()
+                    viewModel.setSearchMode(SearchMode.RESULT)
+                }
+                false
+            }
+        }
+    }
+
     private fun observeData() {
         with(binding) {
             viewModel.searchMode.flowWithLifecycle(lifecycle)
@@ -113,7 +129,7 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
                         else -> {
                             // TODO : 서버 통신 받아온 리스트 띄우기
                             rvSearch.adapter = resultConcatAdapter
-                            binding.etSearch.clearFocus()
+                            closeKeyboard(binding.etSearch)
                         }
                     }
                 }.launchIn(lifecycleScope)
@@ -132,7 +148,6 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
                         }
                         else -> {
                             // TODO : Loading, Error 추후 구현
-                            showToast("알 수 없는 에러")
                         }
                     }
                 }.launchIn(lifecycleScope)

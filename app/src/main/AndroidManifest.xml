@@ -20,8 +20,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="32">
         <activity
-            android:name=".SearchActivity"
-            android:exported="false" />
+            android:name=".presentation.search.SearchActivity"
+            android:exported="true"
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".presentation.LoginActivity"
             android:exported="true">
