@@ -57,6 +57,11 @@
         <item name="android:textSize">14sp</item>
     </style>
 
+    <style name="TextView.Drawer.TextAppearance" parent="">
+        <item name="android:fontFamily">@font/notosanskr_r</item>
+        <item name="android:textColor">@color/gray_800</item>
+    </style>
+
     <style name="CircleImageView.Radius.8.Style" parent="">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">8%</item>
