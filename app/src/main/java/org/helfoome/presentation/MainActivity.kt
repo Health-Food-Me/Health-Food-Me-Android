@@ -23,6 +23,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import org.helfoome.R
 import org.helfoome.databinding.ActivityMainBinding
 import org.helfoome.databinding.ActivityMainDrawerHeaderBinding
+import org.helfoome.presentation.drawer.MyReviewActivity
 import org.helfoome.presentation.drawer.ProfileModifyActivity
 import org.helfoome.presentation.restaurant.RestaurantTabAdapter
 import org.helfoome.util.binding.BindingActivity
@@ -131,6 +132,10 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
 
             binding.layoutDrawerHeader.btnEdit.setOnClickListener {
                 startActivity(Intent(this@MainActivity, ProfileModifyActivity::class.java))
+            }
+
+            binding.layoutDrawerHeader.tvReview.setOnClickListener {
+                startActivity(Intent(this@MainActivity, MyReviewActivity::class.java))
             }
 
         }
