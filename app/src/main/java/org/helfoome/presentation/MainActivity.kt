@@ -1,28 +1,26 @@
 package org.helfoome.presentation
 
 import android.Manifest
+import android.content.Intent
+import android.graphics.Paint
+import android.net.Uri
 import android.os.Bundle
+import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
+import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.add
 import androidx.fragment.app.commit
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.tabs.TabLayoutMediator
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.*
 import com.naver.maps.map.overlay.Marker
 import com.naver.maps.map.overlay.OverlayImage
-import android.content.Intent
-import android.graphics.Paint
-import android.net.Uri
-import android.view.View
-import androidx.activity.viewModels
-import androidx.core.widget.NestedScrollView
-import androidx.databinding.DataBindingUtil
-import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.tabs.TabLayoutMediator
 import com.naver.maps.map.util.FusedLocationSource
 import dagger.hilt.android.AndroidEntryPoint
 import org.helfoome.R
 import org.helfoome.databinding.ActivityMainBinding
-import org.helfoome.databinding.ActivityMainDrawerHeaderBinding
 import org.helfoome.presentation.drawer.MyReviewActivity
 import org.helfoome.presentation.drawer.MyScrapActivity
 import org.helfoome.presentation.drawer.ProfileModifyActivity
@@ -141,6 +139,28 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
 
             binding.layoutDrawerHeader.tvScrap.setOnClickListener {
                 startActivity(Intent(this@MainActivity, MyScrapActivity::class.java))
+            }
+
+            binding.layoutDrawerHeader.tvReport.setOnClickListener {
+                val emailIntent = Intent(
+                    Intent.ACTION_SENDTO, Uri.fromParts(
+                        "mailto", "abc@gmail.com", null
+                    )
+                )
+                emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Subject")
+                emailIntent.putExtra(Intent.EXTRA_TEXT, "Body")
+                startActivity(Intent.createChooser(emailIntent, "Send email..."))
+            }
+
+            binding.layoutDrawerHeader.tvModifyReport.setOnClickListener {
+                val emailIntent = Intent(
+                    Intent.ACTION_SENDTO, Uri.fromParts(
+                        "mailto", "abc@gmail.com", null
+                    )
+                )
+                emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Subject")
+                emailIntent.putExtra(Intent.EXTRA_TEXT, "Body")
+                startActivity(Intent.createChooser(emailIntent, "Send email..."))
             }
 
         }
