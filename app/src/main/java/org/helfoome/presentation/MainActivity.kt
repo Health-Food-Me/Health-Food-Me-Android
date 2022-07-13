@@ -19,6 +19,7 @@ import androidx.fragment.app.add
 import androidx.fragment.app.commit
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.chip.Chip
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.*
@@ -40,7 +41,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
     private val String.toChip: Chip
         get() = ChipFactory.create(layoutInflater).also { it.text = this }
     private val viewModel: MainViewModel by viewModels()
-    private lateinit var behavior: BottomSheetBehavior<NestedScrollView>
+    private lateinit var behavior: BottomSheetBehavior<ConstraintLayout>
     private val restaurantDetailAdapter = RestaurantTabAdapter(this)
     private var locationManager: LocationManager? = null
     private lateinit var locationSource: FusedLocationSource
@@ -98,7 +99,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<String>,
-        grantResults: IntArray
+        grantResults: IntArray,
     ) {
         if (locationSource.onRequestPermissionsResult(
                 requestCode, permissions,
@@ -142,7 +143,8 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
     }
 
     private fun initView() {
-        behavior = BottomSheetBehavior.from(binding.svBottomSheet)
+        behavior = BottomSheetBehavior.from(binding.layoutBottomSheet)
+        behavior.state = BottomSheetBehavior.STATE_COLLAPSED
 
         with(binding.layoutRestaurantDialog) {
             vpRestaurantDetail.adapter = restaurantDetailAdapter
@@ -156,6 +158,14 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
 
     private fun initListeners() {
         with(binding.layoutRestaurantDialog) {
+            layoutAppBar.setOnClickListener {
+                if (behavior.state == BottomSheetBehavior.STATE_COLLAPSED) behavior.state = BottomSheetBehavior.STATE_EXPANDED
+            }
+
+            btnBack.setOnClickListener {
+                behavior.state = BottomSheetBehavior.STATE_COLLAPSED
+            }
+
             btnScrap.setOnClickListener {
                 it.isSelected = !it.isSelected
                 // TODO 스크랩 상태값 업데이트 api 요청
@@ -168,6 +178,12 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
             tvNumber.setOnClickListener {
                 startActivity(Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + tvNumber.text)))
             }
+
+            with(binding) {
+                btnHamburger.setOnClickListener {
+                    layoutDrawer.open()
+                }
+            }
         }
     }
 
@@ -175,6 +191,14 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
         viewModel.selectedRestaurant.observe(this) {
             behavior.state = BottomSheetBehavior.STATE_COLLAPSED
             viewModel.selectedRestaurant.value?.location
+        }
+    }
+
+    override fun onBackPressed() {
+        when (behavior.state) {
+            BottomSheetBehavior.STATE_COLLAPSED -> behavior.state = BottomSheetBehavior.STATE_HIDDEN
+            BottomSheetBehavior.STATE_EXPANDED -> behavior.state = BottomSheetBehavior.STATE_COLLAPSED
+            BottomSheetBehavior.STATE_HIDDEN -> super.onBackPressed()
         }
     }
 
@@ -186,6 +210,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
     private val bottomSheetCallback = object : BottomSheetBehavior.BottomSheetCallback() {
         override fun onStateChanged(bottomSheet: View, newState: Int) {
             viewModel.setExpendedBottomSheetDialog(newState == BottomSheetBehavior.STATE_EXPANDED)
+            behavior.isDraggable = newState != BottomSheetBehavior.STATE_EXPANDED
         }
 
         override fun onSlide(bottomSheetView: View, slideOffset: Float) {

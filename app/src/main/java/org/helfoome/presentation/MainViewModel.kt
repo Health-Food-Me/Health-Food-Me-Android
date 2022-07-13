@@ -27,12 +27,11 @@ class MainViewModel @Inject constructor() : ViewModel() {
             id = 1,
             image = "https://salady.com/superboard/data/siteconfig/2021021809004816136064486235.jpg",
             name = "샐러디",
-            score = "4.0",
+            score = 4.8f,
             tags = listOf("샐러드", "샌드위치", "랩"),
             category = "샐러드",
             location = "서울특별시 중랑구 상봉동",
-            time = "월요일 09:00 ~ 20:00",
-            number = "02-123-123"
+            time = listOf("화요일 10:00 ~ 22:00", "수요일 10:00 ~ 22:00", "목요일 10:00 ~ 22:00", "금요일 10:00 ~ 22:00", "토요일 10:00 ~ 22:00", "일요일 10:00 ~ 22:00", "월요일 10:00 ~ 22:00"), number = "02-123-123"
         )
     }
 

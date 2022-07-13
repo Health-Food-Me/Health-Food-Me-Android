@@ -57,6 +57,17 @@
         <item name="android:textSize">14sp</item>
     </style>
 
+    <style name="TextView.OpeningTime.Appearance" parent="">
+        <item name="android:fontFamily">@font/notosanskr_m</item>
+        <item name="android:textColor">@color/gray_600</item>
+        <item name="android:textSize">12dp</item>
+    </style>
+
+    <style name="TextView.Drawer.TextAppearance" parent="">
+        <item name="android:fontFamily">@font/notosanskr_r</item>
+        <item name="android:textColor">@color/gray_800</item>
+    </style>
+
     <style name="CircleImageView.Radius.8.Style" parent="">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">8%</item>
@@ -75,5 +86,10 @@
 
     <style name="ShapeAppearanceOverlay.App.Corner_14" parent="">
         <item name="cornerSize">14dp</item>
+    </style>
+
+    <style name="ShapeAppearanceOverlay.App.CornerRadius8" parent="">
+        <item name="cornerSize">8dp</item>
+        <item name="cornerFamily">rounded</item>
     </style>
 </resources>
