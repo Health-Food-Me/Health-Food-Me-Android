@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@drawable/rectangle_white_top_radius_24">
+
+        <TextView
+            style="@style/TextView.MapButton.Style"
+            android:layout_height="wrap_content"
+            android:text="@string/dialog_map_selection_kakao"
+            android:textAppearance="@style/TextView.Map.TextAppearance" />
+
+        <TextView
+            style="@style/TextView.MapButton.Style"
+            android:layout_height="wrap_content"
+            android:text="@string/dialog_map_selection_naver"
+            android:textAppearance="@style/TextView.Map.TextAppearance" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#CBCBCC" />
+
+        <TextView
+            style="@style/TextView.MapButton.Style"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/notosanskr_m"
+            android:text="@string/cancel"
+            android:textAppearance="@style/TextView.Map.TextAppearance"
+            android:textColor="@color/gray_550"
+            android:textSize="17dp" />
+    </LinearLayout>
+</layout>
