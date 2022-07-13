@@ -2,16 +2,24 @@ package org.helfoome.presentation
 
 import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Paint
+import android.location.Location
+import android.location.LocationListener
+import android.location.LocationManager
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
-import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.app.ActivityCompat
+import androidx.core.content.PermissionChecker
+import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.add
 import androidx.fragment.app.commit
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.chip.Chip
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.*
@@ -22,28 +30,70 @@ import dagger.hilt.android.AndroidEntryPoint
 import org.helfoome.R
 import org.helfoome.databinding.ActivityMainBinding
 import org.helfoome.presentation.restaurant.RestaurantTabAdapter
+import org.helfoome.presentation.type.FoodType
+import org.helfoome.util.ChipFactory
 import org.helfoome.util.binding.BindingActivity
+import org.helfoome.util.ext.stringListFrom
 import org.helfoome.util.showToast
 
 @AndroidEntryPoint
 class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main), OnMapReadyCallback {
+    private val String.toChip: Chip
+        get() = ChipFactory.create(layoutInflater).also { it.text = this }
     private val viewModel: MainViewModel by viewModels()
     private lateinit var behavior: BottomSheetBehavior<ConstraintLayout>
     private val restaurantDetailAdapter = RestaurantTabAdapter(this)
-    private lateinit var naverMap: NaverMap
+    private var locationManager: LocationManager? = null
     private lateinit var locationSource: FusedLocationSource
+    private lateinit var naverMap: NaverMap
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        locationSource =
+            FusedLocationSource(this, 1000)
+//        locationManager = getSystemService(LOCATION_SERVICE) as LocationManager?
 
-        locationSource = FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE)
+        val fm = supportFragmentManager
+        val mapFragment = fm.findFragmentById(R.id.fragment_naver_map) as MapFragment?
+            ?: MapFragment.newInstance().also {
+                fm.commit {
+                    add<MapFragment>(R.id.fragment_naver_map)
+                    setReorderingAllowed(true)
+                }
+            }
+        mapFragment.getMapAsync(this)
 
         binding.viewModel = viewModel
         initView()
+        initChip()
         initListeners()
         initObservers()
-        initNaverMap()
         requirePermission()
+    }
+
+    private fun provideChipClickListener(chip: Chip) =
+        View.OnClickListener {
+            if(!chip.isChecked)
+                binding.cgFoodTag.clearCheck()
+            else {
+                binding.cgFoodTag.clearCheck()
+                chip.isChecked = true
+            }
+        }
+
+    private fun initChip() {
+        for (i in FoodType.values().indices) {
+            with(binding.cgFoodTag) {
+                addView(
+                    stringListFrom(R.array.main_chip_group)[i].toChip.apply {
+                        setOnClickListener(provideChipClickListener(this))
+                        setChipIconResource(FoodType.values()[i].icon)
+                        setChipIconTintResource(FoodType.values()[i].iconTint)
+                        setChipBackgroundColorResource(FoodType.values()[i].color)
+                    }
+                )
+            }
+        }
     }
 
     override fun onRequestPermissionsResult(
@@ -140,6 +190,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
     private fun initObservers() {
         viewModel.selectedRestaurant.observe(this) {
             behavior.state = BottomSheetBehavior.STATE_COLLAPSED
+            viewModel.selectedRestaurant.value?.location
         }
     }
 
@@ -178,28 +229,29 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
         mapFragment.getMapAsync(this)
     }
 
-    override fun onMapReady(map: NaverMap) {
-        naverMap = map
-        locationSource = FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE)
+    override fun onMapReady(naverMap: NaverMap) {
+        this.naverMap = naverMap
         naverMap.locationSource = locationSource
-        binding.fabLocation.map = naverMap
+        naverMap.locationTrackingMode = LocationTrackingMode.Follow
+//        map = naverMap2
+//        locationSource = FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE)
+//        map!!.locationSource = locationSource
+//
+//        val uiSettings = map!!.uiSettings
+//        uiSettings.isZoomControlEnabled = false
 
-        val marker = Marker()
-        marker.position = LatLng(37.5670135, 126.9783740)
-        marker.icon = OverlayImage.fromResource(R.drawable.ic_marker_red)
-        marker.map = map
-
-        val marker2 = Marker()
-        marker2.position = LatLng(37.5570135, 126.9783740)
-        marker2.icon = OverlayImage.fromResource(R.drawable.ic_marker_green)
-        marker2.map = map
-
-        val initialPosition = LatLng(37.5670135, 126.9783740)
-        val cameraUpdate = CameraUpdate.scrollTo(initialPosition)
-        naverMap.moveCamera(cameraUpdate)
-    }
-
-    companion object {
-        private const val LOCATION_PERMISSION_REQUEST_CODE = 1000
+//        val marker = Marker()
+//        marker.position = LatLng(37.5670135, 126.9783740)
+//        marker.icon = OverlayImage.fromResource(R.drawable.ic_marker_red)
+//        marker.map = naverMap2
+//
+//        val marker2 = Marker()
+//        marker2.position = LatLng(37.5570135, 126.9783740)
+//        marker2.icon = OverlayImage.fromResource(R.drawable.ic_marker_green)
+//        marker2.map = naverMap2
+//
+//        val initialPosition = LatLng(37.5670135, 126.9783740)
+//        val cameraUpdate = CameraUpdate.scrollTo(initialPosition)
+//        map!!.moveCamera(cameraUpdate)
     }
 }
