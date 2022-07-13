@@ -19,12 +19,13 @@ class OpeningTimeView(context: Context, attrs: AttributeSet? = null) : Constrain
     private fun initView() {
         if (!::inflater.isInitialized)
             inflater = LayoutInflater.from(context)
-        binding = ViewOpeningTimeBinding.inflate(inflater, this, true)
+        binding = ViewOpeningTimeBinding.inflate(inflater, this, true).apply {
+            btnDropdown.isSelected = false
+            layoutNextday.visibility = GONE
+        }
     }
 
     private fun initListeners() {
-        binding.btnDropdown.isSelected = false
-        binding.layoutNextday.visibility = GONE
         binding.btnDropdown.setOnClickListener {
             with(binding) {
                 btnDropdown.isSelected = !btnDropdown.isSelected
