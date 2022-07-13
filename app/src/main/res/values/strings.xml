@@ -16,6 +16,18 @@
     <string name="main_chip_group_ricebowl">덮밥</string>
     <string name="main_chip_group_quito">키토김밥</string>
 
+    <!-- Profile -->
+    <string name="profile_title">프로필 수정</string>
+
+    <!-- My Review -->
+    <string name="my_review_title">내가 쓴 리뷰</string>
+
+    <!-- My Scrap -->
+    <string name="my_scrap_title">스크랩한 식당</string>
+    <string name="my_scrap_explain_first">헬푸미와 외식 걱정을 날려보아요!</string>
+    <string name="my_scrap_explain_second">다이어터도 즐길 수 있는 식당</string>
+    <string name="my_scrap_go_to_scrap">스크랩 하러 가기</string>
+
     <string-array name="main_chip_group">
         <item>@string/main_chip_group_salad</item>
         <item>@string/main_chip_group_poke</item>
