@@ -5,6 +5,6 @@ data class SearchResultInfo(
     val image: String,
     val name: String,
     val category: String,
-    val score: String,
+    val score: Float,
     val distance: String
 )
