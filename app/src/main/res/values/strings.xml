@@ -19,6 +19,16 @@
     <!-- My Review -->
     <string name="my_review_title">내가 쓴 리뷰</string>
 
+    <!-- Setting -->
+    <string name="setting_title">설정</string>
+    <string name="setting_customer_support">고객지원</string>
+    <string name="setting_inquiry">문의하기</string>
+    <string name="setting_withdrawal">회원탈퇴</string>
+    <string name="setting_terms_policies">약관 및 정책</string>
+    <string name="setting_open_source_info">오픈 소스 정보</string>
+    <string name="setting_naver_map_notice">네이버 지도 법적 공지</string>
+    <string name="setting_naver_map_open_source">네이버 지도 오픈소스 라이선스</string>
+
     <!-- My Scrap -->
     <string name="my_scrap_title">스크랩한 식당</string>
     <string name="my_scrap_explain_first">헬푸미와 외식 걱정을 날려보아요!</string>
