@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import androidx.constraintlayout.widget.ConstraintLayout
 import org.helfoome.R
 import org.helfoome.databinding.ViewRatingBarBinding
+import timber.log.Timber
 
 class RatingBar(context: Context, val attrs: AttributeSet? = null) : ConstraintLayout(context, attrs) {
     private lateinit var binding: ViewRatingBarBinding
@@ -31,7 +32,8 @@ class RatingBar(context: Context, val attrs: AttributeSet? = null) : ConstraintL
     }
 
     fun setScore(score: Float) {
-        setStarImage(score)
+        if (score in 0f..5f) setStarImage(score)
+        else Timber.d("Invalid Score: Error")
     }
 
     private fun setStarImage(score: Float) {
