@@ -1,6 +1,7 @@
 package org.helfoome.presentation
 
 import android.Manifest
+import android.app.AlertDialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Paint
@@ -9,9 +10,13 @@ import android.location.LocationListener
 import android.location.LocationManager
 import android.net.Uri
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.widget.Button
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.databinding.DataBindingUtil
 import androidx.core.app.ActivityCompat
 import androidx.core.content.PermissionChecker
 import androidx.core.widget.NestedScrollView
@@ -21,20 +26,25 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.chip.Chip
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import com.kakao.sdk.user.UserApiClient
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.*
 import com.naver.maps.map.overlay.Marker
 import com.naver.maps.map.overlay.OverlayImage
 import com.naver.maps.map.util.FusedLocationSource
+import com.navercorp.nid.NaverIdLoginSDK
 import dagger.hilt.android.AndroidEntryPoint
 import org.helfoome.R
+import org.helfoome.databinding.ActivityLoginBinding
 import org.helfoome.databinding.ActivityMainBinding
+import org.helfoome.databinding.LogoutDialogBinding
 import org.helfoome.presentation.restaurant.RestaurantTabAdapter
 import org.helfoome.presentation.type.FoodType
 import org.helfoome.util.ChipFactory
 import org.helfoome.util.binding.BindingActivity
 import org.helfoome.util.ext.stringListFrom
 import org.helfoome.util.showToast
+import timber.log.Timber
 
 @AndroidEntryPoint
 class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main), OnMapReadyCallback {
@@ -182,6 +192,30 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
             with(binding) {
                 btnHamburger.setOnClickListener {
                     layoutDrawer.open()
+                }
+            }
+
+            binding.layoutDrawerHeader.tvLogout.setOnClickListener {
+                val layoutInflater = LayoutInflater.from(this@MainActivity)
+                val bind: LogoutDialogBinding = LogoutDialogBinding.inflate(layoutInflater)
+                val alertDialog = AlertDialog.Builder(this@MainActivity)
+                    .setView(bind.root)
+                    .show()
+
+                bind.btnYes.setOnClickListener {
+                    NaverIdLoginSDK.logout()
+                    UserApiClient.instance.logout { error ->
+                        if (error != null) {
+                            Timber.e(error, "로그아웃 실패. SDK에서 토큰 삭제됨")
+                        } else {
+                            Timber.i("로그아웃 성공. SDK에서 토큰 삭제됨")
+                        }
+                    }
+                    startActivity(Intent(this@MainActivity, LoginActivity::class.java))
+                    finish()
+                }
+                bind.btnNo.setOnClickListener {
+                    alertDialog.dismiss()
                 }
             }
         }
