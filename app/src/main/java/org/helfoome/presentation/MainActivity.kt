@@ -49,7 +49,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<String>,
-        grantResults: IntArray
+        grantResults: IntArray,
     ) {
         if (locationSource.onRequestPermissionsResult(
                 requestCode, permissions,
@@ -144,7 +144,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
     }
 
     override fun onBackPressed() {
-        when(behavior.state) {
+        when (behavior.state) {
             BottomSheetBehavior.STATE_COLLAPSED -> behavior.state = BottomSheetBehavior.STATE_HIDDEN
             BottomSheetBehavior.STATE_EXPANDED -> behavior.state = BottomSheetBehavior.STATE_COLLAPSED
             BottomSheetBehavior.STATE_HIDDEN -> super.onBackPressed()
