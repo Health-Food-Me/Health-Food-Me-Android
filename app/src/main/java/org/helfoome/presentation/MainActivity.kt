@@ -73,7 +73,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
 
     private fun provideChipClickListener(chip: Chip) =
         View.OnClickListener {
-            if(!chip.isChecked)
+            if (!chip.isChecked)
                 binding.cgFoodTag.clearCheck()
             else {
                 binding.cgFoodTag.clearCheck()
@@ -222,7 +222,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                     }
                     bind.btnNo.setOnClickListener {
                         alertDialog.dismiss()
-                  }
+                    }
                 }
             }
         }
