@@ -1,6 +1,5 @@
 package org.helfoome.presentation.drawer
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import org.helfoome.R
 import org.helfoome.databinding.ActivityProfileModifyBinding
