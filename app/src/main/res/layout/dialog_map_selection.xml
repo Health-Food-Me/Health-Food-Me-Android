@@ -3,17 +3,18 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:background="@drawable/rectangle_white_top_radius_24">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <TextView
+            android:id="@+id/tv_kakao"
             style="@style/TextView.MapButton.Style"
             android:layout_height="wrap_content"
             android:text="@string/dialog_map_selection_kakao"
             android:textAppearance="@style/TextView.Map.TextAppearance" />
 
         <TextView
+            android:id="@+id/tv_naver"
             style="@style/TextView.MapButton.Style"
             android:layout_height="wrap_content"
             android:text="@string/dialog_map_selection_naver"
@@ -25,6 +26,7 @@
             android:background="#CBCBCC" />
 
         <TextView
+            android:id="@+id/cancel"
             style="@style/TextView.MapButton.Style"
             android:layout_height="wrap_content"
             android:fontFamily="@font/notosanskr_m"

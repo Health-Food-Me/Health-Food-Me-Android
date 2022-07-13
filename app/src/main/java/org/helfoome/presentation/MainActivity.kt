@@ -21,9 +21,11 @@ import com.naver.maps.map.util.FusedLocationSource
 import dagger.hilt.android.AndroidEntryPoint
 import org.helfoome.R
 import org.helfoome.databinding.ActivityMainBinding
+import org.helfoome.presentation.restaurant.MapSelectionBottomDialogFragment
 import org.helfoome.presentation.restaurant.RestaurantTabAdapter
 import org.helfoome.util.binding.BindingActivity
 import org.helfoome.util.showToast
+import timber.log.Timber
 
 @AndroidEntryPoint
 class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main), OnMapReadyCallback {
@@ -32,6 +34,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
     private val restaurantDetailAdapter = RestaurantTabAdapter(this)
     private lateinit var naverMap: NaverMap
     private lateinit var locationSource: FusedLocationSource
+    private var mapSelectionBottomDialog: MapSelectionBottomDialogFragment? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -134,7 +137,17 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                     layoutDrawer.open()
                 }
             }
+
+            btnNavi.setOnClickListener {
+                showMapSelectionBottomDialog()
+            }
         }
+    }
+
+    private fun showMapSelectionBottomDialog() {
+        if (mapSelectionBottomDialog?.isAdded == true) return
+        mapSelectionBottomDialog = MapSelectionBottomDialogFragment()
+        mapSelectionBottomDialog?.show(supportFragmentManager, "MapSelectionBottomDialogFragment")
     }
 
     private fun initObservers() {
