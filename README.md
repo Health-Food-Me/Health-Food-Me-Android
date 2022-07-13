@@ -2,6 +2,8 @@
 
 🌿 THE SOPT 30th APPJAM 헬푸미 Android 팀 프로젝트 레포지터리입니다.
 
+<br>
+
 ## 🍎 *****Project*****
 
 **헬푸미(Health-Food-Me)**
