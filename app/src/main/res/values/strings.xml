@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Health-Food-Me</string>
     <string name="login_logo">헬푸미</string>
-    <string name="login_description"><b><font color="#A7D000">샐러드</font></b>부터 <b><font color="#FF5050">일반식</font></b>까지\n다이어터를 위한 식당 추천 지도앱</string>
+    <string name="login_description">샐러드부터 일반식까지\n다이어터를 위한 식당 추천 지도앱</string>
 
     <!-- Main Chip Group -->
     <string name="main_chip_group_salad">샐러드</string>
