@@ -15,12 +15,15 @@ import android.net.Uri
 import android.view.View
 import androidx.activity.viewModels
 import androidx.core.widget.NestedScrollView
+import androidx.databinding.DataBindingUtil
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.tabs.TabLayoutMediator
 import com.naver.maps.map.util.FusedLocationSource
 import dagger.hilt.android.AndroidEntryPoint
 import org.helfoome.R
 import org.helfoome.databinding.ActivityMainBinding
+import org.helfoome.databinding.ActivityMainDrawerHeaderBinding
+import org.helfoome.presentation.drawer.ProfileModifyActivity
 import org.helfoome.presentation.restaurant.RestaurantTabAdapter
 import org.helfoome.util.binding.BindingActivity
 import org.helfoome.util.showToast
@@ -125,6 +128,11 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                     layoutDrawer.open()
                 }
             }
+
+            binding.layoutDrawerHeader.btnEdit.setOnClickListener {
+                startActivity(Intent(this@MainActivity, ProfileModifyActivity::class.java))
+            }
+
         }
     }
 
