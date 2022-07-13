@@ -230,7 +230,8 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
 
     private fun sendGmail() {
         val emailIntent = Intent(
-            Intent.ACTION_SENDTO, Uri.fromParts(
+            Intent.ACTION_SENDTO,
+            Uri.fromParts(
                 "mailto", "abc@gmail.com", null
             )
         )
