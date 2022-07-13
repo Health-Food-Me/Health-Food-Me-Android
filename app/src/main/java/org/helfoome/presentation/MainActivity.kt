@@ -12,6 +12,7 @@ import android.widget.Button
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.add
 import androidx.fragment.app.commit
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -25,7 +26,9 @@ import com.naver.maps.map.util.FusedLocationSource
 import com.navercorp.nid.NaverIdLoginSDK
 import dagger.hilt.android.AndroidEntryPoint
 import org.helfoome.R
+import org.helfoome.databinding.ActivityLoginBinding
 import org.helfoome.databinding.ActivityMainBinding
+import org.helfoome.databinding.LogoutDialogBinding
 import org.helfoome.presentation.restaurant.RestaurantTabAdapter
 import org.helfoome.util.binding.BindingActivity
 import org.helfoome.util.showToast
@@ -143,12 +146,12 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
 
             binding.layoutDrawerHeader.tvLogout.setOnClickListener {
                 val layoutInflater = LayoutInflater.from(this@MainActivity)
-                val view = layoutInflater.inflate(R.layout.logout_dialog, null)
+                val bind: LogoutDialogBinding = LogoutDialogBinding.inflate(layoutInflater)
                 val alertDialog = AlertDialog.Builder(this@MainActivity)
-                    .setView(view)
+                    .setView(bind.root)
                     .show()
 
-                view.findViewById<Button>(R.id.btn_yes).setOnClickListener {
+                bind.btnYes.setOnClickListener {
                     NaverIdLoginSDK.logout()
                     UserApiClient.instance.logout { error ->
                         if (error != null) {
@@ -160,7 +163,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                     startActivity(Intent(this@MainActivity, LoginActivity::class.java))
                     finish()
                 }
-                view.findViewById<Button>(R.id.btn_no).setOnClickListener {
+                bind.btnNo.setOnClickListener {
                     alertDialog.dismiss()
                 }
             }

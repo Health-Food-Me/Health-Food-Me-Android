@@ -2,8 +2,8 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="288dp"
-    android:background="@drawable/rectangle_white_radius_15"
-    android:layout_height="241dp">
+    android:layout_height="@dimen/size_logout_dialog_height_241"
+    android:background="@drawable/rectangle_white_radius_15">
 
     <TextView
         android:id="@+id/tv_caution"
@@ -31,32 +31,36 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_caution" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_yes"
+        style="@style/Button.Basic.Style"
         android:layout_width="match_parent"
-        android:layout_height="44dp"
+        android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
         android:layout_marginTop="24dp"
-        android:text="@string/logout_dialog_yes"
         android:background="@drawable/rectangle_red_radius_8"
+        android:paddingVertical="11dp"
+        android:text="@string/logout_dialog_yes"
         android:textColor="@color/white"
         android:textSize="15sp"
         android:textStyle="bold"
         app:layout_constraintTop_toBottomOf="@id/tv_caution_description" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_no"
+        style="@style/Button.Basic.Style"
         android:layout_width="match_parent"
-        android:layout_height="44dp"
+        android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
         android:layout_marginTop="8dp"
+        android:layout_marginBottom="24dp"
+        android:background="@drawable/rectangle_white_radius_8"
+        android:paddingVertical="11dp"
         android:text="@string/logout_dialog_no"
-        android:background="@drawable/rectangle_red_radius_8"
         android:textColor="@color/gray_600"
         android:textSize="15sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="24dp"
         app:layout_constraintTop_toBottomOf="@id/btn_yes" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
