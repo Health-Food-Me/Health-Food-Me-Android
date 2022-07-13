@@ -16,7 +16,7 @@
 
 | [@mdb1217](https://github.com/mdb1217) | [@youngjinc](https://github.com/youngjinc) | [@lee989898](https://github.com/lee989898) |
 | :---: | :---: | :---: |
-|<img width="600" src="https://user-images.githubusercontent.com/48701368/178091311-9569379e-1112-488a-b4e5-306dfe0568d3.png"/>|<img width="600" src="https://user-images.githubusercontent.com/48701368/178091328-1cd992bc-6ac2-425e-897c-f3323fc15e85.png"/>|<img width="600" src="https://user-images.githubusercontent.com/48701368/178091306-5a0c674d-0d76-4878-aa9e-4abc937c5028.jpg"/>|
+|<img width="580" src="https://user-images.githubusercontent.com/48701368/178742544-5aee7e5e-85e1-4a36-99ad-f94d166762fb.png"/>|<img width="540" src="https://user-images.githubusercontent.com/48701368/178742510-562970eb-37a6-4efc-b97a-54f8ea65b65c.png"/>|<img width="580" src="https://user-images.githubusercontent.com/48701368/178742530-2e473a27-e49a-44fb-876c-b88ceeb70162.png"/>|
 |`SearchView`|`RestaurantView`|`LoginView`, `MainView`|
 
 <br>
