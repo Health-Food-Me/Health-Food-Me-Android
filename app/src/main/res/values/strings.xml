@@ -26,6 +26,12 @@
     <string name="login_text_kakao">카카오 계정으로 로그인</string>
     <string name="login_text_naver">네이버 계정으로 로그인</string>
 
+    <!-- Logout Dialog -->
+    <string name="logout_dialog_caution">정말 로그아웃 하시겠어요?</string>
+    <string name="logout_dialog_caution_description">로그아웃 시 헬푸미의 업데이트 내용을\n 보실 수 없습니다</string>
+    <string name="logout_dialog_yes">네</string>
+    <string name="logout_dialog_no">아니요</string>
+
     <!-- Format -->
     <string name="format_hashtag">#%s</string>
 

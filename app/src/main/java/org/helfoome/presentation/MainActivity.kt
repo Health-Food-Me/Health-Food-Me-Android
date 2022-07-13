@@ -1,11 +1,14 @@
 package org.helfoome.presentation
 
 import android.Manifest
+import android.app.AlertDialog
 import android.content.Intent
 import android.graphics.Paint
 import android.net.Uri
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.widget.Button
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -13,17 +16,20 @@ import androidx.fragment.app.add
 import androidx.fragment.app.commit
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.tabs.TabLayoutMediator
+import com.kakao.sdk.user.UserApiClient
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.*
 import com.naver.maps.map.overlay.Marker
 import com.naver.maps.map.overlay.OverlayImage
 import com.naver.maps.map.util.FusedLocationSource
+import com.navercorp.nid.NaverIdLoginSDK
 import dagger.hilt.android.AndroidEntryPoint
 import org.helfoome.R
 import org.helfoome.databinding.ActivityMainBinding
 import org.helfoome.presentation.restaurant.RestaurantTabAdapter
 import org.helfoome.util.binding.BindingActivity
 import org.helfoome.util.showToast
+import timber.log.Timber
 
 @AndroidEntryPoint
 class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main), OnMapReadyCallback {
@@ -132,6 +138,31 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
             with(binding) {
                 btnHamburger.setOnClickListener {
                     layoutDrawer.open()
+                }
+            }
+
+            binding.layoutDrawerHeader.tvLogout.setOnClickListener {
+                val layoutInflater = LayoutInflater.from(this@MainActivity)
+                val view = layoutInflater.inflate(R.layout.logout_dialog, null)
+                val alertDialog = AlertDialog.Builder(this@MainActivity)
+                    .setView(view)
+                    .show()
+
+                view.findViewById<Button>(R.id.btn_yes).setOnClickListener {
+                    NaverIdLoginSDK.logout()
+                    UserApiClient.instance.logout { error ->
+                        if (error != null) {
+                            Timber.e(error, "로그아웃 실패. SDK에서 토큰 삭제됨")
+                        }
+                        else {
+                            Timber.i("로그아웃 성공. SDK에서 토큰 삭제됨")
+                        }
+                    }
+                    startActivity(Intent(this@MainActivity, LoginActivity::class.java))
+                    finish()
+                }
+                view.findViewById<Button>(R.id.btn_no).setOnClickListener {
+                    alertDialog.dismiss()
                 }
             }
         }
