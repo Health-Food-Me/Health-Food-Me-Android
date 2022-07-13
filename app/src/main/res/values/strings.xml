@@ -19,6 +19,12 @@
     <!-- My Review -->
     <string name="my_review_title">내가 쓴 리뷰</string>
 
+    <!-- My Scrap -->
+    <string name="my_scrap_title">스크랩한 식당</string>
+    <string name="my_scrap_explain_first">헬푸미와 외식 걱정을 날려보아요!</string>
+    <string name="my_scrap_explain_second">다이어터도 즐길 수 있는 식당</string>
+    <string name="my_scrap_go_to_scrap">스크랩 하러 가기</string>
+
     <!-- Main Drawer -->
     <string name="main_drawer_welcome">안녕하세요!\n배부른 현우는 행복해요 님\n오늘도 헬푸미하세요</string>
     <string name="main_drawer_scrap">스크랩한 식당</string>

@@ -20,6 +20,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="32">
         <activity
+            android:name=".presentation.drawer.MyScrapActivity"
+            android:exported="false" />
+        <activity
             android:name=".presentation.drawer.MyReviewActivity"
             android:exported="false" />
         <activity
