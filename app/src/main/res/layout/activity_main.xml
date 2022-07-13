@@ -32,7 +32,6 @@
                     android:name="com.naver.maps.map.MapFragment"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
-                <!--                app:navermap_locationButtonEnabled="true"-->
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/layout_search"

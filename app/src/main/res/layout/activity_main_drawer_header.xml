@@ -12,12 +12,13 @@
 
         <TextView
             android:id="@+id/tv_welcome"
-            style="@style/TextView.Drawer.TextAppearance_16"
+            style="@style/TextView.Drawer.TextAppearance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="64dp"
             android:text="@string/main_drawer_welcome"
+            android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -41,23 +42,25 @@
 
         <TextView
             android:id="@+id/tv_scrap"
-            style="@style/TextView.Drawer.TextAppearance_15"
+            style="@style/TextView.Drawer.TextAppearance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="24dp"
             android:text="@string/main_drawer_scrap"
+            android:textSize="15sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/line_first" />
 
         <TextView
             android:id="@+id/tv_review"
-            style="@style/TextView.Drawer.TextAppearance_15"
+            style="@style/TextView.Drawer.TextAppearance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
             android:text="@string/main_drawer_review"
+            android:textSize="15sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_scrap" />
 
@@ -71,23 +74,25 @@
 
         <TextView
             android:id="@+id/tv_report"
-            style="@style/TextView.Drawer.TextAppearance_15"
+            style="@style/TextView.Drawer.TextAppearance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="24dp"
             android:text="@string/main_drawer_report"
+            android:textSize="15sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/line_second" />
 
         <TextView
             android:id="@+id/tv_modify_report"
-            style="@style/TextView.Drawer.TextAppearance_15"
+            style="@style/TextView.Drawer.TextAppearance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
             android:text="@string/main_drawer_modify_report"
+            android:textSize="15sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_report" />
 
@@ -101,12 +106,13 @@
 
         <TextView
             android:id="@+id/tv_setting"
-            style="@style/TextView.Drawer.TextAppearance_16"
+            style="@style/TextView.Drawer.TextAppearance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="24dp"
             android:text="@string/main_drawer_setting"
+            android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/line_third" />
 

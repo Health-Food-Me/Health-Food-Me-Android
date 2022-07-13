@@ -57,16 +57,9 @@
         <item name="android:textSize">14sp</item>
     </style>
 
-    <style name="TextView.Drawer.TextAppearance_15" parent="">
+    <style name="TextView.Drawer.TextAppearance" parent="">
         <item name="android:fontFamily">@font/notosanskr_r</item>
         <item name="android:textColor">@color/gray_800</item>
-        <item name="android:textSize">15sp</item>
-    </style>
-
-    <style name="TextView.Drawer.TextAppearance_16" parent="">
-        <item name="android:fontFamily">@font/notosanskr_r</item>
-        <item name="android:textColor">@color/gray_800</item>
-        <item name="android:textSize">16sp</item>
     </style>
 
     <style name="CircleImageView.Radius.8.Style" parent="">
