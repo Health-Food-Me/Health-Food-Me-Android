@@ -153,8 +153,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                     UserApiClient.instance.logout { error ->
                         if (error != null) {
                             Timber.e(error, "로그아웃 실패. SDK에서 토큰 삭제됨")
-                        }
-                        else {
+                        } else {
                             Timber.i("로그아웃 성공. SDK에서 토큰 삭제됨")
                         }
                     }
