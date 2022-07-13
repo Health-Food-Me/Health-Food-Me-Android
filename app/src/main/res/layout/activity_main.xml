@@ -88,62 +88,6 @@
                         app:singleLine="true"
                         app:singleSelection="true">
 
-                        <com.google.android.material.chip.Chip
-                            style="@style/Base.Widget.MaterialComponents.Chip.Style"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/main_chip_group_salad"
-                            app:chipIcon="@drawable/ic_sandwitch" />
-
-                        <com.google.android.material.chip.Chip
-                            style="@style/Base.Widget.MaterialComponents.Chip.Style"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/main_chip_group_poke"
-                            app:chipIcon="@drawable/ic_sandwitch" />
-
-                        <com.google.android.material.chip.Chip
-                            style="@style/Base.Widget.MaterialComponents.Chip.Style"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/main_chip_group_sandwich"
-                            app:chipIcon="@drawable/ic_sandwitch" />
-
-                        <com.google.android.material.chip.Chip
-                            style="@style/Base.Widget.MaterialComponents.Chip.Style"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/main_chip_group_shabu"
-                            app:chipIcon="@drawable/ic_sandwitch" />
-
-                        <com.google.android.material.chip.Chip
-                            style="@style/Base.Widget.MaterialComponents.Chip.Style"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/main_chip_group_bosam"
-                            app:chipIcon="@drawable/ic_sandwitch" />
-
-                        <com.google.android.material.chip.Chip
-                            style="@style/Base.Widget.MaterialComponents.Chip.Style"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/main_chip_group_meat"
-                            app:chipIcon="@drawable/ic_sandwitch" />
-
-                        <com.google.android.material.chip.Chip
-                            style="@style/Base.Widget.MaterialComponents.Chip.Style"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/main_chip_group_ricebowl"
-                            app:chipIcon="@drawable/ic_sandwitch" />
-
-                        <com.google.android.material.chip.Chip
-                            style="@style/Base.Widget.MaterialComponents.Chip.Style"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/main_chip_group_quito"
-                            app:chipIcon="@drawable/ic_sandwitch" />
-
                     </com.google.android.material.chip.ChipGroup>
 
                 </HorizontalScrollView>

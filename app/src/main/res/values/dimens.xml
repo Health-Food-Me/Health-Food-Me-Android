@@ -2,4 +2,6 @@
 <resources>
     <dimen name="size_pin_16">16dp</dimen>
     <dimen name="size_restaurant_image_83">83dp</dimen>
+
+    <dimen name="size_logout_dialog_height_241">241dp</dimen>
 </resources>

@@ -86,11 +86,19 @@
         <item name="cornerSize">8%</item>
     </style>
 
-    <style name="Base.Widget.MaterialComponents.Chip.Style" parent="">
+    <style name="Base.Widget.MaterialComponents.Chip.Style" parent="Widget.MaterialComponents.Chip.Choice">
         <item name="android:fontFamily">@font/notosanskr_r</item>
-        <item name="android:textColor">@color/black</item>
+        <item name="android:textColor">@color/selector_chip_text</item>
         <item name="android:textSize">14sp</item>
-        <item name="chipBackgroundColor">@color/white</item>
+        <item name="iconStartPadding">8dp</item>
+        <item name="elevation">2dp</item>
+        <item name="textEndPadding">12dp</item>
+        <item name="android:elevation">2dp</item>
+        <item name="chipIconVisible">true</item>
+    </style>
+
+    <style name="ShapeAppearanceOverlay.App.Corner_14" parent="">
+        <item name="cornerSize">14dp</item>
     </style>
 
     <style name="ShapeAppearanceOverlay.App.CornerRadius8" parent="">
@@ -104,5 +112,20 @@
 
     <style name="Modal.Style" parent="Widget.Design.BottomSheet.Modal">
         <item name="android:background">@drawable/rectangle_white_top_radius_24</item>
+    </style>
+
+    <style name="CustomAlertDialog">
+        <!-- 꽉 채운 화면에 배경 없이 (custom view 영역만 보일 것이다.) -->
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowMinWidthMajor">75%</item>
+        <item name="android:windowMinWidthMinor">75%</item>
+
+        <!-- Dim 처리 -->
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:colorBackground">?attr/colorBackgroundFloating</item>
+        <item name="android:windowCloseOnTouchOutside">true</item>
+
+        <!-- Dialog 가 센터에 나오도록 하자. -->
+        <item name="android:windowIsFloating">true</item>
     </style>
 </resources>
