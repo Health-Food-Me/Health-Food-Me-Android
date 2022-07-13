@@ -9,6 +9,7 @@
     <color name="white">#FFFFFFFF</color>
 
     <color name="red_200">#FFEAEA</color>
+    <color name="red_400">#FF6666</color>
     <color name="red_500">#FF5050</color>
     <color name="red_600">#FF4B4B</color>
 
@@ -18,6 +19,7 @@
     <color name="yellow_400">#B1DE00</color>
     <color name="yellow_500">#A6D000</color>
     <color name="yellow_600">#9CC300</color>
+    <color name="yellow_700">#FEE500</color>
 
     <color name="green_50">#D6E8E0</color>
     <color name="green_300">#A7D000</color>
