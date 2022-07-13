@@ -20,208 +20,113 @@
 
         <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
             tools:context=".presentation.MainActivity">
-
-          <fragment
-                android:id="@+id/fragment_naver_map"
-                android:name="com.naver.maps.map.MapFragment"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingHorizontal="20dp"
-                android:paddingTop="12dp"
-                android:paddingBottom="6dp"
-                app:layout_constraintTop_toTopOf="parent">
+                android:layout_height="match_parent">
 
-                <ImageView
-                    android:id="@+id/btn_hamburger"
+                <fragment
+                    android:id="@+id/fragment_naver_map"
+                    android:name="com.naver.maps.map.MapFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/layout_search"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginTop="12dp"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageButton
+                        android:id="@+id/btn_hamburger"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/rectangle_white_radius_14"
+                        android:padding="20dp"
+                        android:src="@drawable/ic_hambuger"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tv_search"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:background="@drawable/rectangle_white_radius_14"
+                        android:drawablePadding="124dp"
+                        android:fontFamily="@font/notosanskr_r"
+                        android:hint="@string/main_search"
+                        android:paddingHorizontal="16dp"
+                        android:paddingVertical="15dp"
+                        android:textColor="@color/gray_400"
+                        android:textSize="15sp"
+                        app:drawableEndCompat="@drawable/ic_search"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/btn_hamburger"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginTop="12dp"
+                    android:overScrollMode="never"
+                    android:scrollbars="none"
+                    app:layout_constraintTop_toBottomOf="@id/layout_search">
+
+                    <com.google.android.material.chip.ChipGroup
+                        android:id="@+id/cg_food_tag"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:singleLine="true"
+                        app:singleSelection="true">
+
+                    </com.google.android.material.chip.ChipGroup>
+
+                </HorizontalScrollView>
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/fab_bookmark"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/rectangle_wihte_radius_14"
-                    android:elevation="4dp"
-                    android:padding="20dp"
-                    android:src="@drawable/ic_hambuger"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginBottom="12dp"
+                    android:backgroundTint="@color/white"
+                    android:src="@drawable/ic_bookmark"
+                    app:borderWidth="0dp"
+                    app:layout_constraintBottom_toTopOf="@id/fab_location"
+                    app:layout_constraintEnd_toEndOf="parent" />
 
-                <TextView
-                    android:id="@+id/tv_search"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_marginStart="10dp"
-                    android:background="@drawable/rectangle_white_radius_14"
-                    android:elevation="4dp"
-                    android:fontFamily="@font/notosanskr_r"
-                    android:hint="@string/main_search"
-                    android:paddingVertical="15dp"
-                    android:paddingStart="16dp"
-                    android:paddingEnd="152dp"
-                    android:textColor="@color/gray_400"
-                    android:textSize="15sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/btn_hamburger"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <ImageView
+                <com.naver.maps.map.widget.LocationButtonView
+                    android:id="@+id/fab_location"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingEnd="16dp"
-                    android:src="@drawable/ic_search"
-                    app:layout_constraintBottom_toBottomOf="@id/tv_search"
-                    app:layout_constraintEnd_toEndOf="@id/tv_search"
-                    app:layout_constraintTop_toTopOf="@id/tv_search" />
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginBottom="39dp"
+                    android:src="@drawable/ic_currentposition"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent" />
 
+                <!--            <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+                <!--                android:id="@+id/fab_location"-->
+                <!--                android:layout_width="wrap_content"-->
+                <!--                android:layout_height="wrap_content"-->
+                <!--                android:layout_marginEnd="20dp"-->
+                <!--                android:layout_marginBottom="39dp"-->
+                <!--                android:backgroundTint="@color/white"-->
+                <!--                android:src="@drawable/ic_currentposition"-->
+                <!--                app:borderWidth="0dp"-->
+                <!--                app:layout_constraintBottom_toBottomOf="parent"-->
+                <!--                app:layout_constraintEnd_toEndOf="parent" />-->
 
             </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <HorizontalScrollView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:overScrollMode="never"
-                android:paddingTop="6dp"
-                android:scrollbars="none"
-                app:layout_constraintTop_toBottomOf="@id/layout_search">
-
-                <com.google.android.material.chip.ChipGroup
-                    android:id="@+id/cg_food_tag"
-                    android:paddingHorizontal="12dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:singleLine="true"
-                    app:singleSelection="true">
-
-<!--                    <com.google.android.material.chip.Chip-->
-<!--                        style="@style/Base.Widget.MaterialComponents.Chip.Style"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_marginStart="20dp"-->
-<!--                        android:text="@string/main_chip_group_salad"-->
-<!--                        app:chipIcon="@drawable/ic_salad" />-->
-
-<!--                    <com.google.android.material.chip.Chip-->
-<!--                        style="@style/Base.Widget.MaterialComponents.Chip.Style"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:text="@string/main_chip_group_poke"-->
-<!--                        app:chipIcon="@drawable/ic_poke" />-->
-
-<!--                    <com.google.android.material.chip.Chip-->
-<!--                        style="@style/Base.Widget.MaterialComponents.Chip.Style"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:text="@string/main_chip_group_sandwich"-->
-<!--                        app:chipIcon="@drawable/ic_sandwich" />-->
-
-<!--                    <com.google.android.material.chip.Chip-->
-<!--                        style="@style/Base.Widget.MaterialComponents.Chip.Style"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:text="@string/main_chip_group_shabu"-->
-<!--                        app:chipIcon="@drawable/ic_shabushabu" />-->
-
-<!--                    <com.google.android.material.chip.Chip-->
-<!--                        style="@style/Base.Widget.MaterialComponents.Chip.Style"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:text="@string/main_chip_group_bosam"-->
-<!--                        app:chipIcon="@drawable/ic_bossam" />-->
-
-<!--                    <com.google.android.material.chip.Chip-->
-<!--                        style="@style/Base.Widget.MaterialComponents.Chip.Style"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:text="@string/main_chip_group_meat"-->
-<!--                        app:chipIcon="@drawable/ic_meat" />-->
-
-<!--                    <com.google.android.material.chip.Chip-->
-<!--                        style="@style/Base.Widget.MaterialComponents.Chip.Style"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:text="@string/main_chip_group_ricebowl"-->
-<!--                        app:chipIcon="@drawable/ic_dupbap" />-->
-
-<!--                    <com.google.android.material.chip.Chip-->
-<!--                        style="@style/Base.Widget.MaterialComponents.Chip.Style"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_marginEnd="20dp"-->
-<!--                        android:text="@string/main_chip_group_quito"-->
-<!--                        app:chipIcon="@drawable/ic_sandwitch" />-->
-
-                </com.google.android.material.chip.ChipGroup>
-
-            </HorizontalScrollView>
-
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fab_bookmark"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="20dp"
-                android:layout_marginBottom="12dp"
-                android:backgroundTint="@color/white"
-                android:src="@drawable/ic_bookmark"
-                app:borderWidth="0dp"
-                app:layout_constraintBottom_toTopOf="@id/fab_location"
-                app:layout_constraintEnd_toEndOf="parent" />
-
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fab_location"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="20dp"
-                android:layout_marginBottom="39dp"
-                android:backgroundTint="@color/white"
-                android:src="@drawable/ic_currentposition"
-                app:borderWidth="0dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
-
-            <!--            <com.naver.maps.map.widget.LocationButtonView-->
-            <!--                android:id="@+id/fab_location"-->
-            <!--                android:layout_width="10dp"-->
-            <!--                android:layout_height="10dp"-->
-            <!--                android:layout_marginEnd="20dp"-->
-            <!--                android:layout_marginBottom="16dp"-->
-            <!--                app:layout_constraintBottom_toBottomOf="parent"-->
-            <!--                app:layout_constraintEnd_toEndOf="parent" />-->
-
-            <!--            <ImageView-->
-            <!--                android:id="@+id/fab_location"-->
-            <!--                app:layout_constraintEnd_toEndOf="parent"-->
-            <!--                app:layout_constraintBottom_toBottomOf="parent"-->
-            <!--                android:layout_marginEnd="20dp"-->
-            <!--                android:layout_marginBottom="16dp"-->
-            <!--                android:src="@drawable/ic_btn_currentposition"-->
-            <!--                android:layout_width="wrap_content"-->
-            <!--                android:layout_height="wrap_content"/>-->
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.core.widget.NestedScrollView
-            android:id="@+id/sv_bottom_sheet"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fillViewport="true"
-            android:overScrollMode="never"
-            app:behavior_hideable="true"
-            app:behavior_peekHeight="155dp"
-            app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
-            tools:visibility="visible">
-
-            <include
-                android:id="@+id/layout_restaurant_dialog"
-                layout="@layout/dialog_restaurant_detail"
-                bind:restaurant="@{viewModel.selectedRestaurant}"
-                bind:viewModel="@{viewModel}" />
-
-        </androidx.core.widget.NestedScrollView>
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/layout_bottom_sheet"
