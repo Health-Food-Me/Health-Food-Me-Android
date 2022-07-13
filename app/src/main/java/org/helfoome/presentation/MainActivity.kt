@@ -129,41 +129,35 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                 }
             }
 
-            binding.layoutDrawerHeader.btnEdit.setOnClickListener {
-                startActivity(Intent(this@MainActivity, ProfileModifyActivity::class.java))
+            with(binding.layoutDrawerHeader) {
+                btnEdit.setOnClickListener {
+                    startActivity(Intent(this@MainActivity, ProfileModifyActivity::class.java))
+                }
+                tvReview.setOnClickListener {
+                    startActivity(Intent(this@MainActivity, MyReviewActivity::class.java))
+                }
+                tvScrap.setOnClickListener {
+                    startActivity(Intent(this@MainActivity, MyScrapActivity::class.java))
+                }
+                tvReport.setOnClickListener {
+                    sendGmail()
+                }
+                tvModifyReport.setOnClickListener {
+                    sendGmail()
+                }
             }
-
-            binding.layoutDrawerHeader.tvReview.setOnClickListener {
-                startActivity(Intent(this@MainActivity, MyReviewActivity::class.java))
-            }
-
-            binding.layoutDrawerHeader.tvScrap.setOnClickListener {
-                startActivity(Intent(this@MainActivity, MyScrapActivity::class.java))
-            }
-
-            binding.layoutDrawerHeader.tvReport.setOnClickListener {
-                val emailIntent = Intent(
-                    Intent.ACTION_SENDTO, Uri.fromParts(
-                        "mailto", "abc@gmail.com", null
-                    )
-                )
-                emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Subject")
-                emailIntent.putExtra(Intent.EXTRA_TEXT, "Body")
-                startActivity(Intent.createChooser(emailIntent, "Send email..."))
-            }
-
-            binding.layoutDrawerHeader.tvModifyReport.setOnClickListener {
-                val emailIntent = Intent(
-                    Intent.ACTION_SENDTO, Uri.fromParts(
-                        "mailto", "abc@gmail.com", null
-                    )
-                )
-                emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Subject")
-                emailIntent.putExtra(Intent.EXTRA_TEXT, "Body")
-                startActivity(Intent.createChooser(emailIntent, "Send email..."))
-            }
-
         }
+    }
+
+    private fun sendGmail() {
+        val emailIntent = Intent(
+            Intent.ACTION_SENDTO, Uri.fromParts(
+                "mailto", "abc@gmail.com", null
+            )
+        )
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Subject")
+        emailIntent.putExtra(Intent.EXTRA_TEXT, "Body")
+        startActivity(Intent.createChooser(emailIntent, "Send email..."))
     }
 
     private fun initObservers() {
