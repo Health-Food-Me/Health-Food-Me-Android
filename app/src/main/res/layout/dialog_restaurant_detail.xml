@@ -149,56 +149,13 @@
                             app:layout_constraintStart_toEndOf="@id/tv_restaurant_name"
                             tools:text="샐러드" />
 
-                        <!-- TODO 소수점까지 고려하여 별점 케이스를 나눈 후 꽉찬 별, 반 채워진 별, 빈 별 아이콘을 디스플레이할 예정 -->
-                        <androidx.constraintlayout.widget.ConstraintLayout
-                            android:id="@+id/layout_star_rating"
+                        <org.helfoome.presentation.custom.RatingBar
+                            android:id="@+id/view_star_rating"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="13dp"
                             app:layout_constraintStart_toStartOf="@id/tv_restaurant_name"
-                            app:layout_constraintTop_toBottomOf="@id/tv_restaurant_name">
-
-                            <ImageView
-                                android:id="@+id/iv_first_star"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:src="@drawable/ic_star_full"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent" />
-
-                            <ImageView
-                                android:id="@+id/iv_second_star"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:src="@drawable/ic_star_full"
-                                app:layout_constraintStart_toEndOf="@id/iv_first_star"
-                                app:layout_constraintTop_toTopOf="parent" />
-
-                            <ImageView
-                                android:id="@+id/iv_third_star"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:src="@drawable/ic_star_full"
-                                app:layout_constraintStart_toEndOf="@id/iv_second_star"
-                                app:layout_constraintTop_toTopOf="parent" />
-
-                            <ImageView
-                                android:id="@+id/iv_fourth_star"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:src="@drawable/ic_star_full"
-                                app:layout_constraintStart_toEndOf="@id/iv_third_star"
-                                app:layout_constraintTop_toTopOf="parent" />
-
-                            <ImageView
-                                android:id="@+id/iv_fifth_star"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:src="@drawable/ic_star_empty"
-                                app:layout_constraintStart_toEndOf="@id/iv_fourth_star"
-                                app:layout_constraintTop_toTopOf="parent" />
-
-                        </androidx.constraintlayout.widget.ConstraintLayout>
+                            app:layout_constraintTop_toBottomOf="@id/tv_restaurant_name"
+                            app:score="@{viewModel.selectedRestaurant.score}" />
 
                         <TextView
                             android:id="@+id/tv_restaurant_score"
@@ -208,8 +165,8 @@
                             android:text="@{String.format(context.getString(R.string.restaurant_detail_score_format), restaurant.score)}"
                             android:textColor="@color/gray_550"
                             android:textSize="12sp"
-                            app:layout_constraintBottom_toBottomOf="@id/layout_star_rating"
-                            app:layout_constraintStart_toEndOf="@id/layout_star_rating"
+                            app:layout_constraintBottom_toBottomOf="@id/view_star_rating"
+                            app:layout_constraintStart_toEndOf="@id/view_star_rating"
                             tools:text="(4.3)" />
 
                         <androidx.constraintlayout.widget.ConstraintLayout
@@ -220,7 +177,7 @@
                             android:layout_marginEnd="20dp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="@id/tv_restaurant_name"
-                            app:layout_constraintTop_toBottomOf="@id/tv_restaurant_score"
+                            app:layout_constraintTop_toBottomOf="@id/view_star_rating"
                             app:visibility="@{viewModel.isExpandedDialog().peekContent() != true}">
 
                             <TextView
