@@ -55,9 +55,9 @@ class RatingBar(context: Context, val attrs: AttributeSet? = null) : ConstraintL
 
     private fun getDecimalPointImageRes(score: Int): Int? {
         return when (score) {
-            in 1..4 -> R.drawable.ic_star_second
-            5 -> R.drawable.ic_star_half
-            in 6..9 -> R.drawable.ic_star_fourth
+            in 1..4 -> R.drawable.ic_star_30_per
+            5 -> R.drawable.ic_star_50_per
+            in 6..9 -> R.drawable.ic_star_70_per
             else -> null
         }
     }
