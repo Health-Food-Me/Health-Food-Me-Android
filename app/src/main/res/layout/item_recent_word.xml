@@ -27,7 +27,7 @@
             tools:text="@string/dear_fine" />
 
         <ImageButton
-            android:id="@+id/ib_delete"
+            android:id="@+id/btn_delete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="20dp"

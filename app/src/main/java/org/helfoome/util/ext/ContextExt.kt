@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import androidx.core.os.bundleOf
 
 fun Context.showKeyboard(view: View) {
@@ -27,4 +28,12 @@ inline fun <reified T : Activity> Context.startActivity(
     vararg argument: Pair<String, Any?>
 ) {
     startActivity(buildIntent<T>(*argument))
+}
+
+fun Context.stringListFrom(id: Int): List<String> =
+    resources.getStringArray(id).toList()
+
+
+fun Context.showToast(msg: String) {
+    Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
 }

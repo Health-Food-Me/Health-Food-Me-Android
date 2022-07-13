@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Health-Food-Me</string>
     <string name="login_logo">헬푸미</string>
-    <string name="login_description"><b><font color="#A7D000">샐러드</font></b>부터 <b><font color="#FF5050">일반식</font></b>까지\n다이어터를 위한 식당 추천 지도앱</string>
+    <string name="login_description">샐러드부터 일반식까지\n다이어터를 위한 식당 추천 지도앱</string>
 
     <!-- Main Chip Group -->
     <string name="main_chip_group_salad">샐러드</string>
@@ -13,9 +13,35 @@
     <string name="main_chip_group_ricebowl">덮밥</string>
     <string name="main_chip_group_quito">키토김밥</string>
 
+    <string-array name="main_chip_group">
+        <item>@string/main_chip_group_salad</item>
+        <item>@string/main_chip_group_poke</item>
+        <item>@string/main_chip_group_sandwich</item>
+        <item>@string/main_chip_group_shabu</item>
+        <item>@string/main_chip_group_bosam</item>
+        <item>@string/main_chip_group_meat</item>
+        <item>@string/main_chip_group_ricebowl</item>
+        <item>@string/main_chip_group_quito</item>
+    </string-array>
+
+    <!-- Main Drawer -->
+    <string name="main_drawer_welcome">안녕하세요!\n배부른 현우는 행복해요 님\n오늘도 헬푸미하세요</string>
+    <string name="main_drawer_scrap">스크랩한 식당</string>
+    <string name="main_drawer_review">내가 쓴 리뷰</string>
+    <string name="main_drawer_report">가게 제보하기</string>
+    <string name="main_drawer_modify_report">수정사항 제보하기</string>
+    <string name="main_drawer_setting">설정</string>
+    <string name="main_drawer_logout">로그아웃</string>
+
     <!-- Login Text -->
     <string name="login_text_kakao">카카오 계정으로 로그인</string>
     <string name="login_text_naver">네이버 계정으로 로그인</string>
+
+    <!-- Logout Dialog -->
+    <string name="logout_dialog_caution">정말 로그아웃 하시겠어요?</string>
+    <string name="logout_dialog_caution_description">로그아웃 시 헬푸미의 업데이트 내용을\n 보실 수 없습니다</string>
+    <string name="logout_dialog_yes">네</string>
+    <string name="logout_dialog_no">아니요</string>
 
     <!-- Format -->
     <string name="format_hashtag">#%s</string>
