@@ -33,7 +33,8 @@
             android:exported="false" />
         <activity
             android:name=".presentation.search.SearchActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".presentation.LoginActivity"
             android:exported="true">
