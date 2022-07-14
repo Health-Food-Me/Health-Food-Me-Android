@@ -5,6 +5,9 @@
 
     <data>
 
+        <variable
+            name="data"
+            type="org.helfoome.domain.entity.RecentSearchInfo" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -13,15 +16,17 @@
 
         <TextView
             android:id="@+id/tv_recent_word"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="19dp"
             android:layout_marginTop="18dp"
             android:layout_marginBottom="17dp"
             android:fontFamily="@font/notosanskr_r"
             android:textColor="@color/gray_800"
+            android:text="@{data.keyword}"
             android:textSize="15dp"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/ib_delete"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="@string/dear_fine" />
