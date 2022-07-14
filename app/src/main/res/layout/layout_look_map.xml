@@ -34,6 +34,6 @@
             app:layout_constraintDimensionRatio="12:15"
             app:layout_constraintEnd_toStartOf="@+id/tv_recent_word"
             app:layout_constraintTop_toTopOf="@+id/tv_recent_word"
-            app:srcCompat="@drawable/ic_marker_red" />
+            app:src="@drawable/ic_marker_red" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
