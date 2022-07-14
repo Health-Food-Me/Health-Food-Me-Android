@@ -88,6 +88,7 @@
     <string name="restaurant_detail_protein">단백질</string>
     <string name="restaurant_detail_fat">지방</string>
     <string name="restaurant_detail_nutrient">영양정보</string>
+    <string name="restaurant_detail_blog_review">블로그 리뷰</string>
 
     <!--Search-->
     <string name="search_restaurant_food">식당, 음식 검색</string>
