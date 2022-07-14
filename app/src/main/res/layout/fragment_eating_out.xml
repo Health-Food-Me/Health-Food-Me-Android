@@ -49,8 +49,9 @@
 
                 <org.helfoome.presentation.custom.EatingOutAdviseView
                     android:id="@+id/view_recommendation_tip_list"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="30dp"
                     android:layout_marginTop="15dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -93,8 +94,9 @@
 
                 <org.helfoome.presentation.custom.EatingOutAdviseView
                     android:id="@+id/view_eating_tip_list"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="30dp"
                     android:layout_marginTop="15dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
