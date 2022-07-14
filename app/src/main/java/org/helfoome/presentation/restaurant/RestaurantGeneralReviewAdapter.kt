@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import org.helfoome.databinding.ItemGeneralReviewBinding
 import org.helfoome.domain.entity.ReviewInfo
+import org.helfoome.util.ItemDecorationUtil
 import org.helfoome.util.ItemDiffCallback
 
 class RestaurantGeneralReviewAdapter :
@@ -19,8 +20,12 @@ class RestaurantGeneralReviewAdapter :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(menu: ReviewInfo) {
             binding.review = menu
-            binding.rvPhotoList.adapter = RestaurantImageAdapter().apply {
+            val adapter = RestaurantImageAdapter().apply {
                 imageList = menu.photoList
+            }
+            binding.rvPhotoList.apply {
+                this.adapter = adapter
+                addItemDecoration(ItemDecorationUtil.ItemDecoration(height = 0f, padding = 20, isVertical = false))
             }
         }
     }

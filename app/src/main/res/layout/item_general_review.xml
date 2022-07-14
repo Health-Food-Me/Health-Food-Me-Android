@@ -51,10 +51,10 @@
             android:layout_marginTop="10dp"
             android:clipToPadding="false"
             android:orientation="horizontal"
-            android:paddingEnd="@dimen/size_spacing_20"
+            android:paddingHorizontal="@dimen/size_spacing_20"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@id/gl_start"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_title"
             tools:listitem="@layout/item_review_image" />
 

@@ -1,6 +1,7 @@
 package org.helfoome.util
 
 import android.graphics.Canvas
+import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Rect
 import android.view.View
@@ -10,9 +11,9 @@ import androidx.recyclerview.widget.RecyclerView
 sealed class ItemDecorationUtil {
     class ItemDecoration(
         private val height: Float,
-        private val dividerPadding: Float?,
+        private val dividerPadding: Float? = null,
         @ColorInt
-        private val color: Int,
+        private val color: Int = Color.TRANSPARENT,
         private val padding: Int,
         private val isVertical: Boolean = true,
     ) : RecyclerView.ItemDecoration() {
