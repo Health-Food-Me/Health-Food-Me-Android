@@ -23,13 +23,13 @@ class ProfileModifyActivity : BindingActivity<ActivityProfileModifyBinding>(R.la
         binding.viewModel = viewModel
 
         initSnackBar()
-        initObserve()
+        initObservers()
         initListener()
     }
 
     private fun initListener() {
         binding.btModify.setOnClickListener {
-            viewModel.checkPasswordFormat()
+            viewModel.checkNicknameFormat()
             if (viewModel.isValidNickname.value == true) {
                 startActivity(Intent(this, MainActivity::class.java))
             } else {
@@ -54,7 +54,7 @@ class ProfileModifyActivity : BindingActivity<ActivityProfileModifyBinding>(R.la
         snackBarView.animationMode = ANIMATION_MODE_FADE
     }
 
-    private fun initObserve() {
+    private fun initObservers() {
         viewModel.isValidNickname.observe(this) {
             if (it == false) {
                 snackBarView.show()
