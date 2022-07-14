@@ -40,6 +40,9 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_photo_list"
             android:layout_width="0dp"
+            tools:listitem="@layout/item_review_image"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             app:layout_constraintEnd_toEndOf="parent"
