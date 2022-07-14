@@ -1,18 +1,24 @@
 package org.helfoome.presentation.search
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 import org.helfoome.domain.entity.AutoCompleteKeywordInfo
 import org.helfoome.domain.entity.RecentSearchInfo
 import org.helfoome.domain.entity.SearchResultInfo
+import org.helfoome.domain.repository.SearchRepository
 import org.helfoome.presentation.search.type.SearchMode
 import javax.inject.Inject
 
 @HiltViewModel
-class SearchViewModel @Inject constructor() : ViewModel() {
+class SearchViewModel @Inject constructor(
+    private val searchRepository: SearchRepository
+) : ViewModel() {
+    val keywordList: StateFlow<List<RecentSearchInfo>> =
+        searchRepository.getRecentKeyword().stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
+
     private val _searchUiState =
         MutableStateFlow<SearchUiState>(SearchUiState.Loading)
     val searchUiState: StateFlow<SearchUiState>
@@ -25,6 +31,22 @@ class SearchViewModel @Inject constructor() : ViewModel() {
 
     fun setSearchMode(searchMode: SearchMode) {
         _searchMode.value = searchMode
+    }
+
+    fun insertKeyword(keyword: String) {
+        viewModelScope.launch {
+            searchRepository.insertKeyword(
+                RecentSearchInfo(keyword)
+            )
+        }
+    }
+
+    fun removeKeyword(keyword: String) {
+        viewModelScope.launch {
+            searchRepository.removeKeyword(
+                RecentSearchInfo(keyword)
+            )
+        }
     }
 
     private fun List<RecentSearchInfo>.toUiState() = SearchUiState.RecentSearch(this)
