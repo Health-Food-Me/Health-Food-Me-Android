@@ -19,6 +19,9 @@ class RestaurantGeneralReviewAdapter :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(menu: ReviewInfo) {
             binding.review = menu
+            binding.rvPhotoList.adapter = RestaurantImageAdapter().apply {
+                imageList = menu.photoList
+            }
         }
     }
 
