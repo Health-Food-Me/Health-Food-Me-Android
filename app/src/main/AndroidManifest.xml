@@ -20,6 +20,10 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="32">
         <activity
+            android:name=".presentation.WithdrawalActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
             android:name=".presentation.drawer.SettingActivity"
             android:exported="false" />
         <activity
