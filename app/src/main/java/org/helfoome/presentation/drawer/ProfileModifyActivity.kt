@@ -6,12 +6,14 @@ import android.view.Gravity
 import android.widget.FrameLayout
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
-import com.google.android.material.snackbar.BaseTransientBottomBar.*
+import com.google.android.material.snackbar.BaseTransientBottomBar.ANIMATION_MODE_FADE
+import com.google.android.material.snackbar.BaseTransientBottomBar.LENGTH_LONG
 import com.google.android.material.snackbar.Snackbar
 import org.helfoome.R
 import org.helfoome.databinding.ActivityProfileModifyBinding
 import org.helfoome.presentation.MainActivity
 import org.helfoome.util.binding.BindingActivity
+
 
 class ProfileModifyActivity : BindingActivity<ActivityProfileModifyBinding>(R.layout.activity_profile_modify) {
     private val viewModel: ProfileModifyViewModel by viewModels()
@@ -29,11 +31,16 @@ class ProfileModifyActivity : BindingActivity<ActivityProfileModifyBinding>(R.la
     private fun initListener() {
         binding.btModify.setOnClickListener {
             viewModel.checkPasswordFormat()
-            if (viewModel.isValidPassword.value == true) {
+            if (viewModel.isValidNickname.value == true) {
                 startActivity(Intent(this, MainActivity::class.java))
             } else {
                 snackBarView.show()
             }
+        }
+
+        binding.etNickname.setOnTouchListener { v, event ->
+            snackBarView.dismiss()
+            false
         }
     }
 
@@ -49,7 +56,7 @@ class ProfileModifyActivity : BindingActivity<ActivityProfileModifyBinding>(R.la
     }
 
     private fun initObserve() {
-        viewModel.isValidPassword.observe(this) {
+        viewModel.isValidNickname.observe(this) {
             if (it == false) {
                 snackBarView.show()
             } else {
