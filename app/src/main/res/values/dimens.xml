@@ -4,4 +4,13 @@
     <dimen name="size_restaurant_image_83">83dp</dimen>
 
     <dimen name="size_logout_dialog_height_241">241dp</dimen>
+
+    <!-- Spacing -->
+    <dimen name="size_spacing_4">4dp</dimen>
+    <dimen name="size_spacing_6">6dp</dimen>
+    <dimen name="size_spacing_16">16dp</dimen>
+    <dimen name="size_spacing_20">20dp</dimen>
+    <dimen name="size_spacing_24">24dp</dimen>
+    <dimen name="size_spacing_26">26dp</dimen>
+    <dimen name="size_spacing_36">36dp</dimen>
 </resources>
