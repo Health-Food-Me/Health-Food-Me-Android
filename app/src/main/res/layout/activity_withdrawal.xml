@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".presentation.WithdrawalActivity">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="26dp"
+            android:layout_marginTop="16dp"
+            android:src="@drawable/ic_back"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_withdrawal_title"
+            style="@style/TextView.Setting.TextAppearance_16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:text="@string/withdrawal_title"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/line_first"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="8dp"
+            android:background="@color/gray_200"
+            app:layout_constraintTop_toBottomOf="@id/tv_withdrawal_title" />
+
+        <TextView
+            android:id="@+id/tv_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:textSize="14sp"
+            android:textColor="@color/gray_800"
+            android:lineSpacingExtra="4dp"
+            android:text="@string/withdraw_description"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/line_first" />
+
+        <EditText
+            android:id="@+id/et_nickname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/rectangle_border_gray_radius_8"
+            android:hint="@string/withdraw_nickname"
+            android:inputType="text"
+            android:maxLength="12"
+            android:maxLines="1"
+            android:paddingVertical="16dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="149dp"
+            android:textColor="@color/gray_400"
+            android:textSize="16sp"
+            app:layout_constraintTop_toBottomOf="@id/tv_description" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/bt_confirm"
+            style="@style/Button.Basic.Style"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/rectangle_red_radius_36"
+            android:paddingTop="11dp"
+            android:paddingBottom="10dp"
+            android:text="@string/withdraw_confirm"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
