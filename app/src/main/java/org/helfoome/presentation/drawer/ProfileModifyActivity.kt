@@ -14,7 +14,6 @@ import org.helfoome.databinding.ActivityProfileModifyBinding
 import org.helfoome.presentation.MainActivity
 import org.helfoome.util.binding.BindingActivity
 
-
 class ProfileModifyActivity : BindingActivity<ActivityProfileModifyBinding>(R.layout.activity_profile_modify) {
     private val viewModel: ProfileModifyViewModel by viewModels()
     private lateinit var snackBarView: Snackbar
