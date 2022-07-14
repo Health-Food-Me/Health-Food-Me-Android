@@ -24,11 +24,11 @@ class RestaurantEatingOutTabFragment : BindingFragment<FragmentEatingOutBinding>
         }
 
         viewModel.recommendationTips.observe(viewLifecycleOwner) { recommendationTips ->
-            binding.viewRecommendationTipList.setTips(recommendationTips, EatingOutTipType.RECOMMENDATION)
+            binding.viewRecommendationTipList.setTips(recommendationTips, EatingOutTipType.RECOMMENDATION_TIP)
         }
 
         viewModel.eatingTips.observe(viewLifecycleOwner) { eatingTips ->
-            binding.viewEatingTipList.setTips(eatingTips, EatingOutTipType.HOW_TO_EAT)
+            binding.viewEatingTipList.setTips(eatingTips, EatingOutTipType.EATING_TIP)
         }
     }
 }
