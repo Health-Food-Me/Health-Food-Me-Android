@@ -41,5 +41,6 @@
     <color name="gray_800">#222222</color>
     <color name="gray_900">#191600</color>
 
+    <color name="gray_550_alpha_80">#CC999999</color>
     <color name="gray_600_alpha_80">#CC666666</color>
 </resources>
