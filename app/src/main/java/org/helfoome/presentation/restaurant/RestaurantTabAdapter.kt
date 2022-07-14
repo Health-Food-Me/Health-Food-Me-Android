@@ -11,7 +11,7 @@ class RestaurantTabAdapter(fm: FragmentActivity) : FragmentStateAdapter(fm) {
     override fun createFragment(position: Int): Fragment {
         return when (position) {
             0 -> RestaurantMenuTabFragment()
-            1 -> RestaurantMenuTabFragment()
+            1 -> RestaurantEatingOutTabFragment()
             else -> RestaurantMenuTabFragment()
         }
     }

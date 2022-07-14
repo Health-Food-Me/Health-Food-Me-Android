@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="9dp">
+
+        <ImageView
+            android:id="@+id/iv_check"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/ic_check_circle_green" />
+
+        <TextView
+            android:id="@+id/tv_advise"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="1dp"
+            android:fontFamily="@font/notosanskr_r"
+            android:textColor="@color/gray_800"
+            android:textSize="12dp"
+            app:layout_constraintStart_toEndOf="@id/iv_check"
+            app:layout_constraintTop_toTopOf="@id/iv_check"
+            tools:text="먹는 속도가 자연스럽게 느려져요" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

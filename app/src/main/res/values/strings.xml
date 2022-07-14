@@ -122,4 +122,6 @@
 
     <!--tools-->
     <string name="dear_fine">디어파인</string>
+    <string name="restaurant_detail_eating_out_recommendation_title">추천하는 이유!</string>
+    <string name="restaurant_detail_eating_out_how_to_eat_title">이렇게 드셔보세요!</string>
 </resources>
