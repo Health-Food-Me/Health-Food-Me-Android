@@ -6,14 +6,10 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.Window
-import com.navercorp.nid.NaverIdLoginSDK
 import org.helfoome.R
 import org.helfoome.databinding.ActivityWithdrawalBinding
-import org.helfoome.databinding.LogoutDialogBinding
 import org.helfoome.databinding.WithdrawDialogBinding
 import org.helfoome.util.binding.BindingActivity
-import timber.log.Timber
 
 class WithdrawalActivity : BindingActivity<ActivityWithdrawalBinding>(R.layout.activity_withdrawal) {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,5 +33,4 @@ class WithdrawalActivity : BindingActivity<ActivityWithdrawalBinding>(R.layout.a
             }
         }
     }
-
 }
