@@ -3,6 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <variable
+            name="review"
+            type="org.helfoome.domain.entity.ReviewInfo" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -17,11 +24,10 @@
         <TextView
             android:id="@+id/tv_title"
             android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_marginEnd="36dp"
+            android:layout_height="wrap_content"
             android:fontFamily="@font/notosanskr_m"
-            android:gravity="@{menu.healfoomePick == true ? Gravity.TOP : Gravity.CENTER_VERTICAL}"
             android:maxLines="1"
+            android:text="@{review.title}"
             android:textColor="@color/gray_800"
             android:textSize="13sp"
             app:layout_constraintStart_toStartOf="@id/gl_start"
@@ -35,19 +41,19 @@
             app:layout_constraintBottom_toBottomOf="@id/tv_title"
             app:layout_constraintStart_toEndOf="@id/tv_title"
             app:layout_constraintTop_toTopOf="@id/tv_title"
-            app:score="2.3" />
+            app:score="@{review.score}" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_photo_list"
             android:layout_width="0dp"
-            tools:listitem="@layout/item_review_image"
-            android:orientation="horizontal"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/gl_start"
-            app:layout_constraintTop_toBottomOf="@id/tv_title" />
+            app:layout_constraintTop_toBottomOf="@id/tv_title"
+            tools:listitem="@layout/item_review_image" />
 
         <TextView
             android:layout_width="match_parent"
@@ -55,6 +61,7 @@
             android:layout_marginHorizontal="20dp"
             android:layout_marginTop="12dp"
             android:fontFamily="@font/notosanskr_r"
+            android:text="@{review.description}"
             android:textColor="@color/gray_800"
             android:textSize="12dp"
             app:layout_constraintTop_toBottomOf="@id/rv_photo_list"
