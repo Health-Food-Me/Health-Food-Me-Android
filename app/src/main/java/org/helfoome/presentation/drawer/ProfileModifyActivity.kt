@@ -6,14 +6,12 @@ import android.view.Gravity
 import android.widget.FrameLayout
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
-import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.BaseTransientBottomBar.*
 import com.google.android.material.snackbar.Snackbar
 import org.helfoome.R
 import org.helfoome.databinding.ActivityProfileModifyBinding
 import org.helfoome.presentation.MainActivity
 import org.helfoome.util.binding.BindingActivity
-
 
 class ProfileModifyActivity : BindingActivity<ActivityProfileModifyBinding>(R.layout.activity_profile_modify) {
     private val viewModel: ProfileModifyViewModel by viewModels()
