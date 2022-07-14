@@ -4,7 +4,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener
 import org.helfoome.databinding.ItemRecentWordBinding
 import org.helfoome.domain.entity.RecentSearchInfo
 import org.helfoome.util.ItemDiffCallback
