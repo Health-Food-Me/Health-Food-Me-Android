@@ -11,9 +11,14 @@ import javax.inject.Inject
 class RestaurantMenuViewModel @Inject constructor() : ViewModel() {
     private val _menu = MutableLiveData<List<MenuInfo>>()
     val menu: LiveData<List<MenuInfo>> = _menu
+    private val _recommendationTips = MutableLiveData<List<String>>()
+    val recommendationTips: LiveData<List<String>> = _recommendationTips
+    private val _eatingTips = MutableLiveData<List<String>>()
+    val eatingTips: LiveData<List<String>> = _eatingTips
 
     init {
         fetchMenuList()
+        fetchEatingOutTips()
     }
 
     private fun fetchMenuList() {
@@ -27,5 +32,10 @@ class RestaurantMenuViewModel @Inject constructor() : ViewModel() {
             MenuInfo(6, "맥시칸 랩", "https://salady.com/superboard/data/product/thumb/3731617857_gzSGH7wP_0faa0c8288336e920f21d8502e96c302a2b0c3f2.png", 8200, 25, 24, 18, 307, 40),
             MenuInfo(7, "할라피뇨치킨 웜랩", "https://salady.com/superboard/data/product/thumb/3731617857_1JRucUKo_10b719f949ee6cda68a67a5d705d4394bda68439.png", 8200, 25, 24, 18, 307, 40)
         )
+    }
+
+    private fun fetchEatingOutTips() {
+        _recommendationTips.value = listOf("먹는 속도가 자연스럽게 느려져요", "다양한 채소와 단백질 섭취가 가능해요", "채소, 버섯, 고기, 해산물 충분히 드실 수 있어요 아니 못 참지 ㅋㅋ")
+        _eatingTips.value = listOf("소스 섭취를 최소화 하세요", "떡, 어묵, 만두, 단호박은 투입을 자제하세요", "칼국수와 죽, 볶음밥 주문은 잠시 참아봐요")
     }
 }

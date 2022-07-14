@@ -22,6 +22,9 @@
     <!-- My Review -->
     <string name="my_review_title">내가 쓴 리뷰</string>
 
+    <!-- Withdrawal -->
+    <string name="withdrawal_title">회원탈퇴</string>
+
     <!-- Setting -->
     <string name="setting_title">설정</string>
     <string name="setting_customer_support">고객지원</string>
@@ -64,9 +67,21 @@
 
     <!-- Logout Dialog -->
     <string name="logout_dialog_caution">정말 로그아웃 하시겠어요?</string>
-    <string name="logout_dialog_caution_description">로그아웃 시 헬푸미의 업데이트 내용을\n 보실 수 없습니다</string>
+    <string name="logout_dialog_caution_description">로그아웃 시 헬푸미의 업데이트 내용을\n보실 수 없습니다</string>
     <string name="logout_dialog_yes">네</string>
     <string name="logout_dialog_no">아니요</string>
+
+    <!-- Withdraw -->
+    <string name="withdraw_description">탈퇴하면 내 앱 모든 데이터가 사라집니다\n서비스를 탈퇴하려면 닉네임을 입력해주세요</string>
+    <string name="withdraw_nickname">푸밍이</string>
+    <string name="withdraw_confirm">확인</string>
+
+
+    <!-- Withdraw Dialog -->
+    <string name="withdraw_dialog_caution">정말로 탈퇴하실건가요?</string>
+    <string name="withdraw_dialog_caution_description">탈퇴 시 헬푸미의 새로운 정보를\n얻을 수 없습니다</string>
+    <string name="withdraw_dialog_no">아니요</string>
+    <string name="withdraw_dialog_yes">네 탈퇴할게요</string>
 
     <!-- Format -->
     <string name="format_hashtag">#%s</string>
@@ -108,4 +123,6 @@
 
     <!--tools-->
     <string name="dear_fine">디어파인</string>
+    <string name="restaurant_detail_eating_out_recommendation_title">추천하는 이유!</string>
+    <string name="restaurant_detail_eating_out_how_to_eat_title">이렇게 드셔보세요!</string>
 </resources>
