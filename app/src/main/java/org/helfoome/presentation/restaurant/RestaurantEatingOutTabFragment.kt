@@ -5,7 +5,7 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import org.helfoome.R
 import org.helfoome.databinding.FragmentEatingOutBinding
-import org.helfoome.presentation.type.EatingOutAdviseType
+import org.helfoome.presentation.type.EatingOutTipType
 import org.helfoome.util.binding.BindingFragment
 
 class RestaurantEatingOutTabFragment : BindingFragment<FragmentEatingOutBinding>(R.layout.fragment_eating_out) {
@@ -24,11 +24,11 @@ class RestaurantEatingOutTabFragment : BindingFragment<FragmentEatingOutBinding>
         }
 
         viewModel.recommendationTips.observe(viewLifecycleOwner) { recommendationTips ->
-            binding.viewRecommendationTipList.setAdviseList(recommendationTips, EatingOutAdviseType.RECOMMENDATION)
+            binding.viewRecommendationTipList.setTips(recommendationTips, EatingOutTipType.RECOMMENDATION)
         }
 
         viewModel.eatingTips.observe(viewLifecycleOwner) { eatingTips ->
-            binding.viewEatingTipList.setAdviseList(eatingTips, EatingOutAdviseType.HOW_TO_EAT)
+            binding.viewEatingTipList.setTips(eatingTips, EatingOutTipType.HOW_TO_EAT)
         }
     }
 }

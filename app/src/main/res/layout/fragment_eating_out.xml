@@ -47,7 +47,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/iv_reason_for_recommendation" />
 
-                <org.helfoome.presentation.custom.EatingOutAdviseView
+                <org.helfoome.presentation.custom.EatingOutTipView
                     android:id="@+id/view_recommendation_tip_list"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -92,7 +92,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/iv_reason_for_how_to_eat" />
 
-                <org.helfoome.presentation.custom.EatingOutAdviseView
+                <org.helfoome.presentation.custom.EatingOutTipView
                     android:id="@+id/view_eating_tip_list"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
