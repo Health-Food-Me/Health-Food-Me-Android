@@ -28,6 +28,11 @@ import dagger.hilt.android.AndroidEntryPoint
 import org.helfoome.R
 import org.helfoome.databinding.ActivityMainBinding
 import org.helfoome.databinding.LogoutDialogBinding
+import org.helfoome.presentation.drawer.MyReviewActivity
+import org.helfoome.presentation.drawer.MyScrapActivity
+import org.helfoome.presentation.drawer.ProfileModifyActivity
+import org.helfoome.presentation.drawer.SettingActivity
+import org.helfoome.presentation.restaurant.MapSelectionBottomDialogFragment
 import org.helfoome.presentation.restaurant.RestaurantTabAdapter
 import org.helfoome.presentation.type.FoodType
 import org.helfoome.util.ChipFactory
@@ -46,6 +51,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
     private var locationManager: LocationManager? = null
     private lateinit var locationSource: FusedLocationSource
     private lateinit var naverMap: NaverMap
+    private var mapSelectionBottomDialog: MapSelectionBottomDialogFragment? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -73,7 +79,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
 
     private fun provideChipClickListener(chip: Chip) =
         View.OnClickListener {
-            if(!chip.isChecked)
+            if (!chip.isChecked)
                 binding.cgFoodTag.clearCheck()
             else {
                 binding.cgFoodTag.clearCheck()
@@ -185,30 +191,96 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                 }
             }
 
-            binding.layoutDrawerHeader.tvLogout.setOnClickListener {
-                val layoutInflater = LayoutInflater.from(this@MainActivity)
-                val bind: LogoutDialogBinding = LogoutDialogBinding.inflate(layoutInflater)
-                val alertDialog = AlertDialog.Builder(this@MainActivity)
-                    .setView(bind.root)
-                    .show()
+            btnNavi.setOnClickListener {
+                showMapSelectionBottomDialog()
+            }
 
-                bind.btnYes.setOnClickListener {
-                    NaverIdLoginSDK.logout()
-                    UserApiClient.instance.logout { error ->
-                        if (error != null) {
-                            Timber.e(error, "로그아웃 실패. SDK에서 토큰 삭제됨")
-                        } else {
-                            Timber.i("로그아웃 성공. SDK에서 토큰 삭제됨")
+            with(binding.layoutDrawerHeader) {
+                btnEdit.setOnClickListener {
+                    startActivity(Intent(this@MainActivity, ProfileModifyActivity::class.java))
+                }
+                tvReview.setOnClickListener {
+                    startActivity(Intent(this@MainActivity, MyReviewActivity::class.java))
+                }
+                tvScrap.setOnClickListener {
+                    startActivity(Intent(this@MainActivity, MyScrapActivity::class.java))
+                }
+                tvReport.setOnClickListener {
+                    sendGmail()
+                }
+                tvModifyReport.setOnClickListener {
+                    sendGmail()
+                }
+                tvLogout.setOnClickListener {
+                    val layoutInflater = LayoutInflater.from(this@MainActivity)
+                    val bind: LogoutDialogBinding = LogoutDialogBinding.inflate(layoutInflater)
+                    val alertDialog = AlertDialog.Builder(this@MainActivity)
+                        .setView(bind.root)
+                        .show()
+                    with(binding.layoutDrawerHeader) {
+                        btnEdit.setOnClickListener {
+                            startActivity(Intent(this@MainActivity, ProfileModifyActivity::class.java))
+                        }
+                        tvReview.setOnClickListener {
+                            startActivity(Intent(this@MainActivity, MyReviewActivity::class.java))
+                        }
+                        tvScrap.setOnClickListener {
+                            startActivity(Intent(this@MainActivity, MyScrapActivity::class.java))
+                        }
+                        tvReport.setOnClickListener {
+                            sendGmail()
+                        }
+                        tvModifyReport.setOnClickListener {
+                            sendGmail()
+                        }
+                        tvSetting.setOnClickListener {
+                            startActivity(Intent(this@MainActivity, SettingActivity::class.java))
+                        }
+                        tvLogout.setOnClickListener {
+                            val layoutInflater = LayoutInflater.from(this@MainActivity)
+                            val bind: LogoutDialogBinding = LogoutDialogBinding.inflate(layoutInflater)
+                            val alertDialog = AlertDialog.Builder(this@MainActivity)
+                                .setView(bind.root)
+                                .show()
+
+                            bind.btnYes.setOnClickListener {
+                                NaverIdLoginSDK.logout()
+                                UserApiClient.instance.logout { error ->
+                                    if (error != null) {
+                                        Timber.e(error, "로그아웃 실패. SDK에서 토큰 삭제됨")
+                                    } else {
+                                        Timber.i("로그아웃 성공. SDK에서 토큰 삭제됨")
+                                    }
+                                }
+                                startActivity(Intent(this@MainActivity, LoginActivity::class.java))
+                                finish()
+                            }
+                            bind.btnNo.setOnClickListener {
+                                alertDialog.dismiss()
+                            }
                         }
                     }
-                    startActivity(Intent(this@MainActivity, LoginActivity::class.java))
-                    finish()
-                }
-                bind.btnNo.setOnClickListener {
-                    alertDialog.dismiss()
                 }
             }
         }
+    }
+
+    private fun sendGmail() {
+        val emailIntent = Intent(
+            Intent.ACTION_SENDTO,
+            Uri.fromParts(
+                "mailto", "abc@gmail.com", null
+            )
+        )
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Subject")
+        emailIntent.putExtra(Intent.EXTRA_TEXT, "Body")
+        startActivity(Intent.createChooser(emailIntent, "Send email..."))
+    }
+
+    private fun showMapSelectionBottomDialog() {
+        if (mapSelectionBottomDialog?.isAdded == true) return
+        mapSelectionBottomDialog = MapSelectionBottomDialogFragment()
+        mapSelectionBottomDialog?.show(supportFragmentManager, "MapSelectionBottomDialogFragment")
     }
 
     private fun initObservers() {

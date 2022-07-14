@@ -13,6 +13,7 @@
         <item name="android:statusBarColor" tools:targetApi="l">@color/purple_700</item>
         <!-- Customize your theme here. -->
         <item name="android:includeFontPadding">false</item>
+        <item name="bottomSheetDialogTheme">@style/BottomSheetDialog.Style</item>
     </style>
 
     <style name="Button.Basic.Style" parent="">
@@ -57,6 +58,16 @@
         <item name="android:textSize">14sp</item>
     </style>
 
+    <style name="TextView.Setting.TextAppearance_14" parent="">
+        <item name="android:textColor">@color/gray_550</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="TextView.Setting.TextAppearance_16" parent="">
+        <item name="android:textColor">@color/gray_800</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
     <style name="TextView.OpeningTime.Appearance" parent="">
         <item name="android:fontFamily">@font/notosanskr_m</item>
         <item name="android:textColor">@color/gray_600</item>
@@ -66,6 +77,18 @@
     <style name="TextView.Drawer.TextAppearance" parent="">
         <item name="android:fontFamily">@font/notosanskr_r</item>
         <item name="android:textColor">@color/gray_800</item>
+    </style>
+
+    <style name="TextView.Map.TextAppearance" parent="">
+        <item name="android:fontFamily">@font/notosanskr_r</item>
+        <item name="android:textColor">@color/gray_800</item>
+        <item name="android:textSize">17dp</item>
+    </style>
+
+    <style name="TextView.MapButton.Style" parent="">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:paddingVertical">14dp</item>
+        <item name="android:gravity">center_horizontal</item>
     </style>
 
     <style name="CircleImageView.Radius.8.Style" parent="">
@@ -93,6 +116,14 @@
         <item name="cornerFamily">rounded</item>
     </style>
 
+    <style name="BottomSheetDialog.Style" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/Modal.Style</item>
+    </style>
+
+    <style name="Modal.Style" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/rectangle_white_top_radius_24</item>
+    </style>
+
     <style name="CustomAlertDialog">
         <!-- 꽉 채운 화면에 배경 없이 (custom view 영역만 보일 것이다.) -->
         <item name="android:windowBackground">@android:color/transparent</item>
@@ -107,5 +138,4 @@
         <!-- Dialog 가 센터에 나오도록 하자. -->
         <item name="android:windowIsFloating">true</item>
     </style>
-
 </resources>

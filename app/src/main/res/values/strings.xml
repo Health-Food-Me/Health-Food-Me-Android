@@ -3,6 +3,9 @@
     <string name="login_logo">헬푸미</string>
     <string name="login_description">샐러드부터 일반식까지\n다이어터를 위한 식당 추천 지도앱</string>
 
+    <!-- Global -->
+    <string name="cancel">취소</string>
+
     <!-- Main Chip Group -->
     <string name="main_chip_group_salad">샐러드</string>
     <string name="main_chip_group_poke">포케</string>
@@ -12,6 +15,28 @@
     <string name="main_chip_group_meat">고깃집</string>
     <string name="main_chip_group_ricebowl">덮밥</string>
     <string name="main_chip_group_quito">키토김밥</string>
+
+    <!-- Profile -->
+    <string name="profile_title">프로필 수정</string>
+
+    <!-- My Review -->
+    <string name="my_review_title">내가 쓴 리뷰</string>
+
+    <!-- Setting -->
+    <string name="setting_title">설정</string>
+    <string name="setting_customer_support">고객지원</string>
+    <string name="setting_inquiry">문의하기</string>
+    <string name="setting_withdrawal">회원탈퇴</string>
+    <string name="setting_terms_policies">약관 및 정책</string>
+    <string name="setting_open_source_info">오픈 소스 정보</string>
+    <string name="setting_naver_map_notice">네이버 지도 법적 공지</string>
+    <string name="setting_naver_map_open_source">네이버 지도 오픈소스 라이선스</string>
+
+    <!-- My Scrap -->
+    <string name="my_scrap_title">스크랩한 식당</string>
+    <string name="my_scrap_explain_first">헬푸미와 외식 걱정을 날려보아요!</string>
+    <string name="my_scrap_explain_second">다이어터도 즐길 수 있는 식당</string>
+    <string name="my_scrap_go_to_scrap">스크랩 하러 가기</string>
 
     <string-array name="main_chip_group">
         <item>@string/main_chip_group_salad</item>
@@ -75,6 +100,10 @@
         <item>@string/restaurant_detail_tab_item_how_to_eat_out</item>
         <item>@string/restaurant_detail_tab_item_review</item>
     </string-array>
+
+    <!-- Map Selection -->
+    <string name="dialog_map_selection_naver">네이버지도</string>
+    <string name="dialog_map_selection_kakao">카카오맵</string>
 
     <!--tools-->
     <string name="dear_fine">디어파인</string>
