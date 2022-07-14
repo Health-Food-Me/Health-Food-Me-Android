@@ -35,7 +35,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/tv_recommend_title"
+                    android:id="@+id/tv_recommend_tip_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/size_spacing_4"
@@ -48,13 +48,13 @@
                     app:layout_constraintTop_toBottomOf="@id/iv_reason_for_recommendation" />
 
                 <org.helfoome.presentation.custom.EatingOutAdviseView
-                    android:id="@+id/view_eating_out_advise_recommendation"
+                    android:id="@+id/view_recommendation_tip_list"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_recommend_title" />
+                    app:layout_constraintTop_toBottomOf="@id/tv_recommend_tip_title" />
 
                 <View
                     android:id="@+id/line"
@@ -66,7 +66,7 @@
                     android:backgroundTint="@color/gray_200"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/view_eating_out_advise_recommendation" />
+                    app:layout_constraintTop_toBottomOf="@id/view_recommendation_tip_list" />
 
                 <ImageView
                     android:id="@+id/iv_reason_for_how_to_eat"
@@ -79,7 +79,7 @@
                     app:layout_constraintTop_toBottomOf="@id/line" />
 
                 <TextView
-                    android:id="@+id/tv_how_to_eat_title"
+                    android:id="@+id/tv_eating_tip_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/size_spacing_4"
@@ -92,17 +92,17 @@
                     app:layout_constraintTop_toBottomOf="@id/iv_reason_for_how_to_eat" />
 
                 <org.helfoome.presentation.custom.EatingOutAdviseView
-                    android:id="@+id/view_eating_out_advise_how_to_eat"
+                    android:id="@+id/view_eating_tip_list"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_how_to_eat_title" />
+                    app:layout_constraintTop_toBottomOf="@id/tv_eating_tip_title" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
-                android:id="@+id/tv_category"
+                android:id="@+id/tv_food_category"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/rectangle_transparent_radius_20"
