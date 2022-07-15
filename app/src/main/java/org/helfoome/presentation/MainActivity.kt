@@ -3,7 +3,9 @@ package org.helfoome.presentation
 import android.Manifest
 import android.app.AlertDialog
 import android.content.Intent
+import android.graphics.Color
 import android.graphics.Paint
+import android.graphics.drawable.ColorDrawable
 import android.location.LocationManager
 import android.net.Uri
 import android.os.Bundle
@@ -33,7 +35,7 @@ import org.helfoome.presentation.drawer.MyScrapActivity
 import org.helfoome.presentation.drawer.ProfileModifyActivity
 import org.helfoome.presentation.drawer.SettingActivity
 import org.helfoome.presentation.restaurant.MapSelectionBottomDialogFragment
-import org.helfoome.presentation.restaurant.RestaurantTabAdapter
+import org.helfoome.presentation.restaurant.adapter.RestaurantTabAdapter
 import org.helfoome.presentation.type.FoodType
 import org.helfoome.util.ChipFactory
 import org.helfoome.util.binding.BindingActivity
@@ -211,54 +213,32 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                 tvModifyReport.setOnClickListener {
                     sendGmail()
                 }
+                tvSetting.setOnClickListener {
+                    startActivity(Intent(this@MainActivity, SettingActivity::class.java))
+                }
                 tvLogout.setOnClickListener {
                     val layoutInflater = LayoutInflater.from(this@MainActivity)
                     val bind: LogoutDialogBinding = LogoutDialogBinding.inflate(layoutInflater)
                     val alertDialog = AlertDialog.Builder(this@MainActivity)
                         .setView(bind.root)
                         .show()
-                    with(binding.layoutDrawerHeader) {
-                        btnEdit.setOnClickListener {
-                            startActivity(Intent(this@MainActivity, ProfileModifyActivity::class.java))
-                        }
-                        tvReview.setOnClickListener {
-                            startActivity(Intent(this@MainActivity, MyReviewActivity::class.java))
-                        }
-                        tvScrap.setOnClickListener {
-                            startActivity(Intent(this@MainActivity, MyScrapActivity::class.java))
-                        }
-                        tvReport.setOnClickListener {
-                            sendGmail()
-                        }
-                        tvModifyReport.setOnClickListener {
-                            sendGmail()
-                        }
-                        tvSetting.setOnClickListener {
-                            startActivity(Intent(this@MainActivity, SettingActivity::class.java))
-                        }
-                        tvLogout.setOnClickListener {
-                            val layoutInflater = LayoutInflater.from(this@MainActivity)
-                            val bind: LogoutDialogBinding = LogoutDialogBinding.inflate(layoutInflater)
-                            val alertDialog = AlertDialog.Builder(this@MainActivity)
-                                .setView(bind.root)
-                                .show()
 
-                            bind.btnYes.setOnClickListener {
-                                NaverIdLoginSDK.logout()
-                                UserApiClient.instance.logout { error ->
-                                    if (error != null) {
-                                        Timber.e(error, "로그아웃 실패. SDK에서 토큰 삭제됨")
-                                    } else {
-                                        Timber.i("로그아웃 성공. SDK에서 토큰 삭제됨")
-                                    }
-                                }
-                                startActivity(Intent(this@MainActivity, LoginActivity::class.java))
-                                finish()
-                            }
-                            bind.btnNo.setOnClickListener {
-                                alertDialog.dismiss()
+                    alertDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+                    bind.btnYes.setOnClickListener {
+                        NaverIdLoginSDK.logout()
+                        UserApiClient.instance.logout { error ->
+                            if (error != null) {
+                                Timber.e(error, "로그아웃 실패. SDK에서 토큰 삭제됨")
+                            } else {
+                                Timber.i("로그아웃 성공. SDK에서 토큰 삭제됨")
                             }
                         }
+                        startActivity(Intent(this@MainActivity, LoginActivity::class.java))
+                        finish()
+                    }
+                    bind.btnNo.setOnClickListener {
+                        alertDialog.dismiss()
                     }
                 }
             }
