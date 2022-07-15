@@ -1,4 +1,4 @@
-package org.helfoome.presentation.restaurant
+package org.helfoome.presentation.restaurant.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

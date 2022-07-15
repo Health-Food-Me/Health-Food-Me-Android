@@ -5,6 +5,8 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import org.helfoome.R
 import org.helfoome.databinding.FragmentEatingOutBinding
+import org.helfoome.presentation.restaurant.adapter.RestaurantMenuAdapter
+import org.helfoome.presentation.restaurant.viewmodel.RestaurantMenuViewModel
 import org.helfoome.presentation.type.EatingOutTipType
 import org.helfoome.util.binding.BindingFragment
 

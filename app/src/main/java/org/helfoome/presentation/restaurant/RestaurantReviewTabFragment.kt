@@ -7,6 +7,9 @@ import com.google.android.material.tabs.TabLayout
 import dagger.hilt.android.AndroidEntryPoint
 import org.helfoome.R
 import org.helfoome.databinding.FragmentReviewBinding
+import org.helfoome.presentation.restaurant.adapter.RestaurantBlogReviewAdapter
+import org.helfoome.presentation.restaurant.adapter.RestaurantGeneralReviewAdapter
+import org.helfoome.presentation.restaurant.viewmodel.RestaurantReviewViewModel
 import org.helfoome.util.ItemDecorationUtil
 import org.helfoome.util.binding.BindingFragment
 

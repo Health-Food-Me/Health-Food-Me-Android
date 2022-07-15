@@ -1,4 +1,4 @@
-package org.helfoome.presentation.restaurant
+package org.helfoome.presentation.restaurant.adapter
 
 import android.util.Log
 import android.view.LayoutInflater

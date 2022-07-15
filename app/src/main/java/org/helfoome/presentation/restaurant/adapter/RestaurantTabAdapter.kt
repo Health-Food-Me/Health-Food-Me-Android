@@ -1,8 +1,11 @@
-package org.helfoome.presentation.restaurant
+package org.helfoome.presentation.restaurant.adapter
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import org.helfoome.presentation.restaurant.RestaurantEatingOutTabFragment
+import org.helfoome.presentation.restaurant.RestaurantMenuTabFragment
+import org.helfoome.presentation.restaurant.RestaurantReviewTabFragment
 
 class RestaurantTabAdapter(fm: FragmentActivity) : FragmentStateAdapter(fm) {
     override fun getItemCount(): Int = 3
