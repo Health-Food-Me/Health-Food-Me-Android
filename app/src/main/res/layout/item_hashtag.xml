@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <TextView
+        android:id="@+id/tv_hashtag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/size_spacing_4"
+        android:background="@drawable/rectangle_boarder_radius_12"
+        android:fontFamily="@font/notosanskr_r"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="4dp"
+        android:textColor="@color/red_500"
+        android:textSize="10dp"
+        tools:text="#맛 최고" />
+
+</layout>

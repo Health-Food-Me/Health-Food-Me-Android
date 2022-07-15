@@ -5,7 +5,6 @@ import android.view.KeyEvent
 import android.view.KeyEvent.KEYCODE_ENTER
 import android.view.MotionEvent
 import android.widget.EditText
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.flowWithLifecycle
@@ -21,7 +20,6 @@ import org.helfoome.presentation.search.type.SearchMode
 import org.helfoome.util.binding.BindingActivity
 import org.helfoome.util.ext.closeKeyboard
 import org.helfoome.util.ext.showKeyboard
-import org.helfoome.util.ext.showToast
 
 @AndroidEntryPoint
 class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_search) {
