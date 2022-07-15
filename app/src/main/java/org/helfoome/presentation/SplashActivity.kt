@@ -1,9 +1,7 @@
 package org.helfoome.presentation
 
-import android.animation.Animator
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
