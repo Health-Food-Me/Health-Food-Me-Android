@@ -17,6 +17,7 @@ class RestaurantGeneralReviewAdapter :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(review: ReviewInfo) {
             binding.review = review
+            binding.hashtag.setHashtag(review.tags)
             val adapter = RestaurantImageAdapter().apply {
                 imageList = review.photoList
             }

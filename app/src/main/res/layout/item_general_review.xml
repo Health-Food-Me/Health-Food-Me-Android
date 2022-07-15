@@ -44,6 +44,14 @@
             app:layout_constraintTop_toTopOf="@id/tv_nickname"
             app:score="@{review.score}" />
 
+        <org.helfoome.presentation.custom.HashtagView
+            android:id="@+id/hashtag"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginHorizontal="@dimen/size_spacing_20"
+            app:layout_constraintTop_toBottomOf="@id/tv_nickname" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_photo_list"
             android:layout_width="0dp"
@@ -55,7 +63,7 @@
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_title"
+            app:layout_constraintTop_toBottomOf="@id/hashtag"
             tools:listitem="@layout/item_review_image" />
 
         <TextView
