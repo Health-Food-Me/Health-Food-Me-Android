@@ -33,7 +33,6 @@ inline fun <reified T : Activity> Context.startActivity(
 fun Context.stringListFrom(id: Int): List<String> =
     resources.getStringArray(id).toList()
 
-
 fun Context.showToast(msg: String) {
     Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
 }
