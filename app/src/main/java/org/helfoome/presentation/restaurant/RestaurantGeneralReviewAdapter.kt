@@ -10,10 +10,7 @@ import org.helfoome.util.ItemDecorationUtil
 import org.helfoome.util.ItemDiffCallback
 
 class RestaurantGeneralReviewAdapter :
-    ListAdapter<ReviewInfo, RestaurantGeneralReviewAdapter.ReviewViewHolder>(ItemDiffCallback<ReviewInfo>(
-        onContentsTheSame = { old, new -> old == new },
-        onItemsTheSame = { old, new -> old.id == new.id }
-    )) {
+    ListAdapter<ReviewInfo, RestaurantGeneralReviewAdapter.ReviewViewHolder>(ItemDiffCallback<ReviewInfo>(onContentsTheSame = { old, new -> old == new }, onItemsTheSame = { old, new -> old.id == new.id })) {
     private lateinit var inflater: LayoutInflater
 
     class ReviewViewHolder(private val binding: ItemGeneralReviewBinding) :

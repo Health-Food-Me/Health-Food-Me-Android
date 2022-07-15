@@ -9,10 +9,7 @@ import org.helfoome.domain.entity.BlogReviewInfo
 import org.helfoome.util.ItemDiffCallback
 
 class RestaurantBlogReviewAdapter :
-    ListAdapter<BlogReviewInfo, RestaurantBlogReviewAdapter.ReviewViewHolder>(ItemDiffCallback<BlogReviewInfo>(
-        onContentsTheSame = { old, new -> old == new },
-        onItemsTheSame = { old, new -> old.id == new.id }
-    )) {
+    ListAdapter<BlogReviewInfo, RestaurantBlogReviewAdapter.ReviewViewHolder>(ItemDiffCallback<BlogReviewInfo>(onContentsTheSame = { old, new -> old == new }, onItemsTheSame = { old, new -> old.id == new.id })) {
     private lateinit var inflater: LayoutInflater
 
     class ReviewViewHolder(private val binding: ItemBlogReviewBinding) :
