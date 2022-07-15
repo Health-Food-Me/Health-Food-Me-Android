@@ -66,6 +66,7 @@ dependencies {
     implementation(libs.naverlogin)
     implementation(libs.navermap)
     implementation(libs.googlegms)
+    implementation(libs.flexbox)
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.analytics)
     implementation(libs.firebase.crashlyticsKtx)

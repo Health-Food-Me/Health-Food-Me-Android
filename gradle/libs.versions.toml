@@ -70,6 +70,7 @@ googlegms = "com.google.android.gms:play-services-location:20.0.0"
 firebase-bom = "com.google.firebase:firebase-bom:30.2.0"
 firebase-analytics = "com.google.firebase:firebase-analytics-ktx:21.0.0"
 firebase-crashlyticsKtx = "com.google.firebase:firebase-crashlytics-ktx:18.2.11"
+flexbox = "com.google.android.flexbox:flexbox:3.0.0"
 
 junit = "junit:junit:4.13.2"
 

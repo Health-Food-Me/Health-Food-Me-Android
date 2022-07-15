@@ -3,17 +3,19 @@ package org.helfoome.presentation.custom
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
-import android.widget.LinearLayout
+import com.google.android.flexbox.FlexWrap
+import com.google.android.flexbox.FlexboxLayout
 import org.helfoome.R
 import org.helfoome.databinding.ItemHashtagBinding
 
-class HashtagView(context: Context, attrs: AttributeSet? = null) : LinearLayout(context, attrs) {
+class HashtagView(context: Context, attrs: AttributeSet? = null) : FlexboxLayout(context, attrs) {
     private var binding: ItemHashtagBinding? = null
     private lateinit var inflater: LayoutInflater
 
     init {
         if (!::inflater.isInitialized)
             inflater = LayoutInflater.from(context)
+        flexWrap = FlexWrap.WRAP
     }
 
     fun setHashtag(hashtag: List<String>, isContainSharp: Boolean = true) {

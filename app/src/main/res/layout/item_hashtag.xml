@@ -7,6 +7,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/size_spacing_4"
+        android:layout_marginBottom="@dimen/size_spacing_4"
         android:background="@drawable/rectangle_boarder_radius_12"
         android:fontFamily="@font/notosanskr_r"
         android:paddingHorizontal="10dp"
