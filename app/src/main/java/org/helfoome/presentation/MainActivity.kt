@@ -1,18 +1,15 @@
 package org.helfoome.presentation
 
-import android.Manifest
 import android.app.AlertDialog
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.drawable.ColorDrawable
-import android.location.LocationManager
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.add
@@ -41,7 +38,6 @@ import org.helfoome.presentation.type.FoodType
 import org.helfoome.util.ChipFactory
 import org.helfoome.util.binding.BindingActivity
 import org.helfoome.util.ext.stringListFrom
-import org.helfoome.util.showToast
 import timber.log.Timber
 
 @AndroidEntryPoint
