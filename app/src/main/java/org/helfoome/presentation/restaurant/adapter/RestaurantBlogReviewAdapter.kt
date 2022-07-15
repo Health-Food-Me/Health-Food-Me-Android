@@ -14,8 +14,8 @@ class RestaurantBlogReviewAdapter :
 
     class ReviewViewHolder(private val binding: ItemBlogReviewBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(menu: BlogReviewInfo) {
-            binding.review = menu
+        fun bind(review: BlogReviewInfo) {
+            binding.review = review
         }
     }
 

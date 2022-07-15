@@ -15,10 +15,10 @@ class RestaurantGeneralReviewAdapter :
 
     class ReviewViewHolder(private val binding: ItemGeneralReviewBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(menu: ReviewInfo) {
-            binding.review = menu
+        fun bind(review: ReviewInfo) {
+            binding.review = review
             val adapter = RestaurantImageAdapter().apply {
-                imageList = menu.photoList
+                imageList = review.photoList
             }
             binding.rvPhotoList.apply {
                 this.adapter = adapter
