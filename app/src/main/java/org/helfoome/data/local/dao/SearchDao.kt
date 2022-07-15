@@ -1,16 +1,17 @@
 package org.helfoome.data.local.dao
 
 import androidx.room.*
+import kotlinx.coroutines.flow.Flow
 import org.helfoome.data.local.entity.SearchData
 
 @Dao
 interface SearchDao {
     @Query("SELECT * FROM search_data_table")
-    suspend fun getAll(): List<SearchData>
+    fun getAll(): Flow<List<SearchData>>
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insert(searchData: SearchData)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertKeyword(searchData: SearchData)
 
     @Delete
-    suspend fun delete(searchData: SearchData)
+    suspend fun deleteKeyword(searchData: SearchData)
 }

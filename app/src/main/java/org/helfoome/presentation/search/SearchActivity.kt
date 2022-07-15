@@ -25,7 +25,9 @@ import org.helfoome.util.ext.showKeyboard
 class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_search) {
     private val viewModel: SearchViewModel by viewModels()
     private val autoCompleteAdapter = AutoCompleteAdapter()
-    private val recentAdapter = RecentAdapter()
+    private val recentAdapter = RecentAdapter {
+        viewModel.removeKeyword(it)
+    }
     private val resultAdapter = ResultAdapter()
     private val searchMapTopAdapter = SearchMapTopAdapter()
     private val searchRecentTopAdapter = SearchRecentTopAdapter()
@@ -100,8 +102,10 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
 
     private fun initKeyListeners() {
         with(binding.etSearch) {
-            setOnKeyListener { view, keyCode, event ->
+            setOnKeyListener { _, keyCode, event ->
                 if (event.action == KeyEvent.ACTION_DOWN && keyCode == KEYCODE_ENTER) {
+                    // TODO : 최근 검색어 추가 서버 통신 시 수정
+                    viewModel.insertKeyword(text.toString())
                     closeKeyboard(this)
                     binding.etSearch.clearFocus()
                     viewModel.setSearchMode(SearchMode.RESULT)
@@ -117,7 +121,6 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
                 .onEach {
                     when (it) {
                         SearchMode.RECENT -> {
-                            // TODO : 로컬데이터 불러오기
                             rvSearch.adapter = recentConcatAdapter
                         }
                         SearchMode.AUTO_COMPLETE -> {
@@ -149,6 +152,13 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
                         }
                     }
                 }.launchIn(lifecycleScope)
+
+            // 최근 검색어 받아오기
+            viewModel.keywordList.flowWithLifecycle(lifecycle)
+                .onEach {
+                    recentAdapter.submitList(it)
+                }
+                .launchIn(lifecycleScope)
         }
     }
 
