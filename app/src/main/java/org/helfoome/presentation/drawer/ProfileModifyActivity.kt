@@ -2,8 +2,6 @@ package org.helfoome.presentation.drawer
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
@@ -16,11 +14,20 @@ import org.helfoome.util.binding.BindingActivity
 class ProfileModifyActivity : BindingActivity<ActivityProfileModifyBinding>(R.layout.activity_profile_modify) {
     private val viewModel: ProfileModifyViewModel by viewModels()
 
+    private lateinit var topDownAnimation : Animation
+    private lateinit var bottomTopAnimation : Animation
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding.viewModel = viewModel
 
+        initAnimation()
         initListener()
+    }
+
+    private fun initAnimation() {
+        topDownAnimation = AnimationUtils.loadAnimation(this, R.anim.anim_snackbar_top_down)
+        bottomTopAnimation = AnimationUtils.loadAnimation(this, R.anim.anim_snackbar_bottom_top)
     }
 
     private fun initListener() {
@@ -34,17 +41,16 @@ class ProfileModifyActivity : BindingActivity<ActivityProfileModifyBinding>(R.la
             if (viewModel.isValidNickname.value == true) {
                 startActivity(Intent(this, MainActivity::class.java))
             } else {
-                val topDownAnimation = AnimationUtils.loadAnimation(this, R.anim.anim_snackbar_top_down)
-                val bottomTopAnimation = AnimationUtils.loadAnimation(this, R.anim.anim_snackbar_bottom_top)
                 binding.snvProfileModify.animation = topDownAnimation
                 binding.snvProfileModify.setText("닉네임 설정 기준에 적합하지 않습니다")
-                binding.snvProfileModify.visibility = View.VISIBLE
                 topDownAnimation.setAnimationListener(object : Animation.AnimationListener {
                     override fun onAnimationStart(animation: Animation?) {
                     }
+
                     override fun onAnimationEnd(animation: Animation?) {
-                            binding.snvProfileModify.animation = bottomTopAnimation
+                        binding.snvProfileModify.animation = bottomTopAnimation
                     }
+
                     override fun onAnimationRepeat(animation: Animation?) {
                     }
                 })
