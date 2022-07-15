@@ -190,6 +190,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                         .show()
 
                     alertDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+                    alertDialog.setCancelable(false)
 
                     bind.btnYes.setOnClickListener {
                         NaverIdLoginSDK.logout()
