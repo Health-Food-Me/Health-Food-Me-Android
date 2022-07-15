@@ -11,6 +11,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -20,10 +21,10 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.chip.Chip
 import com.google.android.material.tabs.TabLayoutMediator
 import com.kakao.sdk.user.UserApiClient
-import com.naver.maps.map.LocationTrackingMode
-import com.naver.maps.map.MapFragment
-import com.naver.maps.map.NaverMap
-import com.naver.maps.map.OnMapReadyCallback
+import com.naver.maps.geometry.LatLng
+import com.naver.maps.map.*
+import com.naver.maps.map.overlay.Marker
+import com.naver.maps.map.overlay.OverlayImage
 import com.naver.maps.map.util.FusedLocationSource
 import com.navercorp.nid.NaverIdLoginSDK
 import dagger.hilt.android.AndroidEntryPoint
@@ -50,33 +51,25 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
     private val viewModel: MainViewModel by viewModels()
     private lateinit var behavior: BottomSheetBehavior<ConstraintLayout>
     private val restaurantDetailAdapter = RestaurantTabAdapter(this)
-    private var locationManager: LocationManager? = null
     private lateinit var locationSource: FusedLocationSource
     private lateinit var naverMap: NaverMap
     private var mapSelectionBottomDialog: MapSelectionBottomDialogFragment? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        locationSource =
-            FusedLocationSource(this, 1000)
-//        locationManager = getSystemService(LOCATION_SERVICE) as LocationManager?
-
-        val fm = supportFragmentManager
-        val mapFragment = fm.findFragmentById(R.id.fragment_naver_map) as MapFragment?
-            ?: MapFragment.newInstance().also {
-                fm.commit {
-                    add<MapFragment>(R.id.fragment_naver_map)
-                    setReorderingAllowed(true)
-                }
-            }
-        mapFragment.getMapAsync(this)
-
         binding.viewModel = viewModel
+
+        initNaverMapLocationSource()
+        initNaverMap()
         initView()
         initChip()
         initListeners()
         initObservers()
-        requirePermission()
+    }
+
+    private fun initNaverMapLocationSource() {
+        locationSource =
+            FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE)
     }
 
     private fun provideChipClickListener(chip: Chip) =
@@ -120,29 +113,6 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
             return
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-    }
-
-    private fun requirePermission() {
-        val locationPermissionRequest = registerForActivityResult(
-            ActivityResultContracts.RequestMultiplePermissions()
-        ) { permissions ->
-            when {
-                permissions.getOrDefault(Manifest.permission.ACCESS_FINE_LOCATION, false) -> {
-                }
-                permissions.getOrDefault(Manifest.permission.ACCESS_COARSE_LOCATION, false) -> {
-                }
-                else -> {
-                    showToast("위치 권한이 없어 현재 위치를 알 수 없습니다.")
-                }
-            }
-        }
-
-        locationPermissionRequest.launch(
-            arrayOf(
-                Manifest.permission.ACCESS_FINE_LOCATION,
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            )
-        )
     }
 
     override fun onStart() {
@@ -308,26 +278,42 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
     override fun onMapReady(naverMap: NaverMap) {
         this.naverMap = naverMap
         naverMap.locationSource = locationSource
-        naverMap.locationTrackingMode = LocationTrackingMode.Follow
-//        map = naverMap2
-//        locationSource = FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE)
-//        map!!.locationSource = locationSource
-//
-//        val uiSettings = map!!.uiSettings
-//        uiSettings.isZoomControlEnabled = false
 
-//        val marker = Marker()
-//        marker.position = LatLng(37.5670135, 126.9783740)
-//        marker.icon = OverlayImage.fromResource(R.drawable.ic_marker_red)
-//        marker.map = naverMap2
-//
-//        val marker2 = Marker()
-//        marker2.position = LatLng(37.5570135, 126.9783740)
-//        marker2.icon = OverlayImage.fromResource(R.drawable.ic_marker_green)
-//        marker2.map = naverMap2
-//
-//        val initialPosition = LatLng(37.5670135, 126.9783740)
-//        val cameraUpdate = CameraUpdate.scrollTo(initialPosition)
-//        map!!.moveCamera(cameraUpdate)
+        binding.fabLocation.setOnClickListener {
+            naverMap.locationTrackingMode = LocationTrackingMode.Follow
+        }
+
+        // 네이버 지도 카메라 초기 위치
+        val cameraPosition = CameraPosition(LatLng(37.5666102, 126.9783881), 11.0)
+        naverMap.cameraPosition = cameraPosition
+
+        val marker = Marker()
+        marker.position = LatLng(37.5670135, 126.9783740)
+        marker.icon = OverlayImage.fromResource(R.drawable.ic_marker_red)
+        marker.map = naverMap
+
+        val marker2 = Marker()
+        marker2.position = LatLng(37.5570135, 126.9783740)
+        marker2.icon = OverlayImage.fromResource(R.drawable.ic_marker_green)
+        marker2.map = naverMap
+
+        // 마커 클릭 이벤트
+        marker.setOnClickListener { overlay ->
+            Toast.makeText(this, "마커 1 클릭", Toast.LENGTH_SHORT).show()
+            true
+        }
+
+        marker2.setOnClickListener { overlay ->
+            Toast.makeText(this, "마커 2 클릭", Toast.LENGTH_SHORT).show()
+            true
+        }
+
+        // 줌 버튼 없애기
+        val uiSettings = naverMap.uiSettings
+        uiSettings.isZoomControlEnabled = false
+    }
+
+    companion object {
+        private const val LOCATION_PERMISSION_REQUEST_CODE = 1000
     }
 }

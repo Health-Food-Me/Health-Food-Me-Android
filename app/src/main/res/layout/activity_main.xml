@@ -104,27 +104,17 @@
                     app:layout_constraintBottom_toTopOf="@id/fab_location"
                     app:layout_constraintEnd_toEndOf="parent" />
 
-                <com.naver.maps.map.widget.LocationButtonView
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/fab_location"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="20dp"
                     android:layout_marginBottom="39dp"
+                    android:backgroundTint="@color/white"
                     android:src="@drawable/ic_currentposition"
+                    app:borderWidth="0dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent" />
-
-                <!--            <com.google.android.material.floatingactionbutton.FloatingActionButton-->
-                <!--                android:id="@+id/fab_location"-->
-                <!--                android:layout_width="wrap_content"-->
-                <!--                android:layout_height="wrap_content"-->
-                <!--                android:layout_marginEnd="20dp"-->
-                <!--                android:layout_marginBottom="39dp"-->
-                <!--                android:backgroundTint="@color/white"-->
-                <!--                android:src="@drawable/ic_currentposition"-->
-                <!--                app:borderWidth="0dp"-->
-                <!--                app:layout_constraintBottom_toBottomOf="parent"-->
-                <!--                app:layout_constraintEnd_toEndOf="parent" />-->
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -134,6 +124,7 @@
                 android:layout_height="match_parent"
                 android:fillViewport="true"
                 android:overScrollMode="never"
+                android:visibility="invisible"
                 app:behavior_hideable="true"
                 app:behavior_peekHeight="155dp"
                 app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
