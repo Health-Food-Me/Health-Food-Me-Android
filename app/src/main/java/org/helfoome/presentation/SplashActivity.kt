@@ -11,7 +11,6 @@ import org.helfoome.R
 import org.helfoome.databinding.ActivitySplashBinding
 import org.helfoome.util.binding.BindingActivity
 
-
 class SplashActivity : BindingActivity<ActivitySplashBinding>(R.layout.activity_splash) {
     private var job: Job? = null
 
