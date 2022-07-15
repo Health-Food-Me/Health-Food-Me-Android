@@ -2,6 +2,7 @@ package org.helfoome.presentation.drawer
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import androidx.activity.viewModels
@@ -33,16 +34,28 @@ class ProfileModifyActivity : BindingActivity<ActivityProfileModifyBinding>(R.la
         binding.btModify.setOnClickListener {
             viewModel.checkNicknameFormat()
             // 중복 닉네임 체크 먼저 하기
-            // if {
-            //     binding.snvSample.setText("중복된 닉네임 입니다")
-            //     binding.snvSample.visibility = View.VISIBLE
-            // }
-            if (viewModel.isValidNickname.value == true) {
+            if (viewModel.isOverlapNickName.value == true) {
+                binding.snvProfileModify.animation = topDownAnimation
+                binding.snvProfileModify.setText("중복된 닉네임 입니다")
+                topDownAnimation.setAnimationListener(object : Animation.AnimationListener {
+
+                    override fun onAnimationStart(animation: Animation?) {
+                    }
+
+                    override fun onAnimationEnd(animation: Animation?) {
+                        binding.snvProfileModify.animation = bottomTopAnimation
+                    }
+
+                    override fun onAnimationRepeat(animation: Animation?) {
+                    }
+                })
+            } else if (viewModel.isValidNickname.value == true) {
                 startActivity(Intent(this, MainActivity::class.java))
             } else {
                 binding.snvProfileModify.animation = topDownAnimation
                 binding.snvProfileModify.setText("닉네임 설정 기준에 적합하지 않습니다")
                 topDownAnimation.setAnimationListener(object : Animation.AnimationListener {
+
                     override fun onAnimationStart(animation: Animation?) {
                     }
 
