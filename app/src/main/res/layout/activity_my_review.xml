@@ -47,7 +47,51 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
             android:layout_marginTop="20dp"
+            android:visibility="gone"
             app:layout_constraintTop_toBottomOf="@id/line_first" />
+
+        <TextView
+            android:id="@+id/tv_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="202dp"
+            android:gravity="center"
+            android:text="@string/my_review_description"
+            android:textColor="@color/gray_800"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/line_first" />
+
+        <TextView
+            android:id="@+id/tv_description_second"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:gravity="center"
+            android:text="@string/my_review_description_second"
+            android:textColor="@color/gray_600"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_description" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            style="@style/Button.Basic.Style"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/rectangle_red_radius_36"
+            android:paddingHorizontal="40dp"
+            android:paddingVertical="9dp"
+            android:text="@string/my_review_store"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_description_second" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
