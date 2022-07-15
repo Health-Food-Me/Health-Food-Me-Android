@@ -39,7 +39,6 @@
     <string name="my_scrap_title">스크랩한 식당</string>
     <string name="my_scrap_explain_first">헬푸미와 외식 걱정을 날려보아요!</string>
     <string name="my_scrap_explain_second">다이어터도 즐길 수 있는 식당</string>
-    <string name="my_scrap_go_to_scrap">스크랩 하러 가기</string>
 
     <string-array name="main_chip_group">
         <item>@string/main_chip_group_salad</item>
@@ -119,6 +118,10 @@
     <!-- Map Selection -->
     <string name="dialog_map_selection_naver">네이버지도</string>
     <string name="dialog_map_selection_kakao">카카오맵</string>
+
+    <!-- empty -->
+    <string name="empty_go_scrap">스크랩하러 가기</string>
+    <string name="empty_go_restaurant">식당 보러 가기</string>
 
     <!--tools-->
     <string name="dear_fine">디어파인</string>
