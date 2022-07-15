@@ -17,7 +17,11 @@
     <string name="main_chip_group_quito">키토김밥</string>
 
     <!-- Profile -->
-    <string name="profile_title">프로필 수정</string>
+    <string name="profile_title">프로필 편집</string>
+    <string name="profile_description">변경할 닉네임을 설정해 주세요</string>
+    <string name="profile_nickname">닉네임을 설정해 주세요</string>
+    <string name="profile_nickname_condition">* 특수문자, 이모티콘은 사용 불가합니다\n* 띄어쓰기 포함 최대 12글자</string>
+    <string name="profile_modify">수정 완료</string>
 
     <!-- My Review -->
     <string name="my_review_title">내가 쓴 리뷰</string>
