@@ -2,7 +2,6 @@ package org.helfoome.presentation.drawer
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import androidx.activity.viewModels
@@ -14,8 +13,8 @@ import org.helfoome.util.binding.BindingActivity
 class ProfileModifyActivity : BindingActivity<ActivityProfileModifyBinding>(R.layout.activity_profile_modify) {
     private val viewModel: ProfileModifyViewModel by viewModels()
 
-    private lateinit var topDownAnimation : Animation
-    private lateinit var bottomTopAnimation : Animation
+    private lateinit var topDownAnimation: Animation
+    private lateinit var bottomTopAnimation: Animation
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

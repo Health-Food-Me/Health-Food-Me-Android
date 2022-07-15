@@ -2,11 +2,8 @@ package org.helfoome.presentation.custom
 
 import android.content.Context
 import android.util.AttributeSet
-import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
-import org.helfoome.databinding.ViewOpeningTimeBinding
 import org.helfoome.databinding.ViewSnackbarBinding
 
 class SnackBarView(context: Context, attrs: AttributeSet? = null) : ConstraintLayout(context, attrs) {
