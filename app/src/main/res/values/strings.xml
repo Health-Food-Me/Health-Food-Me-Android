@@ -25,6 +25,9 @@
 
     <!-- My Review -->
     <string name="my_review_title">내가 쓴 리뷰</string>
+    <string name="my_review_description">헬푸미와 외식 걱정을 날려보아요!</string>
+    <string name="my_review_description_second">다이어터도 즐길 수 있는</string>
+    <string name="my_review_store">식당 보러 가기</string>
 
     <!-- Withdrawal -->
     <string name="withdrawal_title">회원탈퇴</string>
