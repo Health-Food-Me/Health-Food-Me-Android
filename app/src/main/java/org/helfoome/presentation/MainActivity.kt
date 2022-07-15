@@ -36,7 +36,7 @@ import org.helfoome.presentation.drawer.MyScrapActivity
 import org.helfoome.presentation.drawer.ProfileModifyActivity
 import org.helfoome.presentation.drawer.SettingActivity
 import org.helfoome.presentation.restaurant.MapSelectionBottomDialogFragment
-import org.helfoome.presentation.restaurant.RestaurantTabAdapter
+import org.helfoome.presentation.restaurant.adapter.RestaurantTabAdapter
 import org.helfoome.presentation.type.FoodType
 import org.helfoome.util.ChipFactory
 import org.helfoome.util.binding.BindingActivity

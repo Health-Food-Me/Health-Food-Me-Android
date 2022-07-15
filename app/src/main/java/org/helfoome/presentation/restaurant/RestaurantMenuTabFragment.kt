@@ -6,6 +6,8 @@ import androidx.fragment.app.viewModels
 import com.google.android.material.tabs.TabLayout
 import org.helfoome.R
 import org.helfoome.databinding.FragmentMenuBinding
+import org.helfoome.presentation.restaurant.adapter.RestaurantMenuAdapter
+import org.helfoome.presentation.restaurant.viewmodel.RestaurantMenuViewModel
 import org.helfoome.util.binding.BindingFragment
 
 class RestaurantMenuTabFragment : BindingFragment<FragmentMenuBinding>(R.layout.fragment_menu) {
@@ -34,9 +36,7 @@ class RestaurantMenuTabFragment : BindingFragment<FragmentMenuBinding>(R.layout.
 
             override fun onTabReselected(tab: TabLayout.Tab?) {
             }
-        }
-
-        )
+        })
     }
 
     private fun initObservers() {
