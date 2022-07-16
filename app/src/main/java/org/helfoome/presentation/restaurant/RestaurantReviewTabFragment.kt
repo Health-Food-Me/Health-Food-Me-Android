@@ -47,7 +47,7 @@ class RestaurantReviewTabFragment : BindingFragment<FragmentReviewBinding>(R.lay
     private fun initView() {
         binding.reviewList.apply {
             adapter = restaurantGeneralReviewAdapter
-            addItemDecoration(ItemDecorationUtil.ItemDecoration(1f, 72f, context.getColor(R.color.gray_500), 28))
+            addItemDecoration(ItemDecorationUtil.ItemDecoration(1f, 100f, context.getColor(R.color.gray_500), 100))
         }
         binding.layoutReviewTab.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
