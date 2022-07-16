@@ -35,7 +35,6 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:text="나는 헬푸파미" />
 
-
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -45,14 +44,15 @@
             app:layout_constraintStart_toEndOf="@id/tv_nickname"
             app:layout_constraintTop_toTopOf="@id/tv_nickname" />
 
-        <org.helfoome.presentation.custom.RatingBar
+        <org.helfoome.presentation.custom.StarScore
             android:id="@+id/rb_my_review"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:layout_marginTop="8dp"
             app:layout_constraintStart_toStartOf="@id/tv_nickname"
-            app:layout_constraintTop_toBottomOf="@id/tv_nickname" />
+            app:layout_constraintTop_toBottomOf="@id/tv_nickname"
+            app:score="@{data.score}" />
 
         <TextView
             android:id="@+id/tv_delete"
