@@ -169,8 +169,8 @@
                             app:layout_constraintStart_toEndOf="@id/view_star_rating"
                             tools:text="(4.3)" />
 
-                        <androidx.constraintlayout.widget.ConstraintLayout
-                            android:id="@+id/layout_hashtag"
+                        <org.helfoome.presentation.custom.HashtagView
+                            android:id="@+id/hashtag"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="19dp"
@@ -178,37 +178,7 @@
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="@id/tv_restaurant_name"
                             app:layout_constraintTop_toBottomOf="@id/view_star_rating"
-                            app:visibility="@{viewModel.isExpandedDialog().peekContent() != true}">
-
-                            <TextView
-                                android:id="@+id/tv_first_hashtag"
-                                style="@style/TextView.Hashtag.Style"
-                                android:layout_width="wrap_content"
-                                android:text="@{String.format(context.getString(R.string.format_hashtag, restaurant.tags.get(0)))}"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent"
-                                tools:text="#샐러드" />
-
-                            <TextView
-                                android:id="@+id/tv_second_hashtag"
-                                style="@style/TextView.Hashtag.Style"
-                                android:layout_width="wrap_content"
-                                android:layout_marginStart="4dp"
-                                android:text="@{String.format(context.getString(R.string.format_hashtag, restaurant.tags.get(1)))}"
-                                app:layout_constraintStart_toEndOf="@id/tv_first_hashtag"
-                                app:layout_constraintTop_toTopOf="@id/tv_first_hashtag"
-                                tools:text="#샌드위치" />
-
-                            <TextView
-                                android:id="@+id/tv_third_hashtag"
-                                style="@style/TextView.Hashtag.Style"
-                                android:layout_width="wrap_content"
-                                android:layout_marginStart="4dp"
-                                android:text="@{String.format(context.getString(R.string.format_hashtag, restaurant.tags.get(2)))}"
-                                app:layout_constraintStart_toEndOf="@id/tv_second_hashtag"
-                                app:layout_constraintTop_toTopOf="@id/tv_second_hashtag"
-                                tools:text="#랩" />
-                        </androidx.constraintlayout.widget.ConstraintLayout>
+                            app:visibility="@{viewModel.isExpandedDialog().peekContent() != true}" />
 
                         <ImageView
                             android:id="@+id/iv_location"

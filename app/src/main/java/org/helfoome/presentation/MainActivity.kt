@@ -36,6 +36,7 @@ import org.helfoome.presentation.restaurant.MapSelectionBottomDialogFragment
 import org.helfoome.presentation.restaurant.adapter.RestaurantTabAdapter
 import org.helfoome.presentation.review.ReviewWritingActivity
 import org.helfoome.presentation.type.FoodType
+import org.helfoome.presentation.type.HashtagViewType
 import org.helfoome.util.ChipFactory
 import org.helfoome.util.binding.BindingActivity
 import org.helfoome.util.ext.stringListFrom
@@ -147,6 +148,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                 visibility = View.INVISIBLE
                 setOnClickListener { startActivity(Intent(this@MainActivity, ReviewWritingActivity::class.java)) }
             }
+            hashtag.setHashtag(listOf("연어 샐러드", "샌드위치"), HashtagViewType.RESTAURANT_SUMMARY_TYPE)
         }
     }
 
