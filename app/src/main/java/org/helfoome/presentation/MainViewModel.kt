@@ -33,7 +33,7 @@ class MainViewModel @Inject constructor() : ViewModel() {
     private val isGeneralReview = MutableLiveData(true)
     private val isReviewTab = MutableLiveData(false)
     val _isVisibleReviewButton = MediatorLiveData<Event<Boolean>>()
-    val isVisibleReviewButton get() =_isVisibleReviewButton
+    val isVisibleReviewButton get() = _isVisibleReviewButton
 
     init {
         // TODO 지도 뷰 구현 후 마커 클릭 시 해당 함수 호출하는 것으로 변경 예정
