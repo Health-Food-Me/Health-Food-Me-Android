@@ -10,9 +10,7 @@ import javax.inject.Inject
 @HiltViewModel
 class RestaurantReviewWritingViewModel @Inject constructor() : ViewModel() {
     val selectedTasteTag = MutableLiveData<TasteHashtagType>()
-    val selectedGoodPointTags = MutableLiveData(hashMapOf(
-        GoodPointHashtagType.NO_BURDEN to false, GoodPointHashtagType.EASY_TO_CONTROL to false, GoodPointHashtagType.FULL to false
-    ))
+    val selectedGoodPointTags = MutableLiveData(hashMapOf(GoodPointHashtagType.NO_BURDEN to false, GoodPointHashtagType.EASY_TO_CONTROL to false, GoodPointHashtagType.FULL to false))
 
     fun setSelectedTasteTag(tagType: TasteHashtagType) {
         selectedTasteTag.value = tagType
