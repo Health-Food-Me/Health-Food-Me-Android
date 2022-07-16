@@ -21,17 +21,19 @@ class MyReviewAdapter(private val itemClickListener: ((Int) -> Unit)) : ListAdap
             inflater = LayoutInflater.from(parent.context)
 
         val binding = ItemGeneralMyReviewBinding.inflate(inflater, parent, false)
-        return MyReviewViewHolder(binding.apply {
-            tvEdit.setOnClickListener {
-                itemClickListener.invoke(EDIT)
+        return MyReviewViewHolder(
+            binding.apply {
+                tvEdit.setOnClickListener {
+                    itemClickListener.invoke(EDIT)
+                }
+                tvNickname.setOnClickListener {
+                    itemClickListener.invoke(ENLARGE)
+                }
+                tvDelete.setOnClickListener {
+                    itemClickListener.invoke(DELETE)
+                }
             }
-            tvNickname.setOnClickListener {
-                itemClickListener.invoke(ENLARGE)
-            }
-            tvDelete.setOnClickListener {
-                itemClickListener.invoke(DELETE)
-            }
-        })
+        )
     }
 
     override fun onBindViewHolder(holder: MyReviewViewHolder, position: Int) {

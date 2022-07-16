@@ -8,5 +8,3 @@ data class MyReviewInfo(
     val content: String,
     val image: List<String>,
 )
-
-
