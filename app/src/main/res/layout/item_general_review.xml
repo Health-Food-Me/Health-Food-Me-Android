@@ -13,7 +13,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingVertical="@dimen/size_spacing_28">
+        android:paddingBottom="@dimen/size_spacing_28">
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/gl_start"
@@ -56,10 +56,10 @@
             android:id="@+id/rv_photo_list"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
+            android:layout_marginTop="10dp"
             android:clipToPadding="false"
             android:orientation="horizontal"
-            android:paddingHorizontal="@dimen/size_spacing_20"
+            android:paddingHorizontal="14dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

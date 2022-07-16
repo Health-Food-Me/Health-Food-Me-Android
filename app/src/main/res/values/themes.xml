@@ -44,7 +44,7 @@
 
     <style name="TabItem.RestaurantTab.TextAppearance" parent="">
         <item name="android:fontFamily">@font/notosanskr_b</item>
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">14dp</item>
     </style>
 
     <style name="TabItem.MenuTab.TextAppearance" parent="">

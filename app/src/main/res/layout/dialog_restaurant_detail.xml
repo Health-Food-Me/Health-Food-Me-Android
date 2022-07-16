@@ -40,6 +40,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
+                android:id="@+id/tv_restaurant_name_in_toolbar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/notosanskr_b"
@@ -98,16 +99,23 @@
                             android:orientation="vertical"
                             app:layout_constraintGuide_begin="20dp" />
 
+                        <View
+                            android:id="@+id/view_spacing"
+                            android:layout_width="match_parent"
+                            android:layout_height="27dp"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:visibility="@{viewModel.isExpandedDialog().peekContent() != true}" />
+
                         <ImageView
                             android:id="@+id/iv_restaurant_image"
                             android:layout_width="116dp"
                             android:layout_height="116dp"
                             android:layout_marginStart="20dp"
-                            android:layout_marginTop="20dp"
+                            android:layout_marginTop="12dp"
                             android:scaleType="centerCrop"
                             app:imageUrl="@{restaurant.image}"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/view_spacing"
                             tools:src="@mipmap/ic_launcher" />
 
                         <androidx.appcompat.widget.AppCompatImageButton
@@ -122,99 +130,66 @@
                             app:visibility="@{viewModel.isExpandedDialog().peekContent() != true}"
                             tools:visibility="gone" />
 
-                        <TextView
-                            android:id="@+id/tv_restaurant_name"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="14dp"
-                            android:layout_marginTop="16dp"
-                            android:fontFamily="@font/notosanskr_b"
-                            android:text="@{restaurant.name}"
-                            android:textColor="@color/gray_600"
-                            android:textSize="16sp"
-                            app:layout_constraintStart_toEndOf="@id/iv_restaurant_image"
-                            app:layout_constraintTop_toTopOf="@id/iv_restaurant_image"
-                            tools:text="샐러디 태릉입구점" />
-
-                        <TextView
-                            android:id="@+id/tv_restaurant_category"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="5dp"
-                            android:fontFamily="@font/notosanskr_r"
-                            android:text="@{restaurant.category}"
-                            android:textColor="@color/gray_550"
-                            android:textSize="10sp"
-                            app:layout_constraintBottom_toBottomOf="@id/tv_restaurant_name"
-                            app:layout_constraintStart_toEndOf="@id/tv_restaurant_name"
-                            tools:text="샐러드" />
-
-                        <org.helfoome.presentation.custom.StarScore
-                            android:id="@+id/view_star_rating"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            app:layout_constraintStart_toStartOf="@id/tv_restaurant_name"
-                            app:layout_constraintTop_toBottomOf="@id/tv_restaurant_name"
-                            app:score="@{viewModel.selectedRestaurant.score}" />
-
-                        <TextView
-                            android:id="@+id/tv_restaurant_score"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="4dp"
-                            android:text="@{String.format(context.getString(R.string.restaurant_detail_score_format), restaurant.score)}"
-                            android:textColor="@color/gray_550"
-                            android:textSize="12sp"
-                            app:layout_constraintBottom_toBottomOf="@id/view_star_rating"
-                            app:layout_constraintStart_toEndOf="@id/view_star_rating"
-                            tools:text="(4.3)" />
-
                         <androidx.constraintlayout.widget.ConstraintLayout
-                            android:id="@+id/layout_hashtag"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="19dp"
-                            android:layout_marginEnd="20dp"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="@id/tv_restaurant_name"
-                            app:layout_constraintTop_toBottomOf="@id/view_star_rating"
-                            app:visibility="@{viewModel.isExpandedDialog().peekContent() != true}">
+                            android:layout_marginStart="16dp"
+                            app:layout_constraintBottom_toBottomOf="@id/iv_restaurant_image"
+                            app:layout_constraintEnd_toStartOf="@id/btn_scrap"
+                            app:layout_constraintStart_toEndOf="@id/iv_restaurant_image"
+                            app:layout_constraintTop_toTopOf="@id/iv_restaurant_image">
 
                             <TextView
-                                android:id="@+id/tv_first_hashtag"
-                                style="@style/TextView.Hashtag.Style"
+                                android:id="@+id/tv_restaurant_name"
                                 android:layout_width="wrap_content"
-                                android:text="@{String.format(context.getString(R.string.format_hashtag, restaurant.tags.get(0)))}"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/notosanskr_b"
+                                android:text="@{restaurant.name}"
+                                android:textColor="@color/gray_800"
+                                android:textSize="15sp"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent"
-                                tools:text="#샐러드" />
+                                tools:text="샐러디 태릉입구점" />
+
+                            <org.helfoome.presentation.custom.StarScore
+                                android:id="@+id/view_star_rating"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="6dp"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/tv_restaurant_name"
+                                app:score="@{viewModel.selectedRestaurant.score}" />
 
                             <TextView
-                                android:id="@+id/tv_second_hashtag"
-                                style="@style/TextView.Hashtag.Style"
+                                android:id="@+id/tv_restaurant_score"
                                 android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
                                 android:layout_marginStart="4dp"
-                                android:text="@{String.format(context.getString(R.string.format_hashtag, restaurant.tags.get(1)))}"
-                                app:layout_constraintStart_toEndOf="@id/tv_first_hashtag"
-                                app:layout_constraintTop_toTopOf="@id/tv_first_hashtag"
-                                tools:text="#샌드위치" />
+                                android:fontFamily="@font/notosanskr_r"
+                                android:text="@{String.format(context.getString(R.string.restaurant_detail_score_format), restaurant.score)}"
+                                android:textColor="@color/gray_550"
+                                android:textSize="12sp"
+                                app:layout_constraintBottom_toBottomOf="@id/view_star_rating"
+                                app:layout_constraintStart_toEndOf="@id/view_star_rating"
+                                tools:text="(4.3)" />
 
-                            <TextView
-                                android:id="@+id/tv_third_hashtag"
-                                style="@style/TextView.Hashtag.Style"
-                                android:layout_width="wrap_content"
-                                android:layout_marginStart="4dp"
-                                android:text="@{String.format(context.getString(R.string.format_hashtag, restaurant.tags.get(2)))}"
-                                app:layout_constraintStart_toEndOf="@id/tv_second_hashtag"
-                                app:layout_constraintTop_toTopOf="@id/tv_second_hashtag"
-                                tools:text="#랩" />
+                            <org.helfoome.presentation.custom.HashtagView
+                                android:id="@+id/hashtag"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:layout_marginEnd="20dp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/view_star_rating"
+                                app:visibility="@{viewModel.isExpandedDialog().peekContent() != true}" />
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
                         <ImageView
                             android:id="@+id/iv_location"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="19dp"
+                            android:layout_marginTop="12dp"
                             android:src="@drawable/ic_location"
                             app:layout_constraintStart_toStartOf="@id/gl_start"
                             app:layout_constraintTop_toBottomOf="@id/iv_restaurant_image" />
@@ -227,7 +202,7 @@
                             android:fontFamily="@font/notosanskr_m"
                             android:text="@{restaurant.location}"
                             android:textColor="@color/gray_600"
-                            android:textSize="12sp"
+                            android:textSize="12dp"
                             app:layout_constraintBottom_toBottomOf="@id/iv_location"
                             app:layout_constraintStart_toEndOf="@id/iv_location"
                             app:layout_constraintTop_toTopOf="@id/iv_location"
@@ -237,10 +212,10 @@
                             android:id="@+id/iv_time"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="13dp"
+                            android:layout_marginTop="5dp"
                             android:src="@drawable/ic_time"
                             app:layout_constraintStart_toStartOf="@id/gl_start"
-                            app:layout_constraintTop_toBottomOf="@id/iv_location" />
+                            app:layout_constraintTop_toTopOf="@id/view_opening_time" />
 
                         <org.helfoome.presentation.custom.OpeningTimeView
                             android:id="@+id/view_opening_time"
@@ -280,14 +255,14 @@
                             style="@style/Button.Basic.Style"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginEnd="33dp"
+                            android:layout_marginEnd="32dp"
                             android:drawableTop="@drawable/ic_navi"
-                            android:drawablePadding="5dp"
+                            android:drawablePadding="4dp"
                             android:fontFamily="@font/notosanskr_m"
                             android:text="@{String.format(context.getString(R.string.restaurant_detail_navi_meter_format), 589)}"
                             android:textAllCaps="false"
                             android:textColor="@color/red_500"
-                            android:textSize="12sp"
+                            android:textSize="12dp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="@id/iv_location"
                             tools:text="589m" />
@@ -350,6 +325,7 @@
             android:id="@+id/line"
             android:layout_width="70dp"
             android:layout_height="3dp"
+            android:layout_marginTop="8dp"
             android:background="@drawable/rectangle_border_radius_10"
             android:backgroundTint="@color/gray_200"
             app:layout_constraintEnd_toEndOf="parent"
