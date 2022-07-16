@@ -184,4 +184,9 @@
         <!-- Dialog 가 센터에 나오도록 하자. -->
         <item name="android:windowIsFloating">true</item>
     </style>
+
+    <style name="RatingBar.HelFooMe.Style" parent="Widget.AppCompat.RatingBar">
+        <item name="android:progressDrawable">@drawable/ic_custom_rating_bar</item>
+        <item name="android:gravity">center</item>
+    </style>
 </resources>

@@ -97,12 +97,12 @@
 
                 <RatingBar
                     android:id="@+id/rating_bar"
+                    style="@style/RatingBar.HelFooMe.Style"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="38dp"
                     android:layout_marginTop="10dp"
                     android:numStars="5"
-                    android:progressBackgroundTint="@color/gray_100"
-                    android:progressTint="@color/green_700"
+                    android:orientation="horizontal"
                     android:rating="5"
                     android:stepSize="0.5"
                     app:layout_constraintEnd_toEndOf="parent"
