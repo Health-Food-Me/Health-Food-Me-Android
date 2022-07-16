@@ -34,11 +34,11 @@ class RestaurantReviewViewModel @Inject constructor() : ViewModel() {
 
     fun fetchBlogReviewList() {
         _blogReviews.value = listOf(
-            BlogReviewInfo(1, "샐러디 안암점 나쵸가 씹히는 멕시칸랩", "블라블라 맛 멋져요 멍멍 만약에 이 내용이 너무 길어진다면 ..? 그게 고민..이었는데 해결됐어요. 왜냐면 더보기를 누르면 되니까요! 더보기나 나올 텍스트 크기는 이 … ", "https://postfiles.pstatic.net/MjAyMjA2MTlfMTM2/MDAxNjU1NjQyOTQ5OTIw.JPYcSZuY_WIVFxj0p7XinmRXH8hEoTqfWHr8ezEifagg.L0P1lCMWpKBhUG-pDQ6SeW1cFVNxhxSJLWMaWzKeOlYg.JPEG.schneesun85/SE-a70a7e59-03f9-453a-8cc3-cb286c1b7038.jpg?type=w773"),
-            BlogReviewInfo(2, "샐러디 안암점 나쵸가 씹히는 멕시칸랩", "블라블라 맛 멋져요 멍멍 만약에 이 내용이 너무 길어진다면 ..? 그게 고민..이었는데 해결됐어요. 왜냐면 더보기를 누르면 되니까요! 더보기나 나올 텍스트 크기는 이 … ", "https://postfiles.pstatic.net/MjAyMjA2MTlfMTM2/MDAxNjU1NjQyOTQ5OTIw.JPYcSZuY_WIVFxj0p7XinmRXH8hEoTqfWHr8ezEifagg.L0P1lCMWpKBhUG-pDQ6SeW1cFVNxhxSJLWMaWzKeOlYg.JPEG.schneesun85/SE-a70a7e59-03f9-453a-8cc3-cb286c1b7038.jpg?type=w773"),
-            BlogReviewInfo(3, "샐러디 안암점 나쵸가 씹히는 멕시칸랩", "블라블라 맛 멋져요 멍멍 만약에 이 내용이 너무 길어진다면 ..? 그게 고민..이었는데 해결됐어요. 왜냐면 더보기를 누르면 되니까요! 더보기나 나올 텍스트 크기는 이 … ", "https://postfiles.pstatic.net/MjAyMjA2MTlfMTM2/MDAxNjU1NjQyOTQ5OTIw.JPYcSZuY_WIVFxj0p7XinmRXH8hEoTqfWHr8ezEifagg.L0P1lCMWpKBhUG-pDQ6SeW1cFVNxhxSJLWMaWzKeOlYg.JPEG.schneesun85/SE-a70a7e59-03f9-453a-8cc3-cb286c1b7038.jpg?type=w773"),
-            BlogReviewInfo(4, "샐러디 안암점 나쵸가 씹히는 멕시칸랩", "블라블라 맛 멋져요 멍멍 만약에 이 내용이 너무 길어진다면 ..? 그게 고민..이었는데 해결됐어요. 왜냐면 더보기를 누르면 되니까요! 더보기나 나올 텍스트 크기는 이 … ", "https://postfiles.pstatic.net/MjAyMjA2MTlfMTM2/MDAxNjU1NjQyOTQ5OTIw.JPYcSZuY_WIVFxj0p7XinmRXH8hEoTqfWHr8ezEifagg.L0P1lCMWpKBhUG-pDQ6SeW1cFVNxhxSJLWMaWzKeOlYg.JPEG.schneesun85/SE-a70a7e59-03f9-453a-8cc3-cb286c1b7038.jpg?type=w773"),
-            BlogReviewInfo(5, "샐러디 안암점 나쵸가 씹히는 멕시칸랩", "블라블라 맛 멋져요 멍멍 만약에 이 내용이 너무 길어진다면 ..? 그게 고민..이었는데 해결됐어요. 왜냐면 더보기를 누르면 되니까요! 더보기나 나올 텍스트 크기는 이 … ", "https://postfiles.pstatic.net/MjAyMjA2MTlfMTM2/MDAxNjU1NjQyOTQ5OTIw.JPYcSZuY_WIVFxj0p7XinmRXH8hEoTqfWHr8ezEifagg.L0P1lCMWpKBhUG-pDQ6SeW1cFVNxhxSJLWMaWzKeOlYg.JPEG.schneesun85/SE-a70a7e59-03f9-453a-8cc3-cb286c1b7038.jpg?type=w773")
+            BlogReviewInfo(1, "샐러디 안암점 나쵸가 씹히는 멕시칸랩", "블라블라 맛 멋져요 멍멍 만약에 이 내용이 너무 길어진다면 ..? 그게 고민..이었는데 해결됐어요. 왜냐면 더보기를 누르면 되니까요! 더보기나 나올 텍스트 크기는 이 … "),
+            BlogReviewInfo(2, "샐러디 안암점 나쵸가 씹히는 멕시칸랩", "블라블라 맛 멋져요 멍멍 만약에 이 내용이 너무 길어진다면 ..? 그게 고민..이었는데 해결됐어요. 왜냐면 더보기를 누르면 되니까요! 더보기나 나올 텍스트 크기는 이 … "),
+            BlogReviewInfo(3, "샐러디 안암점 나쵸가 씹히는 멕시칸랩", "블라블라 맛 멋져요 멍멍 만약에 이 내용이 너무 길어진다면 ..? 그게 고민..이었는데 해결됐어요. 왜냐면 더보기를 누르면 되니까요! 더보기나 나올 텍스트 크기는 이 … "),
+            BlogReviewInfo(4, "샐러디 안암점 나쵸가 씹히는 멕시칸랩", "블라블라 맛 멋져요 멍멍 만약에 이 내용이 너무 길어진다면 ..? 그게 고민..이었는데 해결됐어요. 왜냐면 더보기를 누르면 되니까요! 더보기나 나올 텍스트 크기는 이 … "),
+            BlogReviewInfo(5, "샐러디 안암점 나쵸가 씹히는 멕시칸랩", "블라블라 맛 멋져요 멍멍 만약에 이 내용이 너무 길어진다면 ..? 그게 고민..이었는데 해결됐어요. 왜냐면 더보기를 누르면 되니까요! 더보기나 나올 텍스트 크기는 이 … ")
         )
     }
 }
