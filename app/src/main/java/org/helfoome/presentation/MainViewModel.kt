@@ -14,7 +14,7 @@ class MainViewModel @Inject constructor() : ViewModel() {
     private val _location = MutableLiveData<List<LatLng>>()
     val location: LiveData<List<LatLng>> = _location
     private val _isDietRestaurant = MutableLiveData<Boolean>()
-    val isDietRestaurant : LiveData<Boolean> = _isDietRestaurant
+    val isDietRestaurant: LiveData<Boolean> = _isDietRestaurant
     private val _cameraZoom = MutableLiveData<Event<Int>>()
     val cameraZoom: MutableLiveData<Event<Int>> = _cameraZoom
     private val _selectedRestaurant = MutableLiveData<RestaurantInfo>()
@@ -41,7 +41,15 @@ class MainViewModel @Inject constructor() : ViewModel() {
             tags = listOf("샐러드", "샌드위치", "랩"),
             category = "샐러드",
             location = "서울특별시 중랑구 상봉동",
-            time = listOf("화요일 10:00 ~ 22:00", "수요일 10:00 ~ 22:00", "목요일 10:00 ~ 22:00", "금요일 10:00 ~ 22:00", "토요일 10:00 ~ 22:00", "일요일 10:00 ~ 22:00", "월요일 10:00 ~ 22:00"), number = "02-123-123"
+            time = listOf(
+                "화요일 10:00 ~ 22:00",
+                "수요일 10:00 ~ 22:00",
+                "목요일 10:00 ~ 22:00",
+                "금요일 10:00 ~ 22:00",
+                "토요일 10:00 ~ 22:00",
+                "일요일 10:00 ~ 22:00",
+                "월요일 10:00 ~ 22:00"
+            ), number = "02-123-123"
         )
     }
 
