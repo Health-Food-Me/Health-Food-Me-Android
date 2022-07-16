@@ -29,8 +29,17 @@ class SearchViewModel @Inject constructor(
     val searchMode: StateFlow<SearchMode>
         get() = _searchMode.asStateFlow()
 
+    private val _isDetail =
+        MutableStateFlow(LIST)
+    val isDetail: StateFlow<Boolean>
+        get() = _isDetail.asStateFlow()
+
     fun setSearchMode(searchMode: SearchMode) {
         _searchMode.value = searchMode
+    }
+
+    fun setDetail(isDetail: Boolean) {
+        _isDetail.value = isDetail
     }
 
     fun insertKeyword(keyword: String) {
@@ -69,5 +78,7 @@ class SearchViewModel @Inject constructor(
         const val SEARCH_RESULT = 2
         const val DIET = 0
         const val NORMAL = 1
+        const val LIST = false
+        const val DETAIL = true
     }
 }

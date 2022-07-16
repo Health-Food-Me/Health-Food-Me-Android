@@ -1,14 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
+        <variable
+            name="isLineVisible"
+            type="boolean" />
 
         <import type="android.view.View" />
 
         <variable
             name="isDeleteButtonVisible"
+            type="boolean" />
+
+        <variable
+            name="isDetail"
             type="boolean" />
     </data>
 
@@ -41,7 +50,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="20dp"
-                android:background="@drawable/ic_delete_circle"
+                android:background="@drawable/selector_delete"
                 android:visibility="@{isDeleteButtonVisible? View.VISIBLE : View.GONE}"
                 app:layout_constraintBottom_toBottomOf="@+id/et_search"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -66,14 +75,45 @@
                 app:layout_constraintTop_toTopOf="@+id/btn_back" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_search"
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:overScrollMode="never"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/layout_search"
-            tools:listitem="@layout/item_recent_word" />
+            app:layout_constraintTop_toBottomOf="@+id/layout_search">
+
+            <fragment
+                android:id="@+id/fragment_naver_map"
+                android:name="com.naver.maps.map.MapFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layout_bottom_sheet"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fillViewport="true"
+                android:overScrollMode="never"
+                app:behavior_hideable="false"
+                app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+                tools:visibility="visible">
+
+                <include
+                    android:id="@+id/layout_restaurant_list_dialog"
+                    layout="@layout/dialog_restaurant_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="@{isDetail? View.GONE : View.VISIBLE}"
+                    bind:isLineVisible="@{isLineVisible}" />
+
+                <include
+                    android:id="@+id/layout_restaurant_detail_dialog"
+                    layout="@layout/dialog_search_restaurant_detail"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="@{isDetail? View.VISIBLE : View.GONE}"
+                    bind:isLineVisible="@{isLineVisible}" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

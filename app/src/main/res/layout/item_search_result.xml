@@ -13,79 +13,101 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/rectangle_border_gray_radius_15">
+        android:paddingHorizontal="20dp"
+        android:paddingBottom="10dp">
 
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/iv_restaurant"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginVertical="14dp"
-            android:layout_marginStart="12dp"
-            app:imageUrl="@{data.image}"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rectangle_border_gray_radius_15"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintDimensionRatio="1:1"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:shapeAppearance="@style/ShapeAppearanceOverlay.App.CornerRadius8"
-            tools:background="@color/blue_100" />
+            app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/tv_category"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:fontFamily="@font/notosanskr_m"
-            android:text="@{data.category}"
-            android:textColor="@color/yellow_600"
-            android:textSize="10dp"
-            app:layout_constraintBottom_toTopOf="@id/tv_name"
-            app:layout_constraintStart_toEndOf="@+id/iv_restaurant"
-            app:layout_constraintTop_toTopOf="@+id/iv_restaurant"
-            app:layout_constraintVertical_chainStyle="packed"
-            tools:text="@string/dear_fine" />
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/iv_restaurant"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginVertical="14dp"
+                android:layout_marginStart="12dp"
+                app:imageUrl="@{data.image}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:shapeAppearance="@style/ShapeAppearanceOverlay.App.CornerRadius8"
+                tools:background="@color/blue_100" />
+
+            <TextView
+                android:id="@+id/tv_category"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:fontFamily="@font/notosanskr_m"
+                android:text="@{data.category}"
+                android:textColor="@color/yellow_600"
+                android:textSize="10dp"
+                app:layout_constraintBottom_toTopOf="@id/tv_name"
+                app:layout_constraintStart_toEndOf="@+id/iv_restaurant"
+                app:layout_constraintTop_toTopOf="@+id/iv_restaurant"
+                app:layout_constraintVertical_chainStyle="packed"
+                tools:text="@string/dear_fine" />
 
 
-        <TextView
-            android:id="@+id/tv_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:fontFamily="@font/notosanskr_b"
-            android:lineSpacingExtra="-1dp"
-            android:text="@{data.name}"
-            android:textColor="@color/gray_800"
-            android:textSize="13dp"
-            app:layout_constraintBottom_toTopOf="@id/rb_score"
-            app:layout_constraintStart_toStartOf="@+id/tv_category"
-            app:layout_constraintTop_toBottomOf="@+id/tv_category"
-            tools:text="@string/dear_fine" />
-
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:fontFamily="@font/notosanskr_b"
+                android:lineSpacingExtra="-1dp"
+                android:text="@{data.name}"
+                android:textColor="@color/gray_800"
+                android:textSize="13dp"
+                app:layout_constraintBottom_toTopOf="@id/rb_score"
+                app:layout_constraintStart_toStartOf="@+id/tv_category"
+                app:layout_constraintTop_toBottomOf="@+id/tv_category"
+                tools:text="@string/dear_fine" />
 
         <!--커스텀 뷰 들어가기 전에 위치 잡아놓는 용 뷰-->
         <org.helfoome.presentation.custom.StarScore
             android:id="@+id/rb_score"
-            android:layout_width="86dp"
-            android:layout_height="13dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="-1dp"
             android:layout_marginTop="1dp"
             app:layout_constraintBottom_toTopOf="@id/tv_distance"
             app:layout_constraintStart_toStartOf="@+id/tv_name"
             app:layout_constraintTop_toBottomOf="@+id/tv_name"
             app:score="@{data.score}" />
 
-        <TextView
-            android:id="@+id/tv_distance"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:fontFamily="@font/notosanskr_m"
-            android:text="@{data.distance}"
-            android:textColor="@color/gray_600"
-            android:textSize="10dp"
-            app:layout_constraintBottom_toBottomOf="@+id/iv_restaurant"
-            app:layout_constraintStart_toStartOf="@+id/tv_category"
-            app:layout_constraintTop_toBottomOf="@+id/rb_score"
-            app:layout_constraintVertical_chainStyle="packed"
-            tools:text="@string/dear_fine" />
+            <TextView
+                android:id="@+id/tv_scroe"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:text="@{@string/restaurant_detail_score_format(Float.toString(data.score))}"
+                android:textColor="@color/gray_550"
+                android:textSize="8dp"
+                app:layout_constraintBottom_toBottomOf="@+id/rb_score"
+                app:layout_constraintStart_toEndOf="@+id/rb_score"
+                app:layout_constraintTop_toTopOf="@+id/rb_score"
+                tools:text="4.3" />
 
+            <TextView
+                android:id="@+id/tv_distance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:fontFamily="@font/notosanskr_m"
+                android:text="@{data.distance}"
+                android:textColor="@color/gray_600"
+                android:textSize="10dp"
+                app:layout_constraintBottom_toBottomOf="@+id/iv_restaurant"
+                app:layout_constraintStart_toStartOf="@+id/tv_category"
+                app:layout_constraintTop_toBottomOf="@+id/rb_score"
+                app:layout_constraintVertical_chainStyle="packed"
+                tools:text="@string/dear_fine" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

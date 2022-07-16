@@ -5,8 +5,14 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import org.helfoome.databinding.LayoutLookMapBinding
 
-class SearchMapTopAdapter :
+class SearchMapTopAdapter(private val searchMapClickListener: (() -> Unit)) :
     RecyclerView.Adapter<SearchMapTopAdapter.SearchMapTopViewHolder>() {
+    private var isNotVisible = false
+
+    fun setVisible(isNotVisible: Boolean) {
+        this.isNotVisible = isNotVisible
+        notifyItemChanged(0)
+    }
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -15,11 +21,13 @@ class SearchMapTopAdapter :
         val inflater = LayoutInflater.from(parent.context)
         val binding = LayoutLookMapBinding.inflate(inflater, parent, false)
 
+        binding.isNotVisible = isNotVisible
+
         return SearchMapTopViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: SearchMapTopViewHolder, position: Int) {
-        holder.onBind()
+        holder.onBind(searchMapClickListener, isNotVisible)
     }
 
     override fun getItemCount() = 1
@@ -27,6 +35,16 @@ class SearchMapTopAdapter :
     class SearchMapTopViewHolder(
         private val binding: LayoutLookMapBinding
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun onBind() {}
+        fun onBind(searchMapClickListener: (() -> Unit), visibility: Boolean) {
+            with(binding) {
+                isNotVisible = visibility
+                tvRecentWord.setOnClickListener {
+                    searchMapClickListener.invoke()
+                }
+                ivPin.setOnClickListener {
+                    searchMapClickListener.invoke()
+                }
+            }
+        }
     }
 }

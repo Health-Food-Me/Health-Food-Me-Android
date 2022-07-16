@@ -4,33 +4,73 @@ import android.os.Bundle
 import android.view.KeyEvent
 import android.view.KeyEvent.KEYCODE_ENTER
 import android.view.MotionEvent
+import android.view.View
 import android.widget.EditText
 import androidx.activity.viewModels
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.ConcatAdapter
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import org.helfoome.R
 import org.helfoome.databinding.ActivitySearchBinding
+import org.helfoome.domain.entity.RestaurantInfo
+import org.helfoome.domain.entity.SearchResultInfo
 import org.helfoome.presentation.search.adapter.*
 import org.helfoome.presentation.search.type.SearchMode
+import org.helfoome.util.ResolutionMetrics
 import org.helfoome.util.binding.BindingActivity
 import org.helfoome.util.ext.closeKeyboard
 import org.helfoome.util.ext.showKeyboard
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_search) {
+    // TODO : Inject 로직 수정 요망
+    @Inject
+    lateinit var resolutionMetrics: ResolutionMetrics
     private val viewModel: SearchViewModel by viewModels()
     private val autoCompleteAdapter = AutoCompleteAdapter()
-    private val recentAdapter = RecentAdapter {
+    private val recentAdapter = RecentAdapter(
+        {
+            // TODO : 서버 통신 주의
+            binding.etSearch.setText(it)
+            viewModel.setSearchMode(SearchMode.RESULT)
+        },
+    ) {
         viewModel.removeKeyword(it)
     }
-    private val resultAdapter = ResultAdapter()
-    private val searchMapTopAdapter = SearchMapTopAdapter()
+    private val resultAdapter = ResultAdapter {
+        // TODO : 서버 통신 주의
+        viewModel.setDetail(true)
+    }
+
+    private val searchMapTopAdapter = SearchMapTopAdapter {
+        behavior.peekHeight = resolutionMetrics.toPixel(125)
+        behavior.state = BottomSheetBehavior.STATE_COLLAPSED
+        behavior.isDraggable = true
+    }
     private val searchRecentTopAdapter = SearchRecentTopAdapter()
+    private lateinit var behavior: BottomSheetBehavior<ConstraintLayout>
+    private val bottomSheetCallback = object : BottomSheetBehavior.BottomSheetCallback() {
+        override fun onStateChanged(bottomSheet: View, newState: Int) {
+            with(newState != BottomSheetBehavior.STATE_EXPANDED) {
+                if (viewModel.isDetail.value && !this)
+                    binding.layoutSearch.visibility = View.GONE
+                else
+                    binding.layoutSearch.visibility = View.VISIBLE
+                searchMapTopAdapter.setVisible(this)
+                behavior.isDraggable = this
+                binding.isLineVisible = this
+            }
+        }
+
+        override fun onSlide(bottomSheetView: View, slideOffset: Float) { }
+    }
 
     private val recentConcatAdapter = ConcatAdapter(
         searchRecentTopAdapter,
@@ -45,16 +85,29 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        initView()
         openKeyboard()
         initClickEvent()
+        initFocusChangeListener()
         initKeyListeners()
         initTextChangeEvent()
         observeData()
     }
 
+    override fun onStart() {
+        super.onStart()
+        behavior.addBottomSheetCallback(bottomSheetCallback)
+    }
+
     private fun openKeyboard() {
         binding.etSearch.requestFocus()
         showKeyboard(binding.etSearch)
+    }
+
+    private fun initView() {
+        behavior = BottomSheetBehavior.from(binding.layoutBottomSheet)
+        behavior.state = BottomSheetBehavior.STATE_EXPANDED
+        behavior.isDraggable = false
     }
 
     private fun initClickEvent() {
@@ -64,39 +117,70 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
                     startSearchModeBackEvent(searchMode.value)
                 }
 
-                etSearch.setOnClickListener {
-                    if (searchMode.value == SearchMode.RESULT) {
-                        setSearchMode(SearchMode.AUTO_COMPLETE)
-                    }
+                layoutRestaurantDetailDialog.btnBack.setOnClickListener {
+                    startSearchModeBackEvent(searchMode.value)
                 }
             }
 
             btnDelete.setOnClickListener {
-                etSearch.text.clear()
+                when (viewModel.searchMode.value) {
+                    SearchMode.AUTO_COMPLETE -> etSearch.text.clear()
+                    else -> finish()
+                }
+            }
+        }
+    }
+
+    private fun initFocusChangeListener() {
+        binding.etSearch.setOnFocusChangeListener { _, isFocus ->
+            if (isFocus && viewModel.searchMode.value == SearchMode.RESULT) {
+                viewModel.setSearchMode(SearchMode.AUTO_COMPLETE)
+                viewModel.setDetail(false)
+                behavior.state = BottomSheetBehavior.STATE_EXPANDED
             }
         }
     }
 
     private fun startSearchModeBackEvent(value: SearchMode) {
         when (value) {
-            SearchMode.RECENT -> {
-                finish()
+            SearchMode.RESULT -> {
+                if (viewModel.isDetail.value) {
+                    if (behavior.state == BottomSheetBehavior.STATE_EXPANDED) {
+                        binding.isLineVisible = true
+                        behavior.peekHeight = resolutionMetrics.toPixel(155)
+                        behavior.state = BottomSheetBehavior.STATE_COLLAPSED
+                    } else {
+                        viewModel.setDetail(false)
+                        viewModel.setSearchMode(SearchMode.RESULT)
+                        behavior.state = BottomSheetBehavior.STATE_EXPANDED
+                    }
+                } else {
+                    if (behavior.state == BottomSheetBehavior.STATE_COLLAPSED)
+                        viewModel.setSearchMode(SearchMode.RESULT)
+                    else
+                        viewModel.setSearchMode(SearchMode.RECENT)
+                    behavior.state = BottomSheetBehavior.STATE_EXPANDED
+                }
             }
             SearchMode.AUTO_COMPLETE -> {
                 viewModel.setSearchMode(SearchMode.RECENT)
             }
             else -> {
-                viewModel.setSearchMode(SearchMode.AUTO_COMPLETE)
+                finish()
             }
         }
     }
 
     private fun initTextChangeEvent() {
-        binding.etSearch.addTextChangedListener {
-            if (it.isNullOrEmpty())
-                viewModel.setSearchMode(SearchMode.RECENT)
-            else
-                viewModel.setSearchMode(SearchMode.AUTO_COMPLETE)
+        with(binding.etSearch) {
+            addTextChangedListener {
+                if (it.isNullOrEmpty()) {
+                    closeKeyboard(this)
+                    this.clearFocus()
+                    viewModel.setSearchMode(SearchMode.RECENT)
+                } else
+                    viewModel.setSearchMode(SearchMode.AUTO_COMPLETE)
+            }
         }
     }
 
@@ -121,15 +205,22 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
                 .onEach {
                     when (it) {
                         SearchMode.RECENT -> {
-                            rvSearch.adapter = recentConcatAdapter
+                            isDeleteButtonVisible = false
+                            etSearch.text.clear()
+                            layoutRestaurantListDialog.rvSearch.adapter = recentConcatAdapter
                         }
                         SearchMode.AUTO_COMPLETE -> {
                             // TODO : 자동완성 서버 통신
-                            rvSearch.adapter = autoCompleteAdapter
+                            btnDelete.isSelected = false
+                            isDeleteButtonVisible = true
+                            layoutRestaurantListDialog.rvSearch.adapter = autoCompleteAdapter
                         }
                         else -> {
                             // TODO : 서버 통신 받아온 리스트 띄우기
-                            rvSearch.adapter = resultConcatAdapter
+                            binding.etSearch.clearFocus()
+                            btnDelete.isSelected = true
+                            isDeleteButtonVisible = true
+                            layoutRestaurantListDialog.rvSearch.adapter = resultConcatAdapter
                             closeKeyboard(binding.etSearch)
                         }
                     }
@@ -159,7 +250,71 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
                     recentAdapter.submitList(it)
                 }
                 .launchIn(lifecycleScope)
+
+            viewModel.isDetail.flowWithLifecycle(lifecycle)
+                .onEach {
+                    when (it) {
+                        true -> {
+                            binding.isDetail = true
+                            behavior.peekHeight = resolutionMetrics.toPixel(155)
+                            behavior.isDraggable = true
+//                            behavior.isHideable = true
+                            behavior.state = BottomSheetBehavior.STATE_COLLAPSED
+                        }
+                        else -> {
+//                            behavior.isHideable = false
+                            binding.isDetail = false
+                        }
+                    }
+                }
+                .launchIn(lifecycleScope)
+
+            resultAdapter.submitList(
+                listOf(
+                    SearchResultInfo(
+                        0,
+                        "https://salady.com/superboard/data/siteconfig/2021021809004816136064486235.jpg",
+                        "샐러디",
+                        "샐러드",
+                        4.8F,
+                        "4.3km"
+                    ),
+                    SearchResultInfo(
+                        1,
+                        "",
+                        "afsddfsa",
+                        "afsdafds",
+                        4.5F,
+                        "4.8km"
+                    )
+                )
+            )
+
+            layoutRestaurantDetailDialog.restaurant = RestaurantInfo(
+                id = 1,
+                image = "https://salady.com/superboard/data/siteconfig/2021021809004816136064486235.jpg",
+                name = "샐러디",
+                score = 4.8f,
+                tags = listOf("샐러드", "샌드위치", "랩"),
+                category = "샐러드",
+                location = "서울특별시 중랑구 상봉동",
+                time = listOf(
+                    "화요일 10:00 ~ 22:00",
+                    "수요일 10:00 ~ 22:00",
+                    "목요일 10:00 ~ 22:00",
+                    "금요일 10:00 ~ 22:00",
+                    "토요일 10:00 ~ 22:00",
+                    "일요일 10:00 ~ 22:00",
+                    "월요일 10:00 ~ 22:00"
+                ),
+                number = "02-123-123"
+            )
         }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        behavior.removeBottomSheetCallback(bottomSheetCallback)
     }
 
     override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
@@ -183,6 +338,8 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
     }
 
     override fun onBackPressed() {
+        // TODO : Collpased 높이 이상한거랑
+        // TODO : hide 안되는 거
         startSearchModeBackEvent(viewModel.searchMode.value)
     }
 }

@@ -29,12 +29,13 @@ import org.helfoome.R
 import org.helfoome.databinding.ActivityMainBinding
 import org.helfoome.databinding.LogoutDialogBinding
 import org.helfoome.presentation.drawer.MyReviewActivity
-import org.helfoome.presentation.drawer.MyScrapActivity
+import org.helfoome.presentation.scrap.MyScrapActivity
 import org.helfoome.presentation.drawer.ProfileModifyActivity
 import org.helfoome.presentation.drawer.SettingActivity
 import org.helfoome.presentation.restaurant.MapSelectionBottomDialogFragment
 import org.helfoome.presentation.restaurant.adapter.RestaurantTabAdapter
 import org.helfoome.presentation.review.ReviewWritingActivity
+import org.helfoome.presentation.search.SearchActivity
 import org.helfoome.presentation.type.FoodType
 import org.helfoome.util.ChipFactory
 import org.helfoome.util.binding.BindingActivity
@@ -171,6 +172,10 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
 
             tvNumber.setOnClickListener {
                 startActivity(Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + tvNumber.text)))
+            }
+
+            binding.layoutSearch.setOnClickListener {
+                startActivity(Intent(this@MainActivity, SearchActivity::class.java))
             }
 
             with(binding) {
