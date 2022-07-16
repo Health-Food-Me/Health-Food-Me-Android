@@ -3,17 +3,30 @@ package org.helfoome.presentation
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.naver.maps.geometry.LatLng
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import org.helfoome.domain.entity.RestaurantInfo
 import org.helfoome.util.Event
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor() : ViewModel() {
+    private val _location = MutableLiveData<List<LatLng>>()
+    val location: LiveData<List<LatLng>> = _location
+    private val _isDietRestaurant = MutableLiveData<Boolean>()
+    val isDietRestaurant : LiveData<Boolean> = _isDietRestaurant
+    private val _cameraZoom = MutableLiveData<Event<Int>>()
+    val cameraZoom: MutableLiveData<Event<Int>> = _cameraZoom
     private val _selectedRestaurant = MutableLiveData<RestaurantInfo>()
     val selectedRestaurant get() = _selectedRestaurant
     private val _isExpandedDialog = MutableLiveData<Event<Boolean>>()
     val isExpandedDialog: LiveData<Event<Boolean>> get() = _isExpandedDialog
+    private val storeIdHash = HashMap<LatLng, Int>()
+
+    fun markerId(position: LatLng) = storeIdHash[position]
 
     init {
         // TODO 지도 뷰 구현 후 마커 클릭 시 해당 함수 호출하는 것으로 변경 예정

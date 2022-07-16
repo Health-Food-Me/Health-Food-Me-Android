@@ -235,6 +235,32 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
             behavior.state = BottomSheetBehavior.STATE_COLLAPSED
             viewModel.selectedRestaurant.value?.location
         }
+
+        viewModel.location.observe(this) {
+            it.map { location ->
+                Marker().apply {
+                    position = location
+                    if(viewModel.isDietRestaurant.value == true){
+                        icon = OverlayImage.fromResource(R.drawable.ic_marker_green)
+                    }else {
+                        icon = OverlayImage.fromResource(R.drawable.ic_marker_red)
+                    }
+                    this.map = naverMap
+                }
+            }.forEach { marker ->
+                marker.setOnClickListener {
+                    if(viewModel.isDietRestaurant.value == true){
+                        marker.icon = OverlayImage.fromResource(R.drawable.ic_marker_green_big)
+                    }else {
+                        marker.icon = OverlayImage.fromResource(R.drawable.ic_marker_red_big)
+                    }
+                    viewModel.markerId(marker.position)?.let { id ->
+//                        bottomsheet(id)
+                    }
+                    true
+                }
+            }
+        }
     }
 
     override fun onBackPressed() {
@@ -273,41 +299,14 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
     }
 
     override fun onMapReady(naverMap: NaverMap) {
-        this.naverMap = naverMap
-        naverMap.locationSource = locationSource
-
-        binding.fabLocation.setOnClickListener {
-            naverMap.locationTrackingMode = LocationTrackingMode.Follow
+        this.naverMap = naverMap.apply {
+            locationSource = locationSource
+            cameraPosition = CameraPosition(LatLng(37.5666102, 126.9783881), 11.0)
+            uiSettings.isZoomControlEnabled = false
+            binding.fabLocation.setOnClickListener {
+                locationTrackingMode = LocationTrackingMode.Follow
+            }
         }
-
-        // 네이버 지도 카메라 초기 위치
-        val cameraPosition = CameraPosition(LatLng(37.5666102, 126.9783881), 11.0)
-        naverMap.cameraPosition = cameraPosition
-
-        val marker = Marker()
-        marker.position = LatLng(37.5670135, 126.9783740)
-        marker.icon = OverlayImage.fromResource(R.drawable.ic_marker_red)
-        marker.map = naverMap
-
-        val marker2 = Marker()
-        marker2.position = LatLng(37.5570135, 126.9783740)
-        marker2.icon = OverlayImage.fromResource(R.drawable.ic_marker_green)
-        marker2.map = naverMap
-
-        // 마커 클릭 이벤트
-        marker.setOnClickListener { overlay ->
-            Toast.makeText(this, "마커 1 클릭", Toast.LENGTH_SHORT).show()
-            true
-        }
-
-        marker2.setOnClickListener { overlay ->
-            Toast.makeText(this, "마커 2 클릭", Toast.LENGTH_SHORT).show()
-            true
-        }
-
-        // 줌 버튼 없애기
-        val uiSettings = naverMap.uiSettings
-        uiSettings.isZoomControlEnabled = false
     }
 
     companion object {
