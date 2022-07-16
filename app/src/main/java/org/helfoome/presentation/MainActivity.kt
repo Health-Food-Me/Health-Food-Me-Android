@@ -293,6 +293,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
 
     override fun onStop() {
         super.onStop()
+        binding.layoutDrawer.closeDrawers()
         behavior.removeBottomSheetCallback(bottomSheetCallback)
         binding.layoutRestaurantDialog.layoutRestaurantTabMenu.removeOnTabSelectedListener(listener)
     }

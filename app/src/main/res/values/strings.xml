@@ -26,8 +26,10 @@
     <!-- My Review -->
     <string name="my_review_title">내가 쓴 리뷰</string>
     <string name="my_review_description">헬푸미와 외식 걱정을 날려보아요!</string>
-    <string name="my_review_description_second">다이어터도 즐길 수 있는</string>
     <string name="my_review_store">식당 보러 가기</string>
+    <string name="my_review_description_second">다이어터도 즐길 수 있는</string>
+    <string name="my_review_delete">편집</string>
+    <string name="my_review_edit">삭제</string>
 
     <!-- Withdrawal -->
     <string name="withdrawal_title">회원탈퇴</string>
@@ -82,12 +84,16 @@
     <string name="withdraw_nickname">푸밍이</string>
     <string name="withdraw_confirm">확인</string>
 
-
     <!-- Withdraw Dialog -->
     <string name="withdraw_dialog_caution">정말로 탈퇴하실건가요?</string>
     <string name="withdraw_dialog_caution_description">탈퇴 시 헬푸미의 새로운 정보를\n얻을 수 없습니다</string>
     <string name="withdraw_dialog_no">아니요</string>
     <string name="withdraw_dialog_yes">네 탈퇴할게요</string>
+
+    <!-- MyReview Dialog -->
+    <string name="my_review_dialog_caution">작성한 리뷰를\n삭제하실 건가요?</string>
+    <string name="my_review_dialog_no">아니요</string>
+    <string name="my_review_dialog_yes">네</string>
 
     <!-- Format -->
     <string name="format_hashtag">#%s</string>
