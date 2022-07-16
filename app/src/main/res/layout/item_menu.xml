@@ -99,7 +99,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/notosanskr_b"
-                    android:text="@{Integer.toString(menu.calorie)}"
+                    android:text="@{menu.calorie == null ? `-` : Integer.toString(menu.calorie)}"
                     android:textAlignment="center"
                     android:textColor="@color/white"
                     android:textSize="16sp"
