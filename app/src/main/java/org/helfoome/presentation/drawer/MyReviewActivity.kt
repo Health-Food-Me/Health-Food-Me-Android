@@ -18,7 +18,6 @@ import org.helfoome.util.ext.startActivity
 
 class MyReviewActivity : BindingActivity<ActivityMyReviewBinding>(R.layout.activity_my_review) {
 
-
     private val myReviewAdapter = MyReviewAdapter {
         adapterClickListener(it)
     }
