@@ -1,7 +1,6 @@
 package org.helfoome.data.interceptor
 
 import okhttp3.Interceptor
-import okhttp3.Request
 import okhttp3.Response
 import org.helfoome.data.local.HFMSharedPreference
 import javax.inject.Inject
