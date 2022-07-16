@@ -1,10 +1,7 @@
 package org.helfoome.presentation
 
-import android.app.AlertDialog
 import android.content.Intent
-import android.graphics.Color
 import android.graphics.Paint
-import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,6 +10,7 @@ import androidx.activity.viewModels
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.add
 import androidx.fragment.app.commit
+import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.chip.Chip
 import com.google.android.material.tabs.TabLayout
@@ -37,7 +35,9 @@ import org.helfoome.presentation.restaurant.adapter.RestaurantTabAdapter
 import org.helfoome.presentation.review.ReviewWritingActivity
 import org.helfoome.presentation.search.SearchActivity
 import org.helfoome.presentation.type.FoodType
+import org.helfoome.presentation.type.HashtagViewType
 import org.helfoome.util.ChipFactory
+import org.helfoome.util.DialogUtil
 import org.helfoome.util.binding.BindingActivity
 import org.helfoome.util.ext.stringListFrom
 import timber.log.Timber
@@ -61,7 +61,16 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
 
         override fun onTabSelected(tab: TabLayout.Tab?) {
             // 리뷰 탭에서만 리뷰 작성 버튼 보여주기
-            binding.layoutRestaurantDialog.btnWriteReview.visibility = if (tab?.position == 2) View.VISIBLE else View.INVISIBLE
+            viewModel.setReviewTab(tab?.position == 2)
+            // binding.layoutRestaurantDialog.btnWriteReview.visibility = if (tab?.position == 2) View.VISIBLE else View.INVISIBLE
+        }
+    }
+
+    private val appbarOffsetListener = AppBarLayout.OnOffsetChangedListener { _, verticalOffset ->
+        binding.layoutRestaurantDialog.tvRestaurantNameInToolbar.visibility = if (verticalOffset == 0) {
+            View.INVISIBLE
+        } else {
+            View.VISIBLE
         }
     }
 
@@ -129,6 +138,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
         super.onStart()
         behavior.addBottomSheetCallback(bottomSheetCallback)
         binding.layoutRestaurantDialog.layoutRestaurantTabMenu.addOnTabSelectedListener(listener)
+        binding.layoutRestaurantDialog.layoutAppBar.addOnOffsetChangedListener(appbarOffsetListener)
     }
 
     private fun initView() {
@@ -148,6 +158,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                 visibility = View.INVISIBLE
                 setOnClickListener { startActivity(Intent(this@MainActivity, ReviewWritingActivity::class.java)) }
             }
+            hashtag.setHashtag(listOf("연어 샐러드", "샌드위치"), HashtagViewType.RESTAURANT_SUMMARY_TYPE)
         }
     }
 
@@ -208,14 +219,8 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                     startActivity(Intent(this@MainActivity, SettingActivity::class.java))
                 }
                 tvLogout.setOnClickListener {
-                    val layoutInflater = LayoutInflater.from(this@MainActivity)
-                    val bind: LogoutDialogBinding = LogoutDialogBinding.inflate(layoutInflater)
-                    val alertDialog = AlertDialog.Builder(this@MainActivity)
-                        .setView(bind.root)
-                        .show()
-
-                    alertDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-                    alertDialog.setCancelable(false)
+                    val bind = LogoutDialogBinding.inflate(LayoutInflater.from(this@MainActivity))
+                    val dialog = DialogUtil.makeDialog(this@MainActivity, bind, 288, 241)
 
                     bind.btnYes.setOnClickListener {
                         NaverIdLoginSDK.logout()
@@ -230,7 +235,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                         finish()
                     }
                     bind.btnNo.setOnClickListener {
-                        alertDialog.dismiss()
+                        dialog.dismiss()
                     }
                 }
             }
@@ -286,6 +291,11 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                 }
             }
         }
+
+        viewModel.isVisibleReviewButton.observe(this) { isVisible ->
+            binding.layoutRestaurantDialog.btnWriteReview.visibility =
+                if (isVisible.peekContent()) View.VISIBLE else View.INVISIBLE
+        }
     }
 
     override fun onBackPressed() {
@@ -301,6 +311,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
         binding.layoutDrawer.closeDrawers()
         behavior.removeBottomSheetCallback(bottomSheetCallback)
         binding.layoutRestaurantDialog.layoutRestaurantTabMenu.removeOnTabSelectedListener(listener)
+        binding.layoutRestaurantDialog.layoutAppBar.removeOnOffsetChangedListener(appbarOffsetListener)
     }
 
     private val bottomSheetCallback = object : BottomSheetBehavior.BottomSheetCallback() {
