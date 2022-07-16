@@ -79,13 +79,13 @@ class MyReviewActivity : BindingActivity<ActivityMyReviewBinding>(R.layout.activ
         myReviewAdapter.submitList(
             listOf(
                 MyReviewInfo(
-                    1, "s", 1F, listOf("11", "11"), "dsd", listOf("de", "de")
+                    1, "s", 1f, listOf("11", "11"), "dsd", listOf("de", "de")
                 ),
                 MyReviewInfo(
-                    1, "s", 1F, listOf("11", "11"), "dsd", listOf("de", "de")
+                    1, "s", 1f, listOf("11", "11"), "dsd", listOf("de", "de")
                 ),
                 MyReviewInfo(
-                    1, "s", 1F, listOf("11", "11"), "dsd", listOf("de", "de")
+                    1, "s", 1f, listOf("11", "11"), "dsd", listOf("de", "de")
                 )
             )
         )
