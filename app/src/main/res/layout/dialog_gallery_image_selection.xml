@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_kakao"
+            style="@style/TextView.MapButton.Style"
+            android:layout_height="wrap_content"
+            android:text="사진 찍기"
+            android:textAppearance="@style/TextView.Map.TextAppearance" />
+
+        <TextView
+            android:id="@+id/tv_naver"
+            style="@style/TextView.MapButton.Style"
+            android:layout_height="wrap_content"
+            android:text="사진 보관함"
+            android:textAppearance="@style/TextView.Map.TextAppearance" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#CBCBCC" />
+
+        <TextView
+            android:id="@+id/cancel"
+            style="@style/TextView.MapButton.Style"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/notosanskr_m"
+            android:text="@string/cancel"
+            android:textAppearance="@style/TextView.Map.TextAppearance"
+            android:textColor="@color/gray_550"
+            android:textSize="17dp" />
+    </LinearLayout>
+</layout>
