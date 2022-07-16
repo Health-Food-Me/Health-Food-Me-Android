@@ -69,9 +69,7 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
             }
         }
 
-        override fun onSlide(bottomSheetView: View, slideOffset: Float) {
-
-        }
+        override fun onSlide(bottomSheetView: View, slideOffset: Float) { }
     }
 
     private val recentConcatAdapter = ConcatAdapter(
