@@ -327,7 +327,7 @@
                     android:backgroundTint="@color/red_500"
                     android:fontFamily="@font/notosanskr_b"
                     android:paddingVertical="12dp"
-                    android:text="리뷰 쓰기"
+                    android:text="@string/review_writing_write_btn_text"
                     android:textColor="@color/white"
                     android:textSize="14dp"
                     app:layout_constraintTop_toBottomOf="@id/tv_photo_guide" />
