@@ -54,11 +54,10 @@
 
                     <TextView
                         android:id="@+id/tv_search"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
                         android:background="@drawable/rectangle_white_radius_14"
-                        android:drawablePadding="124dp"
                         android:fontFamily="@font/notosanskr_r"
                         android:hint="@string/main_search"
                         android:paddingHorizontal="16dp"
@@ -67,6 +66,7 @@
                         android:textSize="15sp"
                         app:drawableEndCompat="@drawable/ic_search"
                         app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@id/btn_hamburger"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -75,8 +75,9 @@
                 <HorizontalScrollView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="20dp"
+                    android:paddingHorizontal="20dp"
                     android:layout_marginTop="12dp"
+                    android:clipToPadding="false"
                     android:overScrollMode="never"
                     android:scrollbars="none"
                     app:layout_constraintTop_toBottomOf="@id/layout_search">
@@ -109,7 +110,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="20dp"
-                    android:layout_marginBottom="39dp"
+                    android:layout_marginBottom="16dp"
                     android:backgroundTint="@color/white"
                     android:src="@drawable/ic_currentposition"
                     app:borderWidth="0dp"
