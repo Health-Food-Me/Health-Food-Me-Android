@@ -62,6 +62,31 @@ class MainViewModel @Inject constructor() : ViewModel() {
         _selectedRestaurant.value = RestaurantInfo(id = 1, image = "https://salady.com/superboard/data/siteconfig/2021021809004816136064486235.jpg", name = "샐러디", score = 4.8f, tags = listOf("샐러드", "샌드위치", "랩"), category = "샐러드", location = "서울특별시 중랑구 상봉동", time = listOf("화요일 10:00 ~ 22:00", "수요일 10:00 ~ 22:00", "목요일 10:00 ~ 22:00", "금요일 10:00 ~ 22:00", "토요일 10:00 ~ 22:00", "일요일 10:00 ~ 22:00", "월요일 10:00 ~ 22:00"), number = "02-123-123")
     }
 
+    fun fetchHealFoodRestaurantLocation() {
+        // TODO fetch location data from remote
+        _location.value = listOf(
+            LatLng(37.7523167, 127.0711813),
+            LatLng(37.7509459, 127.0733813),
+            LatLng(37.7516837, 127.0749479),
+            LatLng(37.7513456, 127.0678897),
+            LatLng(37.7488591, 127.0677059),
+            LatLng(37.5915564, 127.0215812),
+            LatLng(37.7523167, 127.0711813),
+            LatLng(37.5683199, 126.9789914),
+            LatLng(37.5735465, 126.9843782),
+            LatLng(37.5721776, 126.9907629),
+            LatLng(37.5713466, 126.9755946),
+            LatLng(37.5755447, 126.9732612),
+            LatLng(37.5221133, 126.9258818),
+            LatLng(37.5159831, 126.9207751),
+            LatLng(37.5217754, 126.9068775),
+            LatLng(37.5175996, 126.9132172),
+            LatLng(37.5150195, 126.9089220),
+            LatLng(37.5168713, 126.9035354),
+            LatLng(37.5160904, 126.8963763)
+        )
+    }
+
     fun fetchReviewList() {
         _reviews.value = listOf(
             ReviewInfo(1, "나는 헬푸파미", 3.6F, listOf("맛 최고", "약속 시 부담없는", "양 조절 쉬운", "든든한"), "블라블라 만약에 이 내용이 너무 길어진다면 ..? 그게 고민...이었는데 말이죠 해결됐어요. 왜냐면 더보기를 누르면 되니까요! 제 뻘소리를 더 보고 싶으시다면 더보기를 함 눌러볼텨?", listOf("https://postfiles.pstatic.net/MjAyMjA2MTlfMTM2/MDAxNjU1NjQyOTQ5OTIw.JPYcSZuY_WIVFxj0p7XinmRXH8hEoTqfWHr8ezEifagg.L0P1lCMWpKBhUG-pDQ6SeW1cFVNxhxSJLWMaWzKeOlYg.JPEG.schneesun85/SE-a70a7e59-03f9-453a-8cc3-cb286c1b7038.jpg?type=w773", "https://postfiles.pstatic.net/MjAyMjA2MTlfMjM5/MDAxNjU1NjQyOTUzMTYy.Sw3GwqLk5rzozr4vpNwc9gRegOFw3MX7pf74jB6R1L8g.OxRoss8qTBqLK4LVKORR_eYEGGxxmym78jnrKvoNsOMg.JPEG.schneesun85/SE-a7df6cbf-07c1-49e8-87c9-2ba2cb75353c.jpg?type=w773", "https://postfiles.pstatic.net/MjAyMjA2MTlfMTY4/MDAxNjU1NjQzMzAxMjg2.-spg_Y_enobTUhKDfpQWc3tl2ecJIf5ZapnFRqHPDeIg.K3depTagAqaC2F-NEbIcXe27Lvpuh5OaRLb-l-fR3Mwg.JPEG.schneesun85/SE-4bd590a3-3240-4226-972f-70fa3898439a.jpg?type=w773", "https://postfiles.pstatic.net/MjAyMjA2MTlfMjc2/MDAxNjU1NjQzNTEwODYx.l4nyYL53pF3-kG_HoO9Q2tZNUc6PeH6wPFZHlqhz_GYg.t4CLM6zcFFdsKvg0-FJegAsWSE4oQ0dHRIX4qEYWNdAg.JPEG.schneesun85/SE-14abe25d-a852-4915-86c1-fd0f3fa6a37b.jpg?type=w773")),

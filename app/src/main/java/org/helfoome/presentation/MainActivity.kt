@@ -143,7 +143,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
 
     private fun initView() {
         behavior = BottomSheetBehavior.from(binding.layoutBottomSheet)
-        behavior.state = BottomSheetBehavior.STATE_COLLAPSED
+        behavior.state = BottomSheetBehavior.STATE_HIDDEN
 
         with(binding.layoutRestaurantDialog) {
             vpRestaurantDetail.adapter = restaurantDetailAdapter
@@ -263,7 +263,6 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
     private fun initObservers() {
         viewModel.selectedRestaurant.observe(this) {
             behavior.state = BottomSheetBehavior.STATE_COLLAPSED
-            viewModel.selectedRestaurant.value?.location
         }
 
         viewModel.location.observe(this) {
@@ -279,6 +278,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                 }
             }.forEach { marker ->
                 marker.setOnClickListener {
+                    viewModel.fetchSelectedRestaurantInfo()
                     if (viewModel.isDietRestaurant.value == true) {
                         marker.icon = OverlayImage.fromResource(R.drawable.ic_marker_green_big)
                     } else {
@@ -344,7 +344,11 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
             binding.fabLocation.setOnClickListener {
                 locationTrackingMode = LocationTrackingMode.Follow
             }
+            setOnMapClickListener { _, _ ->
+                behavior.state = BottomSheetBehavior.STATE_HIDDEN
+            }
         }
+        viewModel.fetchHealFoodRestaurantLocation()
     }
 
     companion object {
