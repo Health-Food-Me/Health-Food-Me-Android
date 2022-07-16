@@ -1,5 +1,6 @@
 package org.helfoome.presentation.restaurant
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
@@ -10,6 +11,7 @@ import org.helfoome.databinding.FragmentReviewBinding
 import org.helfoome.presentation.restaurant.adapter.RestaurantBlogReviewAdapter
 import org.helfoome.presentation.restaurant.adapter.RestaurantGeneralReviewAdapter
 import org.helfoome.presentation.restaurant.viewmodel.RestaurantReviewViewModel
+import org.helfoome.presentation.review.ReviewWritingActivity
 import org.helfoome.util.ItemDecorationUtil
 import org.helfoome.util.binding.BindingFragment
 
@@ -45,6 +47,9 @@ class RestaurantReviewTabFragment : BindingFragment<FragmentReviewBinding>(R.lay
             override fun onTabReselected(tab: TabLayout.Tab?) {
             }
         })
+        binding.btnWriteReview.setOnClickListener {
+            startActivity(Intent(context, ReviewWritingActivity::class.java))
+        }
     }
 
     private fun initObservers() {

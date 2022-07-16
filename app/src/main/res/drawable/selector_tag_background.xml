@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/rectangle_boarder_red_radius_12" android:state_selected="true" />
+    <item android:drawable="@drawable/rectangle_boarder_gray_radius_12" android:state_selected="false" />
+</selector>
