@@ -27,6 +27,8 @@ class MyReviewActivity : BindingActivity<ActivityMyReviewBinding>(R.layout.activ
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        binding.rcvReview.visibility = View.VISIBLE
+        binding.layoutEmptyView.visibility = View.GONE
         initAdapter()
         initListeners()
 //        if (dataset.isEmpty()) {
@@ -34,8 +36,8 @@ class MyReviewActivity : BindingActivity<ActivityMyReviewBinding>(R.layout.activ
 //            binding.layoutEmptyView.visibility = View.VISIBLE
 //        }
 //        else {
-        binding.rcvReview.visibility = View.VISIBLE
-        binding.layoutEmptyView.visibility = View.GONE
+//        binding.rcvReview.visibility = View.VISIBLE
+//        binding.layoutEmptyView.visibility = View.GONE
 //        }
     }
 
@@ -77,14 +79,13 @@ class MyReviewActivity : BindingActivity<ActivityMyReviewBinding>(R.layout.activ
         myReviewAdapter.submitList(
             listOf(
                 MyReviewInfo(
-                    1, "s", 1, listOf("11", "11"), "dsd",
-                    listOf("de", "de")
-                ), MyReviewInfo(
-                    1, "s", 1, listOf("11", "11"), "dsd",
-                    listOf("de", "de")
-                ), MyReviewInfo(
-                    1, "s", 1, listOf("11", "11"), "dsd",
-                    listOf("de", "de")
+                    1, "s", 1, listOf("11", "11"), "dsd", listOf("de", "de")
+                ),
+                MyReviewInfo(
+                    1, "s", 1, listOf("11", "11"), "dsd", listOf("de", "de")
+                ),
+                MyReviewInfo(
+                    1, "s", 1, listOf("11", "11"), "dsd", listOf("de", "de")
                 )
             )
         )
