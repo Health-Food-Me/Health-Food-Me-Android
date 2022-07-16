@@ -27,6 +27,7 @@ android {
         buildConfigField("String", "KAKAO_APP_KEY", properties.getProperty("KAKAO_APP_KEY"))
         buildConfigField("String", "KAKAO_NATIVE_KEY", properties.getProperty("KAKAO_NATIVE_KEY"))
         buildConfigField("String", "NAVER_API_MAP_KEY", properties.getProperty("NAVER_API_MAP_KEY"))
+        buildConfigField("String", "HFM_BASE_URL", properties.getProperty("HFM_BASE_URL"))
     }
 
     buildTypes {
