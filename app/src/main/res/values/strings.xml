@@ -92,6 +92,7 @@
     <!-- Format -->
     <string name="format_hashtag">#%s</string>
     <string name="format_hashtag_with_blank"># %s</string>
+    <string name="format_image_count">%d/3</string>
     <string name="main_search">식당, 음식 검색</string>
 
     <!-- Restaurant Detail -->
