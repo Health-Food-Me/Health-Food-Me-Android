@@ -284,6 +284,7 @@
                     app:tabIndicator="@drawable/rectangle_border_radius_10"
                     app:tabIndicatorColor="@color/red_500"
                     app:tabIndicatorHeight="2dp"
+                    app:tabRippleColor="@null"
                     app:tabSelectedTextColor="@color/red_500"
                     app:tabTextAppearance="@style/TabItem.RestaurantTab.TextAppearance"
                     app:tabTextColor="@color/gray_600">
