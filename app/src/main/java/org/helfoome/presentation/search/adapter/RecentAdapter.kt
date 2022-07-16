@@ -8,7 +8,7 @@ import org.helfoome.databinding.ItemRecentWordBinding
 import org.helfoome.domain.entity.RecentSearchInfo
 import org.helfoome.util.ItemDiffCallback
 
-class RecentAdapter(private val deleteButtonClickListener: ((String) -> Unit)) :
+class RecentAdapter(private val keywordClickListener: ((String) -> Unit), private val deleteButtonClickListener: ((String) -> Unit)) :
     ListAdapter<RecentSearchInfo, RecentAdapter.RecentViewHolder>(
         ItemDiffCallback<RecentSearchInfo>(
             onContentsTheSame = { old, new -> old == new },
@@ -26,15 +26,22 @@ class RecentAdapter(private val deleteButtonClickListener: ((String) -> Unit)) :
     }
 
     override fun onBindViewHolder(holder: RecentViewHolder, position: Int) {
-        holder.onBind(deleteButtonClickListener, getItem(position))
+        holder.onBind(keywordClickListener, deleteButtonClickListener, getItem(position))
     }
 
     class RecentViewHolder(private val binding: ItemRecentWordBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun onBind(deleteButtonClickListener: (String) -> Unit, data: RecentSearchInfo) {
-            binding.data = data
-            binding.btnDelete.setOnClickListener {
-                deleteButtonClickListener.invoke(data.keyword)
+        fun onBind(keywordClickListener: (String) -> Unit, deleteButtonClickListener: (String) -> Unit, recentSearchData: RecentSearchInfo) {
+            with(binding) {
+                with(recentSearchData) {
+                    data = this
+                    btnDelete.setOnClickListener {
+                        deleteButtonClickListener.invoke(keyword)
+                    }
+                    tvRecentWord.setOnClickListener {
+                        keywordClickListener.invoke(keyword)
+                    }
+                }
             }
         }
     }
