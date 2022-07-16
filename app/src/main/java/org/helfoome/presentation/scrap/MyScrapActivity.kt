@@ -1,9 +1,9 @@
-package org.helfoome.presentation.drawer
+package org.helfoome.presentation.scrap
 
 import android.os.Bundle
 import org.helfoome.R
 import org.helfoome.databinding.ActivityMyScrapBinding
-import org.helfoome.presentation.drawer.adapter.MyScrapAdapter
+import org.helfoome.presentation.scrap.adapter.MyScrapAdapter
 import org.helfoome.util.binding.BindingActivity
 
 class MyScrapActivity : BindingActivity<ActivityMyScrapBinding>(R.layout.activity_my_scrap) {

@@ -4,11 +4,17 @@
 
     <data>
 
+        <import type="android.view.View" />
+
+        <variable
+            name="isNotVisible"
+            type="boolean" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:visibility="@{isNotVisible? View.GONE : View.VISIBLE}">
 
         <TextView
             android:id="@+id/tv_recent_word"

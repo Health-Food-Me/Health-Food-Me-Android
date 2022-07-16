@@ -1,10 +1,7 @@
 package org.helfoome.presentation
 
-import android.app.AlertDialog
 import android.content.Intent
-import android.graphics.Color
 import android.graphics.Paint
-import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -30,15 +27,17 @@ import org.helfoome.R
 import org.helfoome.databinding.ActivityMainBinding
 import org.helfoome.databinding.LogoutDialogBinding
 import org.helfoome.presentation.drawer.MyReviewActivity
-import org.helfoome.presentation.drawer.MyScrapActivity
+import org.helfoome.presentation.scrap.MyScrapActivity
 import org.helfoome.presentation.drawer.ProfileModifyActivity
 import org.helfoome.presentation.drawer.SettingActivity
 import org.helfoome.presentation.restaurant.MapSelectionBottomDialogFragment
 import org.helfoome.presentation.restaurant.adapter.RestaurantTabAdapter
 import org.helfoome.presentation.review.ReviewWritingActivity
+import org.helfoome.presentation.search.SearchActivity
 import org.helfoome.presentation.type.FoodType
 import org.helfoome.presentation.type.HashtagViewType
 import org.helfoome.util.ChipFactory
+import org.helfoome.util.DialogUtil
 import org.helfoome.util.binding.BindingActivity
 import org.helfoome.util.ext.stringListFrom
 import timber.log.Timber
@@ -186,6 +185,10 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                 startActivity(Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + tvNumber.text)))
             }
 
+            binding.layoutSearch.setOnClickListener {
+                startActivity(Intent(this@MainActivity, SearchActivity::class.java))
+            }
+
             with(binding) {
                 btnHamburger.setOnClickListener {
                     layoutDrawer.open()
@@ -216,14 +219,8 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                     startActivity(Intent(this@MainActivity, SettingActivity::class.java))
                 }
                 tvLogout.setOnClickListener {
-                    val layoutInflater = LayoutInflater.from(this@MainActivity)
-                    val bind: LogoutDialogBinding = LogoutDialogBinding.inflate(layoutInflater)
-                    val alertDialog = AlertDialog.Builder(this@MainActivity)
-                        .setView(bind.root)
-                        .show()
-
-                    alertDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-                    alertDialog.setCancelable(false)
+                    val bind = LogoutDialogBinding.inflate(LayoutInflater.from(this@MainActivity))
+                    val dialog = DialogUtil.makeDialog(this@MainActivity, bind, 288, 241)
 
                     bind.btnYes.setOnClickListener {
                         NaverIdLoginSDK.logout()
@@ -238,7 +235,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                         finish()
                     }
                     bind.btnNo.setOnClickListener {
-                        alertDialog.dismiss()
+                        dialog.dismiss()
                     }
                 }
             }
@@ -311,6 +308,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
 
     override fun onStop() {
         super.onStop()
+        binding.layoutDrawer.closeDrawers()
         behavior.removeBottomSheetCallback(bottomSheetCallback)
         binding.layoutRestaurantDialog.layoutRestaurantTabMenu.removeOnTabSelectedListener(listener)
         binding.layoutRestaurantDialog.layoutAppBar.removeOnOffsetChangedListener(appbarOffsetListener)
