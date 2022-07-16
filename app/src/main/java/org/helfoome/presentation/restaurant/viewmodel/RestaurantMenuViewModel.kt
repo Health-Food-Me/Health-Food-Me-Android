@@ -30,7 +30,8 @@ class RestaurantMenuViewModel @Inject constructor() : ViewModel() {
             MenuInfo(4, "콥 샐러디", "https://salady.com/superboard/data/product/thumb/3731617857_1epsjcm2_d79e57ca53061076a729c03d00aa123312ca9d0f.jpg", 6300, 23, 22, 15, 291, 70, true),
             MenuInfo(5, "치킨토마토 샌드위치", "https://salady.com/superboard/data/product/thumb/3731617857_P6qao2j4_1e3ff731c9a1d91414ac0bbc9ea101dc885d6bd5.jpg", 8200, 24, 23, 16, 307, 60),
             MenuInfo(6, "맥시칸 랩", "https://salady.com/superboard/data/product/thumb/3731617857_gzSGH7wP_0faa0c8288336e920f21d8502e96c302a2b0c3f2.png", 8200, 25, 24, 18, 307, 40),
-            MenuInfo(7, "할라피뇨치킨 웜랩", null, 8200, 25, 24, 18, 307, 40)
+            MenuInfo(7, "할라피뇨치킨 웜랩", null, 8200, 25, 24, 18, 307, 40),
+            MenuInfo(8, "포테이토 피자", null, 15200, 25, 24, 18, 307, 40, isGeneralMenu = true)
         )
     }
 
