@@ -17,10 +17,17 @@
     <string name="main_chip_group_quito">키토김밥</string>
 
     <!-- Profile -->
-    <string name="profile_title">프로필 수정</string>
+    <string name="profile_title">프로필 편집</string>
+    <string name="profile_description">변경할 닉네임을 설정해 주세요</string>
+    <string name="profile_nickname">닉네임을 설정해 주세요</string>
+    <string name="profile_nickname_condition">* 특수문자, 이모티콘은 사용 불가합니다\n* 띄어쓰기 포함 최대 12글자</string>
+    <string name="profile_modify">수정 완료</string>
 
     <!-- My Review -->
     <string name="my_review_title">내가 쓴 리뷰</string>
+    <string name="my_review_description">헬푸미와 외식 걱정을 날려보아요!</string>
+    <string name="my_review_description_second">다이어터도 즐길 수 있는</string>
+    <string name="my_review_store">식당 보러 가기</string>
 
     <!-- Withdrawal -->
     <string name="withdrawal_title">회원탈퇴</string>
@@ -75,6 +82,7 @@
     <string name="withdraw_nickname">푸밍이</string>
     <string name="withdraw_confirm">확인</string>
 
+
     <!-- Withdraw Dialog -->
     <string name="withdraw_dialog_caution">정말로 탈퇴하실건가요?</string>
     <string name="withdraw_dialog_caution_description">탈퇴 시 헬푸미의 새로운 정보를\n얻을 수 없습니다</string>
@@ -93,7 +101,6 @@
     <string name="restaurant_detail_gram_format">%dg</string>
     <string name="restaurant_detail_gram_per_person_format">1인분 (%dg)</string>
     <string name="restaurant_detail_review_length_format">(%d/500자)</string>
-
     <string name="restaurant_detail_tab_item_menu">메뉴</string>
     <string name="restaurant_detail_tab_item_how_to_eat_out">외식 대처법</string>
     <string name="restaurant_detail_tab_item_review">리뷰</string>
@@ -103,7 +110,6 @@
     <string name="restaurant_detail_fat">지방</string>
     <string name="restaurant_detail_nutrient">영양정보</string>
     <string name="restaurant_detail_blog_review">블로그 리뷰</string>
-
     <string name="restaurant_detail_eating_out_recommendation_title">추천하는 이유!</string>
     <string name="restaurant_detail_eating_out_how_to_eat_title">이렇게 드셔보세요!</string>
 
@@ -122,10 +128,6 @@
     <!-- Map Selection -->
     <string name="dialog_map_selection_naver">네이버지도</string>
     <string name="dialog_map_selection_kakao">카카오맵</string>
-
-    <!-- empty -->
-    <string name="empty_go_scrap">스크랩하러 가기</string>
-    <string name="empty_go_restaurant">식당 보러 가기</string>
 
     <!-- Review Writing-->
     <string name="review_writing_title">리뷰작성</string>
@@ -149,6 +151,11 @@
     <string name="review_writing_hint">리뷰를 작성해주세요 (최대 500자)</string>
     <string name="review_writing_write_btn_text">리뷰 쓰기</string>
 
+    <!-- empty -->
+    <string name="empty_go_scrap">스크랩하러 가기</string>
+    <string name="empty_go_restaurant">식당 보러 가기</string>
+
     <!-- tools -->
     <string name="dear_fine">디어파인</string>
+
 </resources>

@@ -2,7 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".presentation.restaurant.RestaurantReviewTabFragment">
+    tools:context=".presentation.restaurant.RestaurantMenuTabFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -68,19 +68,5 @@
                     tools:listitem="@layout/item_general_review" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
-
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/btn_write_review"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/notosanskr_b"
-            style="@style/Button.Basic.Style"
-            android:text="리뷰 쓰기"
-            android:background="@color/red_500"
-            android:textSize="14dp"
-            android:paddingVertical="12dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginHorizontal="@dimen/size_spacing_20"
-            android:textColor="@color/white"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
