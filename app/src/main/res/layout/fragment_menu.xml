@@ -12,46 +12,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/layout_tab_menu_background"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/rectangle_transparent_radius_20"
-                android:backgroundTint="@color/gray_50"
-                android:padding="3dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:tabRippleColor="@android:color/transparent">
-
-                <com.google.android.material.tabs.TabLayout
-                    android:id="@+id/layout_menu_tab"
-                    android:layout_width="wrap_content"
-                    android:layout_height="32dp"
-                    android:background="@android:color/transparent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:tabBackground="@drawable/selector_menu_tab_item_background"
-                    app:tabIndicatorHeight="0dp"
-                    app:tabMinWidth="78dp"
-                    app:tabRippleColor="@android:color/transparent"
-                    app:tabSelectedTextColor="@color/gray_800"
-                    app:tabTextAppearance="@style/TabItem.MenuTab.TextAppearance"
-                    app:tabTextColor="@color/gray_550">
-
-                    <com.google.android.material.tabs.TabItem
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/restaurant_detail_tab_item_menu" />
-
-                    <com.google.android.material.tabs.TabItem
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/restaurant_detail_nutrient" />
-                </com.google.android.material.tabs.TabLayout>
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/menu_list"
                 android:layout_width="match_parent"
@@ -61,7 +21,6 @@
                 android:clipToPadding="false"
                 android:paddingBottom="20dp"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintTop_toBottomOf="@id/layout_tab_menu_background"
                 tools:listitem="@layout/item_menu" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>

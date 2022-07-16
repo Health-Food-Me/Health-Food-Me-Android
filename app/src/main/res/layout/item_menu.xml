@@ -28,13 +28,13 @@
                 android:layout_width="85dp"
                 android:layout_height="0dp"
                 android:layout_marginStart="15dp"
+                android:src="@drawable/ic_helfoome_place_holder"
                 app:imageUrl="@{menu.image}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintDimensionRatio="1:1"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:shapeAppearanceOverlay="@style/CircleImageView.Radius.8.Style"
-                tools:src="@mipmap/ic_launcher" />
+                app:shapeAppearanceOverlay="@style/CircleImageView.Radius.8.Style" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="0dp"
@@ -92,15 +92,15 @@
                 android:orientation="vertical"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toTopOf="parent"
+                app:visibility="@{menu.generalMenu != true}">
 
                 <TextView
                     android:id="@+id/tv_calorie"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/notosanskr_b"
-                    android:text="@{Integer.toString(menu.calorie)}"
-                    android:textAlignment="center"
+                    android:text="@{menu.calorie == null ? `-` : Integer.toString(menu.calorie)}"
                     android:textColor="@color/white"
                     android:textSize="16sp"
                     tools:text="219" />
@@ -111,9 +111,17 @@
                     android:layout_marginTop="3dp"
                     android:fontFamily="@font/notosanskr_m"
                     android:text="@string/restaurant_detail_calorie_unit"
-                    android:textAlignment="center"
                     android:textColor="@color/white"
                     android:textSize="10sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/notosanskr_m"
+                    android:text="@{menu.gramPerPerson == null ? context.getString(R.string.restaurant_detail_gram_per_person_for_empty) : String.format(context.getString(R.string.restaurant_detail_gram_per_person), menu.gramPerPerson)}"
+                    android:textColor="@color/white"
+                    android:textSize="8dp"
+                    tools:text="(50g당)"/>
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -100,6 +100,8 @@
     <string name="restaurant_detail_price_format">%d원</string>
     <string name="restaurant_detail_navi_meter_format">%dm</string>
     <string name="restaurant_detail_gram_format">%dg</string>
+    <string name="restaurant_detail_gram_per_person">(%dg당)</string>
+    <string name="restaurant_detail_gram_per_person_for_empty">(-g당)</string>
     <string name="restaurant_detail_gram_per_person_format">1인분 (%dg)</string>
     <string name="restaurant_detail_review_length_format">(%d/500자)</string>
     <string name="restaurant_detail_tab_item_menu">메뉴</string>
