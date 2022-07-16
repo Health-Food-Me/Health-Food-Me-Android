@@ -9,7 +9,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.add
@@ -240,18 +239,18 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
             it.map { location ->
                 Marker().apply {
                     position = location
-                    if(viewModel.isDietRestaurant.value == true){
+                    if (viewModel.isDietRestaurant.value == true) {
                         icon = OverlayImage.fromResource(R.drawable.ic_marker_green)
-                    }else {
+                    } else {
                         icon = OverlayImage.fromResource(R.drawable.ic_marker_red)
                     }
                     this.map = naverMap
                 }
             }.forEach { marker ->
                 marker.setOnClickListener {
-                    if(viewModel.isDietRestaurant.value == true){
+                    if (viewModel.isDietRestaurant.value == true) {
                         marker.icon = OverlayImage.fromResource(R.drawable.ic_marker_green_big)
-                    }else {
+                    } else {
                         marker.icon = OverlayImage.fromResource(R.drawable.ic_marker_red_big)
                     }
                     viewModel.markerId(marker.position)?.let { id ->

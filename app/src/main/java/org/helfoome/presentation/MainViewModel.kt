@@ -3,13 +3,10 @@ package org.helfoome.presentation
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.naver.maps.geometry.LatLng
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
 import org.helfoome.domain.entity.RestaurantInfo
 import org.helfoome.util.Event
-import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
