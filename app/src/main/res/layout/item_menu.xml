@@ -101,7 +101,6 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/notosanskr_b"
                     android:text="@{menu.calorie == null ? `-` : Integer.toString(menu.calorie)}"
-                    android:textAlignment="center"
                     android:textColor="@color/white"
                     android:textSize="16sp"
                     tools:text="219" />
@@ -112,9 +111,17 @@
                     android:layout_marginTop="3dp"
                     android:fontFamily="@font/notosanskr_m"
                     android:text="@string/restaurant_detail_calorie_unit"
-                    android:textAlignment="center"
                     android:textColor="@color/white"
                     android:textSize="10sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/notosanskr_m"
+                    android:text="@{menu.gramPerPerson == null ? context.getString(R.string.restaurant_detail_gram_per_person_for_empty) : String.format(context.getString(R.string.restaurant_detail_gram_per_person), menu.gramPerPerson)}"
+                    android:textColor="@color/white"
+                    android:textSize="8dp"
+                    tools:text="(50g당)"/>
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>

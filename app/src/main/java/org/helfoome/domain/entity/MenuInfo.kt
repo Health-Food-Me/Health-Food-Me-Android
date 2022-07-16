@@ -9,7 +9,7 @@ data class MenuInfo(
     val protein: Int,
     val fat: Int,
     val calorie: Int?,
-    val gramPerPerson: Int,
+    val gramPerPerson: Int?,
     val isHealfoomePick: Boolean = false,
     val isGeneralMenu: Boolean = false,
 )
