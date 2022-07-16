@@ -18,7 +18,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginHorizontal="20dp"
                 android:clipToPadding="false"
-                android:paddingTop="4dp"
+                android:paddingTop="5dp"
                 android:paddingBottom="20dp"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:listitem="@layout/item_menu" />
