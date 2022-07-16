@@ -15,6 +15,7 @@ import androidx.fragment.app.add
 import androidx.fragment.app.commit
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.chip.Chip
+import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.kakao.sdk.user.UserApiClient
 import com.naver.maps.geometry.LatLng
@@ -33,6 +34,7 @@ import org.helfoome.presentation.drawer.ProfileModifyActivity
 import org.helfoome.presentation.drawer.SettingActivity
 import org.helfoome.presentation.restaurant.MapSelectionBottomDialogFragment
 import org.helfoome.presentation.restaurant.adapter.RestaurantTabAdapter
+import org.helfoome.presentation.review.ReviewWritingActivity
 import org.helfoome.presentation.type.FoodType
 import org.helfoome.util.ChipFactory
 import org.helfoome.util.binding.BindingActivity
@@ -49,6 +51,18 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
     private lateinit var locationSource: FusedLocationSource
     private lateinit var naverMap: NaverMap
     private var mapSelectionBottomDialog: MapSelectionBottomDialogFragment? = null
+    private val listener = object : TabLayout.OnTabSelectedListener {
+        override fun onTabReselected(tab: TabLayout.Tab?) {
+        }
+
+        override fun onTabUnselected(tab: TabLayout.Tab?) {
+        }
+
+        override fun onTabSelected(tab: TabLayout.Tab?) {
+            // 리뷰 탭에서만 리뷰 작성 버튼 보여주기
+            binding.layoutRestaurantDialog.btnWriteReview.visibility = if (tab?.position == 2) View.VISIBLE else View.INVISIBLE
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -113,6 +127,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
     override fun onStart() {
         super.onStart()
         behavior.addBottomSheetCallback(bottomSheetCallback)
+        binding.layoutRestaurantDialog.layoutRestaurantTabMenu.addOnTabSelectedListener(listener)
     }
 
     private fun initView() {
@@ -123,9 +138,15 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
             vpRestaurantDetail.adapter = restaurantDetailAdapter
             TabLayoutMediator(layoutRestaurantTabMenu, vpRestaurantDetail) { tab, position ->
                 tab.text = resources.getStringArray(R.array.restaurant_detail_tab_titles)[position]
+                binding.layoutRestaurantDialog.btnWriteReview.visibility = if (position == 2) View.VISIBLE else View.INVISIBLE
             }.attach()
 
             tvNumber.paintFlags = tvNumber.paintFlags or Paint.UNDERLINE_TEXT_FLAG
+
+            btnWriteReview.apply {
+                visibility = View.INVISIBLE
+                setOnClickListener { startActivity(Intent(this@MainActivity, ReviewWritingActivity::class.java)) }
+            }
         }
     }
 
@@ -274,6 +295,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
         super.onStop()
         binding.layoutDrawer.closeDrawers()
         behavior.removeBottomSheetCallback(bottomSheetCallback)
+        binding.layoutRestaurantDialog.layoutRestaurantTabMenu.removeOnTabSelectedListener(listener)
     }
 
     private val bottomSheetCallback = object : BottomSheetBehavior.BottomSheetCallback() {

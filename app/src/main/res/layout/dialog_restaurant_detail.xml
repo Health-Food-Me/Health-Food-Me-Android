@@ -149,7 +149,7 @@
                             app:layout_constraintStart_toEndOf="@id/tv_restaurant_name"
                             tools:text="샐러드" />
 
-                        <org.helfoome.presentation.custom.RatingBar
+                        <org.helfoome.presentation.custom.StarScore
                             android:id="@+id/view_star_rating"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -357,5 +357,14 @@
             app:layout_constraintTop_toTopOf="parent"
             app:visibility="@{viewModel.isExpandedDialog().peekContent() != true}"
             tools:visibility="gone" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_write_review"
+            style="@style/Button.FullButton.Style"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:text="@string/review_writing_write_btn_text"
+            app:layout_constraintBottom_toBottomOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

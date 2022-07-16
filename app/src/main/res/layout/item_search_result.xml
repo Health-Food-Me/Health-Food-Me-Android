@@ -62,7 +62,7 @@
 
 
         <!--커스텀 뷰 들어가기 전에 위치 잡아놓는 용 뷰-->
-        <org.helfoome.presentation.custom.RatingBar
+        <org.helfoome.presentation.custom.StarScore
             android:id="@+id/rb_score"
             android:layout_width="86dp"
             android:layout_height="13dp"
