@@ -27,13 +27,23 @@ class OpeningTimeView(context: Context, attrs: AttributeSet? = null) : Constrain
 
     private fun initListeners() {
         binding.btnDropdown.setOnClickListener {
-            with(binding) {
-                btnDropdown.isSelected = !btnDropdown.isSelected
-                layoutNextday.visibility = if (btnDropdown.isSelected) {
-                    View.VISIBLE
-                } else {
-                    View.GONE
-                }
+            controlVisibility()
+        }
+        binding.layoutNextday.setOnClickListener {
+            controlVisibility()
+        }
+        binding.tvToday.setOnClickListener {
+            controlVisibility()
+        }
+    }
+
+    private fun controlVisibility() {
+        with(binding) {
+            btnDropdown.isSelected = !btnDropdown.isSelected
+            layoutNextday.visibility = if (btnDropdown.isSelected) {
+                View.VISIBLE
+            } else {
+                View.GONE
             }
         }
     }

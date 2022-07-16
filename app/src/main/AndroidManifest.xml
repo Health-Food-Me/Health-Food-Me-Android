@@ -29,6 +29,9 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".presentation.scrap.MapSelectActivity"
+            android:exported="false" />
+        <activity
             android:name=".presentation.WithdrawalActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
@@ -36,7 +39,7 @@
             android:name=".presentation.drawer.SettingActivity"
             android:exported="false" />
         <activity
-            android:name=".presentation.drawer.MyScrapActivity"
+            android:name=".presentation.scrap.MyScrapActivity"
             android:exported="false" />
         <activity
             android:name=".presentation.drawer.MyReviewActivity"
@@ -47,8 +50,7 @@
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".presentation.search.SearchActivity"
-            android:exported="false"
-            android:windowSoftInputMode="stateAlwaysHidden" />
+            android:exported="false" />
         <activity
             android:name=".presentation.LoginActivity"
             android:exported="false">
@@ -75,6 +77,9 @@
 
         <activity
             android:name=".presentation.MainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.review.ReviewWritingActivity"
             android:exported="false" />
     </application>
 

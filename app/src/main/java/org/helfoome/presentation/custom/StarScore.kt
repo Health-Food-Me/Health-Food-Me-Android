@@ -8,7 +8,7 @@ import org.helfoome.R
 import org.helfoome.databinding.ViewRatingBarBinding
 import timber.log.Timber
 
-class RatingBar(context: Context, val attrs: AttributeSet? = null) : ConstraintLayout(context, attrs) {
+class StarScore(context: Context, val attrs: AttributeSet? = null) : ConstraintLayout(context, attrs) {
     private lateinit var binding: ViewRatingBarBinding
     private lateinit var inflater: LayoutInflater
 

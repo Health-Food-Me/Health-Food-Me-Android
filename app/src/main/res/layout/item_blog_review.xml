@@ -13,11 +13,11 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingVertical="@dimen/size_spacing_28">
+        android:paddingBottom="@dimen/size_spacing_28">
 
         <TextView
             android:id="@+id/tv_nickname"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="16dp"
@@ -27,23 +27,8 @@
             android:text="@{review.title}"
             android:textColor="@color/gray_800"
             android:textSize="13sp"
-            app:layout_constraintEnd_toStartOf="@id/iv_thumbnail"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="샐러디 안암점 나쵸가 씹히는 멕시칸랩" />
-
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/iv_thumbnail"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginEnd="20dp"
-            android:src="@mipmap/ic_launcher"
-            app:imageUrl="@{review.thumbnail}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintDimensionRatio="1:1"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:shapeAppearanceOverlay="@style/CircleImageView.Radius.5.Style" />
 
         <TextView
             android:layout_width="0dp"

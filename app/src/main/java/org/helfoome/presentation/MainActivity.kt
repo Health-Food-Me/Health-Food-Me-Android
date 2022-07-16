@@ -1,21 +1,19 @@
 package org.helfoome.presentation
 
-import android.app.AlertDialog
 import android.content.Intent
-import android.graphics.Color
 import android.graphics.Paint
-import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.add
 import androidx.fragment.app.commit
+import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.chip.Chip
+import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.kakao.sdk.user.UserApiClient
 import com.naver.maps.geometry.LatLng
@@ -29,13 +27,17 @@ import org.helfoome.R
 import org.helfoome.databinding.ActivityMainBinding
 import org.helfoome.databinding.LogoutDialogBinding
 import org.helfoome.presentation.drawer.MyReviewActivity
-import org.helfoome.presentation.drawer.MyScrapActivity
+import org.helfoome.presentation.scrap.MyScrapActivity
 import org.helfoome.presentation.drawer.ProfileModifyActivity
 import org.helfoome.presentation.drawer.SettingActivity
 import org.helfoome.presentation.restaurant.MapSelectionBottomDialogFragment
 import org.helfoome.presentation.restaurant.adapter.RestaurantTabAdapter
+import org.helfoome.presentation.review.ReviewWritingActivity
+import org.helfoome.presentation.search.SearchActivity
 import org.helfoome.presentation.type.FoodType
+import org.helfoome.presentation.type.HashtagViewType
 import org.helfoome.util.ChipFactory
+import org.helfoome.util.DialogUtil
 import org.helfoome.util.binding.BindingActivity
 import org.helfoome.util.ext.stringListFrom
 import timber.log.Timber
@@ -50,6 +52,27 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
     private lateinit var locationSource: FusedLocationSource
     private lateinit var naverMap: NaverMap
     private var mapSelectionBottomDialog: MapSelectionBottomDialogFragment? = null
+    private val listener = object : TabLayout.OnTabSelectedListener {
+        override fun onTabReselected(tab: TabLayout.Tab?) {
+        }
+
+        override fun onTabUnselected(tab: TabLayout.Tab?) {
+        }
+
+        override fun onTabSelected(tab: TabLayout.Tab?) {
+            // 리뷰 탭에서만 리뷰 작성 버튼 보여주기
+            viewModel.setReviewTab(tab?.position == 2)
+            // binding.layoutRestaurantDialog.btnWriteReview.visibility = if (tab?.position == 2) View.VISIBLE else View.INVISIBLE
+        }
+    }
+
+    private val appbarOffsetListener = AppBarLayout.OnOffsetChangedListener { _, verticalOffset ->
+        binding.layoutRestaurantDialog.tvRestaurantNameInToolbar.visibility = if (verticalOffset == 0) {
+            View.INVISIBLE
+        } else {
+            View.VISIBLE
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -114,19 +137,28 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
     override fun onStart() {
         super.onStart()
         behavior.addBottomSheetCallback(bottomSheetCallback)
+        binding.layoutRestaurantDialog.layoutRestaurantTabMenu.addOnTabSelectedListener(listener)
+        binding.layoutRestaurantDialog.layoutAppBar.addOnOffsetChangedListener(appbarOffsetListener)
     }
 
     private fun initView() {
         behavior = BottomSheetBehavior.from(binding.layoutBottomSheet)
-        behavior.state = BottomSheetBehavior.STATE_COLLAPSED
+        behavior.state = BottomSheetBehavior.STATE_HIDDEN
 
         with(binding.layoutRestaurantDialog) {
             vpRestaurantDetail.adapter = restaurantDetailAdapter
             TabLayoutMediator(layoutRestaurantTabMenu, vpRestaurantDetail) { tab, position ->
                 tab.text = resources.getStringArray(R.array.restaurant_detail_tab_titles)[position]
+                binding.layoutRestaurantDialog.btnWriteReview.visibility = if (position == 2) View.VISIBLE else View.INVISIBLE
             }.attach()
 
             tvNumber.paintFlags = tvNumber.paintFlags or Paint.UNDERLINE_TEXT_FLAG
+
+            btnWriteReview.apply {
+                visibility = View.INVISIBLE
+                setOnClickListener { startActivity(Intent(this@MainActivity, ReviewWritingActivity::class.java)) }
+            }
+            hashtag.setHashtag(listOf("연어 샐러드", "샌드위치"), HashtagViewType.RESTAURANT_SUMMARY_TYPE)
         }
     }
 
@@ -151,6 +183,10 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
 
             tvNumber.setOnClickListener {
                 startActivity(Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + tvNumber.text)))
+            }
+
+            binding.layoutSearch.setOnClickListener {
+                startActivity(Intent(this@MainActivity, SearchActivity::class.java))
             }
 
             with(binding) {
@@ -183,14 +219,8 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                     startActivity(Intent(this@MainActivity, SettingActivity::class.java))
                 }
                 tvLogout.setOnClickListener {
-                    val layoutInflater = LayoutInflater.from(this@MainActivity)
-                    val bind: LogoutDialogBinding = LogoutDialogBinding.inflate(layoutInflater)
-                    val alertDialog = AlertDialog.Builder(this@MainActivity)
-                        .setView(bind.root)
-                        .show()
-
-                    alertDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-                    alertDialog.setCancelable(false)
+                    val bind = LogoutDialogBinding.inflate(LayoutInflater.from(this@MainActivity))
+                    val dialog = DialogUtil.makeDialog(this@MainActivity, bind, 288, 241)
 
                     bind.btnYes.setOnClickListener {
                         NaverIdLoginSDK.logout()
@@ -205,7 +235,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                         finish()
                     }
                     bind.btnNo.setOnClickListener {
-                        alertDialog.dismiss()
+                        dialog.dismiss()
                     }
                 }
             }
@@ -233,7 +263,38 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
     private fun initObservers() {
         viewModel.selectedRestaurant.observe(this) {
             behavior.state = BottomSheetBehavior.STATE_COLLAPSED
-            viewModel.selectedRestaurant.value?.location
+        }
+
+        viewModel.location.observe(this) {
+            it.map { location ->
+                Marker().apply {
+                    position = location
+                    if (viewModel.isDietRestaurant.value == true) {
+                        icon = OverlayImage.fromResource(R.drawable.ic_marker_green)
+                    } else {
+                        icon = OverlayImage.fromResource(R.drawable.ic_marker_red)
+                    }
+                    this.map = naverMap
+                }
+            }.forEach { marker ->
+                marker.setOnClickListener {
+                    viewModel.fetchSelectedRestaurantInfo()
+                    if (viewModel.isDietRestaurant.value == true) {
+                        marker.icon = OverlayImage.fromResource(R.drawable.ic_marker_green_big)
+                    } else {
+                        marker.icon = OverlayImage.fromResource(R.drawable.ic_marker_red_big)
+                    }
+                    viewModel.markerId(marker.position)?.let { id ->
+//                        bottomsheet(id)
+                    }
+                    true
+                }
+            }
+        }
+
+        viewModel.isVisibleReviewButton.observe(this) { isVisible ->
+            binding.layoutRestaurantDialog.btnWriteReview.visibility =
+                if (isVisible.peekContent()) View.VISIBLE else View.INVISIBLE
         }
     }
 
@@ -247,7 +308,10 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
 
     override fun onStop() {
         super.onStop()
+        binding.layoutDrawer.closeDrawers()
         behavior.removeBottomSheetCallback(bottomSheetCallback)
+        binding.layoutRestaurantDialog.layoutRestaurantTabMenu.removeOnTabSelectedListener(listener)
+        binding.layoutRestaurantDialog.layoutAppBar.removeOnOffsetChangedListener(appbarOffsetListener)
     }
 
     private val bottomSheetCallback = object : BottomSheetBehavior.BottomSheetCallback() {
@@ -273,41 +337,18 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
     }
 
     override fun onMapReady(naverMap: NaverMap) {
-        this.naverMap = naverMap
-        naverMap.locationSource = locationSource
-
-        binding.fabLocation.setOnClickListener {
-            naverMap.locationTrackingMode = LocationTrackingMode.Follow
+        this.naverMap = naverMap.apply {
+            locationSource = locationSource
+            cameraPosition = CameraPosition(LatLng(37.5666102, 126.9783881), 11.0)
+            uiSettings.isZoomControlEnabled = false
+            binding.fabLocation.setOnClickListener {
+                locationTrackingMode = LocationTrackingMode.Follow
+            }
+            setOnMapClickListener { _, _ ->
+                behavior.state = BottomSheetBehavior.STATE_HIDDEN
+            }
         }
-
-        // 네이버 지도 카메라 초기 위치
-        val cameraPosition = CameraPosition(LatLng(37.5666102, 126.9783881), 11.0)
-        naverMap.cameraPosition = cameraPosition
-
-        val marker = Marker()
-        marker.position = LatLng(37.5670135, 126.9783740)
-        marker.icon = OverlayImage.fromResource(R.drawable.ic_marker_red)
-        marker.map = naverMap
-
-        val marker2 = Marker()
-        marker2.position = LatLng(37.5570135, 126.9783740)
-        marker2.icon = OverlayImage.fromResource(R.drawable.ic_marker_green)
-        marker2.map = naverMap
-
-        // 마커 클릭 이벤트
-        marker.setOnClickListener { overlay ->
-            Toast.makeText(this, "마커 1 클릭", Toast.LENGTH_SHORT).show()
-            true
-        }
-
-        marker2.setOnClickListener { overlay ->
-            Toast.makeText(this, "마커 2 클릭", Toast.LENGTH_SHORT).show()
-            true
-        }
-
-        // 줌 버튼 없애기
-        val uiSettings = naverMap.uiSettings
-        uiSettings.isZoomControlEnabled = false
+        viewModel.fetchHealFoodRestaurantLocation()
     }
 
     companion object {

@@ -1,4 +1,4 @@
-package org.helfoome.presentation.drawer.adapter
+package org.helfoome.presentation.scrap.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

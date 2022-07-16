@@ -44,7 +44,7 @@
 
     <style name="TabItem.RestaurantTab.TextAppearance" parent="">
         <item name="android:fontFamily">@font/notosanskr_b</item>
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">14dp</item>
     </style>
 
     <style name="TabItem.MenuTab.TextAppearance" parent="">
@@ -91,6 +91,18 @@
         <item name="android:gravity">center_horizontal</item>
     </style>
 
+    <style name="TextView.Review.Title.TextAppearance" parent="">
+        <item name="android:fontFamily">@font/notosanskr_b</item>
+        <item name="android:textColor">@color/gray_800</item>
+        <item name="android:textSize">14dp</item>
+    </style>
+
+    <style name="TextView.Review.Description.TextAppearance" parent="">
+        <item name="android:fontFamily">@font/notosanskr_r</item>
+        <item name="android:textColor">@color/gray_550</item>
+        <item name="android:textSize">12dp</item>
+    </style>
+
     <style name="CircleImageView.Radius.8.Style" parent="">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">8%</item>
@@ -110,6 +122,35 @@
         <item name="textEndPadding">12dp</item>
         <item name="android:elevation">2dp</item>
         <item name="chipIconVisible">true</item>
+    </style>
+
+    <style name="TextView.Review.Writing.Hashtag.Style" parent="">
+        <item name="android:fontFamily">@font/notosanskr_m</item>
+        <item name="android:textColor">@color/selector_tag_text_color</item>
+        <item name="android:background">@drawable/selector_tag_background</item>
+        <item name="android:textSize">14dp</item>
+        <item name="android:paddingVertical">4dp</item>
+        <item name="android:paddingHorizontal">10dp</item>
+        <item name="android:layout_marginEnd">4dp</item>
+    </style>
+
+    <style name="TextView.Hashtag.Basic.Style" parent="">
+        <item name="android:textColor">@color/red_500</item>
+        <item name="android:background">@drawable/rectangle_boarder_red_radius_14</item>
+        <item name="android:textSize">10dp</item>
+        <item name="android:paddingHorizontal">10dp</item>
+    </style>
+
+    <style name="TextView.Blog.Review.Hashtag.Style" parent="TextView.Hashtag.Basic.Style">
+        <item name="android:fontFamily">@font/notosanskr_r</item>
+        <item name="android:paddingVertical">4dp</item>
+        <item name="android:layout_marginEnd">6dp</item>
+    </style>
+
+    <style name="TextView.Restaurant.Summary.Hashtag.Style" parent="TextView.Hashtag.Basic.Style">
+        <item name="android:fontFamily">@font/notosanskr_m</item>
+        <item name="android:paddingVertical">2dp</item>
+        <item name="android:layout_marginEnd">4dp</item>
     </style>
 
     <style name="ShapeAppearanceOverlay.App.Corner_14" parent="">
@@ -142,5 +183,20 @@
 
         <!-- Dialog 가 센터에 나오도록 하자. -->
         <item name="android:windowIsFloating">true</item>
+    </style>
+
+    <style name="RatingBar.HelFooMe.Style" parent="Widget.AppCompat.RatingBar">
+        <item name="android:progressDrawable">@drawable/ic_custom_rating_bar</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="Button.FullButton.Style" parent="Button.Basic.Style">
+        <item name="android:layout_marginHorizontal">@dimen/size_spacing_20</item>
+        <item name="android:paddingVertical">12dp</item>
+        <item name="android:background">@drawable/rectangle_transparent_radius_20</item>
+        <item name="android:backgroundTint">@color/red_500</item>
+        <item name="android:fontFamily">@font/notosanskr_b</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">14dp</item>
     </style>
 </resources>
