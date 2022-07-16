@@ -3,7 +3,7 @@ package org.helfoome.domain.entity
 data class MenuInfo(
     val id: Int,
     val name: String,
-    val image: String,
+    val image: String?,
     val price: Int,
     val carb: Int,
     val protein: Int,
