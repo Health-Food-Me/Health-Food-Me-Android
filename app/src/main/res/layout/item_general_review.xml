@@ -41,8 +41,7 @@
             android:layout_marginStart="4dp"
             app:layout_constraintBottom_toBottomOf="@id/tv_nickname"
             app:layout_constraintStart_toEndOf="@id/tv_nickname"
-            app:layout_constraintTop_toTopOf="@id/tv_nickname"
-            app:score="@{review.score}" />
+            app:layout_constraintTop_toTopOf="@id/tv_nickname" />
 
         <org.helfoome.presentation.custom.HashtagView
             android:id="@+id/hashtag"
