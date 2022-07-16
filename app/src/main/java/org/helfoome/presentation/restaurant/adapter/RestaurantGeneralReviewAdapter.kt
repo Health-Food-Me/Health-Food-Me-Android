@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import org.helfoome.databinding.ItemGeneralReviewBinding
 import org.helfoome.domain.entity.ReviewInfo
+import org.helfoome.presentation.type.HashtagViewType
 import org.helfoome.util.ItemDecorationUtil
 import org.helfoome.util.ItemDiffCallback
 
@@ -17,7 +18,7 @@ class RestaurantGeneralReviewAdapter :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(review: ReviewInfo) {
             binding.review = review
-            binding.hashtag.setHashtag(review.tags)
+            binding.hashtag.setHashtag(review.tags, HashtagViewType.REVIEW_TAB_TYPE)
             val adapter = RestaurantImageAdapter().apply {
                 imageList = review.photoList
             }
