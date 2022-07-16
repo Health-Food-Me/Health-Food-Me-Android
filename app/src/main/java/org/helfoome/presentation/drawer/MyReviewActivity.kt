@@ -3,7 +3,6 @@ package org.helfoome.presentation.drawer
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
-import androidx.appcompat.app.AlertDialog
 import org.helfoome.R
 import org.helfoome.databinding.ActivityMyReviewBinding
 import org.helfoome.databinding.MyreviewDialogBinding
@@ -13,12 +12,12 @@ import org.helfoome.presentation.drawer.adapter.MyReviewAdapter
 import org.helfoome.presentation.drawer.adapter.MyReviewAdapter.Companion.DELETE
 import org.helfoome.presentation.drawer.adapter.MyReviewAdapter.Companion.EDIT
 import org.helfoome.presentation.drawer.adapter.MyReviewAdapter.Companion.ENLARGE
+import org.helfoome.util.DialogUtil
 import org.helfoome.util.binding.BindingActivity
 import org.helfoome.util.ext.startActivity
 
 class MyReviewActivity : BindingActivity<ActivityMyReviewBinding>(R.layout.activity_my_review) {
 
-    private lateinit var alertDialog: AlertDialog
 
     private val myReviewAdapter = MyReviewAdapter {
         adapterClickListener(it)
@@ -50,25 +49,14 @@ class MyReviewActivity : BindingActivity<ActivityMyReviewBinding>(R.layout.activ
                 startActivity<MainActivity>()
             }
             DELETE -> {
-                val layoutInflater = LayoutInflater.from(this@MyReviewActivity)
-                val bind: MyreviewDialogBinding = MyreviewDialogBinding.inflate(layoutInflater)
-                alertDialog = AlertDialog.Builder(this@MyReviewActivity)
-                    .setView(bind.root)
-                    .show()
-
-                alertDialog.window?.setLayout(
-                    288,
-                    223
-                )
-                alertDialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
-
-                alertDialog.setCancelable(false)
+                val bind = MyreviewDialogBinding.inflate(LayoutInflater.from(this@MyReviewActivity))
+                val dialog = DialogUtil.makeDialog(this, bind, 288, 223)
 
                 bind.btnYes.setOnClickListener {
-                    alertDialog.dismiss()
+                    dialog.dismiss()
                 }
                 bind.btnNo.setOnClickListener {
-                    alertDialog.dismiss()
+                    dialog.dismiss()
                 }
             }
         }
