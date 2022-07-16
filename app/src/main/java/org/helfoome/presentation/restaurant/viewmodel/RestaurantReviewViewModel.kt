@@ -14,6 +14,7 @@ class RestaurantReviewViewModel @Inject constructor() : ViewModel() {
     val reviews: LiveData<List<ReviewInfo>> = _reviews
     private val _blogReviews = MutableLiveData<List<BlogReviewInfo>>()
     val blogReviews: LiveData<List<BlogReviewInfo>> = _blogReviews
+    val isGeneralReview = MutableLiveData(true)
 
     init {
         fetchReviewList()
@@ -40,5 +41,9 @@ class RestaurantReviewViewModel @Inject constructor() : ViewModel() {
             BlogReviewInfo(4, "샐러디 안암점 나쵸가 씹히는 멕시칸랩", "블라블라 맛 멋져요 멍멍 만약에 이 내용이 너무 길어진다면 ..? 그게 고민..이었는데 해결됐어요. 왜냐면 더보기를 누르면 되니까요! 더보기나 나올 텍스트 크기는 이 … "),
             BlogReviewInfo(5, "샐러디 안암점 나쵸가 씹히는 멕시칸랩", "블라블라 맛 멋져요 멍멍 만약에 이 내용이 너무 길어진다면 ..? 그게 고민..이었는데 해결됐어요. 왜냐면 더보기를 누르면 되니까요! 더보기나 나올 텍스트 크기는 이 … ")
         )
+    }
+
+    fun setGeneralReview(isGeneral: Boolean) {
+        isGeneralReview.value = isGeneral
     }
 }

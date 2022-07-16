@@ -2,22 +2,40 @@ package org.helfoome.presentation.restaurant
 
 import android.os.Bundle
 import android.view.View
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import com.google.android.material.tabs.TabLayout
 import dagger.hilt.android.AndroidEntryPoint
 import org.helfoome.R
 import org.helfoome.databinding.FragmentReviewBinding
+import org.helfoome.presentation.MainViewModel
 import org.helfoome.presentation.restaurant.adapter.RestaurantBlogReviewAdapter
 import org.helfoome.presentation.restaurant.adapter.RestaurantGeneralReviewAdapter
-import org.helfoome.presentation.restaurant.viewmodel.RestaurantReviewViewModel
 import org.helfoome.util.ItemDecorationUtil
 import org.helfoome.util.binding.BindingFragment
 
 @AndroidEntryPoint
 class RestaurantReviewTabFragment : BindingFragment<FragmentReviewBinding>(R.layout.fragment_review) {
-    private val viewModel: RestaurantReviewViewModel by viewModels()
+    //    private val viewModel: RestaurantReviewViewModel by viewModels() // TODO delete
+    private val viewModel: MainViewModel by activityViewModels()
     private val restaurantGeneralReviewAdapter = RestaurantGeneralReviewAdapter()
     private val restaurantBlogReviewAdapter = RestaurantBlogReviewAdapter()
+    private val listener = object : TabLayout.OnTabSelectedListener {
+        override fun onTabReselected(tab: TabLayout.Tab?) {
+        }
+
+        override fun onTabUnselected(tab: TabLayout.Tab?) {
+        }
+
+        override fun onTabSelected(tab: TabLayout.Tab?) {
+            // index가 아닌 enum class로 비교하기
+            viewModel.setGeneralReview(tab?.position == 0)
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        binding.layoutReviewTab.addOnTabSelectedListener(listener)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -56,5 +74,10 @@ class RestaurantReviewTabFragment : BindingFragment<FragmentReviewBinding>(R.lay
             binding.reviewList.adapter = restaurantBlogReviewAdapter
             restaurantBlogReviewAdapter.submitList(reviews)
         }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        binding.layoutReviewTab.removeOnTabSelectedListener(listener)
     }
 }

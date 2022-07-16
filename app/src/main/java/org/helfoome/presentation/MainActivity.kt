@@ -62,7 +62,8 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
 
         override fun onTabSelected(tab: TabLayout.Tab?) {
             // 리뷰 탭에서만 리뷰 작성 버튼 보여주기
-            binding.layoutRestaurantDialog.btnWriteReview.visibility = if (tab?.position == 2) View.VISIBLE else View.INVISIBLE
+            viewModel.setReviewTab(tab?.position == 2)
+            // binding.layoutRestaurantDialog.btnWriteReview.visibility = if (tab?.position == 2) View.VISIBLE else View.INVISIBLE
         }
     }
 
@@ -292,6 +293,11 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                     true
                 }
             }
+        }
+
+        viewModel.isVisibleReviewButton.observe(this) { isVisible ->
+            binding.layoutRestaurantDialog.btnWriteReview.visibility =
+                if (isVisible.peekContent()) View.VISIBLE else View.INVISIBLE
         }
     }
 
