@@ -114,6 +114,7 @@
                     android:backgroundTint="@color/white"
                     android:src="@drawable/ic_currentposition"
                     app:borderWidth="0dp"
+                    app:layout_dodgeInsetEdges="bottom"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent" />
 

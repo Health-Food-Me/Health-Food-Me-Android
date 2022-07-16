@@ -9,12 +9,13 @@
     <!-- Main Chip Group -->
     <string name="main_chip_group_salad">샐러드</string>
     <string name="main_chip_group_poke">포케</string>
-    <string name="main_chip_group_sandwich">샌드위치</string>
+    <string name="main_chip_group_quito">키토김밥</string>
     <string name="main_chip_group_shabu">샤브샤브</string>
     <string name="main_chip_group_bosam">보쌈</string>
     <string name="main_chip_group_meat">고깃집</string>
     <string name="main_chip_group_ricebowl">덮밥</string>
-    <string name="main_chip_group_quito">키토김밥</string>
+    <string name="main_chip_group_sandwich">샌드위치</string>
+
 
     <!-- Profile -->
     <string name="profile_title">프로필 편집</string>
@@ -39,6 +40,7 @@
     <string name="setting_customer_support">고객지원</string>
     <string name="setting_inquiry">문의하기</string>
     <string name="setting_withdrawal">회원탈퇴</string>
+    <string name="setting_declaration">신고하기</string>
     <string name="setting_terms_policies">약관 및 정책</string>
     <string name="setting_open_source_info">오픈 소스 정보</string>
     <string name="setting_naver_map_notice">네이버 지도 법적 공지</string>
@@ -52,12 +54,12 @@
     <string-array name="main_chip_group">
         <item>@string/main_chip_group_salad</item>
         <item>@string/main_chip_group_poke</item>
+        <item>@string/main_chip_group_quito</item>
         <item>@string/main_chip_group_sandwich</item>
         <item>@string/main_chip_group_shabu</item>
         <item>@string/main_chip_group_bosam</item>
         <item>@string/main_chip_group_meat</item>
         <item>@string/main_chip_group_ricebowl</item>
-        <item>@string/main_chip_group_quito</item>
     </string-array>
 
     <!-- Main Drawer -->

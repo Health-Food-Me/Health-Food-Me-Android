@@ -30,6 +30,10 @@ class ProfileModifyActivity : BindingActivity<ActivityProfileModifyBinding>(R.la
     }
 
     private fun initListener() {
+        binding.ivBack.setOnClickListener {
+            finish()
+        }
+
         binding.btModify.setOnClickListener {
             viewModel.checkNicknameFormat()
             // 중복 닉네임 체크 먼저 하기

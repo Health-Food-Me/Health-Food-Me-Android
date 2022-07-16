@@ -17,6 +17,7 @@
         tools:context=".presentation.drawer.ProfileModifyActivity">
 
         <ImageView
+            android:id="@+id/iv_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="26dp"
@@ -108,12 +109,12 @@
 
         <org.helfoome.presentation.custom.SnackBarView
             android:id="@+id/snv_profile_modify"
-            android:visibility="invisible"
             android:layout_width="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_height="wrap_content"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -13,6 +13,7 @@
         tools:context=".presentation.drawer.SettingActivity">
 
         <ImageView
+            android:id="@+id/iv_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="26dp"
@@ -75,6 +76,17 @@
             app:layout_constraintTop_toBottomOf="@id/tv_inquiry" />
 
         <TextView
+            android:id="@+id/tv_declaration"
+            style="@style/TextView.Setting.TextAppearance_16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="36dp"
+            android:text="@string/setting_declaration"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_withdrawal" />
+
+        <TextView
             android:id="@+id/tv_terms_plicies"
             style="@style/TextView.Setting.TextAppearance_14"
             android:layout_width="wrap_content"
@@ -83,7 +95,7 @@
             android:layout_marginTop="54dp"
             android:text="@string/setting_terms_policies"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_withdrawal" />
+            app:layout_constraintTop_toBottomOf="@id/tv_declaration" />
 
         <TextView
             android:id="@+id/tv_open_soruce_info"

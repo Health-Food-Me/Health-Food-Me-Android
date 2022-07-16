@@ -17,6 +17,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="64dp"
+            android:lineSpacingExtra="3dp"
             android:text="@string/main_drawer_welcome"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"

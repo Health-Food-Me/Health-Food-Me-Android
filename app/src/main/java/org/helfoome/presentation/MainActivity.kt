@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import androidx.activity.viewModels
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.add
 import androidx.fragment.app.commit
 import com.google.android.material.appbar.AppBarLayout
@@ -25,7 +26,7 @@ import com.navercorp.nid.NaverIdLoginSDK
 import dagger.hilt.android.AndroidEntryPoint
 import org.helfoome.R
 import org.helfoome.databinding.ActivityMainBinding
-import org.helfoome.databinding.LogoutDialogBinding
+import org.helfoome.databinding.DialogLogoutBinding
 import org.helfoome.presentation.drawer.MyReviewActivity
 import org.helfoome.presentation.scrap.MyScrapActivity
 import org.helfoome.presentation.drawer.ProfileModifyActivity
@@ -38,12 +39,16 @@ import org.helfoome.presentation.type.FoodType
 import org.helfoome.presentation.type.HashtagViewType
 import org.helfoome.util.ChipFactory
 import org.helfoome.util.DialogUtil
+import org.helfoome.util.ResolutionMetrics
 import org.helfoome.util.binding.BindingActivity
 import org.helfoome.util.ext.stringListFrom
 import timber.log.Timber
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main), OnMapReadyCallback {
+    @Inject
+    lateinit var resolutionMetrics: ResolutionMetrics
     private val String.toChip: Chip
         get() = ChipFactory.create(layoutInflater).also { it.text = this }
     private val viewModel: MainViewModel by viewModels()
@@ -144,6 +149,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
     private fun initView() {
         behavior = BottomSheetBehavior.from(binding.layoutBottomSheet)
         behavior.state = BottomSheetBehavior.STATE_HIDDEN
+        binding.layoutDrawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
 
         with(binding.layoutRestaurantDialog) {
             vpRestaurantDetail.adapter = restaurantDetailAdapter
@@ -219,8 +225,8 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                     startActivity(Intent(this@MainActivity, SettingActivity::class.java))
                 }
                 tvLogout.setOnClickListener {
-                    val bind = LogoutDialogBinding.inflate(LayoutInflater.from(this@MainActivity))
-                    val dialog = DialogUtil.makeDialog(this@MainActivity, bind, 288, 241)
+                    val bind = DialogLogoutBinding.inflate(LayoutInflater.from(this@MainActivity))
+                    val dialog = DialogUtil.makeDialog(this@MainActivity, bind, resolutionMetrics.toPixel(288), resolutionMetrics.toPixel(241))
 
                     bind.btnYes.setOnClickListener {
                         NaverIdLoginSDK.logout()
@@ -308,7 +314,6 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
 
     override fun onStop() {
         super.onStop()
-        binding.layoutDrawer.closeDrawers()
         behavior.removeBottomSheetCallback(bottomSheetCallback)
         binding.layoutRestaurantDialog.layoutRestaurantTabMenu.removeOnTabSelectedListener(listener)
         binding.layoutRestaurantDialog.layoutAppBar.removeOnOffsetChangedListener(appbarOffsetListener)

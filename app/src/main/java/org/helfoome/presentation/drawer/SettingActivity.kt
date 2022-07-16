@@ -11,8 +11,15 @@ class SettingActivity : BindingActivity<ActivitySettingBinding>(R.layout.activit
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        initListener()
+    }
+
+    private fun initListener() {
         binding.tvWithdrawal.setOnClickListener {
             startActivity(Intent(this, WithdrawalActivity::class.java))
+        }
+        binding.ivBack.setOnClickListener {
+            finish()
         }
     }
 }
