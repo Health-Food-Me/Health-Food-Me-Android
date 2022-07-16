@@ -13,6 +13,7 @@ import androidx.activity.viewModels
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.add
 import androidx.fragment.app.commit
+import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.chip.Chip
 import com.google.android.material.tabs.TabLayout
@@ -62,6 +63,14 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
         override fun onTabSelected(tab: TabLayout.Tab?) {
             // 리뷰 탭에서만 리뷰 작성 버튼 보여주기
             binding.layoutRestaurantDialog.btnWriteReview.visibility = if (tab?.position == 2) View.VISIBLE else View.INVISIBLE
+        }
+    }
+
+    private val appbarOffsetListener = AppBarLayout.OnOffsetChangedListener { _, verticalOffset ->
+        binding.layoutRestaurantDialog.tvRestaurantNameInToolbar.visibility = if (verticalOffset == 0) {
+            View.INVISIBLE
+        } else {
+            View.VISIBLE
         }
     }
 
@@ -129,6 +138,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
         super.onStart()
         behavior.addBottomSheetCallback(bottomSheetCallback)
         binding.layoutRestaurantDialog.layoutRestaurantTabMenu.addOnTabSelectedListener(listener)
+        binding.layoutRestaurantDialog.layoutAppBar.addOnOffsetChangedListener(appbarOffsetListener)
     }
 
     private fun initView() {
@@ -297,6 +307,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
         super.onStop()
         behavior.removeBottomSheetCallback(bottomSheetCallback)
         binding.layoutRestaurantDialog.layoutRestaurantTabMenu.removeOnTabSelectedListener(listener)
+        binding.layoutRestaurantDialog.layoutAppBar.removeOnOffsetChangedListener(appbarOffsetListener)
     }
 
     private val bottomSheetCallback = object : BottomSheetBehavior.BottomSheetCallback() {
