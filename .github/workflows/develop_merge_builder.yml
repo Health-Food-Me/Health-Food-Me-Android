@@ -65,6 +65,11 @@ jobs:
               env:
                   KAKAO_NATIVE_KEY: ${{ secrets.KAKAO_NATIVE_KEY }}
               run: echo "KAKAO_NATIVE_KEY=\"$KAKAO_NATIVE_KEY\"" >> local.properties
+              
+            - name: Access HFM_BASE_URL
+              env:
+                  HFM_BASE_URL: ${{ secrets.HFM_BASE_URL }}
+              run: echo "HFM_BASE_URL=\"$HFM_BASE_URL\"" >> local.properties
 
             -   name: Change gradlew permissions
                 run: chmod +x ./gradlew
