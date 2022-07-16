@@ -49,7 +49,8 @@ class MainViewModel @Inject constructor() : ViewModel() {
                 "토요일 10:00 ~ 22:00",
                 "일요일 10:00 ~ 22:00",
                 "월요일 10:00 ~ 22:00"
-            ), number = "02-123-123"
+            ),
+            number = "02-123-123"
         )
     }
 
