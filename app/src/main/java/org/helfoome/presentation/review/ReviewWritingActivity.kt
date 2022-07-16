@@ -23,5 +23,8 @@ class ReviewWritingActivity : BindingActivity<ActivityReviewWritingBinding>(R.la
         binding.etReview.setOnClickListener {
             binding.layoutScrollView.fullScroll(ScrollView.FOCUS_DOWN)
         }
+        binding.btnBack.setOnClickListener {
+            onBackPressed()
+        }
     }
 }
