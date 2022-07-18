@@ -28,12 +28,12 @@ import org.helfoome.R
 import org.helfoome.databinding.ActivityMainBinding
 import org.helfoome.databinding.DialogLogoutBinding
 import org.helfoome.presentation.drawer.MyReviewActivity
-import org.helfoome.presentation.scrap.MyScrapActivity
 import org.helfoome.presentation.drawer.ProfileModifyActivity
 import org.helfoome.presentation.drawer.SettingActivity
 import org.helfoome.presentation.restaurant.MapSelectionBottomDialogFragment
 import org.helfoome.presentation.restaurant.adapter.RestaurantTabAdapter
 import org.helfoome.presentation.review.ReviewWritingActivity
+import org.helfoome.presentation.scrap.MyScrapActivity
 import org.helfoome.presentation.search.SearchActivity
 import org.helfoome.presentation.type.FoodType
 import org.helfoome.presentation.type.HashtagViewType
@@ -161,7 +161,6 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
             tvNumber.paintFlags = tvNumber.paintFlags or Paint.UNDERLINE_TEXT_FLAG
 
             btnWriteReview.apply {
-                visibility = View.INVISIBLE
                 setOnClickListener { startActivity(Intent(this@MainActivity, ReviewWritingActivity::class.java)) }
             }
             hashtag.setHashtag(listOf("연어 샐러드", "샌드위치"), HashtagViewType.RESTAURANT_SUMMARY_TYPE)
@@ -226,7 +225,8 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                 }
                 tvLogout.setOnClickListener {
                     val bind = DialogLogoutBinding.inflate(LayoutInflater.from(this@MainActivity))
-                    val dialog = DialogUtil.makeDialog(this@MainActivity, bind, resolutionMetrics.toPixel(288), resolutionMetrics.toPixel(241))
+                    val dialog =
+                        DialogUtil.makeDialog(this@MainActivity, bind, resolutionMetrics.toPixel(288), resolutionMetrics.toPixel(241))
 
                     bind.btnYes.setOnClickListener {
                         NaverIdLoginSDK.logout()
@@ -300,7 +300,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
         }
 
         viewModel.isVisibleReviewButton.observe(this) { isVisible ->
-            binding.layoutRestaurantDialog.btnWriteReview.visibility =
+            binding.layoutRestaurantDialog.layoutReviewBtnBackground.visibility =
                 if (isVisible.peekContent()) View.VISIBLE else View.INVISIBLE
         }
     }
