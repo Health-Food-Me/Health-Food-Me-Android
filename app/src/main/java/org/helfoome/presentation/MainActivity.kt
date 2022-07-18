@@ -357,7 +357,8 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                 LatLng(
                     naverMap.cameraPosition.target.latitude,
                     naverMap.cameraPosition.target.longitude
-                ), 11.0
+                ),
+                11.0
             )
             naverMap.locationTrackingMode = LocationTrackingMode.Follow
         } else {
@@ -368,7 +369,8 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                 LatLng(
                     naverMap.cameraPosition.target.latitude,
                     naverMap.cameraPosition.target.longitude
-                ), 11.0
+                ),
+                11.0
             )
             naverMap.locationTrackingMode = LocationTrackingMode.Follow
         }

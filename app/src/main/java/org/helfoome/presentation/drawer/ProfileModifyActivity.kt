@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import androidx.activity.viewModels
-import androidx.core.widget.doAfterTextChanged
 import org.helfoome.R
 import org.helfoome.databinding.ActivityProfileModifyBinding
 import org.helfoome.presentation.MainActivity
