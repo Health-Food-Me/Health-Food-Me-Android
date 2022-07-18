@@ -25,6 +25,7 @@
             android:id="@+id/layout_toolbar"
             android:layout_width="match_parent"
             android:layout_height="48dp"
+            android:layout_marginTop="24dp"
             app:layout_constraintTop_toTopOf="parent"
             app:visibility="@{viewModel.isExpandedDialog().peekContent()}"
             tools:visibility="gone">
