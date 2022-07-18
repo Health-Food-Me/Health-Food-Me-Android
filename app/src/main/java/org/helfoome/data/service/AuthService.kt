@@ -1,7 +1,6 @@
 package org.helfoome.data.service
 
 import org.helfoome.data.model.request.RequestLogin
-import org.helfoome.data.model.request.RequestProfile
 import org.helfoome.data.model.response.BaseResponse
 import org.helfoome.data.model.response.ResponseLogin
 import org.helfoome.data.model.response.ResponseProfile

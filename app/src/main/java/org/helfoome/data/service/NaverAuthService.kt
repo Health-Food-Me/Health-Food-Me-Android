@@ -1,11 +1,13 @@
 package org.helfoome.data.service
 
 import android.content.Context
-import android.util.Log
 import com.navercorp.nid.NaverIdLoginSDK
 import com.navercorp.nid.oauth.OAuthLoginCallback
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.launch
 import org.helfoome.BuildConfig.*
 import org.helfoome.data.local.HFMSharedPreference
 import org.helfoome.data.model.request.RequestLogin

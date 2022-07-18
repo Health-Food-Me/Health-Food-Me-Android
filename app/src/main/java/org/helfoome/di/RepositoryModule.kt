@@ -40,7 +40,7 @@ object RepositoryModule {
     ): ProfileRepository {
         return ProfileRepositoryImpl(authService)
     }
-    
+
     @Provides
     @Singleton
     fun provideRestaurantRepository(service: RestaurantService): RestaurantRepository =
