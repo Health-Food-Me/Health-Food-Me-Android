@@ -7,7 +7,7 @@ import org.helfoome.data.service.AuthService
 import org.helfoome.domain.repository.LoginRepository
 import javax.inject.Inject
 
-class LoginRepositoryImpl @Inject constructor(private val authService: AuthService): LoginRepository {
+class LoginRepositoryImpl @Inject constructor(private val authService: AuthService) : LoginRepository {
 
     override suspend fun login(requestLogin: RequestLogin): BaseResponse<ResponseLogin> {
         return authService.login(requestLogin)
