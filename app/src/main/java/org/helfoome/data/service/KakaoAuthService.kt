@@ -5,21 +5,40 @@ import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.model.ClientError
 import com.kakao.sdk.common.model.ClientErrorCause
 import com.kakao.sdk.user.UserApiClient
+import com.navercorp.nid.NaverIdLoginSDK
 import dagger.hilt.android.qualifiers.ActivityContext
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.launch
+import org.helfoome.data.local.HFMSharedPreference
+import org.helfoome.data.model.request.RequestLogin
 import timber.log.Timber
 import javax.inject.Inject
 
 class KakaoAuthService @Inject constructor(
     @ActivityContext private val context: Context,
-    private val client: UserApiClient
+    private val client: UserApiClient,
+    private val sharedPreferences: HFMSharedPreference,
+    private val authService: AuthService
 ) {
 
-    fun kakaoLogin() {
+    fun kakaoLogin(loginListener: (() -> Unit)? = null) {
         val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
             if (error != null) {
                 Timber.e(error, "카카오계정으로 로그인 실패")
             } else if (token != null) {
-                Timber.i("카카오계정으로 로그인 성공 ${token.accessToken}")
+                CoroutineScope(Dispatchers.IO).launch {
+                    runCatching { authService.login(RequestLogin("kakao", token.accessToken)) }
+                        .onSuccess {
+                            sharedPreferences.accessToken = it.data.accessToken
+                            loginListener?.invoke()
+                            cancel()
+                        }
+                        .onFailure {
+                            cancel()
+                        }
+                }
             }
         }
         // 카카오톡이 설치되어 있으면 카카오톡으로 로그인, 아니면 카카오계정으로 로그인
@@ -37,7 +56,17 @@ class KakaoAuthService @Inject constructor(
                     // 카카오톡에 연결된 카카오계정이 없는 경우, 카카오계정으로 로그인 시도
                     client.loginWithKakaoAccount(context, callback = callback)
                 } else if (token != null) {
-                    Timber.i("카카오톡으로 로그인 성공 ${token.accessToken}")
+                    CoroutineScope(Dispatchers.IO).launch {
+                        runCatching { authService.login(RequestLogin("kakao", token.accessToken)) }
+                            .onSuccess {
+                                sharedPreferences.accessToken = it.data.accessToken
+                                loginListener?.invoke()
+                                cancel()
+                            }
+                            .onFailure {
+                                cancel()
+                            }
+                    }
                 }
             }
         } else {
