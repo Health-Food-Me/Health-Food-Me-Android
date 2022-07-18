@@ -38,8 +38,8 @@ class ReviewWritingActivity : BindingActivity<ActivityReviewWritingBinding>(R.la
             onBackPressed()
         }
 
-        binding.etReview.setOnFocusChangeListener { view, hasFocus ->
-            if(hasFocus){
+        binding.etReview.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
                 binding.layoutScrollView.smoothScrollBy(0, 1200)
             }
         }
