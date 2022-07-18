@@ -162,9 +162,6 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
                     behavior.state = BottomSheetBehavior.STATE_EXPANDED
                 }
             }
-            SearchMode.AUTO_COMPLETE -> {
-                viewModel.setSearchMode(SearchMode.RECENT)
-            }
             else -> {
                 finish()
             }

@@ -268,7 +268,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
 
     private fun initObservers() {
         viewModel.selectedRestaurant.observe(this) {
-            behavior.state = BottomSheetBehavior.STATE_COLLAPSED
+//            behavior.state = BottomSheetBehavior.STATE_COLLAPSED
         }
 
         viewModel.location.observe(this) {
@@ -284,6 +284,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                 }
             }.forEach { marker ->
                 marker.setOnClickListener {
+                    behavior.state = BottomSheetBehavior.STATE_COLLAPSED
                     viewModel.fetchSelectedRestaurantInfo()
                     if (viewModel.isDietRestaurant.value == true) {
                         marker.icon = OverlayImage.fromResource(R.drawable.ic_marker_green_big)
@@ -322,8 +323,9 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
 
     private val bottomSheetCallback = object : BottomSheetBehavior.BottomSheetCallback() {
         override fun onStateChanged(bottomSheet: View, newState: Int) {
+            binding.layoutRestaurantDialog.nvDetail.isNestedScrollingEnabled = false
             viewModel.setExpendedBottomSheetDialog(newState == BottomSheetBehavior.STATE_EXPANDED)
-            behavior.isDraggable = newState != BottomSheetBehavior.STATE_EXPANDED
+            behavior.isDraggable = true
         }
 
         override fun onSlide(bottomSheetView: View, slideOffset: Float) {
