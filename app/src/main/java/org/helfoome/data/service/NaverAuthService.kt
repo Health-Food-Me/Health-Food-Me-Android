@@ -1,18 +1,22 @@
 package org.helfoome.data.service
 
 import android.content.Context
-import androidx.lifecycle.MutableLiveData
 import com.navercorp.nid.NaverIdLoginSDK
 import com.navercorp.nid.oauth.OAuthLoginCallback
-import dagger.hilt.android.qualifiers.ActivityContext
+import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.*
 import org.helfoome.BuildConfig.*
+import org.helfoome.data.local.HFMSharedPreference
+import org.helfoome.data.model.request.RequestLogin
 import timber.log.Timber
 import javax.inject.Inject
 
-class NaverAuthService @Inject constructor(@ActivityContext private val context: Context) : OAuthLoginCallback {
-
-    private val _loginSuccess = MutableLiveData<Boolean>()
-    val loginSuccess get() = _loginSuccess
+class NaverAuthService @Inject constructor(
+    @ApplicationContext private val context: Context,
+    private val sharedPreferences: HFMSharedPreference,
+    private val authService: AuthService
+) : OAuthLoginCallback {
+    var loginListener: (() -> Unit)? = null
 
     init {
         NaverIdLoginSDK.initialize(context, NAVER_CLIENT_ID, NAVER_CLIENT_SECRET, NAVER_CLIENT_NAME)
@@ -29,7 +33,17 @@ class NaverAuthService @Inject constructor(@ActivityContext private val context:
     }
 
     override fun onSuccess() {
-        _loginSuccess.value = true
+        CoroutineScope(Dispatchers.IO).launch {
+            runCatching { authService.login(RequestLogin("naver", NaverIdLoginSDK.getAccessToken().toString())) }
+                .onSuccess {
+                    sharedPreferences.accessToken = it.data.accessToken
+                    loginListener?.invoke()
+                    cancel()
+                }
+                .onFailure {
+                    cancel()
+                }
+        }
         Timber.i(NaverIdLoginSDK.getAccessToken().toString())
         Timber.i(NaverIdLoginSDK.getRefreshToken().toString())
     }

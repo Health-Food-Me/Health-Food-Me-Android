@@ -9,6 +9,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.helfoome.R
 import org.helfoome.databinding.ActivitySplashBinding
+import org.helfoome.presentation.login.LoginActivity
 import org.helfoome.util.binding.BindingActivity
 import org.helfoome.util.makeTransparentStatusBar
 

@@ -52,7 +52,7 @@
             android:name=".presentation.search.SearchActivity"
             android:exported="false" />
         <activity
-            android:name=".presentation.LoginActivity"
+            android:name=".presentation.login.LoginActivity"
             android:exported="false">
         </activity>
         <activity
@@ -77,7 +77,7 @@
 
         <activity
             android:name=".presentation.MainActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".presentation.review.ReviewWritingActivity"
             android:exported="false" />

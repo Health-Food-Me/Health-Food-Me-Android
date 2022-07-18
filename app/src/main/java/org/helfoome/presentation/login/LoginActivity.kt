@@ -1,4 +1,4 @@
-package org.helfoome.presentation
+package org.helfoome.presentation.login
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,6 +8,7 @@ import org.helfoome.R
 import org.helfoome.data.service.KakaoAuthService
 import org.helfoome.data.service.NaverAuthService
 import org.helfoome.databinding.ActivityLoginBinding
+import org.helfoome.presentation.MainActivity
 import org.helfoome.util.binding.BindingActivity
 import javax.inject.Inject
 
@@ -24,7 +25,6 @@ class LoginActivity : BindingActivity<ActivityLoginBinding>(R.layout.activity_lo
         super.onCreate(savedInstanceState)
 
         initListeners()
-        initObserve()
     }
 
     private fun initListeners() {
@@ -36,29 +36,21 @@ class LoginActivity : BindingActivity<ActivityLoginBinding>(R.layout.activity_lo
         }
     }
 
-    private fun initObserve() {
-        naverAuthService.loginSuccess.observe(this) {
-            if (naverAuthService.loginSuccess.value == true) {
-                goToMain()
-            }
-        }
-        kakaoAuthService.loginSuccess.observe(this) {
-            if (kakaoAuthService.loginSuccess.value == true) {
-                goToMain()
-            }
-        }
+    private fun startMain() {
+        startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+        finish()
     }
 
     private fun naverLogin() {
-        NaverIdLoginSDK.authenticate(this, naverAuthService)
+        NaverIdLoginSDK.authenticate(
+            this,
+            naverAuthService.apply {
+                loginListener = ::startMain
+            }
+        )
     }
 
     private fun kakaoLogin() {
         kakaoAuthService.kakaoLogin()
-    }
-
-    private fun goToMain() {
-        startActivity(Intent(this@LoginActivity, MainActivity::class.java))
-        finish()
     }
 }

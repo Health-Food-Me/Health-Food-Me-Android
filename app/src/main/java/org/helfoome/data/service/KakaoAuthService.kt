@@ -1,7 +1,6 @@
 package org.helfoome.data.service
 
 import android.content.Context
-import androidx.lifecycle.MutableLiveData
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.model.ClientError
 import com.kakao.sdk.common.model.ClientErrorCause
@@ -14,8 +13,6 @@ class KakaoAuthService @Inject constructor(
     @ActivityContext private val context: Context,
     private val client: UserApiClient
 ) {
-    private val _loginSuccess = MutableLiveData<Boolean>()
-    val loginSuccess get() = _loginSuccess
 
     fun kakaoLogin() {
         val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
@@ -23,7 +20,6 @@ class KakaoAuthService @Inject constructor(
                 Timber.e(error, "카카오계정으로 로그인 실패")
             } else if (token != null) {
                 Timber.i("카카오계정으로 로그인 성공 ${token.accessToken}")
-                _loginSuccess.value = true
             }
         }
         // 카카오톡이 설치되어 있으면 카카오톡으로 로그인, 아니면 카카오계정으로 로그인
@@ -42,7 +38,6 @@ class KakaoAuthService @Inject constructor(
                     client.loginWithKakaoAccount(context, callback = callback)
                 } else if (token != null) {
                     Timber.i("카카오톡으로 로그인 성공 ${token.accessToken}")
-                    _loginSuccess.value = true
                 }
             }
         } else {
