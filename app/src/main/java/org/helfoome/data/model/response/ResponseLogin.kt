@@ -1,5 +1,6 @@
 package org.helfoome.data.model.response
 
+import com.google.gson.annotations.SerializedName
 import kotlinx.serialization.Contextual
 import kotlinx.serialization.Serializable
 
@@ -11,6 +12,7 @@ data class ResponseLogin(
     val refreshToken: String
 ) {
     data class User(
+        @SerializedName("_id")
         val id: String,
         val name: String,
         val socialId: String,
