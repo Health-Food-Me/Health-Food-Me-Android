@@ -10,13 +10,14 @@ import kotlinx.coroutines.launch
 import org.helfoome.R
 import org.helfoome.databinding.ActivitySplashBinding
 import org.helfoome.util.binding.BindingActivity
+import org.helfoome.util.makeTransparentStatusBar
 
 class SplashActivity : BindingActivity<ActivitySplashBinding>(R.layout.activity_splash) {
     private var job: Job? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_splash)
+        window.makeTransparentStatusBar()
 
         lifecycleScope.launch(Dispatchers.Main) {
             job = launch {
