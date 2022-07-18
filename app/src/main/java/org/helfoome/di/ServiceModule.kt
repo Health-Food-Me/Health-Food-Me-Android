@@ -5,6 +5,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import org.helfoome.data.service.AuthService
+import org.helfoome.data.service.RestaurantService
 import retrofit2.Retrofit
 import javax.inject.Singleton
 
@@ -17,4 +18,9 @@ object ServiceModule {
     fun provideAuthAPIService(retrofit: Retrofit): AuthService {
         return retrofit.create(AuthService::class.java)
     }
+
+    @Provides
+    @Singleton
+    fun provideRestaurantService(retrofit: Retrofit): RestaurantService =
+        retrofit.create(RestaurantService::class.java)
 }
