@@ -1,6 +1,5 @@
 package org.helfoome.presentation.drawer
 
-import android.animation.AnimatorSet
 import android.content.Intent
 import android.os.Bundle
 import android.view.animation.Animation
@@ -17,9 +16,6 @@ class ProfileModifyActivity : BindingActivity<ActivityProfileModifyBinding>(R.la
     private var animation: Animation? = null
     private var animator: Animation.AnimationListener? = null
 
-//    private lateinit var topDownAnimation: Animation
-//    private lateinit var bottomTopAnimation: Animation
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -32,16 +28,6 @@ class ProfileModifyActivity : BindingActivity<ActivityProfileModifyBinding>(R.la
                 binding.snvProfileModify.setText("닉네임 설정 기준에 적합하지 않습니다")
             }
             override fun onAnimationRepeat(animation: Animation?) = Unit
-        }
-//        binding.etNickname.doAfterTextChanged {
-//            binding.snvProfileModify.animation = bottomTopAnimation2
-//            binding.snvProfileModify.setText("닉네임 설정 기준에 적합하지 않습니다")
-//        }
-        binding.etNickname.doAfterTextChanged {
-            if (animation?.hasStarted() == true) {
-                animation?.reset()
-                animation = null
-            }
         }
         initAnimation()
         initListener()
