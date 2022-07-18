@@ -27,7 +27,7 @@ object LoginModule {
         client: UserApiClient,
         sharedPreferences: HFMSharedPreference,
         authService: AuthService
-    ) = KakaoAuthService(context, client,sharedPreferences, authService)
+    ) = KakaoAuthService(context, client, sharedPreferences, authService)
 
     @Provides
     fun provideNaverAuthService(
