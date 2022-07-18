@@ -19,12 +19,12 @@ fun ImageView.setImage(imageUrl: String?) {
 
 @BindingAdapter("app:visibility")
 fun View.setVisibility(isVisible: Boolean?) {
-    if(isVisible == null) return
+    if (isVisible == null) return
     this.isVisible = isVisible
 }
 
 @BindingAdapter("app:isSelected")
 fun View.setSelected(isSelected: Boolean?) {
-    if(isSelected == null) return
+    if (isSelected == null) return
     this.isSelected = isSelected
 }

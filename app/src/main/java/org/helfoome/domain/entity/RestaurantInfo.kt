@@ -7,7 +7,7 @@ data class RestaurantInfo(
     val category: String, // TODO 카테고리 enum class 추가 및 적용 고려
     val score: Float,
     val tags: List<String>,
-    val isScrap: Boolean? = false,
+    var isScrap: Boolean? = false,
     val location: String? = null,
     val time: List<String>? = null,
     val number: String? = null,
