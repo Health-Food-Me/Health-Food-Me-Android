@@ -1,11 +1,15 @@
 package org.helfoome.presentation
 
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Paint
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.drawerlayout.widget.DrawerLayout
@@ -83,17 +87,13 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
         super.onCreate(savedInstanceState)
         binding.viewModel = viewModel
 
-        initNaverMapLocationSource()
+        locationSource =
+            FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE)
         initNaverMap()
         initView()
         initChip()
         initListeners()
         initObservers()
-    }
-
-    private fun initNaverMapLocationSource() {
-        locationSource =
-            FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE)
     }
 
     private fun provideChipClickListener(chip: Chip) =
@@ -226,7 +226,8 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                 }
                 tvLogout.setOnClickListener {
                     val bind = DialogLogoutBinding.inflate(LayoutInflater.from(this@MainActivity))
-                    val dialog = DialogUtil.makeDialog(this@MainActivity, bind, resolutionMetrics.toPixel(288), resolutionMetrics.toPixel(241))
+                    val dialog =
+                        DialogUtil.makeDialog(this@MainActivity, bind, resolutionMetrics.toPixel(288), resolutionMetrics.toPixel(241))
 
                     bind.btnYes.setOnClickListener {
                         NaverIdLoginSDK.logout()
@@ -342,16 +343,36 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
     }
 
     override fun onMapReady(naverMap: NaverMap) {
-        this.naverMap = naverMap.apply {
-            locationSource = locationSource
-            cameraPosition = CameraPosition(LatLng(37.5666102, 126.9783881), 11.0)
-            uiSettings.isZoomControlEnabled = false
-            binding.fabLocation.setOnClickListener {
-                locationTrackingMode = LocationTrackingMode.Follow
-            }
-            setOnMapClickListener { _, _ ->
-                behavior.state = BottomSheetBehavior.STATE_HIDDEN
-            }
+        this.naverMap = naverMap
+
+        naverMap.uiSettings.isZoomControlEnabled = false
+        naverMap.setOnMapClickListener { _, _ ->
+            behavior.state = BottomSheetBehavior.STATE_HIDDEN
+        }
+        naverMap.locationSource = locationSource
+        locationSource.lastLocation
+
+        if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION)
+            == PackageManager.PERMISSION_GRANTED
+        ) {
+            naverMap.cameraPosition = CameraPosition(
+                LatLng(
+                    naverMap.cameraPosition.target.latitude,
+                    naverMap.cameraPosition.target.longitude
+                ), 11.0
+            )
+            naverMap.locationTrackingMode = LocationTrackingMode.Follow
+        } else {
+            naverMap.cameraPosition = CameraPosition(LatLng(37.498095, 127.027610), 11.0)
+        }
+        binding.fabLocation.setOnClickListener {
+            naverMap.cameraPosition = CameraPosition(
+                LatLng(
+                    naverMap.cameraPosition.target.latitude,
+                    naverMap.cameraPosition.target.longitude
+                ), 11.0
+            )
+            naverMap.locationTrackingMode = LocationTrackingMode.Follow
         }
         viewModel.fetchHealFoodRestaurantLocation()
     }

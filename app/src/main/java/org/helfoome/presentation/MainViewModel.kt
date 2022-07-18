@@ -26,6 +26,7 @@ class MainViewModel @Inject constructor() : ViewModel() {
     val isExpandedDialog: LiveData<Event<Boolean>> get() = _isExpandedDialog
     private val storeIdHash = HashMap<LatLng, Int>()
 
+
     private val _reviews = MutableLiveData<List<ReviewInfo>>()
     val reviews: LiveData<List<ReviewInfo>> = _reviews
     private val _blogReviews = MutableLiveData<List<BlogReviewInfo>>()
