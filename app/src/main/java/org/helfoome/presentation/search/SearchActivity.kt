@@ -26,6 +26,7 @@ import org.helfoome.util.ResolutionMetrics
 import org.helfoome.util.binding.BindingActivity
 import org.helfoome.util.ext.closeKeyboard
 import org.helfoome.util.ext.showKeyboard
+import org.helfoome.util.ext.startActivity
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -34,7 +35,10 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
     @Inject
     lateinit var resolutionMetrics: ResolutionMetrics
     private val viewModel: SearchViewModel by viewModels()
-    private val autoCompleteAdapter = AutoCompleteAdapter()
+    private val autoCompleteAdapter = AutoCompleteAdapter {
+        viewModel.setDetail(true)
+        viewModel.setSearchMode(SearchMode.RESULT)
+    }
     private val recentAdapter = RecentAdapter(
         {
             // TODO : 서버 통신 주의
@@ -69,7 +73,7 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
             }
         }
 
-        override fun onSlide(bottomSheetView: View, slideOffset: Float) { }
+        override fun onSlide(bottomSheetView: View, slideOffset: Float) {}
     }
 
     private val recentConcatAdapter = ConcatAdapter(
@@ -175,8 +179,10 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
                     closeKeyboard(this)
                     this.clearFocus()
                     viewModel.setSearchMode(SearchMode.RECENT)
-                } else
+                } else {
                     viewModel.setSearchMode(SearchMode.AUTO_COMPLETE)
+                    viewModel.getAutCompleteKeyword(it.toString())
+                }
             }
         }
     }
@@ -230,7 +236,14 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
                             recentAdapter.submitList(it.data)
                         }
                         is SearchViewModel.SearchUiState.AutoCompleteSearch -> {
-                            autoCompleteAdapter.submitList(it.data)
+                            with(autoCompleteAdapter) {
+                                setKeywordListener {
+                                    it.data.first
+                                }
+                                autoCompleteAdapter.submitList(it.data.second)
+                                // TODO : 추후 더 좋은 데이터 갱신 요망
+                                autoCompleteAdapter.notifyDataSetChanged()
+                            }
                         }
                         is SearchViewModel.SearchUiState.Result -> {
                             resultAdapter.submitList(it.data)
