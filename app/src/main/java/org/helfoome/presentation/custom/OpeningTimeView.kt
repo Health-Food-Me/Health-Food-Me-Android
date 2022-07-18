@@ -48,7 +48,8 @@ class OpeningTimeView(context: Context, attrs: AttributeSet? = null) : Constrain
         }
     }
 
-    fun setText(timeList: List<String>) {
+    fun setText(timeList: List<String>?) {
+        if (timeList == null) return
         // TODO 서버 응답값 확인 후 로직 구현 예정
         binding.tvToday.text = timeList[0]
         binding.tvNextday1.text = timeList[1]
