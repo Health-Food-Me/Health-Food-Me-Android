@@ -2,7 +2,6 @@ package org.helfoome.presentation.login
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.activity.viewModels
 import com.navercorp.nid.NaverIdLoginSDK
 import dagger.hilt.android.AndroidEntryPoint
 import org.helfoome.R
@@ -43,10 +42,9 @@ class LoginActivity : BindingActivity<ActivityLoginBinding>(R.layout.activity_lo
     }
 
     private fun naverLogin() {
-        NaverIdLoginSDK.authenticate(this,
-            naverAuthService.apply {
-                loginListener = ::startMain
-            }
+        NaverIdLoginSDK.authenticate(this, naverAuthService.apply {
+            loginListener = ::startMain
+        }
         )
     }
 
