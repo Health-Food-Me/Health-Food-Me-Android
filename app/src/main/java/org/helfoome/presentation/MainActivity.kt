@@ -86,7 +86,9 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding.viewModel = viewModel
+        binding.layoutDrawerHeader.drawerViewModel = viewModel
         window.makeTransparentStatusBar()
+        viewModel.getProfile()
 
         locationSource =
             FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE)
@@ -170,6 +172,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
 
     private fun initListeners() {
         with(binding.layoutRestaurantDialog) {
+
             layoutAppBar.setOnClickListener {
                 if (behavior.state == BottomSheetBehavior.STATE_COLLAPSED) behavior.state = BottomSheetBehavior.STATE_EXPANDED
             }
@@ -206,6 +209,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
             }
 
             with(binding.layoutDrawerHeader) {
+
                 btnEdit.setOnClickListener {
                     startActivity(Intent(this@MainActivity, ProfileModifyActivity::class.java))
                 }
