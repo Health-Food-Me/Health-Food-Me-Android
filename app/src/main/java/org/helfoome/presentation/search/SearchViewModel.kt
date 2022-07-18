@@ -3,6 +3,7 @@ package org.helfoome.presentation.search
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import org.helfoome.domain.entity.AutoCompleteKeywordInfo
@@ -38,6 +39,19 @@ class SearchViewModel @Inject constructor(
         _searchMode.value = searchMode
     }
 
+    fun getAutCompleteKeyword(query: String) {
+        viewModelScope.launch {
+            delay(150L)
+            searchRepository.getSearchAutoComplete(query)
+                .onSuccess {
+                    _searchUiState.value = it.toUiState(query)
+                }
+                .onFailure {
+                    _searchUiState.value = SearchUiState.Error(it.message)
+                }
+        }
+    }
+
     fun setDetail(isDetail: Boolean) {
         _isDetail.value = isDetail
     }
@@ -60,14 +74,14 @@ class SearchViewModel @Inject constructor(
 
     private fun List<RecentSearchInfo>.toUiState() = SearchUiState.RecentSearch(this)
 
-    private fun List<AutoCompleteKeywordInfo>.toUiState() = SearchUiState.AutoCompleteSearch(this)
+    private fun List<AutoCompleteKeywordInfo>.toUiState(keyword: String) = SearchUiState.AutoCompleteSearch(Pair(keyword, this))
 
     private fun List<SearchResultInfo>.toUiState() = SearchUiState.Result(this)
 
     sealed class SearchUiState {
         object Loading : SearchUiState()
         data class RecentSearch(val data: List<RecentSearchInfo>) : SearchUiState()
-        data class AutoCompleteSearch(val data: List<AutoCompleteKeywordInfo>) : SearchUiState()
+        data class AutoCompleteSearch(val data: Pair<String, List<AutoCompleteKeywordInfo>>) : SearchUiState()
         data class Result(val data: List<SearchResultInfo>) : SearchUiState()
         class Error(val message: String?) : SearchUiState()
     }
@@ -76,8 +90,8 @@ class SearchViewModel @Inject constructor(
         const val SEARCH_RECENT = 0
         const val SEARCH_AUTO_COMPLETE = 1
         const val SEARCH_RESULT = 2
-        const val DIET = 0
-        const val NORMAL = 1
+        const val DIET = true
+        const val NORMAL = false
         const val LIST = false
         const val DETAIL = true
     }
