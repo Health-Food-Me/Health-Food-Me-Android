@@ -77,7 +77,7 @@
 
         <activity
             android:name=".presentation.MainActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".presentation.review.ReviewWritingActivity"
             android:exported="false" />

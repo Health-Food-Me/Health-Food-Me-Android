@@ -21,6 +21,7 @@ class LoginActivity : BindingActivity<ActivityLoginBinding>(R.layout.activity_lo
 
     @Inject
     lateinit var naverAuthService: NaverAuthService
+
     @Inject
     lateinit var kakaoAuthService: KakaoAuthService
     private val viewModel by viewModels<LoginViewModel>()
@@ -29,9 +30,7 @@ class LoginActivity : BindingActivity<ActivityLoginBinding>(R.layout.activity_lo
         super.onCreate(savedInstanceState)
 
         binding.viewModel = viewModel
-
         initListeners()
-        initObserve()
     }
 
     private fun initListeners() {
@@ -43,29 +42,21 @@ class LoginActivity : BindingActivity<ActivityLoginBinding>(R.layout.activity_lo
         }
     }
 
-    private fun initObserve() {
-        naverAuthService.loginSuccess.observe(this) {
-            if (naverAuthService.loginSuccess.value == true) {
-                goToMain()
-            }
-        }
-        kakaoAuthService.loginSuccess.observe(this) {
-            if (kakaoAuthService.loginSuccess.value == true) {
-                goToMain()
-            }
-        }
+    private fun startMain() {
+        startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+        finish()
     }
 
     private fun naverLogin() {
-        NaverIdLoginSDK.authenticate(this, naverAuthService)
+        NaverIdLoginSDK.authenticate(this,
+            naverAuthService.apply {
+                loginListener = ::startMain
+            }
+        )
     }
 
     private fun kakaoLogin() {
         kakaoAuthService.kakaoLogin()
-    }
-
-    private fun goToMain() {
-        startActivity(Intent(this@LoginActivity, MainActivity::class.java))
-        finish()
+        viewModel.loginNetwork("kakao")
     }
 }

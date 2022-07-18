@@ -19,5 +19,5 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideSharedPreference(@ApplicationContext app: Application): HFMSharedPreference = HFMSharedPreference(app)
+    fun provideSharedPreference(app: Application): HFMSharedPreference = HFMSharedPreference(app)
 }

@@ -5,7 +5,6 @@ import org.helfoome.data.model.response.BaseResponse
 import org.helfoome.data.model.response.ResponseLogin
 import org.helfoome.data.service.AuthService
 import org.helfoome.domain.repository.LoginRepository
-import retrofit2.Response
 import javax.inject.Inject
 
 class LoginRepositoryImpl @Inject constructor(private val authService: AuthService): LoginRepository {
