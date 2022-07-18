@@ -37,6 +37,12 @@ class ReviewWritingActivity : BindingActivity<ActivityReviewWritingBinding>(R.la
         binding.btnBack.setOnClickListener {
             onBackPressed()
         }
+
+        binding.etReview.setOnFocusChangeListener { view, hasFocus ->
+            if(hasFocus){
+                binding.layoutScrollView.smoothScrollBy(0, 1200)
+            }
+        }
     }
 
     private fun showGalleryImageDialog() {
