@@ -31,6 +31,7 @@ class KakaoAuthService @Inject constructor(
                     runCatching { authService.login(RequestLogin("kakao", token.accessToken)) }
                         .onSuccess {
                             sharedPreferences.accessToken = it.data.accessToken
+                            sharedPreferences.id = it.data.user.id
                             loginListener?.invoke()
                             cancel()
                         }
@@ -59,6 +60,7 @@ class KakaoAuthService @Inject constructor(
                         runCatching { authService.login(RequestLogin("kakao", token.accessToken)) }
                             .onSuccess {
                                 sharedPreferences.accessToken = it.data.accessToken
+                                sharedPreferences.id = it.data.user.id
                                 loginListener?.invoke()
                                 cancel()
                             }
