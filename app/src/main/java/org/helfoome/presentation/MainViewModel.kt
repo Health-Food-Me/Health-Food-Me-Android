@@ -112,6 +112,14 @@ class MainViewModel @Inject constructor(private val restaurantRepository: Restau
         )
     }
 
+    fun updateRestaurantScrap() {
+        viewModelScope.launch(Dispatchers.IO) {
+            val isScrap =
+                restaurantRepository.updateRestaurantScrap(selectedRestaurant.value?.id ?: return@launch, "62cf2c468ae4a7cda10f4f4f") ?: return@launch
+            _selectedRestaurant.postValue(_selectedRestaurant.value?.apply { this.isScrap = isScrap })
+        }
+    }
+
     fun setExpendedBottomSheetDialog(isExpended: Boolean) {
         _isExpandedDialog.value = Event(isExpended)
     }
