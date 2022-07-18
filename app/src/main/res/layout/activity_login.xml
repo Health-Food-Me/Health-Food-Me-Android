@@ -5,12 +5,15 @@
 
     <data>
 
+        <variable
+            name="viewModel"
+            type="org.helfoome.presentation.login.viewmodel.LoginViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".presentation.LoginActivity">
+        tools:context=".presentation.login.LoginActivity">
 
         <TextView
             android:id="@+id/tv_logo"
@@ -48,6 +51,7 @@
             android:layout_marginHorizontal="50dp"
             android:layout_marginTop="246dp"
             android:adjustViewBounds="true"
+            android:onClick="@{()->viewModel.setKakao()}"
             android:src="@drawable/rectangle_yellow_radius_5"
             app:layout_constraintTop_toBottomOf="@id/tv_description" />
 
@@ -72,6 +76,7 @@
             android:layout_marginHorizontal="50dp"
             android:layout_marginTop="10dp"
             android:adjustViewBounds="true"
+            android:onClick="@{()->viewModel.setNaver()}"
             android:src="@drawable/rectangle_login_naver"
             app:layout_constraintTop_toBottomOf="@id/iv_kakao_login" />
 

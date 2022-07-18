@@ -6,7 +6,10 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import org.helfoome.data.local.dao.SearchDao
 import org.helfoome.data.repository.SearchRepositoryImpl
+import org.helfoome.data.repository.LoginRepositoryImpl
+import org.helfoome.data.service.AuthService
 import org.helfoome.domain.repository.SearchRepository
+import org.helfoome.domain.repository.LoginRepository
 import javax.inject.Singleton
 
 @Module
@@ -16,4 +19,12 @@ object RepositoryModule {
     @Singleton
     fun provideSearchRepository(searchDao: SearchDao): SearchRepository =
         SearchRepositoryImpl(searchDao)
+
+    @Singleton
+    @Provides
+    fun provideAuthRepository(
+        authService: AuthService
+    ): LoginRepository {
+        return LoginRepositoryImpl(authService)
+    }
 }
