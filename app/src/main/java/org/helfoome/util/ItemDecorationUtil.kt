@@ -57,14 +57,14 @@ sealed class ItemDecorationUtil {
             val start = parent.paddingStart + dividerPadding
             val end = parent.width - parent.paddingEnd - dividerPadding
 
-            for (i in 0 until parent.childCount) {
+            for (i in 0 until parent.childCount - 1) {
                 val child = parent.getChildAt(i)
                 val params = child.layoutParams as RecyclerView.LayoutParams
 
                 val top = (child.bottom + params.bottomMargin).toFloat()
                 val bottom = top + height
 
-                c.drawRect(start, top, end.toFloat(), bottom, paint)
+                c.drawRect(start, top, end, bottom, paint)
             }
         }
     }
