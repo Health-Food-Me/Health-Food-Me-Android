@@ -44,6 +44,7 @@ import org.helfoome.util.DialogUtil
 import org.helfoome.util.ResolutionMetrics
 import org.helfoome.util.binding.BindingActivity
 import org.helfoome.util.ext.stringListFrom
+import org.helfoome.util.makeTransparentStatusBar
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -84,6 +85,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding.viewModel = viewModel
+        window.makeTransparentStatusBar()
 
         locationSource =
             FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE)
