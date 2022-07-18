@@ -4,6 +4,7 @@ import android.content.Intent
 import android.graphics.Paint
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import androidx.activity.viewModels
@@ -161,7 +162,6 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
             tvNumber.paintFlags = tvNumber.paintFlags or Paint.UNDERLINE_TEXT_FLAG
 
             btnWriteReview.apply {
-                visibility = View.INVISIBLE
                 setOnClickListener { startActivity(Intent(this@MainActivity, ReviewWritingActivity::class.java)) }
             }
             hashtag.setHashtag(listOf("연어 샐러드", "샌드위치"), HashtagViewType.RESTAURANT_SUMMARY_TYPE)
@@ -299,7 +299,8 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
         }
 
         viewModel.isVisibleReviewButton.observe(this) { isVisible ->
-            binding.layoutRestaurantDialog.btnWriteReview.visibility =
+            Timber.d("${isVisible.peekContent()}")
+            binding.layoutRestaurantDialog.layoutReviewBtnBackground.visibility =
                 if (isVisible.peekContent()) View.VISIBLE else View.INVISIBLE
         }
     }

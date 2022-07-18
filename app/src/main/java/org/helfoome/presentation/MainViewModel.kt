@@ -32,7 +32,7 @@ class MainViewModel @Inject constructor() : ViewModel() {
     val blogReviews: LiveData<List<BlogReviewInfo>> = _blogReviews
     private val isGeneralReview = MutableLiveData(true)
     private val isReviewTab = MutableLiveData(false)
-    val _isVisibleReviewButton = MediatorLiveData<Event<Boolean>>()
+    private val _isVisibleReviewButton = MediatorLiveData<Event<Boolean>>()
     val isVisibleReviewButton get() = _isVisibleReviewButton
 
     init {
