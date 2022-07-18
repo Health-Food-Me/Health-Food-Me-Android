@@ -42,9 +42,11 @@ class LoginActivity : BindingActivity<ActivityLoginBinding>(R.layout.activity_lo
     }
 
     private fun naverLogin() {
-        NaverIdLoginSDK.authenticate(this, naverAuthService.apply {
-            loginListener = ::startMain
-        }
+        NaverIdLoginSDK.authenticate(
+            this,
+            naverAuthService.apply {
+                loginListener = ::startMain
+            }
         )
     }
 
