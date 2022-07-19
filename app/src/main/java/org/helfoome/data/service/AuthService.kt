@@ -3,7 +3,6 @@ package org.helfoome.data.service
 import org.helfoome.data.model.request.RequestLogin
 import org.helfoome.data.model.request.RequestProfileModify
 import org.helfoome.data.model.response.*
-import org.mockito.internal.matchers.Null
 import retrofit2.http.*
 
 interface AuthService {

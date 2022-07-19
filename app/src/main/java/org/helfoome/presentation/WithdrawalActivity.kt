@@ -6,14 +6,12 @@ import android.view.LayoutInflater
 import androidx.activity.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import org.helfoome.R
-import org.helfoome.data.local.HFMSharedPreference
 import org.helfoome.databinding.ActivityWithdrawalBinding
 import org.helfoome.databinding.DialogWithdrawBinding
 import org.helfoome.presentation.login.LoginActivity
 import org.helfoome.util.DialogUtil
 import org.helfoome.util.ResolutionMetrics
 import org.helfoome.util.binding.BindingActivity
-import timber.log.Timber
 import javax.inject.Inject
 
 @AndroidEntryPoint

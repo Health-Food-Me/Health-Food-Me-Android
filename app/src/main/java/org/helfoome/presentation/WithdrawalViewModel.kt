@@ -1,6 +1,5 @@
 package org.helfoome.presentation
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,12 +9,13 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.helfoome.data.local.HFMSharedPreference
 import org.helfoome.domain.repository.WithdrawalRepository
-import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
-class WithdrawalViewModel @Inject constructor(private val sharedHFMSharedPreference: HFMSharedPreference,
-private val withdrawalRepository: WithdrawalRepository) : ViewModel() {
+class WithdrawalViewModel @Inject constructor(
+    private val sharedHFMSharedPreference: HFMSharedPreference,
+    private val withdrawalRepository: WithdrawalRepository
+) : ViewModel() {
 
     private val _isCorrectedNickname = MutableLiveData<Boolean>()
     val isCorrectedNickname: LiveData<Boolean> get() = _isCorrectedNickname
