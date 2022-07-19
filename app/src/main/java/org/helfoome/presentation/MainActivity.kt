@@ -11,7 +11,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -58,17 +57,23 @@ import javax.inject.Inject
 class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main), OnMapReadyCallback {
     @Inject
     lateinit var resolutionMetrics: ResolutionMetrics
-    private var animation: Animation? = null
-    private var animator: Animation.AnimationListener? = null
     private val requestModifyNickname =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
             if (activityResult.resultCode == Activity.RESULT_OK) {
-                animation = AnimationUtils.loadAnimation(this, R.anim.anim_snackbar_top_down)
+                val animation = AnimationUtils.loadAnimation(this, R.anim.anim_snackbar_top_down)
                 binding.snvProfileModify.animation = animation
-                binding.snvProfileModify.setText("중복된 닉네임 입니다")
-                animator?.let {
-                    animation?.setAnimationListener(it)
-                }
+                binding.snvProfileModify.setText("닉네임이 변경되었습니다")
+                animation.setAnimationListener(object : Animation.AnimationListener {
+                    override fun onAnimationStart(animation: Animation?) {
+                    }
+                    override fun onAnimationEnd(animation: Animation?) {
+                        val bottomTopAnimation = AnimationUtils.loadAnimation(this@MainActivity, R.anim.anim_snackbar_bottom_top)
+                        binding.snvProfileModify.animation = bottomTopAnimation
+                        binding.snvProfileModify.setText("닉네임이 변경되었습니다")
+                    }
+                    override fun onAnimationRepeat(p0: Animation?) {
+                    }
+                })
             }
         }
     private val String.toChip: Chip
@@ -106,16 +111,6 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
         binding.layoutDrawerHeader.drawerViewModel = viewModel
         window.makeTransparentStatusBar()
         viewModel.getProfile()
-
-        animator = object : Animation.AnimationListener {
-            override fun onAnimationStart(animation: Animation?) = Unit
-            override fun onAnimationEnd(animation: Animation?) {
-                val bottomTopAnimation = AnimationUtils.loadAnimation(this@MainActivity, R.anim.anim_snackbar_bottom_top)
-                binding.snvProfileModify.animation = bottomTopAnimation
-                binding.snvProfileModify.setText("닉네임 설정 기준에 적합하지 않습니다")
-            }
-            override fun onAnimationRepeat(animation: Animation?) = Unit
-        }
 
         locationSource =
             FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE)

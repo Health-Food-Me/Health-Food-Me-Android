@@ -1,7 +1,6 @@
 package org.helfoome.presentation.drawer
 
 import android.app.Activity
-import android.content.Intent
 import android.os.Bundle
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
@@ -9,7 +8,6 @@ import androidx.activity.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import org.helfoome.R
 import org.helfoome.databinding.ActivityProfileModifyBinding
-import org.helfoome.presentation.MainActivity
 import org.helfoome.util.binding.BindingActivity
 
 @AndroidEntryPoint
