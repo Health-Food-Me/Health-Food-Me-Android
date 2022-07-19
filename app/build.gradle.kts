@@ -69,6 +69,7 @@ dependencies {
     implementation(libs.googlegms)
     implementation(libs.flexbox)
     implementation(libs.gson)
+    implementation(libs.image.picker)
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.analytics)
     implementation(libs.firebase.crashlyticsKtx)
