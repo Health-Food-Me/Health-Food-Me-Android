@@ -30,8 +30,12 @@ class KakaoAuthService @Inject constructor(
                 CoroutineScope(Dispatchers.IO).launch {
                     runCatching { authService.login(RequestLogin("kakao", token.accessToken)) }
                         .onSuccess {
-                            sharedPreferences.accessToken = it.data.accessToken
-                            sharedPreferences.id = it.data.user.id
+                            val response = it.data
+                            with(sharedPreferences) {
+                                accessToken = response.accessToken
+                                id = response.user.id
+                                nickname = response.user.name
+                            }
                             loginListener?.invoke()
                             cancel()
                         }
@@ -59,8 +63,12 @@ class KakaoAuthService @Inject constructor(
                     CoroutineScope(Dispatchers.IO).launch {
                         runCatching { authService.login(RequestLogin("kakao", token.accessToken)) }
                             .onSuccess {
-                                sharedPreferences.accessToken = it.data.accessToken
-                                sharedPreferences.id = it.data.user.id
+                                val response = it.data
+                                with(sharedPreferences) {
+                                    accessToken = response.accessToken
+                                    id = response.user.id
+                                    nickname = response.user.name
+                                }
                                 loginListener?.invoke()
                                 cancel()
                             }

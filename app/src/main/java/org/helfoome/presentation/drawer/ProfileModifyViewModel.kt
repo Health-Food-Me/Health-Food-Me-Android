@@ -32,9 +32,10 @@ class ProfileModifyViewModel @Inject constructor(
                 runCatching {
                     profileModifyRepository.modifyProfile(
                         RequestProfileModify(nickname.toString()),
-                        sharedPreferences.id
+                        sharedPreferences.id,
                     )
                 }.onSuccess {
+                    sharedPreferences.nickname = it.data.name
                     _isProfileModify.value = true
                 }.onFailure {
                     _isOverlapNickname.value = false

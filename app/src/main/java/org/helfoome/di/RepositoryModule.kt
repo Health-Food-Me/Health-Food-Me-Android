@@ -49,16 +49,21 @@ object RepositoryModule {
 
     @Provides
     @Singleton
-    fun putProfileModifyRepository(service: AuthService): ProfileModifyRepository =
+    fun provideProfileModifyRepository(service: AuthService): ProfileModifyRepository =
         ProfileModifyRepositoryImpl(service)
 
     @Provides
     @Singleton
-    fun getMapRepository(service: MapService): MapRepository =
+    fun provideMapRepository(service: MapService): MapRepository =
         MapRepositoryImpl(service)
 
     @Provides
     @Singleton
     fun provideReviewRepository(service: ReviewService): ReviewRepository =
         ReviewRepositoryImpl(service)
+
+    @Provides
+    @Singleton
+    fun provideWithdrawalRepository(service: AuthService): WithdrawalRepository =
+        WithdrawalRepositoryImpl(service)
 }
