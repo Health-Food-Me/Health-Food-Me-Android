@@ -8,8 +8,8 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import org.helfoome.data.local.HFMSharedPreference
 import org.helfoome.domain.entity.BlogReviewInfo
-import org.helfoome.domain.entity.RestaurantInfo
 import org.helfoome.domain.entity.HFMReviewInfo
+import org.helfoome.domain.entity.RestaurantInfo
 import org.helfoome.domain.repository.ProfileRepository
 import org.helfoome.domain.repository.RestaurantRepository
 import org.helfoome.util.Event
@@ -49,7 +49,8 @@ class MainViewModel @Inject constructor(
     init {
         // TODO 지도 뷰 구현 후 마커 클릭 시 해당 함수 호출하는 것으로 변경 예정
         fetchSelectedRestaurantInfo()
-        fetchReviewList()
+        fetchHFMReviewList()
+        fetchBlogReviewList()
         initVisibleReviewButton()
     }
 
@@ -125,33 +126,9 @@ class MainViewModel @Inject constructor(
     }
 
     fun fetchBlogReviewList() {
-        _blogReviews.value = listOf(
-            BlogReviewInfo(
-                1,
-                "샐러디 안암점 나쵸가 씹히는 멕시칸랩",
-                "블라블라 맛 멋져요 멍멍 만약에 이 내용이 너무 길어진다면 ..? 그게 고민..이었는데 해결됐어요. 왜냐면 더보기를 누르면 되니까요! 더보기나 나올 텍스트 크기는 이 … "
-            ),
-            BlogReviewInfo(
-                2,
-                "샐러디 안암점 나쵸가 씹히는 멕시칸랩",
-                "블라블라 맛 멋져요 멍멍 만약에 이 내용이 너무 길어진다면 ..? 그게 고민..이었는데 해결됐어요. 왜냐면 더보기를 누르면 되니까요! 더보기나 나올 텍스트 크기는 이 … "
-            ),
-            BlogReviewInfo(
-                3,
-                "샐러디 안암점 나쵸가 씹히는 멕시칸랩",
-                "블라블라 맛 멋져요 멍멍 만약에 이 내용이 너무 길어진다면 ..? 그게 고민..이었는데 해결됐어요. 왜냐면 더보기를 누르면 되니까요! 더보기나 나올 텍스트 크기는 이 … "
-            ),
-            BlogReviewInfo(
-                4,
-                "샐러디 안암점 나쵸가 씹히는 멕시칸랩",
-                "블라블라 맛 멋져요 멍멍 만약에 이 내용이 너무 길어진다면 ..? 그게 고민..이었는데 해결됐어요. 왜냐면 더보기를 누르면 되니까요! 더보기나 나올 텍스트 크기는 이 … "
-            ),
-            BlogReviewInfo(
-                5,
-                "샐러디 안암점 나쵸가 씹히는 멕시칸랩",
-                "블라블라 맛 멋져요 멍멍 만약에 이 내용이 너무 길어진다면 ..? 그게 고민..이었는데 해결됐어요. 왜냐면 더보기를 누르면 되니까요! 더보기나 나올 텍스트 크기는 이 … "
-            )
-        )
+        viewModelScope.launch(Dispatchers.IO) {
+            _blogReviews.postValue(restaurantRepository.fetchBlogReview("62d26c9bd11146a81ef18ea6").getOrNull())
+        }
     }
 
     fun updateRestaurantScrap() {

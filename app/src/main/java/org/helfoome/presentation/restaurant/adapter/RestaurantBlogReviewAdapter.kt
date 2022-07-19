@@ -8,14 +8,17 @@ import org.helfoome.databinding.ItemBlogReviewBinding
 import org.helfoome.domain.entity.BlogReviewInfo
 import org.helfoome.util.ItemDiffCallback
 
-class RestaurantBlogReviewAdapter :
-    ListAdapter<BlogReviewInfo, RestaurantBlogReviewAdapter.ReviewViewHolder>(ItemDiffCallback<BlogReviewInfo>(onContentsTheSame = { old, new -> old == new }, onItemsTheSame = { old, new -> old.id == new.id })) {
+class RestaurantBlogReviewAdapter(private val onClickListener: (BlogReviewInfo)->(Unit)) :
+    ListAdapter<BlogReviewInfo, RestaurantBlogReviewAdapter.ReviewViewHolder>(ItemDiffCallback<BlogReviewInfo>(onContentsTheSame = { old, new -> old == new }, onItemsTheSame = { old, new -> old.url == new.url })) {
     private lateinit var inflater: LayoutInflater
 
     class ReviewViewHolder(private val binding: ItemBlogReviewBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(review: BlogReviewInfo) {
+        fun bind(review: BlogReviewInfo, onClickListener: (BlogReviewInfo)->(Unit)) {
             binding.review = review
+            binding.layoutReviewContainer.setOnClickListener {
+                onClickListener(review)
+            }
         }
     }
 
@@ -29,6 +32,6 @@ class RestaurantBlogReviewAdapter :
     }
 
     override fun onBindViewHolder(viewHolder: ReviewViewHolder, position: Int) {
-        viewHolder.bind(getItem(position))
+        viewHolder.bind(getItem(position), onClickListener)
     }
 }
