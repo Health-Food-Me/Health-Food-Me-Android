@@ -5,11 +5,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import org.helfoome.databinding.ItemGeneralMyReviewBinding
-import org.helfoome.domain.entity.MyReviewInfo
+import org.helfoome.domain.entity.MyReviewListInfo
 import org.helfoome.util.ItemDiffCallback
 
-class MyReviewAdapter(private val itemClickListener: ((Int) -> Unit)) : ListAdapter<MyReviewInfo, MyReviewAdapter.MyReviewViewHolder>(
-    ItemDiffCallback<MyReviewInfo>(
+class MyReviewAdapter(private val itemClickListener: ((Int) -> Unit)) : ListAdapter<MyReviewListInfo, MyReviewAdapter.MyReviewViewHolder>(
+    ItemDiffCallback<MyReviewListInfo>(
         onContentsTheSame = { old, new -> old == new },
         onItemsTheSame = { old, new -> old.id == new.id }
     )
@@ -41,7 +41,7 @@ class MyReviewAdapter(private val itemClickListener: ((Int) -> Unit)) : ListAdap
     }
 
     class MyReviewViewHolder(private val binding: ItemGeneralMyReviewBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun onBind(myReviewData: MyReviewInfo) {
+        fun onBind(myReviewData: MyReviewListInfo) {
             with(binding) {
                 data = myReviewData
             }

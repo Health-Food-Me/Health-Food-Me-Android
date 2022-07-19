@@ -1,5 +1,8 @@
 package org.helfoome.data.repository
 
+import org.helfoome.data.model.response.BaseResponse
+import org.helfoome.data.model.response.ResponseMyReviewList
+import org.helfoome.data.model.response.ResponseProfile
 import org.helfoome.data.service.ReviewService
 import org.helfoome.domain.entity.HFMReviewInfo
 import org.helfoome.domain.repository.ReviewRepository
@@ -17,5 +20,8 @@ class ReviewRepositoryImpl @Inject constructor(
             it.printStackTrace()
             Result.failure(it.fillInStackTrace())
         })
+    }
+    override suspend fun getMyReviewList(userId: String): BaseResponse<List<ResponseMyReviewList>> {
+        return reviewService.getMyReviewList(userId)
     }
 }
