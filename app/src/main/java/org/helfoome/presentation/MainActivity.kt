@@ -66,11 +66,13 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                 animation.setAnimationListener(object : Animation.AnimationListener {
                     override fun onAnimationStart(animation: Animation?) {
                     }
+
                     override fun onAnimationEnd(animation: Animation?) {
                         val bottomTopAnimation = AnimationUtils.loadAnimation(this@MainActivity, R.anim.anim_snackbar_bottom_top)
                         binding.snvProfileModify.animation = bottomTopAnimation
                         binding.snvProfileModify.setText("닉네임이 변경되었습니다")
                     }
+
                     override fun onAnimationRepeat(p0: Animation?) {
                     }
                 })
@@ -297,8 +299,10 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
             markers.map { marker ->
                 Marker().apply {
                     position = LatLng(marker.latitude, marker.longitude)
-                    icon = OverlayImage.fromResource(if (marker.isDietRestaurant) R.drawable.ic_marker_green
-                    else R.drawable.ic_marker_red)
+                    icon = OverlayImage.fromResource(
+                        if (marker.isDietRestaurant) R.drawable.ic_marker_green
+                        else R.drawable.ic_marker_red
+                    )
                     this.map = naverMap
                 }
             }.forEach { marker ->

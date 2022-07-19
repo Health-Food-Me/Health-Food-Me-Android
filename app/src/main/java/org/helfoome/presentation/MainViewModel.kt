@@ -1,13 +1,9 @@
 package org.helfoome.presentation
 
-import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.*
 import com.naver.maps.geometry.LatLng
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.cancel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.helfoome.data.local.HFMSharedPreference
 import org.helfoome.domain.entity.BlogReviewInfo
