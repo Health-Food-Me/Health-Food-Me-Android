@@ -25,7 +25,6 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
             android:fontFamily="@font/notosanskr_r"
-            android:text="@{data.name}"
             android:textColor="@color/gray_800"
             android:textSize="15dp"
             app:layout_constraintBottom_toBottomOf="@+id/iv_pin"

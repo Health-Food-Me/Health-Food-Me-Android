@@ -1,28 +1,38 @@
 package org.helfoome.di
 
+import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.json.Json
 import okhttp3.Interceptor
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.helfoome.BuildConfig.HFM_BASE_URL
 import org.helfoome.data.interceptor.AuthInterceptor
 import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
-
     @Provides
     @Singleton
-    fun provideRetrofit(client: OkHttpClient): Retrofit = Retrofit.Builder()
+    fun provideJson(): Json = Json {
+        isLenient = true
+        prettyPrint = true
+    }
+
+    @ExperimentalSerializationApi
+    @Provides
+    @Singleton
+    fun provideRetrofit(client: OkHttpClient, json: Json): Retrofit = Retrofit.Builder()
         .baseUrl(HFM_BASE_URL)
         .client(client)
-        .addConverterFactory(GsonConverterFactory.create())
+        .addConverterFactory(json.asConverterFactory(requireNotNull("application/json".toMediaTypeOrNull())))
         .build()
 
     @Provides

@@ -45,6 +45,7 @@ class NaverAuthService @Inject constructor(
                     cancel()
                 }
                 .onFailure {
+                    Timber.d(it.message)
                     cancel()
                 }
         }
