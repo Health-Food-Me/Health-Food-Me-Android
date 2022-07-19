@@ -2,7 +2,6 @@ package org.helfoome.data.repository
 
 import org.helfoome.data.model.response.BaseResponse
 import org.helfoome.data.model.response.ResponseMyReviewList
-import org.helfoome.data.model.response.ResponseProfile
 import org.helfoome.data.service.ReviewService
 import org.helfoome.domain.entity.HFMReviewInfo
 import org.helfoome.domain.repository.ReviewRepository

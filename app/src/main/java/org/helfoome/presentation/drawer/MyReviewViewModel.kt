@@ -8,8 +8,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.helfoome.data.local.HFMSharedPreference
-import org.helfoome.data.model.response.ResponseMyReviewList
-import org.helfoome.domain.entity.MarkerInfo
 import org.helfoome.domain.entity.MyReviewListInfo
 import org.helfoome.domain.repository.ReviewRepository
 import timber.log.Timber
