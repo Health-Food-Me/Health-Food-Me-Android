@@ -7,7 +7,6 @@ import org.helfoome.domain.entity.EatingOutTipInfo
 import org.helfoome.domain.entity.HFMReviewInfo
 import org.helfoome.domain.entity.RestaurantInfo
 import org.helfoome.domain.repository.RestaurantRepository
-import timber.log.Timber
 import javax.inject.Inject
 
 class RestaurantRepositoryImpl @Inject constructor(

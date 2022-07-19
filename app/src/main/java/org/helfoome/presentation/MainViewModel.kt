@@ -7,10 +7,14 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.helfoome.data.local.HFMSharedPreference
 import org.helfoome.domain.entity.BlogReviewInfo
+import org.helfoome.domain.entity.HFMReviewInfo
+import org.helfoome.domain.entity.MarkerInfo
 import org.helfoome.domain.entity.RestaurantInfo
+import org.helfoome.domain.repository.MapRepository
 import org.helfoome.domain.repository.ProfileRepository
 import org.helfoome.domain.repository.RestaurantRepository
 import org.helfoome.util.Event
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -18,7 +22,7 @@ class MainViewModel @Inject constructor(
     private val profileRepository: ProfileRepository,
     private val sharedPreferences: HFMSharedPreference,
     private val restaurantRepository: RestaurantRepository,
-    private val mapRepository: MapRepository
+    private val mapRepository: MapRepository,
 ) : ViewModel() {
     private val _location = MutableLiveData<List<MarkerInfo>>()
     val location: LiveData<List<MarkerInfo>> = _location
@@ -106,7 +110,7 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    fun fetchReviewList() {
+    fun fetchHFMReviewList() {
         viewModelScope.launch(Dispatchers.IO) {
             _hfmReviews.postValue(restaurantRepository.fetchHFMReview("62d26c9bd11146a81ef18ea6").getOrNull())
         }
