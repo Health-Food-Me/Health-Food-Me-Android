@@ -1,6 +1,7 @@
 package org.helfoome.data.service
 
 import org.helfoome.data.model.response.BaseResponse
+import org.helfoome.data.model.response.ResponseEatingOutTip
 import org.helfoome.data.model.response.ResponseRestaurantSummary
 import org.helfoome.data.model.response.ResponseScrap
 import retrofit2.Response
@@ -25,4 +26,9 @@ interface RestaurantService {
         @Path("restaurantId") restaurantId: String,
         @Path("userId") userId: String,
     ): Response<BaseResponse<ResponseScrap>>
+
+    @GET("/restaurant/{restaurantId}/prescription")
+    suspend fun getEatingOutTips(
+        @Path("restaurantId") restaurantId: String,
+    ): Response<BaseResponse<ResponseEatingOutTip>>
 }
