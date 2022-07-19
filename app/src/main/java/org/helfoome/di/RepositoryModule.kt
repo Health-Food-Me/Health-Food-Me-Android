@@ -4,11 +4,13 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import org.helfoome.data.datasource.RemoteSearchDataSource
 import org.helfoome.data.local.dao.SearchDao
 import org.helfoome.data.repository.*
 import org.helfoome.data.service.AuthService
 import org.helfoome.data.service.RestaurantService
 import org.helfoome.data.service.ReviewService
+import org.helfoome.domain.repository.*
 import org.helfoome.domain.repository.*
 import javax.inject.Singleton
 
@@ -17,8 +19,11 @@ import javax.inject.Singleton
 object RepositoryModule {
     @Provides
     @Singleton
-    fun provideSearchRepository(searchDao: SearchDao): SearchRepository =
-        SearchRepositoryImpl(searchDao)
+    fun provideSearchRepository(
+        searchDao: SearchDao,
+        searchDataSource: RemoteSearchDataSource
+    ): SearchRepository =
+        SearchRepositoryImpl(searchDao, searchDataSource)
 
     @Singleton
     @Provides
@@ -40,6 +45,11 @@ object RepositoryModule {
     @Singleton
     fun provideRestaurantRepository(service: RestaurantService): RestaurantRepository =
         RestaurantRepositoryImpl(service)
+
+    @Provides
+    @Singleton
+    fun putProfileModifyRepository(service: AuthService): ProfileModifyRepository =
+        ProfileModifyRepositoryImpl(service)
 
     @Provides
     @Singleton
