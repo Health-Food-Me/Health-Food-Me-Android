@@ -12,7 +12,6 @@ import org.helfoome.domain.entity.RestaurantInfo
 import org.helfoome.domain.entity.ReviewInfo
 import org.helfoome.domain.repository.ProfileRepository
 import org.helfoome.domain.repository.RestaurantRepository
-import org.helfoome.domain.repository.ReviewRepository
 import org.helfoome.util.Event
 import javax.inject.Inject
 
@@ -21,7 +20,6 @@ class MainViewModel @Inject constructor(
     private val profileRepository: ProfileRepository,
     private val sharedPreferences: HFMSharedPreference,
     private val restaurantRepository: RestaurantRepository,
-    private val reviewRepository: ReviewRepository,
 ) : ViewModel() {
     private val _location = MutableLiveData<List<LatLng>>()
     val location: LiveData<List<LatLng>> = _location
@@ -121,7 +119,7 @@ class MainViewModel @Inject constructor(
 
     fun fetchReviewList() {
         viewModelScope.launch(Dispatchers.IO) {
-            _hfmReviews.postValue(reviewRepository.fetchHFMReview("62d26c9bd11146a81ef18ea6").getOrNull())
+            _hfmReviews.postValue(restaurantRepository.fetchHFMReview("62d26c9bd11146a81ef18ea6").getOrNull())
         }
     }
 
