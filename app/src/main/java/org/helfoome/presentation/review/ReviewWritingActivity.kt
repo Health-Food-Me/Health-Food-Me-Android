@@ -13,6 +13,7 @@ import gun0912.tedimagepicker.builder.TedImagePicker
 import org.helfoome.R
 import org.helfoome.databinding.ActivityReviewWritingBinding
 import org.helfoome.presentation.type.ReviewImageType
+import org.helfoome.util.ItemDecorationUtil
 import org.helfoome.util.binding.BindingActivity
 import org.helfoome.util.ext.closeKeyboard
 
@@ -41,7 +42,10 @@ class ReviewWritingActivity : BindingActivity<ActivityReviewWritingBinding>(R.la
     }
 
     private fun initView() {
-        binding.rvPhotoList.adapter = galleryImageAdapter
+        binding.rvPhotoList.apply {
+            adapter = galleryImageAdapter
+            addItemDecoration(ItemDecorationUtil.ItemDecoration(0f, padding = 18 , isVertical = false))
+        }
     }
 
     private fun initListeners() {
