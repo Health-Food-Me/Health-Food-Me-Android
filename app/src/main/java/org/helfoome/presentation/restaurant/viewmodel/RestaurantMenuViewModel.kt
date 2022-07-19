@@ -44,7 +44,6 @@ class RestaurantMenuViewModel @Inject constructor(
         // TODO 레스토랑 id 받아오기
         viewModelScope.launch(Dispatchers.IO) {
             _eatingOutTips.postValue(restaurantRepository.getEatingOutTips("62d26c9bd11146a81ef18ea6"))
-
         }
     }
 }
