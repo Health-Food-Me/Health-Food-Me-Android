@@ -7,7 +7,6 @@ import android.view.animation.AnimationUtils
 import androidx.activity.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import org.helfoome.R
-import org.helfoome.data.local.HFMSharedPreference
 import org.helfoome.databinding.ActivityProfileModifyBinding
 import org.helfoome.util.binding.BindingActivity
 
