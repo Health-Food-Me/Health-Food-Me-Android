@@ -1,5 +1,6 @@
 package org.helfoome.presentation.review
 
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -10,17 +11,23 @@ import org.helfoome.databinding.ItemGalleryImageBinding
 class GalleryImageAdapter(private val cameraOnClickListener: () -> Unit) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private lateinit var inflater: LayoutInflater
-    private val _imageList = mutableListOf<String>()
-    var imageList: List<String> = _imageList
+    private val _imageList = mutableListOf<Uri?>()
+
+    var imageList: List<Uri?> = _imageList
         set(value) {
             _imageList.clear()
             _imageList.addAll(value)
             notifyDataSetChanged()
         }
 
+    init {
+        _imageList.add(null)
+        notifyItemInserted(0)
+    }
+
     class GalleryImageViewHolder(private val binding: ItemGalleryImageBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(imageUrl: String) {
+        fun bind(imageUrl: Uri?) {
             binding.ivImage.load(imageUrl)
         }
     }

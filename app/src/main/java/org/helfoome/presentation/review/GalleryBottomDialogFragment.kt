@@ -7,9 +7,10 @@ import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 import org.helfoome.databinding.DialogGalleryImageSelectionBinding
+import org.helfoome.presentation.type.ReviewImageType
 
 @AndroidEntryPoint
-class GalleryBottomDialogFragment : BottomSheetDialogFragment() {
+class GalleryBottomDialogFragment(private val onDialogClickListener: (ReviewImageType) -> (Unit)) : BottomSheetDialogFragment() {
     private lateinit var binding: DialogGalleryImageSelectionBinding
 
     override fun onCreateView(
@@ -21,10 +22,6 @@ class GalleryBottomDialogFragment : BottomSheetDialogFragment() {
         return binding.root
     }
 
-    override fun onStart() {
-        super.onStart()
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -32,11 +29,13 @@ class GalleryBottomDialogFragment : BottomSheetDialogFragment() {
     }
 
     private fun addListeners() {
-        binding.tvKakao.setOnClickListener {
-            // TODO
+        binding.tvPhotoShoot.setOnClickListener {
+            onDialogClickListener(ReviewImageType.PHOTO_SHOOT)
+            dismiss()
         }
-        binding.tvNaver.setOnClickListener {
-            // TODO
+        binding.tvGallery.setOnClickListener {
+            onDialogClickListener(ReviewImageType.GALLERY)
+            dismiss()
         }
         binding.cancel.setOnClickListener {
             dismiss()

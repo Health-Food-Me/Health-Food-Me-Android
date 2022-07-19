@@ -1,13 +1,18 @@
 package org.helfoome.presentation.review
 
+import android.Manifest
+
 import android.os.Bundle
 import android.view.MotionEvent
 import android.widget.EditText
 import android.widget.ScrollView
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import dagger.hilt.android.AndroidEntryPoint
+import gun0912.tedimagepicker.builder.TedImagePicker
 import org.helfoome.R
 import org.helfoome.databinding.ActivityReviewWritingBinding
+import org.helfoome.presentation.type.ReviewImageType
 import org.helfoome.util.binding.BindingActivity
 import org.helfoome.util.ext.closeKeyboard
 
@@ -16,18 +21,27 @@ class ReviewWritingActivity : BindingActivity<ActivityReviewWritingBinding>(R.la
     private val viewModel: RestaurantReviewWritingViewModel by viewModels()
     private val galleryImageAdapter = GalleryImageAdapter(::showGalleryImageDialog)
 
+    private val requestStorage =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) {
+            if (it) {
+                TedImagePicker.with(this)
+                    .showCameraTile(false)
+                    .max(3, "사진첨부는 최대 3장만 가능합니다")
+                    .startMultiImage { uriList -> viewModel.setSelectedGalleryImages(uriList) }
+            }
+        }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding.viewModel = viewModel
 
         initView()
         initListeners()
+        initObservers()
     }
 
     private fun initView() {
-        binding.rvPhotoList.adapter = galleryImageAdapter.apply {
-            imageList = listOf("")
-        }
+        binding.rvPhotoList.adapter = galleryImageAdapter
     }
 
     private fun initListeners() {
@@ -37,7 +51,6 @@ class ReviewWritingActivity : BindingActivity<ActivityReviewWritingBinding>(R.la
         binding.btnBack.setOnClickListener {
             onBackPressed()
         }
-
         binding.etReview.setOnFocusChangeListener { _, hasFocus ->
             if (hasFocus) {
                 binding.layoutScrollView.smoothScrollBy(0, 1200)
@@ -45,8 +58,14 @@ class ReviewWritingActivity : BindingActivity<ActivityReviewWritingBinding>(R.la
         }
     }
 
+    private fun initObservers() {
+        viewModel.selectedImageList.observe(this) {
+            galleryImageAdapter.imageList = listOf(null) + it
+        }
+    }
+
     private fun showGalleryImageDialog() {
-        GalleryBottomDialogFragment().show(supportFragmentManager, "GalleryBottomDialogFragment")
+        GalleryBottomDialogFragment(::setOnclickListener).show(supportFragmentManager, "GalleryBottomDialogFragment")
     }
 
     override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
@@ -67,5 +86,16 @@ class ReviewWritingActivity : BindingActivity<ActivityReviewWritingBinding>(R.la
         }
 
         return super.dispatchTouchEvent(ev)
+    }
+
+    private fun setOnclickListener(reviewImageType: ReviewImageType) {
+        when (reviewImageType) {
+            ReviewImageType.GALLERY -> {
+                requestStorage.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
+            }
+            ReviewImageType.PHOTO_SHOOT -> {
+                // TODO
+            }
+        }
     }
 }
