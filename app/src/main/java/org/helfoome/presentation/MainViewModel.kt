@@ -59,9 +59,11 @@ class MainViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             runCatching { mapRepository.getMap(37.498095, 127.027610, 11, null) }
                 .onSuccess {
-                    _location.postValue(it.data.map { marker ->
-                        marker.toMakerInfo()
-                    })
+                    _location.postValue(
+                        it.data.map { marker ->
+                            marker.toMakerInfo()
+                        }
+                    )
                 }.onFailure {
                     Timber.d(it.message)
                 }
