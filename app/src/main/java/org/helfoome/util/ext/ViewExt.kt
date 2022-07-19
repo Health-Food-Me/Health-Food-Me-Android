@@ -12,7 +12,7 @@ fun TextView.setAutoKeyword(restaurant: String, keyword: String?) {
         text = SpannableStringBuilder(restaurant).apply {
             val index = restaurant.indexOf(keyword)
             Timber.d(keyword)
-            if(index != -1) {
+            if (index != -1) {
                 setSpan(
                     ForegroundColorSpan(getColor(R.color.red_500)),
                     index,

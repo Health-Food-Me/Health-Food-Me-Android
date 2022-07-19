@@ -26,7 +26,6 @@ import org.helfoome.util.ResolutionMetrics
 import org.helfoome.util.binding.BindingActivity
 import org.helfoome.util.ext.closeKeyboard
 import org.helfoome.util.ext.showKeyboard
-import org.helfoome.util.ext.startActivity
 import javax.inject.Inject
 
 @AndroidEntryPoint
