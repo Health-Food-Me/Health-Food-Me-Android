@@ -61,7 +61,7 @@ class ProfileModifyActivity : BindingActivity<ActivityProfileModifyBinding>(R.la
         }
 
         viewModel.isProfileModify.observe(this) {
-            if(it) {
+            if (it) {
                 setResult(Activity.RESULT_OK)
                 finish()
             }
