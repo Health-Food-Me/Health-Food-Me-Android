@@ -34,6 +34,10 @@ class HFMSharedPreference @Inject constructor(@ApplicationContext context: Conte
         set(value) = dataStore.edit { putString("REFRESH_TOKEN", value) }
         get() = dataStore.getString("REFRESH_TOKEN", "") ?: ""
 
+    var id: String
+        set(value) = dataStore.edit { putString("USER_ID", value) }
+        get() = dataStore.getString("USER_ID", "") ?: ""
+
     companion object {
         const val FILE_NAME = "HFM"
     }

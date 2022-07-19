@@ -71,7 +71,6 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
         override fun onTabSelected(tab: TabLayout.Tab?) {
             // 리뷰 탭에서만 리뷰 작성 버튼 보여주기
             viewModel.setReviewTab(tab?.position == 2)
-            // binding.layoutRestaurantDialog.btnWriteReview.visibility = if (tab?.position == 2) View.VISIBLE else View.INVISIBLE
         }
     }
 
@@ -86,7 +85,9 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding.viewModel = viewModel
+        binding.layoutDrawerHeader.drawerViewModel = viewModel
         window.makeTransparentStatusBar()
+        viewModel.getProfile()
 
         locationSource =
             FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE)
@@ -170,21 +171,13 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
 
     private fun initListeners() {
         with(binding.layoutRestaurantDialog) {
+
             layoutAppBar.setOnClickListener {
                 if (behavior.state == BottomSheetBehavior.STATE_COLLAPSED) behavior.state = BottomSheetBehavior.STATE_EXPANDED
             }
 
             btnBack.setOnClickListener {
                 behavior.state = BottomSheetBehavior.STATE_COLLAPSED
-            }
-
-            btnScrap.setOnClickListener {
-                it.isSelected = !it.isSelected
-                // TODO 스크랩 상태값 업데이트 api 요청
-            }
-
-            btnScrapToolbar.setOnClickListener {
-                it.isSelected = !it.isSelected
             }
 
             tvNumber.setOnClickListener {
@@ -206,6 +199,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
             }
 
             with(binding.layoutDrawerHeader) {
+
                 btnEdit.setOnClickListener {
                     startActivity(Intent(this@MainActivity, ProfileModifyActivity::class.java))
                 }

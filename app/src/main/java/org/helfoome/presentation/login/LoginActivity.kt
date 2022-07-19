@@ -51,6 +51,8 @@ class LoginActivity : BindingActivity<ActivityLoginBinding>(R.layout.activity_lo
     }
 
     private fun kakaoLogin() {
-        kakaoAuthService.kakaoLogin()
+        kakaoAuthService.kakaoLogin(
+            ::startMain
+        )
     }
 }

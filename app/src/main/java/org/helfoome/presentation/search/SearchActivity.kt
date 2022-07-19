@@ -301,7 +301,7 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
             )
 
             layoutRestaurantDetailDialog.restaurant = RestaurantInfo(
-                id = 1,
+                id = "62d26c9bd11146a81ef18eb8",
                 image = "https://salady.com/superboard/data/siteconfig/2021021809004816136064486235.jpg",
                 name = "샐러디",
                 score = 4.8f,
