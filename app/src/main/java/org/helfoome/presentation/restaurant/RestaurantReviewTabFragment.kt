@@ -15,7 +15,6 @@ import org.helfoome.util.binding.BindingFragment
 
 @AndroidEntryPoint
 class RestaurantReviewTabFragment : BindingFragment<FragmentReviewBinding>(R.layout.fragment_review) {
-    //    private val viewModel: RestaurantReviewViewModel by viewModels() // TODO delete
     private val viewModel: MainViewModel by activityViewModels()
     private val restaurantGeneralReviewAdapter = RestaurantGeneralReviewAdapter()
     private val restaurantBlogReviewAdapter = RestaurantBlogReviewAdapter()
@@ -40,6 +39,7 @@ class RestaurantReviewTabFragment : BindingFragment<FragmentReviewBinding>(R.lay
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        viewModel.fetchReviewList()
         initView()
         initObservers()
     }
@@ -66,7 +66,7 @@ class RestaurantReviewTabFragment : BindingFragment<FragmentReviewBinding>(R.lay
     }
 
     private fun initObservers() {
-        viewModel.reviews.observe(viewLifecycleOwner) { reviews ->
+        viewModel.hfmReviews.observe(viewLifecycleOwner) { reviews ->
             binding.reviewList.adapter = restaurantGeneralReviewAdapter
             restaurantGeneralReviewAdapter.submitList(reviews)
         }
