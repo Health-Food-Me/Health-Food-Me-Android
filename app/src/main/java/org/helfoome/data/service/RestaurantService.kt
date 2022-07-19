@@ -33,4 +33,9 @@ interface RestaurantService {
     suspend fun getHFMReview(
         @Path("restaurantId") restaurantId: String,
     ): BaseResponse<List<ResponseHFMReview>>
+
+    @GET("review/restaurant/{restaurantId}/blog")
+    suspend fun getBlogReview(
+        @Path("restaurantId") restaurantId: String,
+    ): BaseResponse<ResponseBlogReview>
 }
