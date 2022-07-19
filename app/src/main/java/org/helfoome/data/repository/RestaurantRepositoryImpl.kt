@@ -1,7 +1,7 @@
 package org.helfoome.data.repository
 
 import org.helfoome.data.service.RestaurantService
-import org.helfoome.domain.EatingOutTip
+import org.helfoome.domain.entity.EatingOutTipInfo
 import org.helfoome.domain.entity.RestaurantInfo
 import org.helfoome.domain.repository.RestaurantRepository
 import timber.log.Timber
@@ -35,7 +35,7 @@ class RestaurantRepositoryImpl @Inject constructor(
         })
     }
 
-    override suspend fun getEatingOutTips(restaurantId: String): EatingOutTip? {
+    override suspend fun getEatingOutTips(restaurantId: String): EatingOutTipInfo? {
         runCatching {
             restaurantService.getEatingOutTips(restaurantId)
         }.fold({

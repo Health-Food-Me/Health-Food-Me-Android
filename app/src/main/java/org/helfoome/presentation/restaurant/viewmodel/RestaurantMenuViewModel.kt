@@ -7,7 +7,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import org.helfoome.domain.EatingOutTip
+import org.helfoome.domain.entity.EatingOutTipInfo
 import org.helfoome.domain.entity.MenuInfo
 import org.helfoome.domain.repository.RestaurantRepository
 import javax.inject.Inject
@@ -18,7 +18,7 @@ class RestaurantMenuViewModel @Inject constructor(
 ) : ViewModel() {
     private val _menu = MutableLiveData<List<MenuInfo>>()
     val menu: LiveData<List<MenuInfo>> = _menu
-    private val _eatingOutTips = MutableLiveData<EatingOutTip>()
+    private val _eatingOutTips = MutableLiveData<EatingOutTipInfo>()
     val eatingOutTips get() = _eatingOutTips
 
     init {

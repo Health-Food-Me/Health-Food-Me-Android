@@ -1,8 +1,7 @@
 package org.helfoome.data.model.response
 
 import kotlinx.serialization.Serializable
-import org.helfoome.domain.EatingOutTip
-import org.helfoome.domain.entity.RestaurantInfo
+import org.helfoome.domain.entity.EatingOutTipInfo
 
 @Serializable
 data class ResponseEatingOutTip(
@@ -14,5 +13,5 @@ data class ResponseEatingOutTip(
         val recommend: List<String>,
         val tip: List<String>,
     )
-    fun toEatingOutTip(): EatingOutTip = EatingOutTip(category, content.recommend, content.tip)
+    fun toEatingOutTip(): EatingOutTipInfo = EatingOutTipInfo(category, content.recommend, content.tip)
 }
