@@ -7,10 +7,10 @@ import org.helfoome.databinding.LayoutLookMapBinding
 
 class SearchMapTopAdapter(private val searchMapClickListener: (() -> Unit)) :
     RecyclerView.Adapter<SearchMapTopAdapter.SearchMapTopViewHolder>() {
-    private var isNotVisible = false
+    private var isCollapsed = false
 
-    fun setVisible(isNotVisible: Boolean) {
-        this.isNotVisible = isNotVisible
+    fun setVisible(isCollapsed: Boolean) {
+        this.isCollapsed = isCollapsed
         notifyItemChanged(0)
     }
 
@@ -21,13 +21,13 @@ class SearchMapTopAdapter(private val searchMapClickListener: (() -> Unit)) :
         val inflater = LayoutInflater.from(parent.context)
         val binding = LayoutLookMapBinding.inflate(inflater, parent, false)
 
-        binding.isNotVisible = isNotVisible
+        binding.isCollapsed = isCollapsed
 
         return SearchMapTopViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: SearchMapTopViewHolder, position: Int) {
-        holder.onBind(searchMapClickListener, isNotVisible)
+        holder.onBind(searchMapClickListener, isCollapsed)
     }
 
     override fun getItemCount() = 1
@@ -37,7 +37,7 @@ class SearchMapTopAdapter(private val searchMapClickListener: (() -> Unit)) :
     ) : RecyclerView.ViewHolder(binding.root) {
         fun onBind(searchMapClickListener: (() -> Unit), visibility: Boolean) {
             with(binding) {
-                isNotVisible = visibility
+                isCollapsed = visibility
                 tvRecentWord.setOnClickListener {
                     searchMapClickListener.invoke()
                 }

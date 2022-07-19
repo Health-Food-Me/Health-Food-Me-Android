@@ -39,12 +39,28 @@ class SearchViewModel @Inject constructor(
         _searchMode.value = searchMode
     }
 
-    fun getAutCompleteKeyword(query: String) {
+    fun getAutoCompleteKeyword(query: String) {
         viewModelScope.launch {
             delay(150L)
             searchRepository.getSearchAutoComplete(query)
                 .onSuccess {
                     _searchUiState.value = it.toUiState(query)
+                }
+                .onFailure {
+                    _searchUiState.value = SearchUiState.Error(it.message)
+                }
+        }
+    }
+
+    fun getSearchResultCardList(
+        longtitude: Double,
+        latitude: Double,
+        keyword: String
+    ) {
+        viewModelScope.launch {
+            searchRepository.getSearchRestaurantCard(longtitude, latitude, keyword)
+                .onSuccess {
+                    _searchUiState.value = it.toUiState()
                 }
                 .onFailure {
                     _searchUiState.value = SearchUiState.Error(it.message)

@@ -1,12 +1,17 @@
 package org.helfoome.presentation.restaurant
 
+import android.content.ActivityNotFoundException
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.util.Patterns
 import android.view.View
 import androidx.fragment.app.activityViewModels
 import com.google.android.material.tabs.TabLayout
 import dagger.hilt.android.AndroidEntryPoint
 import org.helfoome.R
 import org.helfoome.databinding.FragmentReviewBinding
+import org.helfoome.domain.entity.BlogReviewInfo
 import org.helfoome.presentation.MainViewModel
 import org.helfoome.presentation.restaurant.adapter.RestaurantBlogReviewAdapter
 import org.helfoome.presentation.restaurant.adapter.RestaurantGeneralReviewAdapter
@@ -15,10 +20,9 @@ import org.helfoome.util.binding.BindingFragment
 
 @AndroidEntryPoint
 class RestaurantReviewTabFragment : BindingFragment<FragmentReviewBinding>(R.layout.fragment_review) {
-    //    private val viewModel: RestaurantReviewViewModel by viewModels() // TODO delete
     private val viewModel: MainViewModel by activityViewModels()
     private val restaurantGeneralReviewAdapter = RestaurantGeneralReviewAdapter()
-    private val restaurantBlogReviewAdapter = RestaurantBlogReviewAdapter()
+    private val restaurantBlogReviewAdapter = RestaurantBlogReviewAdapter(::moveToBlog)
     private val listener = object : TabLayout.OnTabSelectedListener {
         override fun onTabReselected(tab: TabLayout.Tab?) {
         }
@@ -40,6 +44,7 @@ class RestaurantReviewTabFragment : BindingFragment<FragmentReviewBinding>(R.lay
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        viewModel.fetchHFMReviewList()
         initView()
         initObservers()
     }
@@ -52,7 +57,7 @@ class RestaurantReviewTabFragment : BindingFragment<FragmentReviewBinding>(R.lay
         binding.layoutReviewTab.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 when (tab?.position) {
-                    0 -> viewModel.fetchReviewList()
+                    0 -> viewModel.fetchHFMReviewList()
                     else -> viewModel.fetchBlogReviewList()
                 }
             }
@@ -66,7 +71,7 @@ class RestaurantReviewTabFragment : BindingFragment<FragmentReviewBinding>(R.lay
     }
 
     private fun initObservers() {
-        viewModel.reviews.observe(viewLifecycleOwner) { reviews ->
+        viewModel.hfmReviews.observe(viewLifecycleOwner) { reviews ->
             binding.reviewList.adapter = restaurantGeneralReviewAdapter
             restaurantGeneralReviewAdapter.submitList(reviews)
         }
@@ -79,5 +84,16 @@ class RestaurantReviewTabFragment : BindingFragment<FragmentReviewBinding>(R.lay
     override fun onStop() {
         super.onStop()
         binding.layoutReviewTab.removeOnTabSelectedListener(listener)
+    }
+
+    private fun moveToBlog(review: BlogReviewInfo) {
+        if (Patterns.WEB_URL.matcher(review.url).matches()) {
+            try {
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(review.url)))
+                return
+            } catch (e: ActivityNotFoundException) {
+                e.printStackTrace()
+            }
+        }
     }
 }

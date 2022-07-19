@@ -6,12 +6,13 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import org.helfoome.databinding.ItemReviewImageBinding
+import org.helfoome.domain.entity.HFMReviewInfo
 
 class RestaurantImageAdapter :
     RecyclerView.Adapter<RestaurantImageAdapter.ReviewImageViewHolder>() {
     private lateinit var inflater: LayoutInflater
-    private val _imageList = mutableListOf<String>()
-    var imageList: List<String> = _imageList
+    private val _imageList = mutableListOf<HFMReviewInfo.ReviewImage>()
+    var imageList: List<HFMReviewInfo.ReviewImage> = _imageList
         set(value) {
             _imageList.clear()
             _imageList.addAll(value)
@@ -36,7 +37,7 @@ class RestaurantImageAdapter :
     }
 
     override fun onBindViewHolder(viewHolder: ReviewImageViewHolder, position: Int) {
-        viewHolder.bind(imageList[position])
+        viewHolder.bind(imageList[position].url)
     }
 
     override fun getItemCount(): Int = imageList.size
