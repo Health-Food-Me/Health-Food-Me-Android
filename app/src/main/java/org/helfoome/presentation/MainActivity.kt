@@ -1,6 +1,7 @@
 package org.helfoome.presentation
 
 import android.Manifest
+import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Paint
@@ -8,6 +9,9 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.drawerlayout.widget.DrawerLayout
@@ -53,6 +57,25 @@ import javax.inject.Inject
 class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main), OnMapReadyCallback {
     @Inject
     lateinit var resolutionMetrics: ResolutionMetrics
+    private val requestModifyNickname =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
+            if (activityResult.resultCode == Activity.RESULT_OK) {
+                val animation = AnimationUtils.loadAnimation(this, R.anim.anim_snackbar_top_down)
+                binding.snvProfileModify.animation = animation
+                binding.snvProfileModify.setText("닉네임이 변경되었습니다")
+                animation.setAnimationListener(object : Animation.AnimationListener {
+                    override fun onAnimationStart(animation: Animation?) {
+                    }
+                    override fun onAnimationEnd(animation: Animation?) {
+                        val bottomTopAnimation = AnimationUtils.loadAnimation(this@MainActivity, R.anim.anim_snackbar_bottom_top)
+                        binding.snvProfileModify.animation = bottomTopAnimation
+                        binding.snvProfileModify.setText("닉네임이 변경되었습니다")
+                    }
+                    override fun onAnimationRepeat(p0: Animation?) {
+                    }
+                })
+            }
+        }
     private val String.toChip: Chip
         get() = ChipFactory.create(layoutInflater).also { it.text = this }
     private val viewModel: MainViewModel by viewModels()
@@ -201,7 +224,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
             with(binding.layoutDrawerHeader) {
 
                 btnEdit.setOnClickListener {
-                    startActivity(Intent(this@MainActivity, ProfileModifyActivity::class.java))
+                    requestModifyNickname.launch(Intent(this@MainActivity, ProfileModifyActivity::class.java))
                 }
                 tvReview.setOnClickListener {
                     startActivity(Intent(this@MainActivity, MyReviewActivity::class.java))

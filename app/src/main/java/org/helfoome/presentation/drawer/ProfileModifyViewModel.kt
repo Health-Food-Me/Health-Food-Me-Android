@@ -1,26 +1,55 @@
 package org.helfoome.presentation.drawer
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
+import org.helfoome.data.local.HFMSharedPreference
+import org.helfoome.data.model.request.RequestProfileModify
+import org.helfoome.domain.repository.ProfileModifyRepository
 import java.util.regex.Pattern
+import javax.inject.Inject
 
-class ProfileModifyViewModel : ViewModel() {
-
+@HiltViewModel
+class ProfileModifyViewModel @Inject constructor(
+    private val profileModifyRepository: ProfileModifyRepository,
+    private val sharedPreferences: HFMSharedPreference
+) : ViewModel() {
+    private val _isProfileModify = MutableLiveData<Boolean>()
+    val isProfileModify: LiveData<Boolean> = _isProfileModify
     val nickname = MutableLiveData<String>()
     private val _isValidNickname = MutableLiveData<Boolean>()
-    val isValidNickname = _isValidNickname
-    // 추후에 서버 연결시 중복 체크
+    val isValidNickname: LiveData<Boolean> = _isValidNickname
     private val _isOverlapNickname = MutableLiveData<Boolean>()
-    val isOverlapNickName = _isOverlapNickname
+    val isOverlapNickName: LiveData<Boolean> = _isOverlapNickname
 
-    fun checkNicknameFormat(): Boolean {
+    fun profileModify() {
+        checkNicknameFormat()
+        if (_isValidNickname.value == true) {
+            viewModelScope.launch {
+                runCatching {
+                    profileModifyRepository.modifyProfile(
+                        RequestProfileModify(nickname.toString()),
+                        sharedPreferences.id
+                    )
+                }.onSuccess {
+                    _isProfileModify.value = true
+                }.onFailure {
+                    _isOverlapNickname.value = false
+                }
+            }
+        }
+    }
+
+    private fun checkNicknameFormat() {
+
         if (!nickname.value.isNullOrBlank()) {
             val nicknamePattern =
                 Pattern.compile("^[가-힣ㄱ-ㅎa-zA-Z0-9._ -]+\$")
 
             _isValidNickname.value = nicknamePattern.matcher(nickname.value).matches()
-            return true
         }
-        return false
     }
 }
