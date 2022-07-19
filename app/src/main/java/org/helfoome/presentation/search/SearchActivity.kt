@@ -19,7 +19,6 @@ import kotlinx.coroutines.flow.onEach
 import org.helfoome.R
 import org.helfoome.databinding.ActivitySearchBinding
 import org.helfoome.domain.entity.RestaurantInfo
-import org.helfoome.domain.entity.SearchResultInfo
 import org.helfoome.presentation.search.adapter.*
 import org.helfoome.presentation.search.type.SearchMode
 import org.helfoome.util.ResolutionMetrics
@@ -53,9 +52,15 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
     }
 
     private val searchMapTopAdapter = SearchMapTopAdapter {
-        behavior.peekHeight = resolutionMetrics.toPixel(125)
-        behavior.state = BottomSheetBehavior.STATE_COLLAPSED
-        behavior.isDraggable = true
+        if(behavior.state == BottomSheetBehavior.STATE_COLLAPSED) {
+            behavior.state = BottomSheetBehavior.STATE_EXPANDED
+            behavior.isDraggable = false
+        }
+        else {
+            behavior.state = BottomSheetBehavior.STATE_COLLAPSED
+            behavior.peekHeight = resolutionMetrics.toPixel(135)
+            behavior.isDraggable = true
+        }
     }
     private val searchRecentTopAdapter = SearchRecentTopAdapter()
     private lateinit var behavior: BottomSheetBehavior<ConstraintLayout>
@@ -180,7 +185,7 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
                     viewModel.setSearchMode(SearchMode.RECENT)
                 } else {
                     viewModel.setSearchMode(SearchMode.AUTO_COMPLETE)
-                    viewModel.getAutCompleteKeyword(it.toString())
+                    viewModel.getAutoCompleteKeyword(it.toString())
                 }
             }
         }
@@ -191,6 +196,7 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
             setOnKeyListener { _, keyCode, event ->
                 if (event.action == KeyEvent.ACTION_DOWN && keyCode == KEYCODE_ENTER) {
                     // TODO : 최근 검색어 추가 서버 통신 시 수정
+                    viewModel.getSearchResultCardList(37.498095, 127.027610, text.toString())
                     viewModel.insertKeyword(text.toString())
                     closeKeyboard(this)
                     binding.etSearch.clearFocus()
@@ -277,27 +283,6 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
                     }
                 }
                 .launchIn(lifecycleScope)
-
-            resultAdapter.submitList(
-                listOf(
-                    SearchResultInfo(
-                        0,
-                        "https://salady.com/superboard/data/siteconfig/2021021809004816136064486235.jpg",
-                        "샐러디",
-                        "샐러드",
-                        4.8F,
-                        "4.3km"
-                    ),
-                    SearchResultInfo(
-                        1,
-                        "",
-                        "afsddfsa",
-                        "afsdafds",
-                        4.5F,
-                        "4.8km"
-                    )
-                )
-            )
 
             layoutRestaurantDetailDialog.restaurant = RestaurantInfo(
                 id = "62d26c9bd11146a81ef18eb8",
