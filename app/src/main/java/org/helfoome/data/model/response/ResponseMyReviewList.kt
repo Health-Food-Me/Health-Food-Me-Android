@@ -1,6 +1,7 @@
 package org.helfoome.data.model.response
 
 import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import org.helfoome.domain.entity.MyReviewListInfo
 
@@ -8,7 +9,7 @@ import org.helfoome.domain.entity.MyReviewListInfo
 data class ResponseMyReviewList(
     val content: String,
     val good: List<String>,
-    @SerializedName("_id")
+    @SerialName("_id")
     val id: String,
     val image: List<Image>,
     val restaurant: String,
@@ -17,11 +18,17 @@ data class ResponseMyReviewList(
 ) {
     @Serializable
     data class Image(
-        @SerializedName("_id")
+        @SerialName("_id")
         val id: String,
         val name: String,
         val url: String
     )
 
-    fun toMyReviewListInfo() = MyReviewListInfo(id, score, taste, good, content, image.map { image -> MyReviewListInfo.ReviewImage(image.id, image.name, image.url) })
+    fun toMyReviewListInfo() = MyReviewListInfo(
+        id,
+        score,
+        taste,
+        good,
+        content,
+        image.map { image -> MyReviewListInfo.ReviewImage(image.id, image.name, image.url) })
 }
