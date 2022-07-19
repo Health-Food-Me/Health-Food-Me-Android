@@ -6,12 +6,14 @@ import android.view.LayoutInflater
 import androidx.activity.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import org.helfoome.R
+import org.helfoome.data.local.HFMSharedPreference
 import org.helfoome.databinding.ActivityWithdrawalBinding
 import org.helfoome.databinding.DialogWithdrawBinding
 import org.helfoome.presentation.login.LoginActivity
 import org.helfoome.util.DialogUtil
 import org.helfoome.util.ResolutionMetrics
 import org.helfoome.util.binding.BindingActivity
+import timber.log.Timber
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -19,10 +21,14 @@ class WithdrawalActivity : BindingActivity<ActivityWithdrawalBinding>(R.layout.a
     @Inject
     lateinit var resolutionMetrics: ResolutionMetrics
     private val withdrawalViewModel: WithdrawalViewModel by viewModels()
+    lateinit var sharedPreferences: HFMSharedPreference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding.viewModel = withdrawalViewModel
+        sharedPreferences = HFMSharedPreference(this)
+        binding.shaerdPreference = sharedPreferences
+        Timber.d(sharedPreferences.nickname)
 
         initListener()
     }
