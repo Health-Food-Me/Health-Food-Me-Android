@@ -13,6 +13,9 @@ interface AuthService {
     @POST("/auth")
     suspend fun login(@Body requestLogin: RequestLogin): BaseResponse<ResponseLogin>
 
+    @DELETE("/auth/withdrawal/{userId}")
+    suspend fun withdrawal(@Path("userId") userId: String): BaseResponse<Unit>
+
     @GET("/user/{userId}/profile")
     suspend fun getProfile(@Path("userId") userId: String): BaseResponse<ResponseProfile>
 
