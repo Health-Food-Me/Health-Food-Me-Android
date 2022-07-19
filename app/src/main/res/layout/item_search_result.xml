@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingHorizontal="20dp"
-        android:paddingBottom="10dp">
+        android:paddingBottom="11dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layout_card"
@@ -56,12 +56,14 @@
 
             <TextView
                 android:id="@+id/tv_name"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                app:layout_constraintEnd_toEndOf="parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
                 android:fontFamily="@font/notosanskr_b"
                 android:lineSpacingExtra="-1dp"
                 android:text="@{data.name}"
+                android:layout_marginEnd="25dp"
                 android:textColor="@color/gray_800"
                 android:textSize="13dp"
                 app:layout_constraintBottom_toTopOf="@id/rb_score"
@@ -88,7 +90,7 @@
                 android:layout_marginStart="4dp"
                 android:text="@{@string/restaurant_detail_score_format(Float.toString(data.score))}"
                 android:textColor="@color/gray_550"
-                android:textSize="8dp"
+                android:textSize="10dp"
                 app:layout_constraintBottom_toBottomOf="@+id/rb_score"
                 app:layout_constraintStart_toEndOf="@+id/rb_score"
                 app:layout_constraintTop_toTopOf="@+id/rb_score"

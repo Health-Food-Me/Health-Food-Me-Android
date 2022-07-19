@@ -40,7 +40,8 @@
             android:layout_marginBottom="16dp"
             android:src="@{vm.NORMAL == data.category? @drawable/ic_marker_red : @drawable/ic_marker_green}"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintDimensionRatio="16:20"
+            tools:src="@drawable/ic_marker_green"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
