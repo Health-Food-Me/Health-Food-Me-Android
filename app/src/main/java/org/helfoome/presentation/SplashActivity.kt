@@ -1,31 +1,37 @@
 package org.helfoome.presentation
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.lifecycle.lifecycleScope
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.helfoome.R
+import org.helfoome.data.local.HFMSharedPreference
 import org.helfoome.databinding.ActivitySplashBinding
 import org.helfoome.presentation.login.LoginActivity
 import org.helfoome.util.binding.BindingActivity
+import org.helfoome.util.ext.startActivity
 import org.helfoome.util.makeTransparentStatusBar
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class SplashActivity : BindingActivity<ActivitySplashBinding>(R.layout.activity_splash) {
-    private var job: Job? = null
+    // TODO : 필드 주입 수정
+    @Inject
+    lateinit var storage: HFMSharedPreference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         window.makeTransparentStatusBar()
 
         lifecycleScope.launch(Dispatchers.Main) {
-            job = launch {
-                delay(2500)
-                startActivity(Intent(this@SplashActivity, LoginActivity::class.java))
-                finish()
-            }
+            delay(2500)
+            if (storage.isLogin)
+                startActivity<MainActivity>()
+            else
+                startActivity<LoginActivity>()
+            finish()
         }
     }
 }

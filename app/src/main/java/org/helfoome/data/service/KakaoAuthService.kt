@@ -21,7 +21,6 @@ class KakaoAuthService @Inject constructor(
     private val sharedPreferences: HFMSharedPreference,
     private val authService: AuthService
 ) {
-
     fun kakaoLogin(loginListener: (() -> Unit)? = null) {
         val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
             if (error != null) {
@@ -30,6 +29,7 @@ class KakaoAuthService @Inject constructor(
                 CoroutineScope(Dispatchers.IO).launch {
                     runCatching { authService.login(RequestLogin("kakao", token.accessToken)) }
                         .onSuccess {
+                            sharedPreferences.isLogin = true
                             val response = it.data
                             with(sharedPreferences) {
                                 accessToken = response.accessToken
@@ -40,6 +40,7 @@ class KakaoAuthService @Inject constructor(
                             cancel()
                         }
                         .onFailure {
+                            sharedPreferences.isLogin = false
                             cancel()
                         }
                 }
@@ -63,6 +64,7 @@ class KakaoAuthService @Inject constructor(
                     CoroutineScope(Dispatchers.IO).launch {
                         runCatching { authService.login(RequestLogin("kakao", token.accessToken)) }
                             .onSuccess {
+                                sharedPreferences.isLogin = true
                                 val response = it.data
                                 with(sharedPreferences) {
                                     accessToken = response.accessToken
@@ -73,6 +75,7 @@ class KakaoAuthService @Inject constructor(
                                 cancel()
                             }
                             .onFailure {
+                                sharedPreferences.isLogin = false
                                 cancel()
                             }
                     }

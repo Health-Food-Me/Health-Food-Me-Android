@@ -71,6 +71,7 @@ firebase-bom = "com.google.firebase:firebase-bom:30.2.0"
 firebase-analytics = "com.google.firebase:firebase-analytics-ktx:21.0.0"
 firebase-crashlyticsKtx = "com.google.firebase:firebase-crashlytics-ktx:18.2.11"
 flexbox = "com.google.android.flexbox:flexbox:3.0.0"
+gson = "com.google.code.gson:gson:2.8.9"
 
 junit = "junit:junit:4.13.2"
 
@@ -82,7 +83,7 @@ kotlinJvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlinKapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
 
 [bundles]
-androidx = [ "androidX-arch-coreTesting", "androidX-appcompat", "androidX-core-ktx", "androidX-lifecycle-viewModel", "androidX-lifecycle-runtimeTesting", "androidX-lifecycle-java8", "androidX-recyclerview", "androidX-room-runtime", "androidX-room-ktx", "androidX-room-testing", "androidX-splashScreen", "androidX-test-junit", "androidX-security", "androidX-navigationFragment", "androidX-navigationUI" ]
-kotlin = [ "kotlin-coroutine-core", "kotlin-coroutine-android", "kotlin-coroutine-test", "kotlin-serialization" ]
-dagger = [ "dagger", "dagger-hilt-android" ]
-compiler = [ "androidX-room-compiler", "dagger-compiler", "dagger-hilt-compiler" ]
+androidx = ["androidX-arch-coreTesting", "androidX-appcompat", "androidX-core-ktx", "androidX-lifecycle-viewModel", "androidX-lifecycle-runtimeTesting", "androidX-lifecycle-java8", "androidX-recyclerview", "androidX-room-runtime", "androidX-room-ktx", "androidX-room-testing", "androidX-splashScreen", "androidX-test-junit", "androidX-security", "androidX-navigationFragment", "androidX-navigationUI"]
+kotlin = ["kotlin-coroutine-core", "kotlin-coroutine-android", "kotlin-coroutine-test", "kotlin-serialization"]
+dagger = ["dagger", "dagger-hilt-android"]
+compiler = ["androidX-room-compiler", "dagger-compiler", "dagger-hilt-compiler"]
