@@ -1,12 +1,13 @@
 package org.helfoome.data.model.response
 
 import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import org.helfoome.domain.entity.HFMReviewInfo
 
 @Serializable
 data class ResponseHFMReview(
-    @SerializedName("_id")
+    @SerialName("_id")
     val id: String,
     val writer: String,
     val score: Float,
@@ -18,7 +19,7 @@ data class ResponseHFMReview(
 ) {
     @Serializable
     data class ReviewImage(
-        @SerializedName("_id")
+        @SerialName("_id")
         val id: String,
         val name: String,
         val url: String,
