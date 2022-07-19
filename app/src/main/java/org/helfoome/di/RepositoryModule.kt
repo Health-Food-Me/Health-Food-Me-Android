@@ -5,6 +5,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import org.helfoome.data.datasource.RemoteRestaurantDataSource
+import org.helfoome.data.datasource.RemoteScrapDataSource
 import org.helfoome.data.datasource.RemoteSearchDataSource
 import org.helfoome.data.local.dao.SearchDao
 import org.helfoome.data.repository.*
@@ -66,4 +67,9 @@ object RepositoryModule {
     @Singleton
     fun provideWithdrawalRepository(service: AuthService): WithdrawalRepository =
         WithdrawalRepositoryImpl(service)
+
+    @Provides
+    @Singleton
+    fun provideScrapRepository(dataSource: RemoteScrapDataSource): ScrapRepository =
+        ScrapRepositoryImpl(dataSource)
 }
