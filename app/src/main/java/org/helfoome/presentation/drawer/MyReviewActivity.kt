@@ -3,11 +3,11 @@ package org.helfoome.presentation.drawer
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import androidx.activity.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import org.helfoome.R
 import org.helfoome.databinding.ActivityMyReviewBinding
 import org.helfoome.databinding.DialogMyreviewBinding
-import org.helfoome.domain.entity.MyReviewInfo
 import org.helfoome.presentation.MainActivity
 import org.helfoome.presentation.drawer.adapter.MyReviewAdapter
 import org.helfoome.presentation.drawer.adapter.MyReviewAdapter.Companion.DELETE
@@ -23,6 +23,7 @@ import javax.inject.Inject
 class MyReviewActivity : BindingActivity<ActivityMyReviewBinding>(R.layout.activity_my_review) {
     @Inject
     lateinit var resolutionMetrics: ResolutionMetrics
+    private val viewModel by viewModels<MyReviewViewModel>()
 
     private val myReviewAdapter = MyReviewAdapter {
         adapterClickListener(it)
@@ -30,9 +31,11 @@ class MyReviewActivity : BindingActivity<ActivityMyReviewBinding>(R.layout.activ
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        viewModel.getMyReviewList()
 
         binding.rcvReview.visibility = View.VISIBLE
         binding.layoutEmptyView.visibility = View.GONE
+        initObservers()
         initAdapter()
         initListeners()
 //        if (dataset.isEmpty()) {
@@ -43,6 +46,12 @@ class MyReviewActivity : BindingActivity<ActivityMyReviewBinding>(R.layout.activ
 //        binding.rcvReview.visibility = View.VISIBLE
 //        binding.layoutEmptyView.visibility = View.GONE
 //        }
+    }
+
+    private fun initObservers() {
+        viewModel.myReviewInfo.observe(this) {
+            myReviewAdapter.submitList(it)
+        }
     }
 
     private fun adapterClickListener(it: Int) {
@@ -69,19 +78,19 @@ class MyReviewActivity : BindingActivity<ActivityMyReviewBinding>(R.layout.activ
 
     private fun initAdapter() {
         binding.rcvReview.adapter = myReviewAdapter
-        myReviewAdapter.submitList(
-            listOf(
-                MyReviewInfo(
-                    1, "s", 1f, listOf("11", "11"), "dsd", listOf("de", "de")
-                ),
-                MyReviewInfo(
-                    1, "s", 1f, listOf("11", "11"), "dsd", listOf("de", "de")
-                ),
-                MyReviewInfo(
-                    1, "s", 1f, listOf("11", "11"), "dsd", listOf("de", "de")
-                )
-            )
-        )
+//        myReviewAdapter.submitList(
+//            listOf(
+//                MyReviewInfo(
+//                    1, "s", 1f, listOf("11", "11"), "dsd", listOf("de", "de")
+//                ),
+//                MyReviewInfo(
+//                    1, "s", 1f, listOf("11", "11"), "dsd", listOf("de", "de")
+//                ),
+//                MyReviewInfo(
+//                    1, "s", 1f, listOf("11", "11"), "dsd", listOf("de", "de")
+//                )
+//            )
+//        )
     }
 
     private fun initListeners() {
