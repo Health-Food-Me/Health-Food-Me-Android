@@ -28,15 +28,27 @@ class HFMSharedPreference @Inject constructor(@ApplicationContext context: Conte
 
     var accessToken: String
         set(value) = dataStore.edit { putString("ACCESS_TOKEN", value) }
-        get() = dataStore.getString("ACCESS_TOKEN", "") ?: ""
+        get() = dataStore.getString(
+            "ACCESS_TOKEN",
+            ""
+        ) ?: ""
 
     var refreshToken: String
         set(value) = dataStore.edit { putString("REFRESH_TOKEN", value) }
-        get() = dataStore.getString("REFRESH_TOKEN", "") ?: ""
+        get() = dataStore.getString(
+            "REFRESH_TOKEN",
+            ""
+        ) ?: ""
 
     var id: String
         set(value) = dataStore.edit { putString("USER_ID", value) }
         get() = dataStore.getString("USER_ID", "") ?: ""
+
+    var isLogin: Boolean
+        set(value) = dataStore.edit {
+            putBoolean("IS_LOGIN", value)
+        }
+        get() = dataStore.getBoolean("IS_LOGIN", false)
 
     companion object {
         const val FILE_NAME = "HFM"
