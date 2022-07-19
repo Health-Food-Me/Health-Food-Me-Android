@@ -32,4 +32,18 @@ class SearchRepositoryImpl(
             it.toAutoCompleteKeywordInfo()
         }
     }
+
+    override suspend fun getSearchRestaurantCard(
+        longtitude: Double,
+        latitude: Double,
+        keyword: String
+    ) = runCatching {
+        searchDataSource.getSearchRestaurantCard(
+            longtitude,
+            latitude,
+            keyword
+        ).data.map {
+            it.toSearchResultInfo()
+        }
+    }
 }
