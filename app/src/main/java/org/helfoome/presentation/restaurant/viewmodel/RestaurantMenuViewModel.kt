@@ -3,18 +3,23 @@ package org.helfoome.presentation.restaurant.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import org.helfoome.domain.EatingOutTip
 import org.helfoome.domain.entity.MenuInfo
+import org.helfoome.domain.repository.RestaurantRepository
 import javax.inject.Inject
 
 @HiltViewModel
-class RestaurantMenuViewModel @Inject constructor() : ViewModel() {
+class RestaurantMenuViewModel @Inject constructor(
+    private val restaurantRepository: RestaurantRepository,
+) : ViewModel() {
     private val _menu = MutableLiveData<List<MenuInfo>>()
     val menu: LiveData<List<MenuInfo>> = _menu
-    private val _recommendationTips = MutableLiveData<List<String>>()
-    val recommendationTips: LiveData<List<String>> = _recommendationTips
-    private val _eatingTips = MutableLiveData<List<String>>()
-    val eatingTips: LiveData<List<String>> = _eatingTips
+    private val _eatingOutTips = MutableLiveData<EatingOutTip>()
+    val eatingOutTips get() = _eatingOutTips
 
     init {
         fetchMenuList()
@@ -36,7 +41,10 @@ class RestaurantMenuViewModel @Inject constructor() : ViewModel() {
     }
 
     private fun fetchEatingOutTips() {
-        _recommendationTips.value = listOf("먹는 속도가 자연스럽게 느려져요", "다양한 채소와 단백질 섭취가 가능해요", "채소, 버섯, 고기, 해산물 충분히 드실 수 있어요 아니 못 참지 ㅋㅋ")
-        _eatingTips.value = listOf("소스 섭취를 최소화 하세요", "떡, 어묵, 만두, 단호박은 투입을 자제하세요", "칼국수와 죽, 볶음밥 주문은 잠시 참아봐요")
+        // TODO 레스토랑 id 받아오기
+        viewModelScope.launch(Dispatchers.IO) {
+            _eatingOutTips.postValue(restaurantRepository.getEatingOutTips("62d26c9bd11146a81ef18ea6"))
+
+        }
     }
 }

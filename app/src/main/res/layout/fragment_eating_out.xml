@@ -2,7 +2,14 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".presentation.restaurant.RestaurantMenuTabFragment">
+    tools:context=".presentation.restaurant.RestaurantEatingOutTabFragment">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="org.helfoome.presentation.restaurant.viewmodel.RestaurantMenuViewModel" />
+    </data>
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -112,7 +119,7 @@
                 android:fontFamily="@font/notosanskr_b"
                 android:paddingHorizontal="@dimen/size_spacing_26"
                 android:paddingVertical="@dimen/size_spacing_6"
-                android:text="#샤브샤브"
+                android:text="@{@string/format_hashtag(viewModel.eatingOutTips.category)}"
                 android:textColor="@color/white"
                 android:textSize="15dp"
                 app:layout_constraintEnd_toEndOf="parent"
