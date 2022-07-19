@@ -50,6 +50,10 @@ class HFMSharedPreference @Inject constructor(@ApplicationContext context: Conte
         }
         get() = dataStore.getBoolean("IS_LOGIN", false)
 
+    var nickname: String
+        set(value) = dataStore.edit { putString("NICKNAME", value) }
+        get() = dataStore.getString("NICKNAME", "") ?: ""
+
     companion object {
         const val FILE_NAME = "HFM"
     }
