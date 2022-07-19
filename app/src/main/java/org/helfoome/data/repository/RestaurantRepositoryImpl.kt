@@ -4,7 +4,7 @@ import org.helfoome.data.datasource.RemoteRestaurantDataSource
 import org.helfoome.data.service.RestaurantService
 import org.helfoome.domain.entity.EatingOutTipInfo
 import org.helfoome.domain.entity.RestaurantInfo
-import org.helfoome.domain.entity.ReviewInfo
+import org.helfoome.domain.entity.HFMReviewInfo
 import org.helfoome.domain.repository.RestaurantRepository
 import timber.log.Timber
 import javax.inject.Inject
@@ -51,7 +51,7 @@ class RestaurantRepositoryImpl @Inject constructor(
         })
     }
 
-    override suspend fun fetchHFMReview(restaurantId: String): Result<List<ReviewInfo>> {
+    override suspend fun fetchHFMReview(restaurantId: String): Result<List<HFMReviewInfo>> {
         return runCatching {
             restaurantDataSource.getHFMReview(restaurantId)
         }.fold({

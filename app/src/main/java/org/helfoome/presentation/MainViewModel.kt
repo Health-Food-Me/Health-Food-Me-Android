@@ -9,7 +9,7 @@ import kotlinx.coroutines.launch
 import org.helfoome.data.local.HFMSharedPreference
 import org.helfoome.domain.entity.BlogReviewInfo
 import org.helfoome.domain.entity.RestaurantInfo
-import org.helfoome.domain.entity.ReviewInfo
+import org.helfoome.domain.entity.HFMReviewInfo
 import org.helfoome.domain.repository.ProfileRepository
 import org.helfoome.domain.repository.RestaurantRepository
 import org.helfoome.util.Event
@@ -37,8 +37,8 @@ class MainViewModel @Inject constructor(
     val nickname get() = _nickname
 
     // Review
-    private val _hfmReviews = MutableLiveData<List<ReviewInfo>>()
-    val hfmReviews: LiveData<List<ReviewInfo>> = _hfmReviews
+    private val _hfmReviews = MutableLiveData<List<HFMReviewInfo>>()
+    val hfmReviews: LiveData<List<HFMReviewInfo>> = _hfmReviews
     private val _blogReviews = MutableLiveData<List<BlogReviewInfo>>()
     val blogReviews: LiveData<List<BlogReviewInfo>> = _blogReviews
     private val isGeneralReview = MutableLiveData(true)
@@ -49,6 +49,7 @@ class MainViewModel @Inject constructor(
     init {
         // TODO 지도 뷰 구현 후 마커 클릭 시 해당 함수 호출하는 것으로 변경 예정
         fetchSelectedRestaurantInfo()
+        fetchReviewList()
         initVisibleReviewButton()
     }
 

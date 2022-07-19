@@ -1,7 +1,7 @@
 package org.helfoome.domain.repository
 
-import org.helfoome.domain.entity.ReviewInfo
+import org.helfoome.domain.entity.HFMReviewInfo
 
 interface ReviewRepository {
-    suspend fun fetchHFMReview(restaurantId: String): Result<List<ReviewInfo>>
+    suspend fun fetchHFMReview(restaurantId: String): Result<List<HFMReviewInfo>>
 }

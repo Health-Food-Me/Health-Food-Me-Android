@@ -5,18 +5,18 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import org.helfoome.databinding.ItemGeneralReviewBinding
-import org.helfoome.domain.entity.ReviewInfo
+import org.helfoome.domain.entity.HFMReviewInfo
 import org.helfoome.presentation.type.HashtagViewType
 import org.helfoome.util.ItemDecorationUtil
 import org.helfoome.util.ItemDiffCallback
 
 class RestaurantGeneralReviewAdapter :
-    ListAdapter<ReviewInfo, RestaurantGeneralReviewAdapter.ReviewViewHolder>(ItemDiffCallback<ReviewInfo>(onContentsTheSame = { old, new -> old == new }, onItemsTheSame = { old, new -> old.id == new.id })) {
+    ListAdapter<HFMReviewInfo, RestaurantGeneralReviewAdapter.ReviewViewHolder>(ItemDiffCallback<HFMReviewInfo>(onContentsTheSame = { old, new -> old == new }, onItemsTheSame = { old, new -> old.id == new.id })) {
     private lateinit var inflater: LayoutInflater
 
     class ReviewViewHolder(private val binding: ItemGeneralReviewBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(review: ReviewInfo) {
+        fun bind(review: HFMReviewInfo) {
             binding.review = review
             binding.hashtag.setHashtag(review.tags, HashtagViewType.REVIEW_TAB_TYPE)
             val adapter = RestaurantImageAdapter().apply {
