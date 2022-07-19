@@ -48,6 +48,5 @@ class AuthInterceptor @Inject constructor(
     }
 
     private fun isLogin(originalRequest: Request) =
-        !originalRequest.url.encodedPath.contains("token") &&
-                originalRequest.url.encodedPath.contains("auth")
+        !originalRequest.url.encodedPath.contains("token") && originalRequest.url.encodedPath.contains("auth")
 }
