@@ -2,7 +2,7 @@ package org.helfoome.data.model.response
 
 import com.google.gson.annotations.SerializedName
 import kotlinx.serialization.Serializable
-import org.helfoome.domain.entity.ReviewInfo
+import org.helfoome.domain.entity.HFMReviewInfo
 
 @Serializable
 data class ResponseHFMReview(
@@ -24,5 +24,5 @@ data class ResponseHFMReview(
         val url: String,
     )
 
-    fun toReviewInfo() = ReviewInfo(id, name, score, taste + good, content, imageList.map { image -> ReviewInfo.ReviewImage(image.id, image.name, image.url) })
+    fun toReviewInfo() = HFMReviewInfo(id, name, score, taste + good, content, imageList.map { image -> HFMReviewInfo.ReviewImage(image.id, image.name, image.url) })
 }

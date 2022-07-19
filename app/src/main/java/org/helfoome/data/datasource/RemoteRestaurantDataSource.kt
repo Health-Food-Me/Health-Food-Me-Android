@@ -1,10 +1,11 @@
 package org.helfoome.data.datasource
 
-import org.helfoome.data.service.ReviewService
+import org.helfoome.data.service.RestaurantService
 import javax.inject.Inject
 
 class RemoteRestaurantDataSource @Inject constructor(
-    private val reviewService: ReviewService,
+    private val restaurantService: RestaurantService,
 ) {
-    suspend fun getHFMReview(restaurantId: String) = reviewService.getHFMReview(restaurantId)
+    suspend fun getHFMReview(restaurantId: String) = restaurantService.getHFMReview(restaurantId)
+    suspend fun getBlogReview(restaurantId: String) = restaurantService.getBlogReview(restaurantId)
 }

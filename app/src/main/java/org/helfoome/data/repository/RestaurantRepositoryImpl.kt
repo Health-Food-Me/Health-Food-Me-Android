@@ -2,11 +2,11 @@ package org.helfoome.data.repository
 
 import org.helfoome.data.datasource.RemoteRestaurantDataSource
 import org.helfoome.data.service.RestaurantService
+import org.helfoome.domain.entity.BlogReviewInfo
 import org.helfoome.domain.entity.EatingOutTipInfo
+import org.helfoome.domain.entity.HFMReviewInfo
 import org.helfoome.domain.entity.RestaurantInfo
-import org.helfoome.domain.entity.ReviewInfo
 import org.helfoome.domain.repository.RestaurantRepository
-import timber.log.Timber
 import javax.inject.Inject
 
 class RestaurantRepositoryImpl @Inject constructor(
@@ -42,20 +42,29 @@ class RestaurantRepositoryImpl @Inject constructor(
         runCatching {
             restaurantService.getEatingOutTips(restaurantId)
         }.fold({
-            Timber.d("${it.body()?.data?.toEatingOutTip()}")
             return it.body()?.data?.toEatingOutTip()
         }, {
-            Timber.d("${it.message}")
             it.printStackTrace()
             return null
         })
     }
 
-    override suspend fun fetchHFMReview(restaurantId: String): Result<List<ReviewInfo>> {
+    override suspend fun fetchHFMReview(restaurantId: String): Result<List<HFMReviewInfo>> {
         return runCatching {
             restaurantDataSource.getHFMReview(restaurantId)
         }.fold({
             Result.success(it.data.map { review -> review.toReviewInfo() })
+        }, {
+            it.printStackTrace()
+            Result.failure(it.fillInStackTrace())
+        })
+    }
+
+    override suspend fun fetchBlogReview(restaurantId: String): Result<List<BlogReviewInfo>> {
+        return runCatching {
+            restaurantDataSource.getBlogReview(restaurantId)
+        }.fold({
+            Result.success(it.data.toBlogReviewInfo())
         }, {
             it.printStackTrace()
             Result.failure(it.fillInStackTrace())
