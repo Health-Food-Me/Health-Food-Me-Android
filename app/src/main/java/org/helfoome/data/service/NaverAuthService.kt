@@ -4,7 +4,10 @@ import android.content.Context
 import com.navercorp.nid.NaverIdLoginSDK
 import com.navercorp.nid.oauth.OAuthLoginCallback
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.launch
 import org.helfoome.BuildConfig.*
 import org.helfoome.data.local.HFMSharedPreference
 import org.helfoome.data.model.request.RequestLogin
@@ -37,6 +40,7 @@ class NaverAuthService @Inject constructor(
             runCatching { authService.login(RequestLogin("naver", NaverIdLoginSDK.getAccessToken().toString())) }
                 .onSuccess {
                     sharedPreferences.accessToken = it.data.accessToken
+                    sharedPreferences.id = it.data.user.id
                     loginListener?.invoke()
                     cancel()
                 }
