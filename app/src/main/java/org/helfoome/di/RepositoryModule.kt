@@ -8,6 +8,7 @@ import org.helfoome.data.datasource.RemoteSearchDataSource
 import org.helfoome.data.local.dao.SearchDao
 import org.helfoome.data.repository.*
 import org.helfoome.data.service.AuthService
+import org.helfoome.data.service.MapService
 import org.helfoome.data.service.RestaurantService
 import org.helfoome.domain.repository.*
 import javax.inject.Singleton
@@ -48,4 +49,9 @@ object RepositoryModule {
     @Singleton
     fun putProfileModifyRepository(service: AuthService): ProfileModifyRepository =
         ProfileModifyRepositoryImpl(service)
+
+    @Provides
+    @Singleton
+    fun getMapRepository(service: MapService): MapRepository =
+        MapRepositoryImpl(service)
 }

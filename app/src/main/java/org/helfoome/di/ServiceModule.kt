@@ -5,6 +5,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import org.helfoome.data.service.AuthService
+import org.helfoome.data.service.MapService
 import org.helfoome.data.service.SearchService
 import org.helfoome.data.service.RestaurantService
 import retrofit2.Retrofit
@@ -23,6 +24,12 @@ object ServiceModule {
     @Provides
     fun provideSearchAPIService(retrofit: Retrofit): SearchService {
         return retrofit.create(SearchService::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideMapAPIService(retrofit: Retrofit): MapService {
+        return retrofit.create(MapService::class.java)
     }
 
     @Provides

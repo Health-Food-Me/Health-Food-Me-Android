@@ -289,15 +289,16 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
 //            behavior.state = BottomSheetBehavior.STATE_COLLAPSED
         }
 
-        viewModel.location.observe(this) {
-            it.map { location ->
+        viewModel.isVisibleReviewButton.observe(this) { isVisible ->
+            binding.layoutRestaurantDialog.layoutReviewBtnBackground.visibility =
+                if (isVisible.peekContent()) View.VISIBLE else View.INVISIBLE
+        }
+        viewModel.location.observe(this) { markers ->
+            markers.map { marker ->
                 Marker().apply {
-                    position = location
-                    if (viewModel.isDietRestaurant.value == true) {
-                        icon = OverlayImage.fromResource(R.drawable.ic_marker_green)
-                    } else {
-                        icon = OverlayImage.fromResource(R.drawable.ic_marker_red)
-                    }
+                    position = LatLng(marker.latitude, marker.longitude)
+                    icon = OverlayImage.fromResource(if (marker.isDietRestaurant) R.drawable.ic_marker_green
+                    else R.drawable.ic_marker_red)
                     this.map = naverMap
                 }
             }.forEach { marker ->
@@ -315,11 +316,6 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                     true
                 }
             }
-        }
-
-        viewModel.isVisibleReviewButton.observe(this) { isVisible ->
-            binding.layoutRestaurantDialog.layoutReviewBtnBackground.visibility =
-                if (isVisible.peekContent()) View.VISIBLE else View.INVISIBLE
         }
     }
 
@@ -395,7 +391,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
             )
             naverMap.locationTrackingMode = LocationTrackingMode.Follow
         }
-        viewModel.fetchHealFoodRestaurantLocation()
+        viewModel.getMapInfo()
     }
 
     companion object {

@@ -1,28 +1,35 @@
 package org.helfoome.presentation
 
+import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.*
 import com.naver.maps.geometry.LatLng
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.helfoome.data.local.HFMSharedPreference
 import org.helfoome.domain.entity.BlogReviewInfo
+import org.helfoome.domain.entity.MarkerInfo
 import org.helfoome.domain.entity.RestaurantInfo
 import org.helfoome.domain.entity.ReviewInfo
+import org.helfoome.domain.repository.MapRepository
 import org.helfoome.domain.repository.ProfileRepository
 import org.helfoome.domain.repository.RestaurantRepository
 import org.helfoome.util.Event
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val profileRepository: ProfileRepository,
     private val sharedPreferences: HFMSharedPreference,
-    private val restaurantRepository: RestaurantRepository
+    private val restaurantRepository: RestaurantRepository,
+    private val mapRepository: MapRepository
 ) : ViewModel() {
-    private val _location = MutableLiveData<List<LatLng>>()
-    val location: LiveData<List<LatLng>> = _location
+    private val _location = MutableLiveData<List<MarkerInfo>>()
+    val location: LiveData<List<MarkerInfo>> = _location
     private val _isDietRestaurant = MutableLiveData<Boolean>()
     val isDietRestaurant: LiveData<Boolean> = _isDietRestaurant
     private val _cameraZoom = MutableLiveData<Event<Int>>()
@@ -52,15 +59,26 @@ class MainViewModel @Inject constructor(
         initVisibleReviewButton()
     }
 
+    fun getMapInfo() {
+        viewModelScope.launch(Dispatchers.IO) {
+            runCatching { mapRepository.getMap(37.498095, 127.027610, 11, null) }
+                .onSuccess {
+                    _location.postValue(it.data.map { marker ->
+                        marker.toMakerInfo()
+                    })
+                }.onFailure {
+                    Timber.d(it.message)
+                }
+        }
+    }
+
     fun getProfile() {
         viewModelScope.launch {
             runCatching { profileRepository.getProfile(sharedPreferences.id) }
                 .onSuccess {
                     _nickname.value = it.data.name
-                    cancel()
                 }
                 .onFailure {
-                    cancel()
                 }
         }
     }
@@ -90,31 +108,6 @@ class MainViewModel @Inject constructor(
                 )
             )
         }
-    }
-
-    fun fetchHealFoodRestaurantLocation() {
-        // TODO fetch location data from remote
-        _location.value = listOf(
-            LatLng(37.7523167, 127.0711813),
-            LatLng(37.7509459, 127.0733813),
-            LatLng(37.7516837, 127.0749479),
-            LatLng(37.7513456, 127.0678897),
-            LatLng(37.7488591, 127.0677059),
-            LatLng(37.5915564, 127.0215812),
-            LatLng(37.7523167, 127.0711813),
-            LatLng(37.5683199, 126.9789914),
-            LatLng(37.5735465, 126.9843782),
-            LatLng(37.5721776, 126.9907629),
-            LatLng(37.5713466, 126.9755946),
-            LatLng(37.5755447, 126.9732612),
-            LatLng(37.5221133, 126.9258818),
-            LatLng(37.5159831, 126.9207751),
-            LatLng(37.5217754, 126.9068775),
-            LatLng(37.5175996, 126.9132172),
-            LatLng(37.5150195, 126.9089220),
-            LatLng(37.5168713, 126.9035354),
-            LatLng(37.5160904, 126.8963763)
-        )
     }
 
     fun fetchReviewList() {
