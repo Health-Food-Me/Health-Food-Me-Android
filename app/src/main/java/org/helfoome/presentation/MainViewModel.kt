@@ -118,7 +118,7 @@ class MainViewModel @Inject constructor(
         )
     }
 
-    fun fetchReviewList() {
+    fun fetchHFMReviewList() {
         viewModelScope.launch(Dispatchers.IO) {
             _hfmReviews.postValue(restaurantRepository.fetchHFMReview("62d26c9bd11146a81ef18ea6").getOrNull())
         }

@@ -39,7 +39,7 @@ class RestaurantReviewTabFragment : BindingFragment<FragmentReviewBinding>(R.lay
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.fetchReviewList()
+        viewModel.fetchHFMReviewList()
         initView()
         initObservers()
     }
@@ -52,7 +52,7 @@ class RestaurantReviewTabFragment : BindingFragment<FragmentReviewBinding>(R.lay
         binding.layoutReviewTab.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 when (tab?.position) {
-                    0 -> viewModel.fetchReviewList()
+                    0 -> viewModel.fetchHFMReviewList()
                     else -> viewModel.fetchBlogReviewList()
                 }
             }
