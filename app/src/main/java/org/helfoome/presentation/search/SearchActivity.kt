@@ -52,11 +52,10 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
     }
 
     private val searchMapTopAdapter = SearchMapTopAdapter {
-        if(behavior.state == BottomSheetBehavior.STATE_COLLAPSED) {
+        if (behavior.state == BottomSheetBehavior.STATE_COLLAPSED) {
             behavior.state = BottomSheetBehavior.STATE_EXPANDED
             behavior.isDraggable = false
-        }
-        else {
+        } else {
             behavior.state = BottomSheetBehavior.STATE_COLLAPSED
             behavior.peekHeight = resolutionMetrics.toPixel(135)
             behavior.isDraggable = true
