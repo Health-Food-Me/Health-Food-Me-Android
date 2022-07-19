@@ -8,10 +8,6 @@
         <variable
             name="viewModel"
             type="org.helfoome.presentation.WithdrawalViewModel" />
-
-        <variable
-            name="shaerdPreference"
-            type="org.helfoome.data.local.HFMSharedPreference" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -86,7 +82,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
             android:layout_marginBottom="12dp"
-            android:enabled='@{viewModel.nickname.equals(shaerdPreference.nickname) ? true : false}'
+            android:enabled='@{viewModel.isCorrectedNickname()}'
             android:background="@drawable/selector_btn_modify"
             android:paddingTop="11dp"
             android:paddingBottom="10dp"

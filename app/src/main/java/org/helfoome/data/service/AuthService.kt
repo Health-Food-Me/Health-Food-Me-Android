@@ -2,10 +2,8 @@ package org.helfoome.data.service
 
 import org.helfoome.data.model.request.RequestLogin
 import org.helfoome.data.model.request.RequestProfileModify
-import org.helfoome.data.model.response.BaseResponse
-import org.helfoome.data.model.response.ResponseLogin
-import org.helfoome.data.model.response.ResponseProfile
-import org.helfoome.data.model.response.ResponseProfileModify
+import org.helfoome.data.model.response.*
+import org.mockito.internal.matchers.Null
 import retrofit2.http.*
 
 interface AuthService {
@@ -14,7 +12,7 @@ interface AuthService {
     suspend fun login(@Body requestLogin: RequestLogin): BaseResponse<ResponseLogin>
 
     @DELETE("/auth/withdrawal/{userId}")
-    suspend fun withdrawal(@Path("userId") userId: String): BaseResponse<Unit>
+    suspend fun withdrawal(@Path("userId") userId: String): EmptyResponse
 
     @GET("/user/{userId}/profile")
     suspend fun getProfile(@Path("userId") userId: String): BaseResponse<ResponseProfile>

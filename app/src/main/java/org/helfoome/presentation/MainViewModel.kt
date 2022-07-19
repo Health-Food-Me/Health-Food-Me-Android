@@ -77,8 +77,7 @@ class MainViewModel @Inject constructor(
         viewModelScope.launch {
             runCatching { profileRepository.getProfile(sharedPreferences.id) }
                 .onSuccess {
-                    _nickname.value = "이준경"
-//                    _nickname.value = it.data.name
+                    _nickname.value = it.data.name
                 }
                 .onFailure {
                 }

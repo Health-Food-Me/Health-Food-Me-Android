@@ -21,16 +21,23 @@ class WithdrawalActivity : BindingActivity<ActivityWithdrawalBinding>(R.layout.a
     @Inject
     lateinit var resolutionMetrics: ResolutionMetrics
     private val withdrawalViewModel: WithdrawalViewModel by viewModels()
-    lateinit var sharedPreferences: HFMSharedPreference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding.viewModel = withdrawalViewModel
-        sharedPreferences = HFMSharedPreference(this)
-        binding.shaerdPreference = sharedPreferences
-        Timber.d(sharedPreferences.nickname)
 
+        initObserves()
         initListener()
+    }
+
+    private fun initObserves() {
+        withdrawalViewModel.nickname.observe(this) { nickname ->
+            withdrawalViewModel.compareNickname(nickname)
+        }
+        withdrawalViewModel.withdrawSuccess.observe(this) {
+            startActivity(Intent(this@WithdrawalActivity, LoginActivity::class.java))
+            finish()
+        }
     }
 
     private fun initListener() {
@@ -43,8 +50,8 @@ class WithdrawalActivity : BindingActivity<ActivityWithdrawalBinding>(R.layout.a
             val dialog = DialogUtil.makeDialog(this, bind, resolutionMetrics.toPixel(288), resolutionMetrics.toPixel(222))
 
             bind.btnYes.setOnClickListener {
-                startActivity(Intent(this@WithdrawalActivity, LoginActivity::class.java))
-                finish()
+                withdrawalViewModel.deleteUser()
+                dialog.dismiss()
             }
             bind.btnNo.setOnClickListener {
                 dialog.dismiss()
