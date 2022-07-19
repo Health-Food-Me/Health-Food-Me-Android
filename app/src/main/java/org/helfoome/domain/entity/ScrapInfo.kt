@@ -1,7 +1,7 @@
 package org.helfoome.domain.entity
 
 data class ScrapInfo(
-    val id: Int,
+    val id: String,
     val restaurantImg: String,
     val title: String,
     val location: String,
