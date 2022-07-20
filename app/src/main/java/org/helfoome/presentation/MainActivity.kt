@@ -9,11 +9,13 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.marginBottom
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.add
 import androidx.fragment.app.commit
@@ -115,8 +117,6 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
         window.makeTransparentStatusBar()
         viewModel.getProfile()
 
-        binding.fabBookmark.outlineProvider
-
         locationSource =
             FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE)
         initNaverMap()
@@ -208,9 +208,9 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
             })
         }
 
-        binding.fabBookmark.setOnClickListener {
-            it.isSelected = !it.isSelected
-        }
+//        binding.fabBookmark.setOnClickListener {
+//            it.isSelected = !it.isSelected
+//        }
 
         with(binding.layoutRestaurantDialog) {
 

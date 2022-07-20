@@ -63,13 +63,16 @@
     </string-array>
 
     <!-- Main Drawer -->
-    <string name="main_drawer_welcome">안녕하세요!\n배부른 현우는 행복해요 님\n오늘도 헬푸미하세요</string>
     <string name="main_drawer_scrap">스크랩한 식당</string>
     <string name="main_drawer_review">내가 쓴 리뷰</string>
     <string name="main_drawer_report">가게 제보하기</string>
     <string name="main_drawer_modify_report">수정사항 제보하기</string>
     <string name="main_drawer_setting">설정</string>
     <string name="main_drawer_logout">로그아웃</string>
+    <string name="main_drawer_welcome">안녕하세요!</string>
+    <string name="main_drawer_welcome_second">님</string>
+    <string name="main_drawer_welcome_third">오늘도 헬푸미하세요</string>
+
 
     <!-- Login Text -->
     <string name="login_text_kakao">카카오 계정으로 로그인</string>
