@@ -50,6 +50,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="@drawable/rectangle_white_radius_14"
+                            android:elevation="3dp"
                             android:padding="20dp"
                             android:src="@drawable/ic_hambuger"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -62,6 +63,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
                             android:background="@drawable/rectangle_white_radius_14"
+                            android:elevation="3dp"
                             android:fontFamily="@font/notosanskr_r"
                             android:hint="@string/main_search"
                             android:paddingHorizontal="16dp"
@@ -79,7 +81,7 @@
                     <HorizontalScrollView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
+                        android:layout_marginTop="10dp"
                         android:clipToPadding="false"
                         android:overScrollMode="never"
                         android:paddingHorizontal="20dp"
@@ -143,6 +145,7 @@
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
             <include
                 android:id="@+id/layout_drawer_header"
                 layout="@layout/activity_main_drawer_header"
