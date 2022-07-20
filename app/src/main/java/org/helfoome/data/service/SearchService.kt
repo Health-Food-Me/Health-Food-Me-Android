@@ -12,7 +12,7 @@ interface SearchService {
 
     @GET("/restaurant/search/card")
     suspend fun getSearchRestaurantCard(
-        @Query("longtitude") longtitude: Double,
+        @Query("longitude") longitude: Double,
         @Query("latitude") latitude: Double,
         @Query("keyword") keyword: String
     ): BaseResponse<List<ResponseSearchCard>>
