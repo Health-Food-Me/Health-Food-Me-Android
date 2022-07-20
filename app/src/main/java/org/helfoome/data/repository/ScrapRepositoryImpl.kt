@@ -16,11 +16,11 @@ class ScrapRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun updateRestaurantScrap(restaurantId: String, userId: String): Boolean? {
+    override suspend fun updateRestaurantScrap(restaurantId: String, userId: String): List<String>? {
         runCatching {
             scrapDataSource.updateRestaurantScrap(restaurantId, userId)
         }.fold({
-            return it.body()?.data?.isScrap
+            return it.body()?.data?.restaurants
         }, {
             it.printStackTrace()
             return null

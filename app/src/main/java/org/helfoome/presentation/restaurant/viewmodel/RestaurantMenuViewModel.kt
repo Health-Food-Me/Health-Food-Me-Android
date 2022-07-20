@@ -23,7 +23,6 @@ class RestaurantMenuViewModel @Inject constructor(
 
     init {
         fetchMenuList()
-        fetchEatingOutTips()
     }
 
     private fun fetchMenuList() {
@@ -40,10 +39,9 @@ class RestaurantMenuViewModel @Inject constructor(
         )
     }
 
-    private fun fetchEatingOutTips() {
-        // TODO 레스토랑 id 받아오기
+    fun fetchEatingOutTips(restaurantId: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            _eatingOutTips.postValue(restaurantRepository.getEatingOutTips("62d26c9bd11146a81ef18ea6"))
+            _eatingOutTips.postValue(restaurantRepository.getEatingOutTips(restaurantId))
         }
     }
 }

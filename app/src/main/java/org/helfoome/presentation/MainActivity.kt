@@ -194,7 +194,6 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
             btnWriteReview.apply {
                 setOnClickListener { startActivity(Intent(this@MainActivity, ReviewWritingActivity::class.java)) }
             }
-            hashtag.setHashtag(listOf("연어 샐러드", "샌드위치"), HashtagViewType.RESTAURANT_SUMMARY_TYPE)
         }
     }
 
@@ -304,9 +303,10 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
     }
 
     private fun initObservers() {
-
         viewModel.selectedRestaurant.observe(this) {
-//            behavior.state = BottomSheetBehavior.STATE_COLLAPSED
+            with(binding.layoutRestaurantDialog) {
+                hashtag.setHashtag(it.tags, HashtagViewType.RESTAURANT_SUMMARY_TYPE)
+            }
         }
 
         viewModel.isVisibleReviewButton.observe(this) { isVisible ->
@@ -325,7 +325,8 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                         this.map = naverMap
 
                         this.setOnClickListener {
-                            viewModel.fetchSelectedRestaurantInfo()
+
+                            viewModel.fetchSelectedRestaurantInfo(marker.id)
                             behavior.state = BottomSheetBehavior.STATE_COLLAPSED
                             markerList.forEach {
                                 it.first.icon = OverlayImage.fromResource(
@@ -433,7 +434,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
             )
             naverMap.locationTrackingMode = LocationTrackingMode.Follow
         }
-        viewModel.getMapInfo()
+        viewModel.getMapInfo(naverMap.cameraPosition.target)
     }
 
     companion object {

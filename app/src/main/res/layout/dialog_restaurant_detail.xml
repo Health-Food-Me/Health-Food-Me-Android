@@ -8,10 +8,6 @@
         <import type="org.helfoome.R" />
 
         <variable
-            name="restaurant"
-            type="org.helfoome.domain.entity.RestaurantInfo" />
-
-        <variable
             name="viewModel"
             type="org.helfoome.presentation.MainViewModel" />
     </data>
@@ -45,7 +41,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/notosanskr_b"
-                android:text="@{restaurant.name}"
+                android:text="@{viewModel.selectedRestaurant.name}"
                 android:textColor="@color/gray_600"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -117,7 +113,7 @@
                             android:layout_marginStart="20dp"
                             android:layout_marginTop="12dp"
                             android:scaleType="centerCrop"
-                            app:imageUrl="@{restaurant.image}"
+                            app:imageUrl="@{viewModel.selectedRestaurant.image}"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/view_spacing"
                             tools:src="@mipmap/ic_launcher" />
@@ -140,6 +136,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="16dp"
+                            android:layout_marginEnd="@dimen/size_spacing_20"
                             app:layout_constraintBottom_toBottomOf="@id/iv_restaurant_image"
                             app:layout_constraintEnd_toStartOf="@id/btn_scrap"
                             app:layout_constraintStart_toEndOf="@id/iv_restaurant_image"
@@ -150,7 +147,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/notosanskr_b"
-                                android:text="@{restaurant.name}"
+                                android:text="@{viewModel.selectedRestaurant.name}"
                                 android:textColor="@color/gray_800"
                                 android:textSize="15sp"
                                 app:layout_constraintStart_toStartOf="parent"
@@ -172,7 +169,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="4dp"
                                 android:fontFamily="@font/notosanskr_r"
-                                android:text="@{String.format(context.getString(R.string.restaurant_detail_score_format), restaurant.score)}"
+                                android:text="@{String.format(context.getString(R.string.restaurant_detail_score_format), viewModel.selectedRestaurant.score)}"
                                 android:textColor="@color/gray_550"
                                 android:textSize="12sp"
                                 app:layout_constraintBottom_toBottomOf="@id/view_star_rating"
@@ -206,7 +203,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="16dp"
                             android:fontFamily="@font/notosanskr_m"
-                            android:text="@{restaurant.location}"
+                            android:text="@{viewModel.selectedRestaurant.location}"
                             android:textColor="@color/gray_600"
                             android:textSize="12dp"
                             app:layout_constraintBottom_toBottomOf="@id/iv_location"
@@ -249,7 +246,7 @@
                             android:layout_marginStart="16dp"
                             android:layout_marginTop="8dp"
                             android:fontFamily="@font/notosanskr_m"
-                            android:text="@{restaurant.number}"
+                            android:text="@{viewModel.selectedRestaurant.number}"
                             android:textColor="@color/gray_600"
                             android:textSize="12sp"
                             app:layout_constraintStart_toEndOf="@id/iv_call"

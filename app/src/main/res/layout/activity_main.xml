@@ -152,7 +152,6 @@
                     <include
                         android:id="@+id/layout_restaurant_dialog"
                         layout="@layout/dialog_restaurant_detail"
-                        bind:restaurant="@{viewModel.selectedRestaurant}"
                         bind:viewModel="@{viewModel}" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
