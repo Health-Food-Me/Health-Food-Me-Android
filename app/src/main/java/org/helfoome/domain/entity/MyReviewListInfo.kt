@@ -7,10 +7,4 @@ data class MyReviewListInfo(
     val good: List<String>,
     val description: String,
     val photoList: List<ReviewImage>,
-) {
-    data class ReviewImage(
-        val id: String,
-        val name: String,
-        val url: String,
-    )
-}
+)

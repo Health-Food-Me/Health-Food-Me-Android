@@ -33,9 +33,13 @@ class MyReviewActivity : BindingActivity<ActivityMyReviewBinding>(R.layout.activ
         super.onCreate(savedInstanceState)
         viewModel.getMyReviewList()
 
+        initView()
         initObservers()
         initAdapter()
         initListeners()
+    }
+
+    private fun initView() {
     }
 
     private fun initObservers() {
@@ -75,19 +79,6 @@ class MyReviewActivity : BindingActivity<ActivityMyReviewBinding>(R.layout.activ
 
     private fun initAdapter() {
         binding.rcvReview.adapter = myReviewAdapter
-//        myReviewAdapter.submitList(
-//            listOf(
-//                MyReviewListInfo(
-//                    "d", 3.0f, "D", listOf("11", "11"), "dsd", listOf()
-//                ),
-//                MyReviewListInfo(
-//                    "d", 3.0f, "D", listOf("11", "11"), "dsd", listOf()
-//                ),
-//                MyReviewListInfo(
-//                    "d", 3.0f, "D", listOf("11", "11"), "dsd", listOf()
-//                ),
-//            )
-//        )
     }
 
     private fun initListeners() {
