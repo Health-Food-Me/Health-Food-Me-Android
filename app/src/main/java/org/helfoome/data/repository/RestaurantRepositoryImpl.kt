@@ -27,11 +27,11 @@ class RestaurantRepositoryImpl @Inject constructor(
         TODO("Not yet implemented")
     }
 
-    override suspend fun updateRestaurantScrap(restaurantId: String, userId: String): Boolean? {
+    override suspend fun updateRestaurantScrap(restaurantId: String, userId: String): List<String>? {
         runCatching {
             restaurantService.updateRestaurantScrap(restaurantId, userId)
         }.fold({
-            return it.body()?.data?.isScrap
+            return it.body()?.data?.restaurants
         }, {
             it.printStackTrace()
             return null

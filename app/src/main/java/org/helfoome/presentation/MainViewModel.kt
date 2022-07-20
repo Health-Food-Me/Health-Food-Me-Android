@@ -33,6 +33,7 @@ class MainViewModel @Inject constructor(
     val cameraZoom: MutableLiveData<Event<Int>> = _cameraZoom
     private val _selectedRestaurant = MutableLiveData<RestaurantInfo>()
     val selectedRestaurant get() = _selectedRestaurant
+
     private val _isExpandedDialog = MutableLiveData<Event<Boolean>>()
     val isExpandedDialog: LiveData<Event<Boolean>> get() = _isExpandedDialog
     private val storeIdHash = HashMap<LatLng, Int>()
@@ -120,10 +121,10 @@ class MainViewModel @Inject constructor(
 
     fun updateRestaurantScrap() {
         viewModelScope.launch(Dispatchers.IO) {
-            val isScrap =
-                restaurantRepository.updateRestaurantScrap(selectedRestaurant.value?.id ?: return@launch, hfmSharedPreference.id)
-                    ?: return@launch
-            _selectedRestaurant.postValue(_selectedRestaurant.value?.apply { this.isScrap = isScrap })
+            if (selectedRestaurant.value?.id == null) return@launch
+            val scrappedRestaurantList =
+                restaurantRepository.updateRestaurantScrap(selectedRestaurant.value?.id!!, hfmSharedPreference.id) ?: return@launch
+            _selectedRestaurant.postValue(_selectedRestaurant.value?.apply { this.isScrap = scrappedRestaurantList.contains(selectedRestaurant.value?.id!!) })
         }
     }
 
