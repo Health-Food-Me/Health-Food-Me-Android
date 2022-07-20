@@ -1,5 +1,6 @@
 package org.helfoome.presentation
 
+import android.util.Log
 import androidx.lifecycle.*
 import com.naver.maps.geometry.LatLng
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -10,6 +11,7 @@ import org.helfoome.domain.entity.*
 import org.helfoome.domain.repository.MapRepository
 import org.helfoome.domain.repository.ProfileRepository
 import org.helfoome.domain.repository.RestaurantRepository
+import org.helfoome.domain.repository.ReviewRepository
 import org.helfoome.util.Event
 import timber.log.Timber
 import javax.inject.Inject
@@ -20,12 +22,15 @@ class MainViewModel @Inject constructor(
     private val sharedPreferences: HFMSharedPreference,
     private val restaurantRepository: RestaurantRepository,
     private val mapRepository: MapRepository,
+    private val reviewRepository: ReviewRepository,
     private val hfmSharedPreference: HFMSharedPreference,
 ) : ViewModel() {
     private val _location = MutableLiveData<List<MarkerInfo>>()
     val location: LiveData<List<MarkerInfo>> = _location
     private val _isDietRestaurant = MutableLiveData<Boolean>()
     val isDietRestaurant: LiveData<Boolean> = _isDietRestaurant
+    private val _checkReview = MutableLiveData<Boolean>()
+    val checkReview: LiveData<Boolean> = _checkReview
     private val _cameraZoom = MutableLiveData<Event<Int>>()
     val cameraZoom: MutableLiveData<Event<Int>> = _cameraZoom
     private val _selectedRestaurant = MutableLiveData<RestaurantInfo>()
@@ -59,6 +64,17 @@ class MainViewModel @Inject constructor(
         fetchHFMReviewList()
         fetchBlogReviewList()
         initVisibleReviewButton()
+    }
+
+    fun getReviewCheck(restaurantId: String) {
+        viewModelScope.launch {
+            kotlin.runCatching { reviewRepository.getReviewCheck(sharedPreferences.id, restaurantId) }
+                .onSuccess {
+                    _checkReview.value = it.data.hasReview
+                }.onFailure {
+                    Timber.d(it.message)
+                }
+        }
     }
 
     fun getMapInfo(latLng: LatLng) {

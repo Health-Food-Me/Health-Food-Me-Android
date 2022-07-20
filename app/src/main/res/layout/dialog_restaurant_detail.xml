@@ -354,6 +354,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/review_writing_write_btn_text"
                 app:layout_constraintBottom_toBottomOf="parent" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
