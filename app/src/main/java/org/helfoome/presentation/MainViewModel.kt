@@ -1,11 +1,5 @@
 package org.helfoome.presentation
 
-import android.graphics.Typeface
-import android.text.Html
-import android.text.Spannable
-import android.text.SpannableString
-import android.text.style.StyleSpan
-import android.util.Log
 import androidx.lifecycle.*
 import com.naver.maps.geometry.LatLng
 import dagger.hilt.android.lifecycle.HiltViewModel
