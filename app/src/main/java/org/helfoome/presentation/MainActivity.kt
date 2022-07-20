@@ -138,6 +138,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
             with(binding.cgFoodTag) {
                 addView(
                     stringListFrom(R.array.main_chip_group)[i].toChip.apply {
+                        setRippleColorResource(android.R.color.transparent)
                         setOnClickListener(provideChipClickListener(this))
                         setChipIconResource(FoodType.values()[i].icon)
                         setChipIconTintResource(FoodType.values()[i].iconTint)
@@ -195,6 +196,15 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
     }
 
     private fun initListeners() {
+        with(binding.layoutDrawer) {
+            addDrawerListener(object : DrawerLayout.DrawerListener {
+                override fun onDrawerSlide(drawerView: View, slideOffset: Float) = Unit
+                override fun onDrawerOpened(drawerView: View) = setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
+                override fun onDrawerClosed(drawerView: View) = setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+                override fun onDrawerStateChanged(newState: Int) = Unit
+            })
+        }
+
         with(binding.layoutRestaurantDialog) {
 
             layoutAppBar.setOnClickListener {
