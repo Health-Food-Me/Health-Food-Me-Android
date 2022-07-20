@@ -1,6 +1,5 @@
 package org.helfoome.presentation
 
-import android.util.Log
 import androidx.lifecycle.*
 import com.naver.maps.geometry.LatLng
 import dagger.hilt.android.lifecycle.HiltViewModel
