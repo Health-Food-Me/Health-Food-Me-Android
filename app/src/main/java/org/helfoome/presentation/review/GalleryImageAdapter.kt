@@ -1,6 +1,6 @@
 package org.helfoome.presentation.review
 
-import android.graphics.Bitmap
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -13,17 +13,18 @@ import org.helfoome.util.ext.getString
 class GalleryImageAdapter(private val cameraOnClickListener: () -> Unit) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private lateinit var inflater: LayoutInflater
-    private val imageList = mutableListOf<Bitmap?>()
+    private val _imageList = mutableListOf<Uri?>()
+    val imageList: List<Uri?> get() = _imageList
 
     init {
         // 0번 인덱스에 커메라 아이템을 넣기 위함
-        imageList.add(null)
+        _imageList.add(null)
         notifyItemInserted(0)
     }
 
     class GalleryImageViewHolder(private val binding: ItemGalleryImageBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(imageUrl: Bitmap?, deleteImage: (Bitmap) -> Unit) {
+        fun bind(imageUrl: Uri?, deleteImage: (Uri) -> Unit) {
             binding.ivImage.load(imageUrl)
             binding.btnDelete.setOnClickListener {
                 deleteImage(imageUrl ?: return@setOnClickListener)
@@ -60,7 +61,7 @@ class GalleryImageAdapter(private val cameraOnClickListener: () -> Unit) :
 
     override fun onBindViewHolder(viewHolder: RecyclerView.ViewHolder, position: Int) {
         when (viewHolder) {
-            is GalleryImageViewHolder -> viewHolder.bind(imageList[position], ::deleteImage)
+            is GalleryImageViewHolder -> viewHolder.bind(_imageList[position], ::deleteImage)
             is CameraViewHolder -> viewHolder.bind(cameraOnClickListener, getCurrentImageCount())
         }
     }
@@ -72,21 +73,21 @@ class GalleryImageAdapter(private val cameraOnClickListener: () -> Unit) :
         }.ordinal
     }
 
-    override fun getItemCount(): Int = imageList.size
+    override fun getItemCount(): Int = _imageList.size
 
     private fun getCurrentImageCount(): Int = itemCount - 1
 
     fun getNumOfSelectableImages() = MAX_IMAGE_COUNT - getCurrentImageCount()
 
-    fun setBitmapList(bitmapList: List<Bitmap?>) {
-        val currentCount = imageList.size - 1
-        if (currentCount + bitmapList.size > 3) return
-        imageList.addAll(1, bitmapList)
+    fun setUriList(uriList: List<Uri?>) {
+        val currentCount = _imageList.size - 1
+        if (currentCount + uriList.size > 3) return
+        _imageList.addAll(1, uriList)
         notifyDataSetChanged()
     }
 
-    private fun deleteImage(url: Bitmap) {
-        imageList.remove(url)
+    private fun deleteImage(url: Uri) {
+        _imageList.remove(url)
         notifyDataSetChanged()
     }
 
