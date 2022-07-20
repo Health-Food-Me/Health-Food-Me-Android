@@ -64,6 +64,7 @@ class ReviewWritingActivity : BindingActivity<ActivityReviewWritingBinding>(R.la
 
         initView()
         initListeners()
+        initObservers()
     }
 
     private fun initView() {
@@ -85,10 +86,22 @@ class ReviewWritingActivity : BindingActivity<ActivityReviewWritingBinding>(R.la
                 binding.layoutScrollView.smoothScrollBy(0, 1200)
             }
         }
+        binding.btnWriteReview.setOnClickListener {
+            viewModel.checkReviewCompletion()
+        }
+    }
+
+    private fun initObservers() {
+        viewModel.isEnabledWritingCompleteButton.observe(this) { isEnabled ->
+            if (isEnabled)
+                onBackPressed() // TODO 리뷰 작성 api 연동
+            else
+                showToast(getString(R.string.review_writing_complete_condition_toast_text))
+        }
     }
 
     private fun getFullImageCount(): Boolean {
-        val isFull = galleryImageAdapter.getNumOfSelectableImages() <= 0 // galleryImageAdapter.itemCount > 3 //
+        val isFull = galleryImageAdapter.getNumOfSelectableImages() <= 0
         if (isFull) showToast(getString(R.string.review_writing_image_upload_toast_text))
         return isFull
     }
