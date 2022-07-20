@@ -51,7 +51,7 @@ class StarScore(context: Context, val attrs: AttributeSet? = null) : ConstraintL
             }
 
             // 소수점 첫째자리에 해당하는 아이콘 디스플레이
-            if(score < 5.0f){
+            if (score < 5.0f) {
                 starViewList[lastIdx + 1].setImageResource(getDecimalPointImageRes(firstDecimalPlace) ?: return)
             }
         }

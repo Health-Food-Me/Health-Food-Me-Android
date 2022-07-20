@@ -1,8 +1,6 @@
 package org.helfoome.data.service
 
 import android.content.Context
-import android.util.Log
-import com.naver.maps.map.app.OpenSourceLicenseActivity
 import com.navercorp.nid.NaverIdLoginSDK
 import com.navercorp.nid.oauth.OAuthLoginCallback
 import dagger.hilt.android.qualifiers.ApplicationContext

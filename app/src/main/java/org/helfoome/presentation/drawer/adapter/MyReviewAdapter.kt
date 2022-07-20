@@ -2,13 +2,11 @@ package org.helfoome.presentation.drawer.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.databinding.adapters.ImageViewBindingAdapter
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import org.helfoome.databinding.ItemGeneralMyReviewBinding
 import org.helfoome.domain.entity.MyReviewListInfo
 import org.helfoome.presentation.restaurant.adapter.RestaurantImageAdapter
-import org.helfoome.presentation.review.GalleryImageAdapter
 import org.helfoome.presentation.type.HashtagViewType
 import org.helfoome.util.ItemDecorationUtil
 import org.helfoome.util.ItemDiffCallback

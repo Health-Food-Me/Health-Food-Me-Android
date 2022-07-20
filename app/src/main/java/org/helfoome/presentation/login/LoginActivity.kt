@@ -2,8 +2,6 @@ package org.helfoome.presentation.login
 
 import android.content.Intent
 import android.os.Bundle
-import com.naver.maps.map.app.LegalNoticeActivity
-import com.naver.maps.map.app.OpenSourceLicenseActivity
 import com.navercorp.nid.NaverIdLoginSDK
 import dagger.hilt.android.AndroidEntryPoint
 import org.helfoome.R
