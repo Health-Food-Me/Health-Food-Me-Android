@@ -12,6 +12,7 @@ import androidx.activity.viewModels
 import androidx.core.content.FileProvider
 import dagger.hilt.android.AndroidEntryPoint
 import gun0912.tedimagepicker.builder.TedImagePicker
+import gun0912.tedimagepicker.util.ToastUtil.context
 import org.helfoome.R
 import org.helfoome.databinding.ActivityReviewWritingBinding
 import org.helfoome.presentation.type.ReviewImageType
@@ -19,6 +20,7 @@ import org.helfoome.util.ItemDecorationUtil
 import org.helfoome.util.binding.BindingActivity
 import org.helfoome.util.ext.closeKeyboard
 import org.helfoome.util.showToast
+import timber.log.Timber
 import java.io.File
 
 @AndroidEntryPoint
@@ -62,10 +64,16 @@ class ReviewWritingActivity : BindingActivity<ActivityReviewWritingBinding>(R.la
 
     private fun initObservers() {
         viewModel.isEnabledWritingCompleteButton.observe(this) { isEnabled ->
-            if (isEnabled)
-                onBackPressed() // TODO 리뷰 작성 api 연동
-            else
+            if (isEnabled) {
+                Timber.d("initObservers: 리뷰 작성 요건 충족")
+                viewModel.uploadReview(context, binding.ratingBar.rating, galleryImageAdapter.imageList)
+            } else {
+                Timber.d("initObservers: 리뷰 작성 요건 충족 못함")
                 showToast(getString(R.string.review_writing_complete_condition_toast_text))
+            }
+        }
+        viewModel.isCompletedReviewUpload.observe(this) {
+            if (it) onBackPressed()
         }
     }
 
