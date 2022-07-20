@@ -98,9 +98,7 @@ class ReviewWritingActivity : BindingActivity<ActivityReviewWritingBinding>(R.la
     override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
         val view = currentFocus
 
-        if (view != null && ev.action == MotionEvent.ACTION_UP || ev.action == MotionEvent.ACTION_MOVE && view is EditText && !view.javaClass.name.startsWith(
-                "android.webkit.")
-        ) {
+        if (view != null && ev.action == MotionEvent.ACTION_UP || ev.action == MotionEvent.ACTION_MOVE && view is EditText && !view.javaClass.name.startsWith("android.webkit.")) {
             val locationList = IntArray(2)
             view.getLocationOnScreen(locationList)
             val x = ev.rawX + view.left - locationList[0]

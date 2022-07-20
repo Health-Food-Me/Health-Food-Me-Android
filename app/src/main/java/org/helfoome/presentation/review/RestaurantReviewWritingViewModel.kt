@@ -77,13 +77,7 @@ class RestaurantReviewWritingViewModel @Inject constructor(
 
         viewModelScope.launch {
             runCatching {
-                reviewService.postHFMReview(hfmSharedPreference.id,
-                    "62d26c9bd11146a81ef18eb5",
-                    scoreRequestBody,
-                    tasteRequestBody,
-                    goodRequestBody,
-                    contentRequestBody,
-                    imageListMultipartBody)
+                reviewService.postHFMReview(hfmSharedPreference.id, "62d26c9bd11146a81ef18eb5", scoreRequestBody, tasteRequestBody, goodRequestBody, contentRequestBody, imageListMultipartBody)
             }.fold({
                 _isCompletedReviewUpload.value = true
             }, {
