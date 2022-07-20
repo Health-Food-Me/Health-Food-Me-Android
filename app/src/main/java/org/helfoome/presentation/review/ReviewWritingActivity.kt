@@ -114,7 +114,7 @@ class ReviewWritingActivity : BindingActivity<ActivityReviewWritingBinding>(R.la
 
     private fun openCamera() {
         val photoFile = File.createTempFile("IMG_", ".jpg", getExternalFilesDir(Environment.DIRECTORY_PICTURES))
-        photoUri = FileProvider.getUriForFile(this, "${packageName}.provider", photoFile)
+        photoUri = FileProvider.getUriForFile(this, "$packageName.provider", photoFile)
         cameraLauncher.launch(photoUri)
     }
 
