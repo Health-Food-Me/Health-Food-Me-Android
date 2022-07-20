@@ -1,6 +1,6 @@
 package org.helfoome.presentation.review
 
-import android.net.Uri
+import android.graphics.Bitmap
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -15,8 +15,8 @@ class RestaurantReviewWritingViewModel @Inject constructor() : ViewModel() {
     val review get() = _review
     val selectedTasteTag = MutableLiveData<TasteHashtagType>()
     val selectedGoodPointTags = MutableLiveData(hashMapOf(GoodPointHashtagType.NO_BURDEN to false, GoodPointHashtagType.EASY_TO_CONTROL to false, GoodPointHashtagType.FULL to false))
-    private val _selectedImageList = MutableLiveData<List<Uri>>()
-    val selectedImageList: LiveData<List<Uri>> get() = _selectedImageList
+    private val _selectedImageList = MutableLiveData<List<Bitmap>>()
+    val selectedImageList: LiveData<List<Bitmap>> get() = _selectedImageList
     fun setSelectedTasteTag(tagType: TasteHashtagType) {
         selectedTasteTag.value = tagType
     }
@@ -28,7 +28,8 @@ class RestaurantReviewWritingViewModel @Inject constructor() : ViewModel() {
         selectedGoodPointTags.value = selectedGoodPointTags.value
     }
 
-    fun setSelectedGalleryImages(uriList: List<Uri>) {
+    // TODO delete
+    fun setSelectedGalleryImages(uriList: List<Bitmap>) {
         _selectedImageList.value = uriList
     }
 }

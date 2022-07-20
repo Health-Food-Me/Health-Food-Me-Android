@@ -1,8 +1,13 @@
 package org.helfoome.presentation.review
 
 import android.Manifest
-
+import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.ImageDecoder
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.provider.MediaStore
 import android.view.MotionEvent
 import android.widget.EditText
 import android.widget.ScrollView
@@ -16,6 +21,8 @@ import org.helfoome.presentation.type.ReviewImageType
 import org.helfoome.util.ItemDecorationUtil
 import org.helfoome.util.binding.BindingActivity
 import org.helfoome.util.ext.closeKeyboard
+import org.helfoome.util.showToast
+import java.io.IOException
 
 @AndroidEntryPoint
 class ReviewWritingActivity : BindingActivity<ActivityReviewWritingBinding>(R.layout.activity_review_writing) {
@@ -27,10 +34,29 @@ class ReviewWritingActivity : BindingActivity<ActivityReviewWritingBinding>(R.la
             if (it) {
                 TedImagePicker.with(this)
                     .showCameraTile(false)
-                    .max(3, "사진첨부는 최대 3장만 가능합니다")
-                    .startMultiImage { uriList -> viewModel.setSelectedGalleryImages(uriList) }
+                    .max(galleryImageAdapter.getNumOfSelectableImages(), "사진첨부는 최대 3장만 가능합니다")
+                    .startMultiImage { uriList ->
+                        val bitmapList = uriList.map { uri -> uriToBitmap(uri) }
+                        galleryImageAdapter.setBitmapList(bitmapList)
+                    }
             }
         }
+
+    private val cameraPermissionLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) {
+            if (it) {
+                val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                cameraLauncher.launch(intent)
+            }
+        }
+
+    private val cameraLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == RESULT_OK) {
+            result.data?.extras?.get("data")?.let { imageBitmap ->
+                galleryImageAdapter.setBitmapList(listOf(imageBitmap as Bitmap))
+            }
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,13 +64,12 @@ class ReviewWritingActivity : BindingActivity<ActivityReviewWritingBinding>(R.la
 
         initView()
         initListeners()
-        initObservers()
     }
 
     private fun initView() {
         binding.rvPhotoList.apply {
             adapter = galleryImageAdapter
-            addItemDecoration(ItemDecorationUtil.ItemDecoration(0f, padding = 18 , isVertical = false))
+            addItemDecoration(ItemDecorationUtil.ItemDecoration(0f, padding = 18, isVertical = false))
         }
     }
 
@@ -62,22 +87,42 @@ class ReviewWritingActivity : BindingActivity<ActivityReviewWritingBinding>(R.la
         }
     }
 
-    private fun initObservers() {
-        viewModel.selectedImageList.observe(this) {
-            galleryImageAdapter.imageList = listOf(null) + it
-        }
+    private fun getFullImageCount(): Boolean {
+        val isFull = galleryImageAdapter.getNumOfSelectableImages() <= 0 // galleryImageAdapter.itemCount > 3 //
+        if (isFull) showToast("사진첨부는 최대 3장만 가능합니다")
+        return isFull
     }
 
     private fun showGalleryImageDialog() {
+        if (getFullImageCount()) return
         GalleryBottomDialogFragment(::setOnclickListener).show(supportFragmentManager, "GalleryBottomDialogFragment")
+    }
+
+    private fun uriToBitmap(uri: Uri): Bitmap? {
+        return try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                ImageDecoder.decodeBitmap(ImageDecoder.createSource(contentResolver, uri))
+            } else {
+                MediaStore.Images.Media.getBitmap(contentResolver, uri)
+            }
+        } catch (e: IOException) {
+            e.printStackTrace()
+            null
+        }
+    }
+
+    private fun setOnclickListener(reviewImageType: ReviewImageType) {
+        when (reviewImageType) {
+            ReviewImageType.GALLERY -> requestStorage.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
+            ReviewImageType.PHOTO_SHOOT -> cameraPermissionLauncher.launch(Manifest.permission.CAMERA)
+        }
     }
 
     override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
         val view = currentFocus
 
         if (view != null && ev.action == MotionEvent.ACTION_UP || ev.action == MotionEvent.ACTION_MOVE && view is EditText && !view.javaClass.name.startsWith(
-                "android.webkit."
-            )
+                "android.webkit.")
         ) {
             val locationList = IntArray(2)
             view.getLocationOnScreen(locationList)
@@ -90,16 +135,5 @@ class ReviewWritingActivity : BindingActivity<ActivityReviewWritingBinding>(R.la
         }
 
         return super.dispatchTouchEvent(ev)
-    }
-
-    private fun setOnclickListener(reviewImageType: ReviewImageType) {
-        when (reviewImageType) {
-            ReviewImageType.GALLERY -> {
-                requestStorage.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
-            }
-            ReviewImageType.PHOTO_SHOOT -> {
-                // TODO
-            }
-        }
     }
 }
