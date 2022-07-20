@@ -52,6 +52,7 @@ class MyReviewActivity : BindingActivity<ActivityMyReviewBinding>(R.layout.activ
 
     private fun initObservers() {
         viewModel.myReviewInfo.observe(this) {
+            binding.isEmptyVisible = it.isEmpty()
             myReviewAdapter.submitList(it)
         }
     }
