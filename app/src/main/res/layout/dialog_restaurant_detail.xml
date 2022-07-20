@@ -136,6 +136,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="16dp"
+                            android:layout_marginEnd="@dimen/size_spacing_20"
                             app:layout_constraintBottom_toBottomOf="@id/iv_restaurant_image"
                             app:layout_constraintEnd_toStartOf="@id/btn_scrap"
                             app:layout_constraintStart_toEndOf="@id/iv_restaurant_image"
