@@ -78,6 +78,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                 })
             }
         }
+    private var markerList: List<Pair<Marker, Boolean>> = listOf()
     private val String.toChip: Chip
         get() = ChipFactory.create(layoutInflater).also { it.text = this }
     private val viewModel: MainViewModel by viewModels()
@@ -113,6 +114,8 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
         binding.layoutDrawerHeader.drawerViewModel = viewModel
         window.makeTransparentStatusBar()
         viewModel.getProfile()
+
+        binding.fabBookmark.outlineProvider
 
         locationSource =
             FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE)
@@ -203,6 +206,10 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                 override fun onDrawerClosed(drawerView: View) = setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
                 override fun onDrawerStateChanged(newState: Int) = Unit
             })
+        }
+
+        binding.fabBookmark.setOnClickListener {
+            it.isSelected = !it.isSelected
         }
 
         with(binding.layoutRestaurantDialog) {
@@ -297,6 +304,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
     }
 
     private fun initObservers() {
+
         viewModel.selectedRestaurant.observe(this) {
 //            behavior.state = BottomSheetBehavior.STATE_COLLAPSED
         }
@@ -306,30 +314,44 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                 if (isVisible.peekContent()) View.VISIBLE else View.INVISIBLE
         }
         viewModel.location.observe(this) { markers ->
-            markers.map { marker ->
-                Marker().apply {
-                    position = LatLng(marker.latitude, marker.longitude)
-                    icon = OverlayImage.fromResource(
-                        if (marker.isDietRestaurant) R.drawable.ic_marker_green
-                        else R.drawable.ic_marker_red
-                    )
-                    this.map = naverMap
-                }
-            }.forEach { marker ->
-                marker.setOnClickListener {
-                    behavior.state = BottomSheetBehavior.STATE_COLLAPSED
-                    viewModel.fetchSelectedRestaurantInfo()
-                    if (viewModel.isDietRestaurant.value == true) {
-                        marker.icon = OverlayImage.fromResource(R.drawable.ic_marker_green_big)
-                    } else {
-                        marker.icon = OverlayImage.fromResource(R.drawable.ic_marker_red_big)
-                    }
-                    viewModel.markerId(marker.position)?.let { id ->
+            markerList = markers.map { marker ->
+                Pair(
+                    Marker().apply {
+                        position = LatLng(marker.latitude, marker.longitude)
+                        icon = OverlayImage.fromResource(
+                            if (marker.isDietRestaurant) R.drawable.ic_marker_green_small
+                            else R.drawable.ic_marker_red_small
+                        )
+                        this.map = naverMap
+
+                        this.setOnClickListener {
+                            viewModel.fetchSelectedRestaurantInfo()
+                            behavior.state = BottomSheetBehavior.STATE_COLLAPSED
+                            markerList.forEach {
+                                it.first.icon = OverlayImage.fromResource(
+                                    if (it.second) R.drawable.ic_marker_green_small
+                                    else R.drawable.ic_marker_red_small
+                                )
+                            }
+                            icon = OverlayImage.fromResource(
+                                if (marker.isDietRestaurant) R.drawable.ic_marker_green_big
+                                else R.drawable.ic_marker_red_big
+                            )
+                            viewModel.markerId(this.position)?.let { id ->
 //                        bottomsheet(id)
-                    }
-                    true
-                }
+                            }
+                            true
+                        }
+                    },
+                    marker.isDietRestaurant
+                )
             }
+//                .forEach { marker ->
+//                marker.setOnClickListener {
+//                    behavior.state = BottomSheetBehavior.STATE_COLLAPSED
+//                    viewModel.fetchSelectedRestaurantInfo()
+//                    true
+//            }
         }
     }
 
@@ -377,6 +399,12 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
         naverMap.uiSettings.isZoomControlEnabled = false
         naverMap.setOnMapClickListener { _, _ ->
             behavior.state = BottomSheetBehavior.STATE_HIDDEN
+            markerList.forEach {
+                it.first.icon = OverlayImage.fromResource(
+                    if (it.second) R.drawable.ic_marker_green_small
+                    else R.drawable.ic_marker_red_small
+                )
+            }
         }
         naverMap.locationSource = locationSource
         locationSource.lastLocation
