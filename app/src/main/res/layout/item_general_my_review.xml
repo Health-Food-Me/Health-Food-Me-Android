@@ -7,7 +7,7 @@
 
         <variable
             name="data"
-            type="org.helfoome.domain.entity.MyReviewInfo" />
+            type="org.helfoome.domain.entity.MyReviewListInfo" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/notosanskr_m"
             android:maxLines="1"
-            android:text="@{data.name}"
+            android:text="@{data.id}"
             android:textColor="@color/gray_800"
             android:textSize="13sp"
             app:layout_constraintStart_toStartOf="@id/gl_start"
@@ -52,7 +52,7 @@
             android:layout_marginTop="8dp"
             app:layout_constraintStart_toStartOf="@id/tv_nickname"
             app:layout_constraintTop_toBottomOf="@id/tv_nickname"
-            app:score="@{data.score}" />
+            />
 
         <TextView
             android:id="@+id/tv_delete"
@@ -116,7 +116,7 @@
             android:layout_marginHorizontal="20dp"
             android:layout_marginTop="12dp"
             android:fontFamily="@font/notosanskr_r"
-            android:text="@{data.content}"
+            android:text="@{data.description}"
             android:textColor="@color/gray_800"
             android:textSize="12dp"
             app:layout_constraintTop_toBottomOf="@id/rv_photo_list"
