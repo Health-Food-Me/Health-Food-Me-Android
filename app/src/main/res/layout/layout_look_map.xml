@@ -26,6 +26,7 @@
             android:fontFamily="@font/notosanskr_r"
             android:text="@{isCollapsed? @string/search_look_list : @string/search_look_map}"
             android:textColor="@color/gray_600"
+            android:foregroundTint="@color/red_500"
             android:textSize="13dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
