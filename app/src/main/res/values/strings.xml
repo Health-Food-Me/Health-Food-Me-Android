@@ -163,6 +163,13 @@
     <string name="review_writing_hint">리뷰를 작성해주세요 (최대 500자)</string>
     <string name="review_writing_write_btn_text">리뷰 쓰기</string>
 
+    <string name="review_writing_image_upload_toast_text">사진첨부는 최대 3장만 가능합니다</string>
+    <string name="review_writing_complete_condition_toast_text">별점과 태그 선택은 필수입니다</string>
+
+    <!-- Gallery -->
+    <string name="tv_photo_shoot">사진 찍기</string>
+    <string name="tv_gallery">사진 보관함</string>
+
     <!-- empty -->
     <string name="empty_go_scrap">스크랩하러 가기</string>
     <string name="empty_go_restaurant">식당 보러 가기</string>
