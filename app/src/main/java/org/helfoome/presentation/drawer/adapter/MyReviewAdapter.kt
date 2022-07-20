@@ -8,12 +8,13 @@ import org.helfoome.databinding.ItemGeneralMyReviewBinding
 import org.helfoome.domain.entity.MyReviewListInfo
 import org.helfoome.util.ItemDiffCallback
 
-class MyReviewAdapter(private val itemClickListener: ((Int) -> Unit)) : ListAdapter<MyReviewListInfo, MyReviewAdapter.MyReviewViewHolder>(
-    ItemDiffCallback<MyReviewListInfo>(
-        onContentsTheSame = { old, new -> old == new },
-        onItemsTheSame = { old, new -> old.id == new.id }
-    )
-) {
+class MyReviewAdapter(private val itemClickListener: ((Int) -> Unit), private val deleteClickListener: (String) -> Unit) :
+    ListAdapter<MyReviewListInfo, MyReviewAdapter.MyReviewViewHolder>(
+        ItemDiffCallback<MyReviewListInfo>(
+            onContentsTheSame = { old, new -> old == new },
+            onItemsTheSame = { old, new -> old.id == new.id }
+        )
+    ) {
     private lateinit var inflater: LayoutInflater
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyReviewViewHolder {
@@ -29,21 +30,21 @@ class MyReviewAdapter(private val itemClickListener: ((Int) -> Unit)) : ListAdap
                 tvNickname.setOnClickListener {
                     itemClickListener.invoke(ENLARGE)
                 }
-                tvDelete.setOnClickListener {
-                    itemClickListener.invoke(DELETE)
-                }
             }
         )
     }
 
     override fun onBindViewHolder(holder: MyReviewViewHolder, position: Int) {
-        holder.onBind(getItem(position))
+        holder.onBind(getItem(position), deleteClickListener)
     }
 
     class MyReviewViewHolder(private val binding: ItemGeneralMyReviewBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun onBind(myReviewData: MyReviewListInfo) {
+        fun onBind(myReviewData: MyReviewListInfo, deleteClickListener: (String) -> Unit) {
             with(binding) {
                 data = myReviewData
+                tvDelete.setOnClickListener {
+                    deleteClickListener.invoke(myReviewData.id)
+                }
             }
         }
     }
@@ -51,6 +52,5 @@ class MyReviewAdapter(private val itemClickListener: ((Int) -> Unit)) : ListAdap
     companion object {
         const val EDIT = 0
         const val ENLARGE = 1
-        const val DELETE = 2
     }
 }
