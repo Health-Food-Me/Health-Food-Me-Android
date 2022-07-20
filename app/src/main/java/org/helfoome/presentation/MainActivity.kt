@@ -33,11 +33,13 @@ import dagger.hilt.android.AndroidEntryPoint
 import org.helfoome.R
 import org.helfoome.databinding.ActivityMainBinding
 import org.helfoome.databinding.DialogLogoutBinding
+import org.helfoome.domain.entity.MenuInfo
 import org.helfoome.presentation.drawer.MyReviewActivity
 import org.helfoome.presentation.drawer.ProfileModifyActivity
 import org.helfoome.presentation.drawer.SettingActivity
 import org.helfoome.presentation.login.LoginActivity
 import org.helfoome.presentation.restaurant.MapSelectionBottomDialogFragment
+import org.helfoome.presentation.restaurant.adapter.RestaurantMenuAdapter
 import org.helfoome.presentation.restaurant.adapter.RestaurantTabAdapter
 import org.helfoome.presentation.review.ReviewWritingActivity
 import org.helfoome.presentation.scrap.MyScrapActivity
@@ -57,6 +59,7 @@ import javax.inject.Inject
 class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main), OnMapReadyCallback {
     @Inject
     lateinit var resolutionMetrics: ResolutionMetrics
+    private val restaurantMenuAdapter = RestaurantMenuAdapter()
     private val requestModifyNickname =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
             if (activityResult.resultCode == Activity.RESULT_OK) {
@@ -314,6 +317,10 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
             }
         }
 
+        viewModel.menu.observe(this) { menuList ->
+            restaurantMenuAdapter.menuList = menuList
+        }
+
         viewModel.isVisibleReviewButton.observe(this) { isVisible ->
             binding.layoutRestaurantDialog.layoutReviewBtnBackground.visibility =
                 if (isVisible.peekContent()) View.VISIBLE else View.INVISIBLE
@@ -330,8 +337,8 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                         this.map = naverMap
 
                         this.setOnClickListener {
-
-                            viewModel.fetchSelectedRestaurantInfo(marker.id)
+                            viewModel.fetchSelectedRestaurantDetailInfo(marker.id, marker.latitude, marker.longitude)
+//                            viewModel.fetchSelectedRestaurantInfo(marker.id)
                             behavior.state = BottomSheetBehavior.STATE_COLLAPSED
                             binding.isMainNotVisible = true
                             markerList.forEach {
