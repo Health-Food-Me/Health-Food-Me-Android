@@ -127,6 +127,18 @@ class MainViewModel @Inject constructor(
         }
     }
 
+    fun fetchSelectedRestaurantDetailInfo(restaurantId: String, latitude: Double, longitude: Double) {
+        // TODO 추후 매개변수로 좌표값을 받아 해당 좌표 음식점 정보를 불러오기
+        viewModelScope.launch {
+            val restaurantInfo =
+                restaurantRepository.fetchRestaurantDetail(restaurantId, hfmSharedPreference.id, latitude, longitude).getOrNull()
+                    ?: return@launch
+            _selectedRestaurant.postValue(restaurantInfo)
+            //  _menu.postValue(restaurantInfo.menuList ?: return@launch)
+            _eatingOutTips.value = restaurantRepository.getEatingOutTips(restaurantId)
+        }
+    }
+
     fun fetchHFMReviewList() {
         viewModelScope.launch(Dispatchers.IO) {
             _hfmReviews.postValue(restaurantRepository.fetchHFMReview(selectedRestaurant.value?.id ?: return@launch).getOrNull())
@@ -186,6 +198,7 @@ class MainViewModel @Inject constructor(
                 "https://salady.com/superboard/data/product/thumb/3731617857_Xhu5dfOk_695bba70202d8f821fc2862641575ddced9316e9.jpg",
                 8400,
                 24,
+                245,
                 26,
                 true
             ),
@@ -195,6 +208,7 @@ class MainViewModel @Inject constructor(
                 "https://salady.com/superboard/data/product/thumb/3731617857_BfKg76Zq_efc7ededf088253bbceff22901cd7cf02baac553.jpg",
                 7600,
                 27,
+                270,
                 27,
                 true
             ),
@@ -204,6 +218,7 @@ class MainViewModel @Inject constructor(
                 "https://salady.com/superboard/data/product/thumb/3731617857_zB4Hvtl7_a207fa684b30ebe9b56981dc1d88a1e5ae47322f.jpg",
                 8100,
                 25,
+                462,
                 26,
                 true
             ),
@@ -215,6 +230,7 @@ class MainViewModel @Inject constructor(
                 23,
                 22,
                 true
+                22
             ),
             MenuInfo(
                 "5",
@@ -224,6 +240,7 @@ class MainViewModel @Inject constructor(
                 24,
                 23,
                 true
+                23
             ),
             MenuInfo(
                 "6",
@@ -236,6 +253,10 @@ class MainViewModel @Inject constructor(
             ),
             MenuInfo("7", "할라피뇨치킨 웜랩", null, 8200, 25, 24, false),
             MenuInfo("8", "포테이토 피자", null, 15200, 25, 24, true)
+                24
+            ),
+            MenuInfo("7", "할라피뇨치킨 웜랩", null, 8200, 25, 24),
+            MenuInfo("8", "포테이토 피자", null, 15200, 25, 24)
         )
     }
 

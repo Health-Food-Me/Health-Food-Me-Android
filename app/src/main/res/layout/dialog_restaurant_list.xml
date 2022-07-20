@@ -10,6 +10,10 @@
         <variable
             name="isLineVisible"
             type="boolean" />
+
+        <variable
+            name="isResultEmpty"
+            type="boolean" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -24,6 +28,7 @@
             android:clipToPadding="false"
             android:overScrollMode="never"
             android:paddingTop="4dp"
+            android:visibility="@{isResultEmpty? View.GONE : View.VISIBLE}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintTop_toBottomOf="@id/line"
             tools:listitem="@layout/item_recent_word" />
@@ -40,5 +45,13 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:visibility="gone" />
+
+        <include
+            android:id="@+id/layout_search_empty"
+            layout="@layout/layout_search_empty"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="@{isResultEmpty? View.VISIBLE : View.GONE}"
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
