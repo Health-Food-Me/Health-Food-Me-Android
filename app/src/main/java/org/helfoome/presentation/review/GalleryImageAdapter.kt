@@ -5,8 +5,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import org.helfoome.R
 import org.helfoome.databinding.ItemCameraBinding
 import org.helfoome.databinding.ItemGalleryImageBinding
+import org.helfoome.util.ext.getString
 
 class GalleryImageAdapter(private val cameraOnClickListener: () -> Unit) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -21,19 +23,25 @@ class GalleryImageAdapter(private val cameraOnClickListener: () -> Unit) :
         }
 
     init {
+        // 0번 인덱스에 커메라 아이템을 넣기 위함
         _imageList.add(null)
         notifyItemInserted(0)
     }
 
     class GalleryImageViewHolder(private val binding: ItemGalleryImageBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(imageUrl: Uri?) {
+        fun bind(imageUrl: Uri?, position: Int, deleteImage: (Int) -> Unit) {
             binding.ivImage.load(imageUrl)
+            binding.btnDelete.setOnClickListener {
+                deleteImage(position)
+            }
         }
     }
 
     class CameraViewHolder(private val binding: ItemCameraBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(cameraOnClickListener: () -> Unit) {
+        fun bind(cameraOnClickListener: () -> Unit, imageCount: Int) {
+            // imageCount - 1 : 카메라 아이콘을 제외한 순수 이미지 갯수를 계산하기 위함
+            binding.tvImageCount.text = String.format(binding.tvImageCount.getString(R.string.format_image_count), imageCount - 1)
             binding.layoutContainer.setOnClickListener {
                 cameraOnClickListener()
             }
@@ -60,8 +68,8 @@ class GalleryImageAdapter(private val cameraOnClickListener: () -> Unit) :
 
     override fun onBindViewHolder(viewHolder: RecyclerView.ViewHolder, position: Int) {
         when (viewHolder) {
-            is GalleryImageViewHolder -> viewHolder.bind(imageList[position])
-            is CameraViewHolder -> viewHolder.bind(cameraOnClickListener)
+            is GalleryImageViewHolder -> viewHolder.bind(imageList[position], position, ::deleteImage)
+            is CameraViewHolder -> viewHolder.bind(cameraOnClickListener, _imageList.size)
         }
     }
 
@@ -73,6 +81,11 @@ class GalleryImageAdapter(private val cameraOnClickListener: () -> Unit) :
     }
 
     override fun getItemCount(): Int = imageList.size
+
+    private fun deleteImage(position: Int) {
+        _imageList.removeAt(position)
+        notifyDataSetChanged()
+    }
 
     enum class GalleryImageViewType {
         GALLERY_VIEW_TYPE, CAMERA_VIEW_TYPE
