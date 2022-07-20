@@ -30,5 +30,6 @@ data class ResponseHFMReview(
         score,
         taste + good,
         content,
-        imageList.map { image -> HFMReviewInfo.ReviewImage(image.id, image.name, image.url) })
+        imageList.map { image -> HFMReviewInfo.ReviewImage(image.id, image.name, image.url) }
+    )
 }
