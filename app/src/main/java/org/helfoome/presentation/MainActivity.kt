@@ -342,7 +342,8 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                             }
                             true
                         }
-                    }, marker.isDietRestaurant
+                    },
+                    marker.isDietRestaurant
                 )
             }
 //                .forEach { marker ->
