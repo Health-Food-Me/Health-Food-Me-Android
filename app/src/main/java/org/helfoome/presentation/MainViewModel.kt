@@ -151,6 +151,16 @@ class MainViewModel @Inject constructor(
         }
     }
 
+    fun fetchSelectedRestaurantDetailInfo(restaurantId: String, latitude: Double, longitude: Double) {
+        // TODO 추후 매개변수로 좌표값을 받아 해당 좌표 음식점 정보를 불러오기
+        viewModelScope.launch {
+            val restaurantInfo = restaurantRepository.fetchRestaurantDetail(restaurantId, hfmSharedPreference.id, latitude, longitude).getOrNull() ?: return@launch
+            _selectedRestaurant.postValue(restaurantInfo)
+            //  _menu.postValue(restaurantInfo.menuList ?: return@launch)
+            _eatingOutTips.value = restaurantRepository.getEatingOutTips(restaurantId)
+        }
+    }
+
     fun setExpendedBottomSheetDialog(isExpended: Boolean) {
         _isExpandedDialog.value = Event(isExpended)
     }
