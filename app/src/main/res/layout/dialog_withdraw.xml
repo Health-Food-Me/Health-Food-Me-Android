@@ -12,7 +12,7 @@
         android:layout_marginTop="32dp"
         android:text="@string/withdraw_dialog_caution"
         android:textColor="@color/gray_800"
-        android:textSize="16sp"
+        android:textSize="16dp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -26,7 +26,7 @@
         android:gravity="center"
         android:text="@string/withdraw_dialog_caution_description"
         android:textColor="@color/gray_800"
-        android:textSize="12sp"
+        android:textSize="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_caution" />
@@ -42,7 +42,7 @@
         android:paddingVertical="11dp"
         android:text="@string/withdraw_dialog_no"
         android:textColor="@color/white"
-        android:textSize="15sp"
+        android:textSize="15dp"
         android:textStyle="bold"
         app:layout_constraintTop_toBottomOf="@id/tv_caution_description" />
 
@@ -56,7 +56,7 @@
         android:background="@drawable/rectangle_white_radius_8"
         android:text="@string/withdraw_dialog_yes"
         android:textColor="@color/gray_550"
-        android:textSize="12sp"
+        android:textSize="12dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"

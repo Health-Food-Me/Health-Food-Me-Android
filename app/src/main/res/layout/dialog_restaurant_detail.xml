@@ -43,7 +43,7 @@
                 android:fontFamily="@font/notosanskr_b"
                 android:text="@{viewModel.selectedRestaurant.name}"
                 android:textColor="@color/gray_600"
-                android:textSize="16sp"
+                android:textSize="16dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -149,7 +149,7 @@
                                 android:fontFamily="@font/notosanskr_b"
                                 android:text="@{viewModel.selectedRestaurant.name}"
                                 android:textColor="@color/gray_800"
-                                android:textSize="15sp"
+                                android:textSize="15dp"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent"
                                 tools:text="샐러디 태릉입구점" />
@@ -171,7 +171,7 @@
                                 android:fontFamily="@font/notosanskr_r"
                                 android:text="@{String.format(context.getString(R.string.restaurant_detail_score_format), viewModel.selectedRestaurant.score)}"
                                 android:textColor="@color/gray_550"
-                                android:textSize="12sp"
+                                android:textSize="12dp"
                                 app:layout_constraintBottom_toBottomOf="@id/view_star_rating"
                                 app:layout_constraintStart_toEndOf="@id/view_star_rating"
                                 tools:text="(4.3)" />
@@ -248,7 +248,7 @@
                             android:fontFamily="@font/notosanskr_m"
                             android:text="@{viewModel.selectedRestaurant.contact}"
                             android:textColor="@color/gray_600"
-                            android:textSize="12sp"
+                            android:textSize="12dp"
                             app:layout_constraintStart_toEndOf="@id/iv_call"
                             app:layout_constraintTop_toBottomOf="@id/view_opening_time"
                             tools:text="02-123-123" />

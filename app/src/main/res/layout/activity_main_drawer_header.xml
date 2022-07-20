@@ -28,7 +28,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="64dp"
                 android:text="@string/main_drawer_welcome"
-                android:textSize="16sp"
+                android:textSize="16dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -40,7 +40,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="3dp"
                 android:text="@{drawerViewModel.nickname}"
-                android:textSize="16sp"
+                android:textSize="16dp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_hello" />
@@ -53,7 +53,7 @@
                 android:layout_marginStart="2dp"
                 android:layout_marginTop="3dp"
                 android:text="@string/main_drawer_welcome_second"
-                android:textSize="16sp"
+                android:textSize="16dp"
                 app:layout_constraintStart_toEndOf="@+id/tv_welcome"
                 app:layout_constraintTop_toBottomOf="@id/tv_hello" />
 
@@ -65,7 +65,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="3dp"
                 android:text="@string/main_drawer_welcome_third"
-                android:textSize="16sp"
+                android:textSize="16dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_welcome" />
 
@@ -95,7 +95,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="24dp"
                 android:text="@string/main_drawer_scrap"
-                android:textSize="15sp"
+                android:textSize="15dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/line_first" />
 
@@ -107,7 +107,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="20dp"
                 android:text="@string/main_drawer_review"
-                android:textSize="15sp"
+                android:textSize="15dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_scrap" />
 
@@ -127,7 +127,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="24dp"
                 android:text="@string/main_drawer_report"
-                android:textSize="15sp"
+                android:textSize="15dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/line_second" />
 
@@ -139,7 +139,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="20dp"
                 android:text="@string/main_drawer_modify_report"
-                android:textSize="15sp"
+                android:textSize="15dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_report" />
 
@@ -159,7 +159,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="24dp"
                 android:text="@string/main_drawer_setting"
-                android:textSize="16sp"
+                android:textSize="16dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/line_third" />
 
@@ -172,7 +172,7 @@
                 android:fontFamily="@font/notosanskr_r"
                 android:text="@string/main_drawer_logout"
                 android:textColor="@color/gray_600"
-                android:textSize="12sp"
+                android:textSize="12dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
