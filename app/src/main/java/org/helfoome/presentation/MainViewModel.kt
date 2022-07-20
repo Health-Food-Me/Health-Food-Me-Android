@@ -51,8 +51,6 @@ class MainViewModel @Inject constructor(
     val isVisibleReviewButton get() = _isVisibleReviewButton
 
     init {
-        // TODO 지도 뷰 구현 후 마커 클릭 시 해당 함수 호출하는 것으로 변경 예정
-        fetchSelectedRestaurantInfo()
         fetchHFMReviewList()
         fetchBlogReviewList()
         initVisibleReviewButton()
@@ -99,7 +97,7 @@ class MainViewModel @Inject constructor(
     fun markerId(position: LatLng) = storeIdHash[position]
 
     /** 선택된 식당 정보 불러오기 */
-    fun fetchSelectedRestaurantInfo() {
+    fun fetchSelectedRestaurantInfo(restaurantId: String) {
         // TODO 추후 매개변수로 좌표값을 받아 해당 좌표 음식점 정보를 불러오기
         viewModelScope.launch(Dispatchers.IO) {
             _selectedRestaurant.postValue(

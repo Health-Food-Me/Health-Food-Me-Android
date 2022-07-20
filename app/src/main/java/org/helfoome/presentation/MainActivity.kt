@@ -325,7 +325,8 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                         this.map = naverMap
 
                         this.setOnClickListener {
-                            viewModel.fetchSelectedRestaurantInfo()
+
+                            viewModel.fetchSelectedRestaurantInfo(marker.id)
                             behavior.state = BottomSheetBehavior.STATE_COLLAPSED
                             markerList.forEach {
                                 it.first.icon = OverlayImage.fromResource(
