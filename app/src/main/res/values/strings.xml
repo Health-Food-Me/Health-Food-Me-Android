@@ -92,6 +92,12 @@
     <string name="withdraw_dialog_no">아니요</string>
     <string name="withdraw_dialog_yes">네 탈퇴할게요</string>
 
+    <!-- MyReview Edit Dialog -->
+    <string name="my_edit_dialog_caution">리뷰편집을 취소하시겠습니까?</string>
+    <string name="my_edit_dialog_caution_description">편집취소 시,\n수정된 글은 저장되지 않습니다.</string>
+    <string name="my_edit_dialog_yse">네</string>
+    <string name="my_edit_dialog_no">아니오</string>
+
     <!-- MyReview Dialog -->
     <string name="my_review_dialog_caution">작성한 리뷰를\n삭제하실 건가요?</string>
     <string name="my_review_dialog_no">아니요</string>
