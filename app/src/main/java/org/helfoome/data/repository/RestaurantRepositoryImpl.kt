@@ -23,16 +23,21 @@ class RestaurantRepositoryImpl @Inject constructor(
             return null
         })
 
-    override suspend fun fetchRestaurantDetail(restaurantId: String, userId: String, latitude: Double, longitude: Double): Result<RestaurantInfo?> {
+    override suspend fun fetchRestaurantDetail(
+        restaurantId: String,
+        userId: String,
+        latitude: Double,
+        longitude: Double
+    ): Result<RestaurantInfo?> {
         return runCatching {
             restaurantService.getRestaurantDetail(restaurantId, userId, latitude, longitude)
-        }.fold({
-            Result.success(it.body()?.data?.toRestaurantInfo())
-        }, {
-            it.printStackTrace()
-            Result.failure(it.fillInStackTrace())
-        })
-
+        }.fold(
+            {
+                Result.success(it.body()?.data?.toRestaurantInfo())
+            }, {
+                it.printStackTrace()
+                Result.failure(it.fillInStackTrace())
+            })
     }
 
     override suspend fun updateRestaurantScrap(restaurantId: String, userId: String): List<String>? {
