@@ -10,6 +10,7 @@ import org.helfoome.domain.entity.*
 import org.helfoome.domain.repository.MapRepository
 import org.helfoome.domain.repository.ProfileRepository
 import org.helfoome.domain.repository.RestaurantRepository
+import org.helfoome.domain.repository.ReviewRepository
 import org.helfoome.util.Event
 import timber.log.Timber
 import javax.inject.Inject
@@ -19,9 +20,12 @@ class MainViewModel @Inject constructor(
     private val profileRepository: ProfileRepository,
     private val sharedPreferences: HFMSharedPreference,
     private val restaurantRepository: RestaurantRepository,
+    private val reviewRepository: ReviewRepository,
     private val mapRepository: MapRepository,
     private val hfmSharedPreference: HFMSharedPreference,
 ) : ViewModel() {
+    private val _checkReview = MutableLiveData<Boolean>()
+    val checkReview: LiveData<Boolean> = _checkReview
     private val _location = MutableLiveData<List<MarkerInfo>>()
     val location: LiveData<List<MarkerInfo>> = _location
     private val _isDietRestaurant = MutableLiveData<Boolean>()
@@ -59,6 +63,16 @@ class MainViewModel @Inject constructor(
         fetchHFMReviewList()
         fetchBlogReviewList()
         initVisibleReviewButton()
+    }
+    fun getReviewCheck(restaurantId: String) {
+        viewModelScope.launch {
+            kotlin.runCatching { reviewRepository.getReviewCheck(sharedPreferences.id, restaurantId) }
+                .onSuccess {
+                    _checkReview.value = it.data.hasReview
+                }.onFailure {
+                    Timber.d(it.message)
+                }
+        }
     }
 
     fun getMapInfo(latLng: LatLng) {
