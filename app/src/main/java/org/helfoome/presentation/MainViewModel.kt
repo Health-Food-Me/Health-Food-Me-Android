@@ -1,5 +1,6 @@
 package org.helfoome.presentation
 
+import android.util.Log
 import androidx.lifecycle.*
 import com.naver.maps.geometry.LatLng
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -74,7 +75,7 @@ class MainViewModel @Inject constructor(
 
     fun getProfile() {
         viewModelScope.launch {
-            runCatching { profileRepository.getProfile(sharedPreferences.id) }
+            runCatching { profileRepository.getProfile(sharedPreferences.nickname) }
                 .onSuccess {
                     _nickname.value = it.data.name
                 }

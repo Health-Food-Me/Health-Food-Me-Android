@@ -8,11 +8,10 @@ import org.helfoome.domain.entity.MyReviewListInfo
 data class ResponseMyReviewList(
     val content: String,
     val good: List<String>,
-    @SerialName("_id")
     val id: String,
     val image: List<Image>,
     val restaurant: String,
-    val score: Double,
+    val score: Float,
     val taste: String
 ) {
     @Serializable

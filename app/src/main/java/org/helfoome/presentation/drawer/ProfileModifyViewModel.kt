@@ -1,5 +1,6 @@
 package org.helfoome.presentation.drawer
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -31,7 +32,7 @@ class ProfileModifyViewModel @Inject constructor(
             viewModelScope.launch {
                 runCatching {
                     profileModifyRepository.modifyProfile(
-                        RequestProfileModify(nickname.toString()),
+                        RequestProfileModify(nickname.value.toString()),
                         sharedPreferences.id,
                     )
                 }.onSuccess {

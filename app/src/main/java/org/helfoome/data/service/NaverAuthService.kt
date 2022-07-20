@@ -1,6 +1,8 @@
 package org.helfoome.data.service
 
 import android.content.Context
+import android.util.Log
+import com.naver.maps.map.app.OpenSourceLicenseActivity
 import com.navercorp.nid.NaverIdLoginSDK
 import com.navercorp.nid.oauth.OAuthLoginCallback
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -42,7 +44,6 @@ class NaverAuthService @Inject constructor(
                     sharedPreferences.accessToken = it.data.accessToken
                     sharedPreferences.id = it.data.user.id
                     sharedPreferences.isLogin = true
-                    Timber.d("12345${it.data}")
                     sharedPreferences.nickname = it.data.user.name
                     loginListener?.invoke()
                     cancel()

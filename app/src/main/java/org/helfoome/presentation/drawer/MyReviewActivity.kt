@@ -7,7 +7,7 @@ import androidx.activity.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import org.helfoome.R
 import org.helfoome.databinding.ActivityMyReviewBinding
-import org.helfoome.databinding.DialogMyreviewBinding
+import org.helfoome.databinding.DialogMyReviewDeleteBinding
 import org.helfoome.presentation.MainActivity
 import org.helfoome.presentation.drawer.adapter.MyReviewAdapter
 import org.helfoome.presentation.drawer.adapter.MyReviewAdapter.Companion.DELETE
@@ -33,23 +33,20 @@ class MyReviewActivity : BindingActivity<ActivityMyReviewBinding>(R.layout.activ
         super.onCreate(savedInstanceState)
         viewModel.getMyReviewList()
 
-        binding.rcvReview.visibility = View.VISIBLE
-        binding.layoutEmptyView.visibility = View.GONE
         initObservers()
         initAdapter()
         initListeners()
-//        if (dataset.isEmpty()) {
-//            binding.rcvReview.visibility = View.GONE
-//            binding.layoutEmptyView.visibility = View.VISIBLE
-//        }
-//        else {
-//        binding.rcvReview.visibility = View.VISIBLE
-//        binding.layoutEmptyView.visibility = View.GONE
-//        }
     }
 
     private fun initObservers() {
         viewModel.myReviewInfo.observe(this) {
+            if (it.isEmpty()) {
+                binding.rcvReview.visibility = View.GONE
+                binding.layoutEmptyView.visibility = View.VISIBLE
+            } else {
+                binding.rcvReview.visibility = View.VISIBLE
+                binding.layoutEmptyView.visibility = View.GONE
+            }
             myReviewAdapter.submitList(it)
         }
     }
@@ -63,7 +60,7 @@ class MyReviewActivity : BindingActivity<ActivityMyReviewBinding>(R.layout.activ
                 startActivity<MainActivity>()
             }
             DELETE -> {
-                val bind = DialogMyreviewBinding.inflate(LayoutInflater.from(this@MyReviewActivity))
+                val bind = DialogMyReviewDeleteBinding.inflate(LayoutInflater.from(this@MyReviewActivity))
                 val dialog = DialogUtil.makeDialog(this, bind, resolutionMetrics.toPixel(288), resolutionMetrics.toPixel(223))
 
                 bind.btnYes.setOnClickListener {
@@ -80,15 +77,15 @@ class MyReviewActivity : BindingActivity<ActivityMyReviewBinding>(R.layout.activ
         binding.rcvReview.adapter = myReviewAdapter
 //        myReviewAdapter.submitList(
 //            listOf(
-//                MyReviewInfo(
-//                    1, "s", 1f, listOf("11", "11"), "dsd", listOf("de", "de")
+//                MyReviewListInfo(
+//                    "d", 3.0f, "D", listOf("11", "11"), "dsd", listOf()
 //                ),
-//                MyReviewInfo(
-//                    1, "s", 1f, listOf("11", "11"), "dsd", listOf("de", "de")
+//                MyReviewListInfo(
+//                    "d", 3.0f, "D", listOf("11", "11"), "dsd", listOf()
 //                ),
-//                MyReviewInfo(
-//                    1, "s", 1f, listOf("11", "11"), "dsd", listOf("de", "de")
-//                )
+//                MyReviewListInfo(
+//                    "d", 3.0f, "D", listOf("11", "11"), "dsd", listOf()
+//                ),
 //            )
 //        )
     }

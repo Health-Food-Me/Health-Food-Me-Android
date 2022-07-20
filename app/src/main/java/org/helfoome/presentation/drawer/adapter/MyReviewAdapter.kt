@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import org.helfoome.databinding.ItemGeneralMyReviewBinding
 import org.helfoome.domain.entity.MyReviewListInfo
+import org.helfoome.presentation.type.HashtagViewType
 import org.helfoome.util.ItemDiffCallback
 
 class MyReviewAdapter(private val itemClickListener: ((Int) -> Unit)) : ListAdapter<MyReviewListInfo, MyReviewAdapter.MyReviewViewHolder>(
@@ -44,6 +45,7 @@ class MyReviewAdapter(private val itemClickListener: ((Int) -> Unit)) : ListAdap
         fun onBind(myReviewData: MyReviewListInfo) {
             with(binding) {
                 data = myReviewData
+                binding.hashtag.setHashtag(listOf(myReviewData.tags, myReviewData.good.joinToString()), HashtagViewType.REVIEW_TAB_TYPE)
             }
         }
     }
