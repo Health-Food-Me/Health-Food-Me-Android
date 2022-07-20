@@ -25,5 +25,11 @@ data class ResponseHFMReview(
         val url: String,
     )
 
-    fun toReviewInfo() = HFMReviewInfo(id, name, score, taste + good, content, imageList.map { image -> HFMReviewInfo.ReviewImage(image.id, image.name, image.url) })
+    fun toReviewInfo() = HFMReviewInfo(
+        id,
+        name,
+        score,
+        taste + good,
+        content,
+        imageList.map { image -> HFMReviewInfo.ReviewImage(image.id, image.name, image.url) })
 }

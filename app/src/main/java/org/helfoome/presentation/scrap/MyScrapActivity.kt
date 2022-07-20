@@ -55,9 +55,7 @@ class MyScrapActivity : BindingActivity<ActivityMyScrapBinding>(R.layout.activit
                     is ScrapViewModel.ScrapUiState.Empty -> {
                         binding.isEmpty = true
                     }
-                    is ScrapViewModel.ScrapUiState.Error -> {
-                           
-                    }
+                    is ScrapViewModel.ScrapUiState.Error -> {}
                     else -> {
                         // TODO : 로딩 에러 처리
                     }
