@@ -205,14 +205,21 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
             })
         }
 
-//        binding.fabBookmark.setOnClickListener {
-//            it.isSelected = !it.isSelected
-//        }
+        binding.fabBookmark.setOnClickListener {
+            it.isSelected = !it.isSelected
+        }
+
+        binding.fabBookmarkMain.setOnClickListener {
+            it.isSelected = !it.isSelected
+        }
 
         with(binding.layoutRestaurantDialog) {
 
             layoutAppBar.setOnClickListener {
-                if (behavior.state == BottomSheetBehavior.STATE_COLLAPSED) behavior.state = BottomSheetBehavior.STATE_EXPANDED
+                if (behavior.state == BottomSheetBehavior.STATE_COLLAPSED) {
+                    binding.isFloatingNotVisible = true
+                    behavior.state = BottomSheetBehavior.STATE_EXPANDED
+                }
             }
 
             btnBack.setOnClickListener {
@@ -326,6 +333,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
 
                             viewModel.fetchSelectedRestaurantInfo(marker.id)
                             behavior.state = BottomSheetBehavior.STATE_COLLAPSED
+                            binding.isMainNotVisible = true
                             markerList.forEach {
                                 it.first.icon = OverlayImage.fromResource(
                                     if (it.second) R.drawable.ic_marker_green_small
@@ -374,6 +382,12 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
             binding.layoutRestaurantDialog.nvDetail.isNestedScrollingEnabled = false
             viewModel.setExpendedBottomSheetDialog(newState == BottomSheetBehavior.STATE_EXPANDED)
             behavior.isDraggable = true
+            if (newState == BottomSheetBehavior.STATE_COLLAPSED)
+                binding.isFloatingNotVisible = false
+            if (newState == BottomSheetBehavior.STATE_DRAGGING)
+                binding.isFloatingNotVisible = true
+            if (newState == BottomSheetBehavior.STATE_HIDDEN)
+                binding.isMainNotVisible = false
         }
 
         override fun onSlide(bottomSheetView: View, slideOffset: Float) {
@@ -433,6 +447,22 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
             naverMap.locationTrackingMode = LocationTrackingMode.Follow
         }
         viewModel.getMapInfo(naverMap.cameraPosition.target)
+        binding.fabLocationMain.setOnClickListener {
+            naverMap.cameraPosition = CameraPosition(
+                LatLng(
+                    naverMap.cameraPosition.target.latitude,
+                    naverMap.cameraPosition.target.longitude
+                ),
+                11.0
+            )
+            naverMap.locationTrackingMode = LocationTrackingMode.Follow
+        }
+        viewModel.getMapInfo(
+            LatLng(
+                naverMap.cameraPosition.target.latitude,
+                naverMap.cameraPosition.target.longitude
+            )
+        )
     }
 
     companion object {

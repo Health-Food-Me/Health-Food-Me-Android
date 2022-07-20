@@ -6,6 +6,16 @@
 
     <data>
 
+        <import type="android.view.View" />
+
+        <variable
+            name="isFloatingNotVisible"
+            type="boolean" />
+
+        <variable
+            name="isMainNotVisible"
+            type="boolean" />
+
         <variable
             name="viewModel"
             type="org.helfoome.presentation.MainViewModel" />
@@ -122,18 +132,31 @@
 <!--                            />-->
 
 <!--                    </androidx.constraintlayout.widget.ConstraintLayout>-->
+                    <ImageButton
+                        android:id="@+id/fab_bookmark_main"
+                        android:layout_width="56dp"
+                        android:layout_height="56dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginBottom="16dp"
+                        android:background="@drawable/rectangle_border_white"
+                        android:elevation="4dp"
+                        android:src="@drawable/selector_btn_scrap"
+                        android:visibility="@{isMainNotVisible? View.GONE : View.VISIBLE}"
+                        app:layout_constraintBottom_toTopOf="@+id/fab_location_main"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_goneMarginBottom="12dp" />
 
                     <com.google.android.material.floatingactionbutton.FloatingActionButton
-                        android:id="@+id/fab_location"
+                        android:id="@+id/fab_location_main"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="20dp"
                         android:layout_marginBottom="16dp"
                         android:backgroundTint="@color/white"
                         android:src="@drawable/ic_currentposition"
+                        android:visibility="@{isMainNotVisible? View.GONE : View.VISIBLE}"
                         app:borderWidth="0dp"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintEnd_toEndOf="@id/fab_bookmark_main"
                         app:layout_dodgeInsetEdges="bottom" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -145,13 +168,50 @@
                     android:fillViewport="true"
                     android:overScrollMode="never"
                     app:behavior_hideable="true"
-                    app:behavior_peekHeight="168dp"
+                    app:behavior_peekHeight="304dp"
                     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
                     tools:visibility="visible">
+
+                    <ImageButton
+                        android:id="@+id/fab_bookmark"
+                        android:layout_width="56dp"
+                        android:layout_height="56dp"
+                        android:layout_marginEnd="20dp"
+                        android:background="@drawable/rectangle_border_white"
+                        android:elevation="4dp"
+                        android:src="@drawable/selector_btn_scrap"
+                        android:visibility="@{isFloatingNotVisible? View.GONE : View.VISIBLE}"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/fab_location"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:backgroundTint="@color/white"
+                        android:src="@drawable/ic_currentposition"
+                        android:visibility="@{isFloatingNotVisible? View.GONE : View.VISIBLE}"
+                        app:borderWidth="0dp"
+                        app:layout_constraintEnd_toEndOf="@+id/fab_bookmark"
+                        app:layout_constraintTop_toBottomOf="@id/fab_bookmark"
+                        app:layout_dodgeInsetEdges="bottom" />
+
+                    <View
+                        android:id="@+id/line"
+                        android:layout_width="match_parent"
+                        android:layout_height="12dp"
+                        android:visibility="@{isFloatingNotVisible? View.GONE : View.VISIBLE}"
+                        app:layout_constraintTop_toBottomOf="@+id/fab_location" />
 
                     <include
                         android:id="@+id/layout_restaurant_dialog"
                         layout="@layout/dialog_restaurant_detail"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/line"
                         bind:viewModel="@{viewModel}" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
