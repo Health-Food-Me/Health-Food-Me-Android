@@ -69,7 +69,7 @@ class ReviewWritingActivity : BindingActivity<ActivityReviewWritingBinding>(R.la
     private fun initView() {
         binding.rvPhotoList.apply {
             adapter = galleryImageAdapter
-            addItemDecoration(ItemDecorationUtil.ItemDecoration(0f, padding = 18, isVertical = false))
+            addItemDecoration(ItemDecorationUtil.ItemDecoration(0f, padding = 24, isVertical = false))
         }
     }
 
