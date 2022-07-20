@@ -5,6 +5,11 @@
 
     <data>
 
+        <import type="android.view.View" />
+
+        <variable
+            name="isEmptyVisible"
+            type="boolean" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -47,11 +52,12 @@
             android:id="@+id/layout_empty_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="202dp"
+            android:visibility="@{isEmptyVisible? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:visibility="invisible"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/line_first">
+            app:layout_constraintTop_toBottomOf="@id/line_first"
+            app:layout_constraintVertical_bias="0.4">
 
             <TextView
                 android:id="@+id/tv_description"
@@ -104,6 +110,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
             android:layout_marginTop="20dp"
+            android:visibility="@{isEmptyVisible? View.GONE : View.VISIBLE}"
             android:overScrollMode="never"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintTop_toBottomOf="@id/line_first"

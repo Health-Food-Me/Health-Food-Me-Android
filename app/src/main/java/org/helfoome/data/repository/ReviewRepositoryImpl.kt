@@ -21,8 +21,13 @@ class ReviewRepositoryImpl @Inject constructor(
             Result.failure(it.fillInStackTrace())
         })
     }
+
     override suspend fun getMyReviewList(userId: String): BaseResponse<List<ResponseMyReviewList>> {
         return reviewService.getMyReviewList(userId)
+    }
+
+    override suspend fun deleteReview(reviewId: String) = runCatching {
+        reviewService.deleteReview(reviewId).success
     }
 
     override suspend fun putMyReviewEdit(reviewId: String): BaseResponse<ResponseMyReviewEdit> {

@@ -1,10 +1,12 @@
 package org.helfoome.data.service
 
 import org.helfoome.data.model.response.BaseResponse
+import org.helfoome.data.model.response.EmptyResponse
 
 import org.helfoome.data.model.response.ResponseHFMReview
 import org.helfoome.data.model.response.ResponseMyReviewEdit
 import org.helfoome.data.model.response.ResponseMyReviewList
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.PUT
 import retrofit2.http.Path
@@ -20,6 +22,11 @@ interface ReviewService {
     suspend fun getMyReviewList(
         @Path("userId") userId: String,
     ): BaseResponse<List<ResponseMyReviewList>>
+
+    @DELETE("/review/{reviewId}")
+    suspend fun deleteReview(
+        @Path("reviewId") reviewId: String,
+    ): EmptyResponse
 
     @PUT("/review/{reviewId}")
     suspend fun putMyReviewEdit(
