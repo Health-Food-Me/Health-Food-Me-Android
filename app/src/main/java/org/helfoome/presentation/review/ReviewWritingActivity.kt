@@ -34,7 +34,7 @@ class ReviewWritingActivity : BindingActivity<ActivityReviewWritingBinding>(R.la
             if (it) {
                 TedImagePicker.with(this)
                     .showCameraTile(false)
-                    .max(galleryImageAdapter.getNumOfSelectableImages(), "사진첨부는 최대 3장만 가능합니다")
+                    .max(galleryImageAdapter.getNumOfSelectableImages(), getString(R.string.review_writing_image_upload_toast_text))
                     .startMultiImage { uriList ->
                         val bitmapList = uriList.map { uri -> uriToBitmap(uri) }
                         galleryImageAdapter.setBitmapList(bitmapList)
@@ -89,7 +89,7 @@ class ReviewWritingActivity : BindingActivity<ActivityReviewWritingBinding>(R.la
 
     private fun getFullImageCount(): Boolean {
         val isFull = galleryImageAdapter.getNumOfSelectableImages() <= 0 // galleryImageAdapter.itemCount > 3 //
-        if (isFull) showToast("사진첨부는 최대 3장만 가능합니다")
+        if (isFull) showToast(getString(R.string.review_writing_image_upload_toast_text))
         return isFull
     }
 
