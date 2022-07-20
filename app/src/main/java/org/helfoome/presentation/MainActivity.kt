@@ -115,8 +115,6 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
         window.makeTransparentStatusBar()
         viewModel.getProfile()
 
-        binding.fabBookmark.outlineProvider
-
         locationSource =
             FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE)
         initNaverMap()
@@ -207,9 +205,9 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
             })
         }
 
-        binding.fabBookmark.setOnClickListener {
-            it.isSelected = !it.isSelected
-        }
+//        binding.fabBookmark.setOnClickListener {
+//            it.isSelected = !it.isSelected
+//        }
 
         with(binding.layoutRestaurantDialog) {
 
