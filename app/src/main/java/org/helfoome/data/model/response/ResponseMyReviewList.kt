@@ -1,6 +1,5 @@
 package org.helfoome.data.model.response
 
-import com.google.gson.annotations.SerializedName
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import org.helfoome.domain.entity.MyReviewListInfo
@@ -30,5 +29,6 @@ data class ResponseMyReviewList(
         taste,
         good,
         content,
-        image.map { image -> MyReviewListInfo.ReviewImage(image.id, image.name, image.url) })
+        image.map { image -> MyReviewListInfo.ReviewImage(image.id, image.name, image.url) }
+    )
 }

@@ -1,6 +1,5 @@
 package org.helfoome.data.model.response
 
-import com.google.gson.annotations.SerializedName
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import org.helfoome.domain.entity.HFMReviewInfo

@@ -41,7 +41,6 @@ class MyScrapActivity : BindingActivity<ActivityMyScrapBinding>(R.layout.activit
                 finish()
             }
         }
-
     }
 
     private fun observeData() {
