@@ -5,6 +5,7 @@ import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.PUT
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface RestaurantService {
     @GET("/restaurant/{restaurantId}/{userId}")
@@ -13,10 +14,13 @@ interface RestaurantService {
         @Path("userId") userId: String,
     ): Response<BaseResponse<ResponseRestaurantSummary>>
 
-    @GET("/restaurant/{restaurantId}")
+    @GET("/restaurant/{restaurantId}/{userId}/menus")
     suspend fun getRestaurantDetail(
         @Path("restaurantId") restaurantId: String,
-    ): Response<BaseResponse<ResponseRestaurantSummary>>
+        @Path("userId") userId: String,
+        @Query("latitude") latitude: Double,
+        @Query("longitude") longitude: Double,
+    ): Response<BaseResponse<ResponseRestaurantDetail>>
 
     @PUT("/user/{userId}/scrap/{restaurantId}")
     suspend fun updateRestaurantScrap(
