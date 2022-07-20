@@ -433,7 +433,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
             )
             naverMap.locationTrackingMode = LocationTrackingMode.Follow
         }
-        viewModel.getMapInfo()
+        viewModel.getMapInfo(naverMap.cameraPosition.target)
     }
 
     companion object {

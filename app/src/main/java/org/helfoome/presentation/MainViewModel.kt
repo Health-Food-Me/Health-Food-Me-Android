@@ -23,6 +23,7 @@ class MainViewModel @Inject constructor(
     private val sharedPreferences: HFMSharedPreference,
     private val restaurantRepository: RestaurantRepository,
     private val mapRepository: MapRepository,
+    private val hfmSharedPreference: HFMSharedPreference,
 ) : ViewModel() {
     private val _location = MutableLiveData<List<MarkerInfo>>()
     val location: LiveData<List<MarkerInfo>> = _location
@@ -57,9 +58,9 @@ class MainViewModel @Inject constructor(
         initVisibleReviewButton()
     }
 
-    fun getMapInfo() {
+    fun getMapInfo(latLng: LatLng) {
         viewModelScope.launch(Dispatchers.IO) {
-            runCatching { mapRepository.getMap(37.498095, 127.027610, 11, null) }
+            runCatching { mapRepository.getMap(latLng.latitude, latLng.longitude, 11, null) }
                 .onSuccess {
                     _location.postValue(
                         it.data.map { marker ->
