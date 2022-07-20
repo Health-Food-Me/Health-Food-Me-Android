@@ -101,10 +101,7 @@ class MainViewModel @Inject constructor(
         // TODO 추후 매개변수로 좌표값을 받아 해당 좌표 음식점 정보를 불러오기
         viewModelScope.launch(Dispatchers.IO) {
             _selectedRestaurant.postValue(
-                restaurantRepository.fetchRestaurantSummary(
-                    "62d26c9bd11146a81ef18ea6",
-                    "62cf2c468ae4a7cda10f4f4f"
-                )
+                restaurantRepository.fetchRestaurantSummary(restaurantId, hfmSharedPreference.id)
             )
         }
     }
@@ -124,7 +121,7 @@ class MainViewModel @Inject constructor(
     fun updateRestaurantScrap() {
         viewModelScope.launch(Dispatchers.IO) {
             val isScrap =
-                restaurantRepository.updateRestaurantScrap(selectedRestaurant.value?.id ?: return@launch, "62cf2c468ae4a7cda10f4f4f")
+                restaurantRepository.updateRestaurantScrap(selectedRestaurant.value?.id ?: return@launch, hfmSharedPreference.id)
                     ?: return@launch
             _selectedRestaurant.postValue(_selectedRestaurant.value?.apply { this.isScrap = isScrap })
         }
