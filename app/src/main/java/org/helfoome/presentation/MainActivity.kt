@@ -72,6 +72,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                         binding.snvProfileModify.animation = bottomTopAnimation
                         binding.snvProfileModify.setText("닉네임이 변경되었습니다")
                     }
+
                     override fun onAnimationRepeat(p0: Animation?) = Unit
                 })
             }
@@ -201,7 +202,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
         viewModel.checkReview.observe(this) {
             if (viewModel.checkReview.value == false) {
                 binding.layoutRestaurantDialog.btnWriteReview.isEnabled = true
-            }else if(viewModel.checkReview.value == true) {
+            } else if (viewModel.checkReview.value == true) {
                 binding.layoutRestaurantDialog.btnWriteReview.isEnabled = false
             }
         }
