@@ -33,6 +33,7 @@ class KakaoAuthService @Inject constructor(
                             val response = it.data
                             with(sharedPreferences) {
                                 accessToken = response.accessToken
+                                refreshToken = response.refreshToken
                                 id = response.user.id
                                 nickname = response.user.name
                             }
@@ -68,6 +69,7 @@ class KakaoAuthService @Inject constructor(
                                 val response = it.data
                                 with(sharedPreferences) {
                                     accessToken = response.accessToken
+                                    refreshToken = response.refreshToken
                                     id = response.user.id
                                     nickname = response.user.name
                                 }
