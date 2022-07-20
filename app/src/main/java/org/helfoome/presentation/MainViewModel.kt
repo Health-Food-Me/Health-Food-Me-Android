@@ -64,6 +64,7 @@ class MainViewModel @Inject constructor(
         fetchBlogReviewList()
         initVisibleReviewButton()
     }
+
     fun getReviewCheck(restaurantId: String) {
         viewModelScope.launch {
             kotlin.runCatching { reviewRepository.getReviewCheck(sharedPreferences.id, restaurantId) }
@@ -155,9 +156,11 @@ class MainViewModel @Inject constructor(
             if (selectedRestaurant.value?.id == null) return@launch
             val scrappedRestaurantList =
                 restaurantRepository.updateRestaurantScrap(selectedRestaurant.value?.id!!, hfmSharedPreference.id) ?: return@launch
-            _selectedRestaurant.postValue(_selectedRestaurant.value?.apply {
-                this.isScrap = scrappedRestaurantList.contains(selectedRestaurant.value?.id!!)
-            })
+            _selectedRestaurant.postValue(
+                _selectedRestaurant.value?.apply {
+                    this.isScrap = scrappedRestaurantList.contains(selectedRestaurant.value?.id!!)
+                }
+            )
         }
     }
 
