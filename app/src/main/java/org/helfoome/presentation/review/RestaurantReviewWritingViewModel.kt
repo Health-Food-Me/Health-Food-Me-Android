@@ -15,9 +15,7 @@ class RestaurantReviewWritingViewModel @Inject constructor() : ViewModel() {
     private val _review = MutableLiveData<String>()
     val review get() = _review
     val selectedTasteTag = MutableLiveData<TasteHashtagType>()
-    val selectedGoodPointTags = MutableLiveData(hashMapOf(GoodPointHashtagType.NO_BURDEN to false,
-        GoodPointHashtagType.EASY_TO_CONTROL to false,
-        GoodPointHashtagType.FULL to false))
+    val selectedGoodPointTags = MutableLiveData(hashMapOf(GoodPointHashtagType.NO_BURDEN to false, GoodPointHashtagType.EASY_TO_CONTROL to false, GoodPointHashtagType.FULL to false))
     private val _selectedImageList = MutableLiveData<List<Bitmap>>()
     val selectedImageList: LiveData<List<Bitmap>> get() = _selectedImageList
     private val _isEnabledWritingCompleteButton = MediatorLiveData<Boolean>()
