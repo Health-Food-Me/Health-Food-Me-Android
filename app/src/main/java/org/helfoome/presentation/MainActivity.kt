@@ -299,7 +299,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
         viewModel.checkReview.observe(this) {
             if (viewModel.checkReview.value == false) {
                 binding.layoutRestaurantDialog.btnWriteReview.isEnabled = false
-            }else if(viewModel.checkReview.value == true) {
+            } else if (viewModel.checkReview.value == true) {
                 binding.layoutRestaurantDialog.btnWriteReview.isEnabled = true
             }
         }

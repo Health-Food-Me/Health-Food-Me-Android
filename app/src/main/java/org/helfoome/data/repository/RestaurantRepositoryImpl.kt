@@ -32,10 +32,11 @@ class RestaurantRepositoryImpl @Inject constructor(
             restaurantService.updateRestaurantScrap(restaurantId, userId)
         }.fold({
             return it.body()?.data?.restaurants
-        }, {
-            it.printStackTrace()
-            return null
-        })
+        },
+            {
+                it.printStackTrace()
+                return null
+            })
     }
 
     override suspend fun getEatingOutTips(restaurantId: String): EatingOutTipInfo? {
