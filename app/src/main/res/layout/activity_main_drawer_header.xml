@@ -21,17 +21,53 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/tv_welcome"
+                android:id="@+id/tv_hello"
                 style="@style/TextView.Drawer.TextAppearance"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="64dp"
-                android:lineSpacingExtra="3dp"
-                android:text='@{"안녕하세요!\n" + drawerViewModel.nickname + "님\n오늘도 헬푸미하세요"}'
+                android:text="@string/main_drawer_welcome"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_welcome"
+                style="@style/TextView.Drawer.TextAppearance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="3dp"
+                android:text="@{drawerViewModel.nickname}"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_hello" />
+
+            <TextView
+                android:id="@+id/tv_welcome_third"
+                style="@style/TextView.Drawer.TextAppearance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="2dp"
+                android:layout_marginTop="3dp"
+                android:text="@string/main_drawer_welcome_second"
+                android:textSize="16sp"
+                app:layout_constraintStart_toEndOf="@+id/tv_welcome"
+                app:layout_constraintTop_toBottomOf="@id/tv_hello" />
+
+            <TextView
+                android:id="@+id/tv_welcome_fourth"
+                style="@style/TextView.Drawer.TextAppearance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="3dp"
+                android:text="@string/main_drawer_welcome_third"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_welcome" />
 
             <ImageView
                 android:id="@+id/btn_edit"
@@ -40,7 +76,7 @@
                 android:layout_marginStart="8dp"
                 android:src="@drawable/ic_edit"
                 app:layout_constraintBottom_toBottomOf="@id/tv_welcome"
-                app:layout_constraintStart_toEndOf="@id/tv_welcome"
+                app:layout_constraintStart_toEndOf="@id/tv_welcome_third"
                 app:layout_constraintTop_toTopOf="@id/tv_welcome" />
 
             <View
@@ -49,7 +85,7 @@
                 android:layout_height="1dp"
                 android:layout_marginTop="36dp"
                 android:background="@color/gray_200"
-                app:layout_constraintTop_toBottomOf="@id/tv_welcome" />
+                app:layout_constraintTop_toBottomOf="@id/tv_welcome_fourth" />
 
             <TextView
                 android:id="@+id/tv_scrap"

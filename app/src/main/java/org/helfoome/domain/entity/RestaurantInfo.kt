@@ -10,5 +10,7 @@ data class RestaurantInfo(
     var isScrap: Boolean? = false,
     val location: String? = null,
     val time: List<String>? = null,
-    val number: String? = null,
+    val contact: String? = null,
+    val distance: Int? = null,
+    val menuList: List<MenuInfo>? = null
 )
