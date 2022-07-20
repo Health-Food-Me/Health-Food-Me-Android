@@ -1,18 +1,15 @@
 package org.helfoome.presentation.review
 
 import android.Manifest
-import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.ImageDecoder
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
-import android.provider.MediaStore
+import android.os.Environment
 import android.view.MotionEvent
 import android.widget.EditText
 import android.widget.ScrollView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
+import androidx.core.content.FileProvider
 import dagger.hilt.android.AndroidEntryPoint
 import gun0912.tedimagepicker.builder.TedImagePicker
 import org.helfoome.R
@@ -22,41 +19,13 @@ import org.helfoome.util.ItemDecorationUtil
 import org.helfoome.util.binding.BindingActivity
 import org.helfoome.util.ext.closeKeyboard
 import org.helfoome.util.showToast
-import java.io.IOException
+import java.io.File
 
 @AndroidEntryPoint
 class ReviewWritingActivity : BindingActivity<ActivityReviewWritingBinding>(R.layout.activity_review_writing) {
     private val viewModel: RestaurantReviewWritingViewModel by viewModels()
     private val galleryImageAdapter = GalleryImageAdapter(::showGalleryImageDialog)
-
-    private val requestStorage =
-        registerForActivityResult(ActivityResultContracts.RequestPermission()) {
-            if (it) {
-                TedImagePicker.with(this)
-                    .showCameraTile(false)
-                    .max(galleryImageAdapter.getNumOfSelectableImages(), getString(R.string.review_writing_image_upload_toast_text))
-                    .startMultiImage { uriList ->
-                        val bitmapList = uriList.map { uri -> uriToBitmap(uri) }
-                        galleryImageAdapter.setBitmapList(bitmapList)
-                    }
-            }
-        }
-
-    private val cameraPermissionLauncher =
-        registerForActivityResult(ActivityResultContracts.RequestPermission()) {
-            if (it) {
-                val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-                cameraLauncher.launch(intent)
-            }
-        }
-
-    private val cameraLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-        if (result.resultCode == RESULT_OK) {
-            result.data?.extras?.get("data")?.let { imageBitmap ->
-                galleryImageAdapter.setBitmapList(listOf(imageBitmap as Bitmap))
-            }
-        }
-    }
+    private var photoUri: Uri? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -111,19 +80,6 @@ class ReviewWritingActivity : BindingActivity<ActivityReviewWritingBinding>(R.la
         GalleryBottomDialogFragment(::setOnclickListener).show(supportFragmentManager, "GalleryBottomDialogFragment")
     }
 
-    private fun uriToBitmap(uri: Uri): Bitmap? {
-        return try {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-                ImageDecoder.decodeBitmap(ImageDecoder.createSource(contentResolver, uri))
-            } else {
-                MediaStore.Images.Media.getBitmap(contentResolver, uri)
-            }
-        } catch (e: IOException) {
-            e.printStackTrace()
-            null
-        }
-    }
-
     private fun setOnclickListener(reviewImageType: ReviewImageType) {
         when (reviewImageType) {
             ReviewImageType.GALLERY -> requestStorage.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
@@ -134,7 +90,9 @@ class ReviewWritingActivity : BindingActivity<ActivityReviewWritingBinding>(R.la
     override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
         val view = currentFocus
 
-        if (view != null && ev.action == MotionEvent.ACTION_UP || ev.action == MotionEvent.ACTION_MOVE && view is EditText && !view.javaClass.name.startsWith("android.webkit.")) {
+        if (view != null && ev.action == MotionEvent.ACTION_UP || ev.action == MotionEvent.ACTION_MOVE && view is EditText && !view.javaClass.name.startsWith(
+                "android.webkit.")
+        ) {
             val locationList = IntArray(2)
             view.getLocationOnScreen(locationList)
             val x = ev.rawX + view.left - locationList[0]
@@ -146,5 +104,35 @@ class ReviewWritingActivity : BindingActivity<ActivityReviewWritingBinding>(R.la
         }
 
         return super.dispatchTouchEvent(ev)
+    }
+
+    private fun openCamera() {
+        val photoFile = File.createTempFile("IMG_", ".jpg", getExternalFilesDir(Environment.DIRECTORY_PICTURES))
+        photoUri = FileProvider.getUriForFile(this, "${packageName}.provider", photoFile)
+        cameraLauncher.launch(photoUri)
+    }
+
+    private val requestStorage =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) {
+            if (it) {
+                TedImagePicker.with(this)
+                    .showCameraTile(false)
+                    .max(galleryImageAdapter.getNumOfSelectableImages(), getString(R.string.review_writing_image_upload_toast_text))
+                    .startMultiImage { uriList ->
+                        galleryImageAdapter.setUriList(uriList)
+                    }
+            }
+        }
+
+    private val cameraPermissionLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
+            if (isGranted) {
+                openCamera()
+            }
+        }
+
+    private val cameraLauncher = registerForActivityResult(ActivityResultContracts.TakePicture()) { isSuccess ->
+        if (isSuccess)
+            galleryImageAdapter.setUriList(listOf(photoUri))
     }
 }

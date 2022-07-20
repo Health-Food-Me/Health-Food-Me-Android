@@ -1,6 +1,6 @@
 package org.helfoome.presentation.review
 
-import android.graphics.Bitmap
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -13,7 +13,7 @@ import org.helfoome.util.ext.getString
 class GalleryImageAdapter(private val cameraOnClickListener: () -> Unit) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private lateinit var inflater: LayoutInflater
-    private val imageList = mutableListOf<Bitmap?>()
+    private val imageList = mutableListOf<Uri?>()
 
     init {
         // 0번 인덱스에 커메라 아이템을 넣기 위함
@@ -23,7 +23,7 @@ class GalleryImageAdapter(private val cameraOnClickListener: () -> Unit) :
 
     class GalleryImageViewHolder(private val binding: ItemGalleryImageBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(imageUrl: Bitmap?, deleteImage: (Bitmap) -> Unit) {
+        fun bind(imageUrl: Uri?, deleteImage: (Uri) -> Unit) {
             binding.ivImage.load(imageUrl)
             binding.btnDelete.setOnClickListener {
                 deleteImage(imageUrl ?: return@setOnClickListener)
@@ -78,14 +78,14 @@ class GalleryImageAdapter(private val cameraOnClickListener: () -> Unit) :
 
     fun getNumOfSelectableImages() = MAX_IMAGE_COUNT - getCurrentImageCount()
 
-    fun setBitmapList(bitmapList: List<Bitmap?>) {
+    fun setUriList(uriList: List<Uri?>) {
         val currentCount = imageList.size - 1
-        if (currentCount + bitmapList.size > 3) return
-        imageList.addAll(1, bitmapList)
+        if (currentCount + uriList.size > 3) return
+        imageList.addAll(1, uriList)
         notifyDataSetChanged()
     }
 
-    private fun deleteImage(url: Bitmap) {
+    private fun deleteImage(url: Uri) {
         imageList.remove(url)
         notifyDataSetChanged()
     }
