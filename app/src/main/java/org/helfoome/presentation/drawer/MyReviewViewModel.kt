@@ -37,4 +37,16 @@ class MyReviewViewModel @Inject constructor(
             }
         }
     }
+
+    fun deleteReview(reviewId: String) {
+        viewModelScope.launch {
+            reviewRepository.deleteReview(reviewId)
+                .onSuccess {
+                    getMyReviewList()
+                }
+                .onFailure {
+
+                }
+        }
+    }
 }
