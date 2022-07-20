@@ -246,7 +246,7 @@
                             android:layout_marginStart="16dp"
                             android:layout_marginTop="8dp"
                             android:fontFamily="@font/notosanskr_m"
-                            android:text="@{viewModel.selectedRestaurant.number}"
+                            android:text="@{viewModel.selectedRestaurant.contact}"
                             android:textColor="@color/gray_600"
                             android:textSize="12sp"
                             app:layout_constraintStart_toEndOf="@id/iv_call"

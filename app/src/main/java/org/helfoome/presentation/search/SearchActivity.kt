@@ -300,7 +300,7 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
                     "일요일 10:00 ~ 22:00",
                     "월요일 10:00 ~ 22:00"
                 ),
-                number = "02-123-123"
+                contact = "02-123-123"
             )
         }
     }

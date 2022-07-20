@@ -33,11 +33,13 @@ import dagger.hilt.android.AndroidEntryPoint
 import org.helfoome.R
 import org.helfoome.databinding.ActivityMainBinding
 import org.helfoome.databinding.DialogLogoutBinding
+import org.helfoome.domain.entity.MenuInfo
 import org.helfoome.presentation.drawer.MyReviewActivity
 import org.helfoome.presentation.drawer.ProfileModifyActivity
 import org.helfoome.presentation.drawer.SettingActivity
 import org.helfoome.presentation.login.LoginActivity
 import org.helfoome.presentation.restaurant.MapSelectionBottomDialogFragment
+import org.helfoome.presentation.restaurant.adapter.RestaurantMenuAdapter
 import org.helfoome.presentation.restaurant.adapter.RestaurantTabAdapter
 import org.helfoome.presentation.review.ReviewWritingActivity
 import org.helfoome.presentation.scrap.MyScrapActivity
@@ -57,6 +59,7 @@ import javax.inject.Inject
 class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main), OnMapReadyCallback {
     @Inject
     lateinit var resolutionMetrics: ResolutionMetrics
+    private val restaurantMenuAdapter = RestaurantMenuAdapter()
     private val requestModifyNickname =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
             if (activityResult.resultCode == Activity.RESULT_OK) {
@@ -107,8 +110,6 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
         binding.layoutDrawerHeader.drawerViewModel = viewModel
         window.makeTransparentStatusBar()
         viewModel.getProfile()
-
-        binding.fabBookmark.outlineProvider
 
         locationSource =
             FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE)
@@ -204,9 +205,16 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
             it.isSelected = !it.isSelected
         }
 
+        binding.fabBookmarkMain.setOnClickListener {
+            it.isSelected = !it.isSelected
+        }
+
         with(binding.layoutRestaurantDialog) {
             layoutAppBar.setOnClickListener {
-                if (behavior.state == BottomSheetBehavior.STATE_COLLAPSED) behavior.state = BottomSheetBehavior.STATE_EXPANDED
+                if (behavior.state == BottomSheetBehavior.STATE_COLLAPSED) {
+                    binding.isFloatingNotVisible = true
+                    behavior.state = BottomSheetBehavior.STATE_EXPANDED
+                }
             }
 
             btnBack.setOnClickListener {
@@ -310,6 +318,10 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
             }
         }
 
+        viewModel.menu.observe(this) { menuList ->
+            restaurantMenuAdapter.menuList = menuList
+        }
+
         viewModel.isVisibleReviewButton.observe(this) { isVisible ->
             binding.layoutRestaurantDialog.layoutReviewBtnBackground.visibility =
                 if (isVisible.peekContent()) View.VISIBLE else View.INVISIBLE
@@ -329,7 +341,10 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
 
                             viewModel.getReviewCheck(marker.id)
                             viewModel.fetchSelectedRestaurantInfo(marker.id)
+                            viewModel.fetchSelectedRestaurantDetailInfo(marker.id, marker.latitude, marker.longitude)
+//                            viewModel.fetchSelectedRestaurantInfo(marker.id)
                             behavior.state = BottomSheetBehavior.STATE_COLLAPSED
+                            binding.isMainNotVisible = true
                             markerList.forEach {
                                 it.first.icon = OverlayImage.fromResource(
                                     if (it.second) R.drawable.ic_marker_green_small
@@ -378,6 +393,12 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
             binding.layoutRestaurantDialog.nvDetail.isNestedScrollingEnabled = false
             viewModel.setExpendedBottomSheetDialog(newState == BottomSheetBehavior.STATE_EXPANDED)
             behavior.isDraggable = true
+            if (newState == BottomSheetBehavior.STATE_COLLAPSED)
+                binding.isFloatingNotVisible = false
+            if (newState == BottomSheetBehavior.STATE_DRAGGING)
+                binding.isFloatingNotVisible = true
+            if (newState == BottomSheetBehavior.STATE_HIDDEN)
+                binding.isMainNotVisible = false
         }
 
         override fun onSlide(bottomSheetView: View, slideOffset: Float) {
@@ -437,6 +458,22 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
             naverMap.locationTrackingMode = LocationTrackingMode.Follow
         }
         viewModel.getMapInfo(naverMap.cameraPosition.target)
+        binding.fabLocationMain.setOnClickListener {
+            naverMap.cameraPosition = CameraPosition(
+                LatLng(
+                    naverMap.cameraPosition.target.latitude,
+                    naverMap.cameraPosition.target.longitude
+                ),
+                11.0
+            )
+            naverMap.locationTrackingMode = LocationTrackingMode.Follow
+        }
+        viewModel.getMapInfo(
+            LatLng(
+                naverMap.cameraPosition.target.latitude,
+                naverMap.cameraPosition.target.longitude
+            )
+        )
     }
 
     companion object {
