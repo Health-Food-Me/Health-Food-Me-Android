@@ -144,7 +144,8 @@ class MainViewModel @Inject constructor(
             if (selectedRestaurant.value?.id == null) return@launch
             val scrappedRestaurantList =
                 restaurantRepository.updateRestaurantScrap(selectedRestaurant.value?.id!!, hfmSharedPreference.id) ?: return@launch
-            _selectedRestaurant.postValue(_selectedRestaurant.value?.apply {
+            _selectedRestaurant.postValue(_selectedRestaurant.value?.apply
+            {
                 this.isScrap = scrappedRestaurantList.contains(selectedRestaurant.value?.id!!)
             }
             )
@@ -154,7 +155,9 @@ class MainViewModel @Inject constructor(
     fun fetchSelectedRestaurantDetailInfo(restaurantId: String, latitude: Double, longitude: Double) {
         // TODO 추후 매개변수로 좌표값을 받아 해당 좌표 음식점 정보를 불러오기
         viewModelScope.launch {
-            val restaurantInfo = restaurantRepository.fetchRestaurantDetail(restaurantId, hfmSharedPreference.id, latitude, longitude).getOrNull() ?: return@launch
+            val restaurantInfo =
+                restaurantRepository.fetchRestaurantDetail(restaurantId, hfmSharedPreference.id, latitude, longitude).getOrNull()
+                    ?: return@launch
             _selectedRestaurant.postValue(restaurantInfo)
             //  _menu.postValue(restaurantInfo.menuList ?: return@launch)
             _eatingOutTips.value = restaurantRepository.getEatingOutTips(restaurantId)

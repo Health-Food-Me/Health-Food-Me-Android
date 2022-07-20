@@ -49,7 +49,8 @@ class RestaurantRepositoryImpl @Inject constructor(
             {
                 it.printStackTrace()
                 return null
-            })
+            }
+        )
     }
 
     override suspend fun getEatingOutTips(restaurantId: String): EatingOutTipInfo? {
