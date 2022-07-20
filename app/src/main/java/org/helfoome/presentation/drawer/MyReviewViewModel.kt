@@ -31,10 +31,22 @@ class MyReviewViewModel @Inject constructor(
                         it.toMyReviewListInfo()
                     }
                 )
-                it.data.map { review -> review.toMyReviewListInfo() }
+                Timber.d("success ${_myReviewInfo.value}")
             }.onFailure {
-                Timber.d(it.message)
+                Timber.d("failure ${it.message}")
             }
+        }
+    }
+
+    fun deleteReview(reviewId: String) {
+        viewModelScope.launch {
+            reviewRepository.deleteReview(reviewId)
+                .onSuccess {
+                    getMyReviewList()
+                }
+                .onFailure {
+                    Timber.d(it.message)
+                }
         }
     }
 }

@@ -23,6 +23,7 @@ class ProfileModifyActivity : BindingActivity<ActivityProfileModifyBinding>(R.la
 
         animator = object : Animation.AnimationListener {
             override fun onAnimationStart(animation: Animation?) = Unit
+            override fun onAnimationRepeat(animation: Animation?) = Unit
             override fun onAnimationEnd(animation: Animation?) {
                 val bottomTopAnimation = AnimationUtils.loadAnimation(this@ProfileModifyActivity, R.anim.anim_snackbar_bottom_top)
                 binding.snvProfileModify.animation = bottomTopAnimation
@@ -32,8 +33,6 @@ class ProfileModifyActivity : BindingActivity<ActivityProfileModifyBinding>(R.la
                     binding.snvProfileModify.setText("닉네임 설정 기준에 적합하지 않습니다")
                 }
             }
-
-            override fun onAnimationRepeat(animation: Animation?) = Unit
         }
         initListener()
         initObserve()

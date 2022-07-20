@@ -3,11 +3,17 @@ package org.helfoome.data.service
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import org.helfoome.data.model.response.BaseResponse
+import org.helfoome.data.model.response.EmptyResponse
 
 import org.helfoome.data.model.response.ResponseHFMReview
+import org.helfoome.data.model.response.ResponseMyReviewEdit
 import org.helfoome.data.model.response.ResponseMyReviewList
 import org.helfoome.data.model.response.ResponseReview
 import retrofit2.http.*
+import retrofit2.http.DELETE
+import retrofit2.http.GET
+import retrofit2.http.PUT
+import retrofit2.http.Path
 
 interface ReviewService {
     // TODO 리뷰 작성 관련 서비스 파일로 변경 예정
@@ -32,4 +38,14 @@ interface ReviewService {
         @Part("content") content: RequestBody,
         @Part image: List<MultipartBody.Part>,
     ): BaseResponse<ResponseReview>
+
+    @DELETE("/review/{reviewId}")
+    suspend fun deleteReview(
+        @Path("reviewId") reviewId: String,
+    ): EmptyResponse
+
+    @PUT("/review/{reviewId}")
+    suspend fun putMyReviewEdit(
+        @Path("reviewId") reviewId: String
+    ): BaseResponse<ResponseMyReviewEdit>
 }
