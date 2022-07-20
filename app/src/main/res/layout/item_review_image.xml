@@ -5,13 +5,6 @@
 
     <data>
 
-        <import type="org.helfoome.R" />
-
-        <import type="android.view.Gravity" />
-
-        <variable
-            name="menu"
-            type="org.helfoome.domain.entity.MenuInfo" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

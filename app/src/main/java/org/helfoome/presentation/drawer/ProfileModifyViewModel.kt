@@ -31,7 +31,7 @@ class ProfileModifyViewModel @Inject constructor(
             viewModelScope.launch {
                 runCatching {
                     profileModifyRepository.modifyProfile(
-                        RequestProfileModify(nickname.toString()),
+                        RequestProfileModify(nickname.value.toString()),
                         sharedPreferences.id,
                     )
                 }.onSuccess {

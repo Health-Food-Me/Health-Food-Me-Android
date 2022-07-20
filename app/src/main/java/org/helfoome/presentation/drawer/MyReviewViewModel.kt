@@ -31,9 +31,9 @@ class MyReviewViewModel @Inject constructor(
                         it.toMyReviewListInfo()
                     }
                 )
-                it.data.map { review -> review.toMyReviewListInfo() }
+                Timber.d("success ${_myReviewInfo.value}")
             }.onFailure {
-                Timber.d(it.message)
+                Timber.d("failure ${it.message}")
             }
         }
     }

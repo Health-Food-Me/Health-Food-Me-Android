@@ -3,6 +3,7 @@ package org.helfoome.data.model.response
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import org.helfoome.domain.entity.HFMReviewInfo
+import org.helfoome.domain.entity.ReviewImage
 
 @Serializable
 data class ResponseHFMReview(
@@ -30,6 +31,6 @@ data class ResponseHFMReview(
         score,
         taste + good,
         content,
-        imageList.map { image -> HFMReviewInfo.ReviewImage(image.id, image.name, image.url) }
+        imageList.map { image -> org.helfoome.domain.entity.ReviewImage(image.id, image.name, image.url) }
     )
 }

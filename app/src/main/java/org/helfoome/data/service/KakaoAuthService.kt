@@ -77,6 +77,7 @@ class KakaoAuthService @Inject constructor(
                                 cancel()
                             }
                             .onFailure {
+                                Timber.i(it.message)
                                 sharedPreferences.isLogin = false
                                 cancel()
                             }

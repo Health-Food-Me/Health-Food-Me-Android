@@ -2,12 +2,11 @@ package org.helfoome.presentation.drawer
 
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
 import androidx.activity.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import org.helfoome.R
 import org.helfoome.databinding.ActivityMyReviewBinding
-import org.helfoome.databinding.DialogMyreviewBinding
+import org.helfoome.databinding.DialogMyReviewDeleteBinding
 import org.helfoome.presentation.MainActivity
 import org.helfoome.presentation.drawer.adapter.MyReviewAdapter
 import org.helfoome.presentation.drawer.adapter.MyReviewAdapter.Companion.EDIT
@@ -27,7 +26,7 @@ class MyReviewActivity : BindingActivity<ActivityMyReviewBinding>(R.layout.activ
     private val myReviewAdapter = MyReviewAdapter(
         ::adapterClickListener
     ) { reviewId ->
-        val bind = DialogMyreviewBinding.inflate(LayoutInflater.from(this@MyReviewActivity))
+        val bind = DialogMyReviewDeleteBinding.inflate(LayoutInflater.from(this@MyReviewActivity))
         val dialog = DialogUtil.makeDialog(this, bind, resolutionMetrics.toPixel(288), resolutionMetrics.toPixel(223))
 
         bind.btnYes.setOnClickListener {
@@ -43,8 +42,6 @@ class MyReviewActivity : BindingActivity<ActivityMyReviewBinding>(R.layout.activ
         super.onCreate(savedInstanceState)
         viewModel.getMyReviewList()
 
-        binding.rcvReview.visibility = View.VISIBLE
-        binding.layoutEmptyView.visibility = View.GONE
         initObservers()
         initAdapter()
         initListeners()
