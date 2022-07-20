@@ -45,7 +45,7 @@ class MyReviewViewModel @Inject constructor(
                     getMyReviewList()
                 }
                 .onFailure {
-
+                    Timber.d(it.message)
                 }
         }
     }
