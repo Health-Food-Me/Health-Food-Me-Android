@@ -4,11 +4,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import org.helfoome.data.service.AuthService
-import org.helfoome.data.service.MapService
-import org.helfoome.data.service.SearchService
-import org.helfoome.data.service.RestaurantService
-import org.helfoome.data.service.ReviewService
+import org.helfoome.data.service.*
 import retrofit2.Retrofit
 import javax.inject.Singleton
 
@@ -42,4 +38,9 @@ object ServiceModule {
     @Singleton
     fun provideReviewService(retrofit: Retrofit): ReviewService =
         retrofit.create(ReviewService::class.java)
+
+    @Provides
+    @Singleton
+    fun provideScrapService(retrofit: Retrofit): ScrapService =
+        retrofit.create(ScrapService::class.java)
 }

@@ -1,9 +1,7 @@
 package org.helfoome.presentation.drawer.adapter
 
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import org.helfoome.databinding.ItemGeneralMyReviewBinding

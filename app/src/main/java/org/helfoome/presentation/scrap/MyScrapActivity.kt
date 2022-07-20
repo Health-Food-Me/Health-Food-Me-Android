@@ -1,21 +1,65 @@
 package org.helfoome.presentation.scrap
 
 import android.os.Bundle
+import androidx.activity.viewModels
+import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.lifecycleScope
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import org.helfoome.R
 import org.helfoome.databinding.ActivityMyScrapBinding
 import org.helfoome.presentation.scrap.adapter.MyScrapAdapter
 import org.helfoome.util.binding.BindingActivity
+import org.helfoome.util.ext.startActivity
 
+@AndroidEntryPoint
 class MyScrapActivity : BindingActivity<ActivityMyScrapBinding>(R.layout.activity_my_scrap) {
-    private val myScrapAdapter = MyScrapAdapter()
+    private val viewModel: ScrapViewModel by viewModels()
+    private val myScrapAdapter = MyScrapAdapter(
+        {
+            // TODO : 다음 액티비티에서 받아서 그려줌
+            startActivity<MapSelectActivity>(Pair("RESTAURANT_ID", it))
+        }
+    ) {
+        viewModel.putScrap(it)
+    }
 
     // TODO : 서버 통신 연동 필요
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        viewModel.getScrapList()
         initAdapter()
-        binding.toolbarScrap.setNavigationOnClickListener {
-            finish()
+        with(binding) {
+            toolbarScrap.setNavigationOnClickListener {
+                finish()
+            }
+            observeData()
+
+            layoutEmpty.btnScrap.setOnClickListener {
+                // TODO : 홈으로 가서 지도 띄워주기
+                finish()
+            }
         }
+    }
+
+    private fun observeData() {
+        viewModel.scrapUiState.flowWithLifecycle(lifecycle)
+            .onEach {
+                when (it) {
+                    is ScrapViewModel.ScrapUiState.Success -> {
+                        myScrapAdapter.submitList(it.data)
+                        binding.isEmpty = false
+                    }
+                    is ScrapViewModel.ScrapUiState.Empty -> {
+                        binding.isEmpty = true
+                    }
+                    is ScrapViewModel.ScrapUiState.Error -> {}
+                    else -> {
+                        // TODO : 로딩 에러 처리
+                    }
+                }
+            }.launchIn(lifecycleScope)
     }
 
     private fun initAdapter() {
