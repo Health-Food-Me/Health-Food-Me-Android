@@ -15,7 +15,7 @@ interface ReviewService {
     @GET("/review/restaurant/{restaurantId}")
     suspend fun getHFMReview(
         @Path("restaurantId") restaurantId: String,
-    ): BaseResponse<List<ResponseHFMReview>>
+    ): BaseResponse<List<ResponseHFMReview>?>
 
     @GET("/review/user/{userId}")
     suspend fun getMyReviewList(

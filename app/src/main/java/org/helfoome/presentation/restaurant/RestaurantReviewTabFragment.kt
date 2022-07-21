@@ -57,10 +57,22 @@ class RestaurantReviewTabFragment : BindingFragment<FragmentReviewBinding>(R.lay
         viewModel.hfmReviews.observe(viewLifecycleOwner) { reviews ->
             binding.reviewList.adapter = restaurantGeneralReviewAdapter
             restaurantGeneralReviewAdapter.submitList(reviews)
+            showReviewEmptyView(reviews == null)
         }
         viewModel.blogReviews.observe(viewLifecycleOwner) { reviews ->
             binding.reviewList.adapter = restaurantBlogReviewAdapter
             restaurantBlogReviewAdapter.submitList(reviews)
+            showReviewEmptyView(reviews == null)
+        }
+    }
+
+    private fun showReviewEmptyView(isShown: Boolean) {
+        if (isShown) {
+            binding.reviewList.visibility = View.INVISIBLE
+            binding.layoutEmptyView.layoutContainer.visibility = View.VISIBLE
+        } else {
+            binding.reviewList.visibility = View.VISIBLE
+            binding.layoutEmptyView.layoutContainer.visibility = View.INVISIBLE
         }
     }
 

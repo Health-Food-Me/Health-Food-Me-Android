@@ -12,11 +12,11 @@ import javax.inject.Inject
 class ReviewRepositoryImpl @Inject constructor(
     private val reviewService: ReviewService,
 ) : ReviewRepository {
-    override suspend fun fetchHFMReview(restaurantId: String): Result<List<HFMReviewInfo>> {
+    override suspend fun fetchHFMReview(restaurantId: String): Result<List<HFMReviewInfo>?> {
         return runCatching {
             reviewService.getHFMReview(restaurantId)
         }.fold({
-            Result.success(it.data.map { review -> review.toReviewInfo() })
+            Result.success(it.data?.map { review -> review.toReviewInfo() })
         }, {
             it.printStackTrace()
             Result.failure(it.fillInStackTrace())
