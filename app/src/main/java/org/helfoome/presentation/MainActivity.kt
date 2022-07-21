@@ -59,6 +59,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
     @Inject
     lateinit var resolutionMetrics: ResolutionMetrics
     private val viewModel: MainViewModel by viewModels()
+    private var category: String? = null
     private lateinit var behavior: BottomSheetBehavior<ConstraintLayout>
     private var mapSelectionBottomDialog: MapSelectionBottomDialogFragment? = null
     private val tabSelectedListener = object : TabLayout.OnTabSelectedListener {
@@ -93,6 +94,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
         }
     }
 
+    private val restaurantMenuAdapter = RestaurantMenuAdapter()
     private var markerList: List<Pair<Marker, Boolean>> = listOf()
     private lateinit var locationSource: FusedLocationSource
     private lateinit var naverMap: NaverMap
@@ -117,7 +119,6 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
         }
 
     private val restaurantDetailAdapter = RestaurantTabAdapter(this)
-    private val restaurantMenuAdapter = RestaurantMenuAdapter()
     private val String.toChip: Chip
         get() = ChipFactory.create(layoutInflater).also { it.text = this }
 
@@ -412,11 +413,18 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
             naverMap.cameraPosition = CameraPosition(LatLng(naverMap.cameraPosition.target.latitude, naverMap.cameraPosition.target.longitude), 11.0)
             naverMap.locationTrackingMode = LocationTrackingMode.Follow
         }
-        viewModel.getMapInfo(naverMap.cameraPosition.target)
+        viewModel.getMapInfo(naverMap.cameraPosition.target, category)
         binding.fabLocationMain.setOnClickListener {
             naverMap.cameraPosition = CameraPosition(LatLng(naverMap.cameraPosition.target.latitude, naverMap.cameraPosition.target.longitude), 11.0)
             naverMap.locationTrackingMode = LocationTrackingMode.Follow
         }
+        viewModel.getMapInfo(
+            LatLng(
+                naverMap.cameraPosition.target.latitude,
+                naverMap.cameraPosition.target.longitude
+            ),
+            category
+        )
         viewModel.getMapInfo(LatLng(naverMap.cameraPosition.target.latitude, naverMap.cameraPosition.target.longitude))
     }
 

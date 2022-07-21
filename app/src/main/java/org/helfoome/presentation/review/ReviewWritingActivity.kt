@@ -28,14 +28,24 @@ class ReviewWritingActivity : BindingActivity<ActivityReviewWritingBinding>(R.la
     private val viewModel: RestaurantReviewWritingViewModel by viewModels()
     private val galleryImageAdapter = GalleryImageAdapter(::showGalleryImageDialog)
     private var photoUri: Uri? = null
+    private var reviewId: String? = null
+    private var topTitle: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding.viewModel = viewModel
 
+        initData()
         initView()
         initListeners()
         initObservers()
+    }
+
+    private fun initData() {
+        Timber.d("${intent.getStringExtra("REVIEW_ID")}")
+        Timber.d("${intent.getBooleanExtra("REVIEW_TITLE", false)}")
+        viewModel.setReviewId(intent.getStringExtra("REVIEW_ID").toString())
+        viewModel.setEditMode(intent.getBooleanExtra("REVIEW_TITLE", false))
     }
 
     private fun initView() {
@@ -98,7 +108,10 @@ class ReviewWritingActivity : BindingActivity<ActivityReviewWritingBinding>(R.la
     override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
         val view = currentFocus
 
-        if (view != null && ev.action == MotionEvent.ACTION_UP || ev.action == MotionEvent.ACTION_MOVE && view is EditText && !view.javaClass.name.startsWith("android.webkit.")) {
+        if (view != null && ev.action == MotionEvent.ACTION_UP || ev.action == MotionEvent.ACTION_MOVE && view is EditText && !view.javaClass.name.startsWith(
+                "android.webkit."
+            )
+        ) {
             val locationList = IntArray(2)
             view.getLocationOnScreen(locationList)
             val x = ev.rawX + view.left - locationList[0]
