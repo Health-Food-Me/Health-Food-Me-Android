@@ -53,7 +53,9 @@ import org.helfoome.presentation.scrap.MyScrapActivity
 import org.helfoome.presentation.search.SearchActivity
 import org.helfoome.presentation.type.FoodType
 import org.helfoome.presentation.type.HashtagViewType
-import org.helfoome.util.*
+import org.helfoome.util.ChipFactory
+import org.helfoome.util.DialogUtil
+import org.helfoome.util.ResolutionMetrics
 import org.helfoome.util.binding.BindingActivity
 import org.helfoome.util.ext.makeTransparentStatusBar
 import org.helfoome.util.ext.stringListFrom
@@ -441,7 +443,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
 
     override fun onMapReady(naverMap: NaverMap) {
         this.naverMap = naverMap.apply {
-            uiSettings.isZoomControlEnabled = true
+            uiSettings.isZoomControlEnabled = false
             setOnMapClickListener { _, _ ->
                 behavior.state = BottomSheetBehavior.STATE_HIDDEN
                 markerList.forEach {
@@ -458,11 +460,11 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
 
             if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                 cameraPosition = CameraPosition(
-                    LatLng(cameraPosition.target.latitude, cameraPosition.target.longitude), 11.0
+                    LatLng(GANGNAM_X, GANGNAM_Y), 11.0
                 )
                 locationTrackingMode = LocationTrackingMode.Follow
             } else {
-                cameraPosition = CameraPosition(LatLng(37.498095, 127.027610), 11.0)
+                cameraPosition = CameraPosition(LatLng(GANGNAM_X, GANGNAM_Y), 11.0)
             }
 
             addOnCameraChangeListener { reason, _ ->
@@ -505,6 +507,8 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
     }
 
     companion object {
+        private const val GANGNAM_X = 37.498095
+        private const val GANGNAM_Y = 127.027610
         private const val LOCATION_PERMISSION_REQUEST_CODE = 1000
     }
 }

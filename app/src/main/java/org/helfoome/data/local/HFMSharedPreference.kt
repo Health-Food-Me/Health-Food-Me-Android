@@ -44,12 +44,6 @@ class HFMSharedPreference @Inject constructor(@ApplicationContext context: Conte
         set(value) = dataStore.edit { putString("USER_ID", value) }
         get() = dataStore.getString("USER_ID", "") ?: ""
 
-    var isLogin: Boolean
-        set(value) = dataStore.edit {
-            putBoolean("IS_LOGIN", value)
-        }
-        get() = dataStore.getBoolean("IS_LOGIN", false)
-
     var nickname: String
         set(value) = dataStore.edit { putString("NICKNAME", value) }
         get() = dataStore.getString("NICKNAME", "") ?: ""

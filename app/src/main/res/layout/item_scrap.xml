@@ -31,12 +31,13 @@
                 android:layout_height="match_parent"
                 android:background="@drawable/rectangle_border_gray_radius_8">
 
-                <ImageView
+                <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/iv_photo"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
+                    app:strokeWidth="1dp"
+                    app:strokeColor="@color/gray_200"
                     android:background="@color/white"
-                    android:scaleType="centerCrop"
                     app:imageUrl="@{data.restaurantImg}"
                     app:layout_constraintDimensionRatio="1:1"
                     app:layout_constraintEnd_toEndOf="parent"
