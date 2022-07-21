@@ -80,4 +80,14 @@ class MyReviewActivity : BindingActivity<ActivityMyReviewBinding>(R.layout.activ
             finish()
         }
     }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.getMyReviewList()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        viewModel.getMyReviewList()
+    }
 }
