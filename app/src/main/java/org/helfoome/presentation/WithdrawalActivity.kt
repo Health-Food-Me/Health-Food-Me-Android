@@ -34,7 +34,7 @@ class WithdrawalActivity : BindingActivity<ActivityWithdrawalBinding>(R.layout.a
         }
         withdrawalViewModel.withdrawSuccess.observe(this) {
             startActivity(Intent(this@WithdrawalActivity, LoginActivity::class.java))
-            finish()
+            finishAffinity()
         }
     }
 
