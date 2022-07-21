@@ -2,7 +2,6 @@ package org.helfoome.data.service
 
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import org.helfoome.data.model.request.RequestReviewEdit
 import org.helfoome.data.model.response.BaseResponse
 import org.helfoome.data.model.response.EmptyResponse
 import org.helfoome.data.model.response.*

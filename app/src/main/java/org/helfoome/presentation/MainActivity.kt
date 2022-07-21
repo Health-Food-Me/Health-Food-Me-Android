@@ -483,7 +483,8 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
             LatLng(
                 naverMap.cameraPosition.target.latitude,
                 naverMap.cameraPosition.target.longitude
-            ), category
+            ),
+            category
         )
     }
 

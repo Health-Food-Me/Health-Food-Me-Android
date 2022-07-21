@@ -12,7 +12,8 @@ import org.helfoome.util.ItemDecorationUtil
 import org.helfoome.util.ItemDiffCallback
 
 class MyReviewAdapter(
-    private val itemClickListener: ((Int) -> Unit), private val deleteClickListener: (String) -> Unit,
+    private val itemClickListener: ((Int) -> Unit),
+    private val deleteClickListener: (String) -> Unit,
     private val editClickListener: (String) -> Unit
 ) :
     ListAdapter<MyReviewListInfo, MyReviewAdapter.MyReviewViewHolder>(
@@ -43,7 +44,8 @@ class MyReviewAdapter(
 
     class MyReviewViewHolder(private val binding: ItemGeneralMyReviewBinding) : RecyclerView.ViewHolder(binding.root) {
         fun onBind(
-            myReviewData: MyReviewListInfo, deleteClickListener: (String) -> Unit,
+            myReviewData: MyReviewListInfo,
+            deleteClickListener: (String) -> Unit,
             editClickListener: (String) -> Unit
         ) {
             with(binding) {

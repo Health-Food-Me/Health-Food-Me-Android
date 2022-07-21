@@ -35,7 +35,8 @@ class MyReviewActivity : BindingActivity<ActivityMyReviewBinding>(R.layout.activ
             bind.btnNo.setOnClickListener {
                 dialog.dismiss()
             }
-        }, { reviewId ->
+        },
+        { reviewId ->
             startActivity<ReviewWritingActivity>(Pair("REVIEW_ID", reviewId), Pair("REVIEW_TITLE", true))
         }
     )
