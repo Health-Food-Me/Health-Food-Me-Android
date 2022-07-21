@@ -38,19 +38,15 @@ import org.helfoome.presentation.drawer.ProfileModifyActivity
 import org.helfoome.presentation.drawer.SettingActivity
 import org.helfoome.presentation.login.LoginActivity
 import org.helfoome.presentation.restaurant.MapSelectionBottomDialogFragment
-import org.helfoome.presentation.restaurant.adapter.RestaurantMenuAdapter
 import org.helfoome.presentation.restaurant.adapter.RestaurantTabAdapter
 import org.helfoome.presentation.review.ReviewWritingActivity
 import org.helfoome.presentation.scrap.MyScrapActivity
 import org.helfoome.presentation.search.SearchActivity
 import org.helfoome.presentation.type.FoodType
 import org.helfoome.presentation.type.HashtagViewType
-import org.helfoome.util.ChipFactory
-import org.helfoome.util.DialogUtil
-import org.helfoome.util.ResolutionMetrics
+import org.helfoome.util.*
 import org.helfoome.util.binding.BindingActivity
 import org.helfoome.util.ext.stringListFrom
-import org.helfoome.util.makeTransparentStatusBar
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -310,6 +306,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
     private fun initObservers() {
         viewModel.selectedRestaurant.observe(this) {
             with(binding.layoutRestaurantDialog) {
+                layoutRestaurantTabMenu.selectTab(layoutRestaurantTabMenu.getTabAt(0))
                 hashtag.setHashtag(it.tags, HashtagViewType.RESTAURANT_SUMMARY_TYPE)
             }
         }

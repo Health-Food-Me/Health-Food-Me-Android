@@ -8,23 +8,23 @@ import org.helfoome.domain.entity.RestaurantInfo
 @Serializable
 data class ResponseRestaurantDetail(
     @SerialName("menu")
-    val menuList: List<Menu>,
+    val menuList: List<Menu>?,
     val restaurant: Restaurant,
 ) {
     @Serializable
     data class Restaurant(
         @SerialName("_id")
         val id: String,
-        val address: String,
-        val score: Float,
-        val category: String,
-        val contact: String,
         val distance: Int,
-        val hashtag: List<String>,
-        val isScrap: Boolean,
-        val logo: String,
         val name: String,
+        val logo: String,
+        val category: String,
+        val hashtag: List<String>,
+        val address: String,
         val workTime: List<String>,
+        val contact: String,
+        val isScrap: Boolean,
+        val score: Float,
     )
 
     @Serializable
@@ -32,11 +32,11 @@ data class ResponseRestaurantDetail(
         @SerialName("_id")
         val id: String,
         val name: String,
+        val image: String,
+        val price: Int,
         val isPick: Boolean,
         val kcal: Int? = null,
-        val image: String,
         val per: Int? = null,
-        val price: Int,
     )
 
     fun toRestaurantInfo() = RestaurantInfo(restaurant.id,
@@ -49,7 +49,7 @@ data class ResponseRestaurantDetail(
         time = restaurant.workTime,
         contact = restaurant.contact,
         distance = restaurant.distance,
-        menuList = menuList.map { menu -> MenuInfo(menu.id, menu.name, menu.image, menu.price, menu.kcal, menu.per, menu.isPick)
+        menuList = menuList?.map { menu -> MenuInfo(menu.id, menu.name, menu.image, menu.price, menu.kcal, menu.per, menu.isPick)
         },
         score=restaurant.score)
 }
