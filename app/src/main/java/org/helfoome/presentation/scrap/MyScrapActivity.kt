@@ -1,6 +1,8 @@
 package org.helfoome.presentation.scrap
 
+import android.app.Activity
 import android.os.Bundle
+import android.view.KeyEvent
 import androidx.activity.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
@@ -32,6 +34,7 @@ class MyScrapActivity : BindingActivity<ActivityMyScrapBinding>(R.layout.activit
         initAdapter()
         with(binding) {
             toolbarScrap.setNavigationOnClickListener {
+                setResult(Activity.RESULT_OK)
                 finish()
             }
             observeData()
@@ -41,6 +44,11 @@ class MyScrapActivity : BindingActivity<ActivityMyScrapBinding>(R.layout.activit
                 finish()
             }
         }
+    }
+
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        setResult(Activity.RESULT_OK)
+        return super.onKeyDown(keyCode, event)
     }
 
     private fun observeData() {

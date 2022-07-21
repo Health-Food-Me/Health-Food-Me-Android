@@ -3,6 +3,7 @@ package org.helfoome.presentation.drawer
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
@@ -41,6 +42,7 @@ class MyReviewActivity : BindingActivity<ActivityMyReviewBinding>(R.layout.activ
                         binding.snvReviewModify.animation = bottomTopAnimation
                         binding.snvReviewModify.setText("리뷰 편집이 완료되었습니다")
                     }
+
                     override fun onAnimationRepeat(p0: Animation?) = Unit
                 })
             }
@@ -91,19 +93,22 @@ class MyReviewActivity : BindingActivity<ActivityMyReviewBinding>(R.layout.activ
         }
     }
 
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        setResult(Activity.RESULT_OK)
+        return super.onKeyDown(keyCode, event)
+    }
+
     private fun initAdapter() {
         binding.rcvReview.adapter = myReviewAdapter
     }
 
     private fun initListeners() {
         binding.ivBack.setOnClickListener {
+            setResult(Activity.RESULT_OK)
             finish()
         }
         binding.btnGoToStore.setOnClickListener {
             setResult(Activity.RESULT_OK)
-            finish()
-        }
-        binding.ivBack.setOnClickListener {
             finish()
         }
     }

@@ -2,6 +2,7 @@ package org.helfoome.presentation.drawer
 
 import android.app.Activity
 import android.os.Bundle
+import android.view.KeyEvent
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import androidx.activity.viewModels
@@ -67,8 +68,14 @@ class ProfileModifyActivity : BindingActivity<ActivityProfileModifyBinding>(R.la
         }
     }
 
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        setResult(Activity.RESULT_OK)
+        return super.onKeyDown(keyCode, event)
+    }
+
     private fun initListener() {
         binding.ivBack.setOnClickListener {
+            setResult(Activity.RESULT_OK)
             finish()
         }
 
