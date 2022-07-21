@@ -2,8 +2,10 @@ package org.helfoome.presentation
 
 import android.Manifest
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Color
 import android.graphics.Paint
 import android.net.Uri
 import android.os.Bundle
@@ -11,15 +13,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
+import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.add
 import androidx.fragment.app.commit
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.chip.Chip
+import com.google.android.material.snackbar.BaseTransientBottomBar.*
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.kakao.sdk.user.UserApiClient
@@ -33,6 +41,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import org.helfoome.R
 import org.helfoome.databinding.ActivityMainBinding
 import org.helfoome.databinding.DialogLogoutBinding
+import org.helfoome.presentation.custom.SnackBarView
 import org.helfoome.presentation.drawer.MyReviewActivity
 import org.helfoome.presentation.drawer.ProfileModifyActivity
 import org.helfoome.presentation.drawer.SettingActivity
@@ -147,8 +156,8 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
         binding.layoutDrawerHeader.drawerViewModel = viewModel
         window.makeTransparentStatusBar()
 
+
         locationSource = FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE)
-        viewModel.getProfile()
 
         initNaverMap()
         initView()
@@ -225,15 +234,18 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
     }
 
     private fun initListeners() {
-        binding.fabBookmark.setOnClickListener {
+        binding.btnBookmark.setOnClickListener {
+            showScarpSnackBar()
             it.isSelected = !it.isSelected
         }
 
-        binding.fabBookmarkMain.setOnClickListener {
+        binding.btnBookmarkMain.setOnClickListener {
+            showScarpSnackBar()
             it.isSelected = !it.isSelected
         }
 
         binding.btnHamburger.setOnClickListener {
+            viewModel.getProfile()
             binding.layoutDrawer.open()
         }
 
@@ -311,6 +323,18 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                 }
             }
         }
+    }
+
+    private fun showScarpSnackBar() {
+        val view = layoutInflater.inflate(R.layout.view_snackbar, null)
+        view.findViewById<TextView>(R.id.tv_snackBar).text = "스크랩한 식당이 없습니다"
+        val snackbar = Snackbar.make(binding.layoutMain, "", 1000)
+        val layout = snackbar.view as Snackbar.SnackbarLayout
+        layout.setBackgroundColor(ContextCompat.getColor(this, android.R.color.transparent))
+        layout.setPadding(56, 0, 56, 10)
+        layout.addView(view)
+        snackbar.animationMode = ANIMATION_MODE_SLIDE
+        snackbar.show()
     }
 
     private fun sendGmail() {
@@ -446,13 +470,13 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
             }
         }
 
-        binding.fabLocation.setOnClickListener {
+        binding.btnLocation.setOnClickListener {
             naverMap.cameraPosition =
                 CameraPosition(LatLng(naverMap.cameraPosition.target.latitude, naverMap.cameraPosition.target.longitude), 11.0)
             naverMap.locationTrackingMode = LocationTrackingMode.Follow
         }
         viewModel.getMapInfo(naverMap.cameraPosition.target, category)
-        binding.fabLocationMain.setOnClickListener {
+        binding.btnLocationMain.setOnClickListener {
             naverMap.cameraPosition =
                 CameraPosition(LatLng(naverMap.cameraPosition.target.latitude, naverMap.cameraPosition.target.longitude), 11.0)
             naverMap.locationTrackingMode = LocationTrackingMode.Follow

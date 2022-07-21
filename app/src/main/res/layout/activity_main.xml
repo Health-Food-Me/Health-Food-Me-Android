@@ -33,6 +33,7 @@
             tools:openDrawer="start">
 
             <androidx.coordinatorlayout.widget.CoordinatorLayout
+                android:id="@+id/layout_main"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 tools:context=".presentation.MainActivity">
@@ -111,7 +112,7 @@
                     </HorizontalScrollView>
 
                     <ImageButton
-                        android:id="@+id/fab_bookmark_main"
+                        android:id="@+id/btn_bookmark_main"
                         android:layout_width="56dp"
                         android:layout_height="56dp"
                         android:layout_marginEnd="20dp"
@@ -120,11 +121,11 @@
                         android:elevation="4dp"
                         android:src="@drawable/selector_btn_scrap"
                         android:visibility="@{isMainNotVisible? View.GONE : View.VISIBLE}"
-                        app:layout_constraintBottom_toTopOf="@+id/fab_location_main"
+                        app:layout_constraintBottom_toTopOf="@+id/btn_location_main"
                         app:layout_constraintEnd_toEndOf="parent" />
 
                     <com.google.android.material.floatingactionbutton.FloatingActionButton
-                        android:id="@+id/fab_location_main"
+                        android:id="@+id/btn_location_main"
                         android:layout_width="56dp"
                         android:layout_height="56dp"
                         android:layout_marginBottom="16dp"
@@ -133,7 +134,7 @@
                         android:visibility="@{isMainNotVisible? View.GONE : View.VISIBLE}"
                         app:borderWidth="0dp"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="@id/fab_bookmark_main"
+                        app:layout_constraintEnd_toEndOf="@id/btn_bookmark_main"
                         app:layout_dodgeInsetEdges="bottom" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -150,7 +151,7 @@
                     tools:visibility="gone">
 
                     <ImageButton
-                        android:id="@+id/fab_bookmark"
+                        android:id="@+id/btn_bookmark"
                         android:layout_width="56dp"
                         android:layout_height="56dp"
                         android:layout_marginEnd="20dp"
@@ -162,7 +163,7 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <com.google.android.material.floatingactionbutton.FloatingActionButton
-                        android:id="@+id/fab_location"
+                        android:id="@+id/btn_location"
                         android:layout_width="56dp"
                         android:layout_height="56dp"
                         android:layout_marginTop="12dp"
@@ -171,8 +172,8 @@
                         android:src="@drawable/ic_currentposition"
                         android:visibility="@{isFloatingNotVisible? View.GONE : View.VISIBLE}"
                         app:borderWidth="0dp"
-                        app:layout_constraintEnd_toEndOf="@+id/fab_bookmark"
-                        app:layout_constraintTop_toBottomOf="@id/fab_bookmark"
+                        app:layout_constraintEnd_toEndOf="@+id/btn_bookmark"
+                        app:layout_constraintTop_toBottomOf="@id/btn_bookmark"
                         app:layout_dodgeInsetEdges="bottom" />
 
                     <View
@@ -180,7 +181,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="12dp"
                         android:visibility="@{isFloatingNotVisible? View.GONE : View.VISIBLE}"
-                        app:layout_constraintTop_toBottomOf="@+id/fab_location" />
+                        app:layout_constraintTop_toBottomOf="@+id/btn_location" />
 
                     <include
                         android:id="@+id/layout_restaurant_dialog"
