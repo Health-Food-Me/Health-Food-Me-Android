@@ -67,17 +67,14 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                 binding.snvProfileModify.animation = animation
                 binding.snvProfileModify.setText("닉네임이 변경되었습니다")
                 animation.setAnimationListener(object : Animation.AnimationListener {
-                    override fun onAnimationStart(animation: Animation?) {
-                    }
-
+                    override fun onAnimationStart(animation: Animation?) = Unit
                     override fun onAnimationEnd(animation: Animation?) {
                         val bottomTopAnimation = AnimationUtils.loadAnimation(this@MainActivity, R.anim.anim_snackbar_bottom_top)
                         binding.snvProfileModify.animation = bottomTopAnimation
                         binding.snvProfileModify.setText("닉네임이 변경되었습니다")
                     }
 
-                    override fun onAnimationRepeat(p0: Animation?) {
-                    }
+                    override fun onAnimationRepeat(p0: Animation?) = Unit
                 })
             }
         }
@@ -216,6 +213,13 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                 override fun onDrawerStateChanged(newState: Int) = Unit
             })
         }
+        viewModel.checkReview.observe(this) {
+            if (viewModel.checkReview.value == false) {
+                binding.layoutRestaurantDialog.btnWriteReview.isEnabled = true
+            } else if (viewModel.checkReview.value == true) {
+                binding.layoutRestaurantDialog.btnWriteReview.isEnabled = false
+            }
+        }
 
         binding.fabBookmark.setOnClickListener {
             it.isSelected = !it.isSelected
@@ -346,6 +350,8 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                         this.map = naverMap
 
                         this.setOnClickListener {
+                            viewModel.getReviewCheck(marker.id)
+
                             viewModel.fetchSelectedRestaurantDetailInfo(marker.id, marker.latitude, marker.longitude)
 //                            viewModel.fetchSelectedRestaurantInfo(marker.id)
                             behavior.state = BottomSheetBehavior.STATE_COLLAPSED

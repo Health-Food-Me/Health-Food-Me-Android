@@ -34,10 +34,12 @@ class RestaurantRepositoryImpl @Inject constructor(
         }.fold(
             {
                 Result.success(it.body()?.data?.toRestaurantInfo())
-            }, {
+            },
+            {
                 it.printStackTrace()
                 Result.failure(it.fillInStackTrace())
-            })
+            }
+        )
     }
 
     override suspend fun updateRestaurantScrap(restaurantId: String, userId: String): List<String>? {

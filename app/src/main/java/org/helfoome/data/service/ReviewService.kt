@@ -2,12 +2,11 @@ package org.helfoome.data.service
 
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import org.helfoome.data.model.request.RequestReviewEdit
 import org.helfoome.data.model.response.BaseResponse
 import org.helfoome.data.model.response.EmptyResponse
-import org.helfoome.data.model.response.ResponseHFMReview
-import org.helfoome.data.model.response.ResponseMyReviewEdit
-import org.helfoome.data.model.response.ResponseMyReviewList
-import org.helfoome.data.model.response.ResponseReview
+import org.helfoome.data.model.response.*
+
 import retrofit2.http.*
 import retrofit2.http.DELETE
 import retrofit2.http.GET
@@ -54,4 +53,10 @@ interface ReviewService {
         @Part("nameList") nameList: RequestBody,
         @Part image: List<MultipartBody.Part>
     ): BaseResponse<ResponseMyReviewEdit>
+
+    @GET("/review/check/{userId}/{restaurantId}")
+    suspend fun getReviewCheck(
+        @Path("userId") userId: String,
+        @Path("restaurantId") restaurantId: String
+    ): BaseResponse<ResponseReviewCheck>
 }
