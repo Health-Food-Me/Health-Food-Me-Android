@@ -200,14 +200,14 @@
 
                         <TextView
                             android:id="@+id/tv_location"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
+                            android:layout_marginHorizontal="16dp"
                             android:fontFamily="@font/notosanskr_m"
                             android:text="@{viewModel.selectedRestaurant.location}"
                             android:textColor="@color/gray_600"
                             android:textSize="12dp"
-                            app:layout_constraintBottom_toBottomOf="@id/iv_location"
+                            app:layout_constraintEnd_toStartOf="@id/btn_navi"
                             app:layout_constraintStart_toEndOf="@id/iv_location"
                             app:layout_constraintTop_toTopOf="@id/iv_location"
                             tools:text="서울특별시 중랑구 상봉동" />
