@@ -9,6 +9,5 @@ interface ReviewRepository {
     suspend fun fetchHFMReview(restaurantId: String): Result<List<HFMReviewInfo>>
     suspend fun getMyReviewList(userId: String): BaseResponse<List<ResponseMyReviewList>>
     suspend fun deleteReview(reviewId: String): Result<Boolean>
-    suspend fun putMyReviewEdit(reviewId: String): BaseResponse<ResponseMyReviewEdit>
     suspend fun getReviewCheck(reviewId: String, restaurantId: String): BaseResponse<ResponseReviewCheck>
 }
