@@ -27,10 +27,7 @@ class SplashActivity : BindingActivity<ActivitySplashBinding>(R.layout.activity_
 
         lifecycleScope.launch(Dispatchers.Main) {
             delay(2500)
-            if (storage.isLogin)
-                startActivity<MainActivity>()
-            else
-                startActivity<LoginActivity>()
+            startActivity<LoginActivity>()
             finish()
         }
     }
