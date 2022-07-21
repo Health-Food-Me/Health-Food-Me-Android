@@ -4,8 +4,6 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.KeyEvent
-import android.widget.Button
-import android.widget.Toast
 import com.naver.maps.map.app.LegalNoticeActivity
 import com.naver.maps.map.app.OpenSourceLicenseActivity
 import org.helfoome.R

@@ -39,7 +39,8 @@ data class ResponseRestaurantDetail(
         val per: Int? = null,
     )
 
-    fun toRestaurantInfo() = RestaurantInfo(restaurant.id,
+    fun toRestaurantInfo() = RestaurantInfo(
+        restaurant.id,
         restaurant.logo,
         restaurant.name,
         restaurant.category,
