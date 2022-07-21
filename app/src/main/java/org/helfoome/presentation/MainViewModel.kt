@@ -10,6 +10,7 @@ import org.helfoome.domain.entity.*
 import org.helfoome.domain.repository.MapRepository
 import org.helfoome.domain.repository.ProfileRepository
 import org.helfoome.domain.repository.RestaurantRepository
+import org.helfoome.domain.repository.ReviewRepository
 import org.helfoome.util.Event
 import timber.log.Timber
 import javax.inject.Inject
@@ -19,9 +20,12 @@ class MainViewModel @Inject constructor(
     private val profileRepository: ProfileRepository,
     private val sharedPreferences: HFMSharedPreference,
     private val restaurantRepository: RestaurantRepository,
+    private val reviewRepository: ReviewRepository,
     private val mapRepository: MapRepository,
     private val hfmSharedPreference: HFMSharedPreference,
 ) : ViewModel() {
+    private val _checkReview = MutableLiveData<Boolean>()
+    val checkReview: LiveData<Boolean> = _checkReview
     private val _location = MutableLiveData<List<MarkerInfo>>()
     val location: LiveData<List<MarkerInfo>> = _location
     private val _isDietRestaurant = MutableLiveData<Boolean>()
@@ -59,6 +63,17 @@ class MainViewModel @Inject constructor(
         fetchHFMReviewList()
         fetchBlogReviewList()
         initVisibleReviewButton()
+    }
+
+    fun getReviewCheck(restaurantId: String) {
+        viewModelScope.launch {
+            kotlin.runCatching { reviewRepository.getReviewCheck(sharedPreferences.id, restaurantId) }
+                .onSuccess {
+                    _checkReview.value = it.data.hasReview
+                }.onFailure {
+                    Timber.d(it.message)
+                }
+        }
     }
 
     fun getMapInfo(latLng: LatLng) {
@@ -115,9 +130,11 @@ class MainViewModel @Inject constructor(
     fun fetchSelectedRestaurantDetailInfo(restaurantId: String, latitude: Double, longitude: Double) {
         // TODO 추후 매개변수로 좌표값을 받아 해당 좌표 음식점 정보를 불러오기
         viewModelScope.launch {
-            val restaurantInfo = restaurantRepository.fetchRestaurantDetail(restaurantId, hfmSharedPreference.id, latitude, longitude).getOrNull() ?: return@launch
+            val restaurantInfo =
+                restaurantRepository.fetchRestaurantDetail(restaurantId, hfmSharedPreference.id, latitude, longitude).getOrNull()
+                    ?: return@launch
             _selectedRestaurant.postValue(restaurantInfo)
-          //  _menu.postValue(restaurantInfo.menuList ?: return@launch)
+            //  _menu.postValue(restaurantInfo.menuList ?: return@launch)
             _eatingOutTips.value = restaurantRepository.getEatingOutTips(restaurantId)
         }
     }
@@ -139,9 +156,11 @@ class MainViewModel @Inject constructor(
             if (selectedRestaurant.value?.id == null) return@launch
             val scrappedRestaurantList =
                 restaurantRepository.updateRestaurantScrap(selectedRestaurant.value?.id!!, hfmSharedPreference.id) ?: return@launch
-            _selectedRestaurant.postValue(_selectedRestaurant.value?.apply {
-                this.isScrap = scrappedRestaurantList.contains(selectedRestaurant.value?.id!!)
-            })
+            _selectedRestaurant.postValue(
+                _selectedRestaurant.value?.apply {
+                    this.isScrap = scrappedRestaurantList.contains(selectedRestaurant.value?.id!!)
+                }
+            )
         }
     }
 
@@ -160,12 +179,57 @@ class MainViewModel @Inject constructor(
     private fun fetchMenuList() {
         // TODO remote에서 특정 식당 메뉴정보 불러오기
         _menu.value = listOf(
-            MenuInfo("1", "연어 샐러디", "https://salady.com/superboard/data/product/thumb/3731617857_Xhu5dfOk_695bba70202d8f821fc2862641575ddced9316e9.jpg", 8400, 245, 26, true),
-            MenuInfo("2", "탄단지 샐러디", "https://salady.com/superboard/data/product/thumb/3731617857_BfKg76Zq_efc7ededf088253bbceff22901cd7cf02baac553.jpg", 7600, 270, 27, true),
-            MenuInfo("3", "리코타 치즈 샐러디", "https://salady.com/superboard/data/product/thumb/3731617857_zB4Hvtl7_a207fa684b30ebe9b56981dc1d88a1e5ae47322f.jpg", 8100, 462, 26, true),
-            MenuInfo("4", "콥 샐러디", "https://salady.com/superboard/data/product/thumb/3731617857_1epsjcm2_d79e57ca53061076a729c03d00aa123312ca9d0f.jpg", 6300, 23, 22),
-            MenuInfo("5", "치킨토마토 샌드위치", "https://salady.com/superboard/data/product/thumb/3731617857_P6qao2j4_1e3ff731c9a1d91414ac0bbc9ea101dc885d6bd5.jpg", 8200, 24, 23),
-            MenuInfo("6", "맥시칸 랩", "https://salady.com/superboard/data/product/thumb/3731617857_gzSGH7wP_0faa0c8288336e920f21d8502e96c302a2b0c3f2.png", 8200, 25, 24),
+            MenuInfo(
+                "1",
+                "연어 샐러디",
+                "https://salady.com/superboard/data/product/thumb/3731617857_Xhu5dfOk_695bba70202d8f821fc2862641575ddced9316e9.jpg",
+                8400,
+                245,
+                26,
+                true
+            ),
+            MenuInfo(
+                "2",
+                "탄단지 샐러디",
+                "https://salady.com/superboard/data/product/thumb/3731617857_BfKg76Zq_efc7ededf088253bbceff22901cd7cf02baac553.jpg",
+                7600,
+                270,
+                27,
+                true
+            ),
+            MenuInfo(
+                "3",
+                "리코타 치즈 샐러디",
+                "https://salady.com/superboard/data/product/thumb/3731617857_zB4Hvtl7_a207fa684b30ebe9b56981dc1d88a1e5ae47322f.jpg",
+                8100,
+                462,
+                26,
+                true
+            ),
+            MenuInfo(
+                "4",
+                "콥 샐러디",
+                "https://salady.com/superboard/data/product/thumb/3731617857_1epsjcm2_d79e57ca53061076a729c03d00aa123312ca9d0f.jpg",
+                6300,
+                23,
+                22
+            ),
+            MenuInfo(
+                "5",
+                "치킨토마토 샌드위치",
+                "https://salady.com/superboard/data/product/thumb/3731617857_P6qao2j4_1e3ff731c9a1d91414ac0bbc9ea101dc885d6bd5.jpg",
+                8200,
+                24,
+                23
+            ),
+            MenuInfo(
+                "6",
+                "맥시칸 랩",
+                "https://salady.com/superboard/data/product/thumb/3731617857_gzSGH7wP_0faa0c8288336e920f21d8502e96c302a2b0c3f2.png",
+                8200,
+                25,
+                24
+            ),
             MenuInfo("7", "할라피뇨치킨 웜랩", null, 8200, 25, 24),
             MenuInfo("8", "포테이토 피자", null, 15200, 25, 24)
         )

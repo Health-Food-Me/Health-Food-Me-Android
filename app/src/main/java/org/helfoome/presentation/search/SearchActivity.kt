@@ -1,5 +1,7 @@
 package org.helfoome.presentation.search
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.KeyEvent.KEYCODE_ENTER
@@ -9,16 +11,22 @@ import android.widget.EditText
 import androidx.activity.viewModels
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.widget.addTextChangedListener
+import androidx.fragment.app.add
+import androidx.fragment.app.commit
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.ConcatAdapter
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.naver.maps.geometry.LatLng
+import com.naver.maps.map.*
+import com.naver.maps.map.util.FusedLocationSource
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import org.helfoome.R
 import org.helfoome.databinding.ActivitySearchBinding
 import org.helfoome.domain.entity.RestaurantInfo
+import org.helfoome.presentation.restaurant.MapSelectionBottomDialogFragment
 import org.helfoome.presentation.search.adapter.*
 import org.helfoome.presentation.search.type.SearchMode
 import org.helfoome.util.ResolutionMetrics
@@ -28,18 +36,26 @@ import org.helfoome.util.ext.showKeyboard
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_search) {
+class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_search), OnMapReadyCallback {
     // TODO : Inject 로직 수정 요망
+    private var isAutoCompleteResult = false
+
     @Inject
     lateinit var resolutionMetrics: ResolutionMetrics
     private val viewModel: SearchViewModel by viewModels()
+    private lateinit var naverMap: NaverMap
+    private lateinit var locationSource: FusedLocationSource
+    private var mapSelectionBottomDialog: MapSelectionBottomDialogFragment? = null
     private val autoCompleteAdapter = AutoCompleteAdapter {
+        isAutoCompleteResult = true
+        viewModel.insertKeyword(it)
         viewModel.setDetail(true)
         viewModel.setSearchMode(SearchMode.RESULT)
     }
     private val recentAdapter = RecentAdapter(
         {
-            // TODO : 서버 통신 주의
+            // TODO : 서버 통신 주의, 고정 값 위도
+            viewModel.getSearchResultCardList(37.498095, 127.027610, it)
             binding.etSearch.setText(it)
             viewModel.setSearchMode(SearchMode.RESULT)
         },
@@ -48,7 +64,8 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
     }
     private val resultAdapter = ResultAdapter {
         // TODO : 서버 통신 주의
-        viewModel.setDetail(true)
+        if (behavior.state == BottomSheetBehavior.STATE_EXPANDED)
+            viewModel.setDetail(true)
     }
 
     private val searchMapTopAdapter = SearchMapTopAdapter {
@@ -93,6 +110,9 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
         super.onCreate(savedInstanceState)
 
         initView()
+        locationSource =
+            FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE)
+        initNaverMap()
         openKeyboard()
         initClickEvent()
         initFocusChangeListener()
@@ -131,7 +151,9 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
 
             btnDelete.setOnClickListener {
                 when (viewModel.searchMode.value) {
-                    SearchMode.AUTO_COMPLETE -> etSearch.text.clear()
+                    SearchMode.AUTO_COMPLETE -> {
+                        etSearch.text.clear()
+                    }
                     else -> finish()
                 }
             }
@@ -141,6 +163,7 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
     private fun initFocusChangeListener() {
         binding.etSearch.setOnFocusChangeListener { _, isFocus ->
             if (isFocus && viewModel.searchMode.value == SearchMode.RESULT) {
+                binding.layoutRestaurantListDialog.isResultEmpty = false
                 viewModel.setSearchMode(SearchMode.AUTO_COMPLETE)
                 viewModel.setDetail(false)
                 behavior.state = BottomSheetBehavior.STATE_EXPANDED
@@ -149,28 +172,43 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
     }
 
     private fun startSearchModeBackEvent(value: SearchMode) {
-        when (value) {
-            SearchMode.RESULT -> {
-                if (viewModel.isDetail.value) {
-                    if (behavior.state == BottomSheetBehavior.STATE_EXPANDED) {
-                        binding.isLineVisible = true
-                        behavior.peekHeight = resolutionMetrics.toPixel(155)
-                        behavior.state = BottomSheetBehavior.STATE_COLLAPSED
+        binding.layoutRestaurantListDialog.isResultEmpty = false
+        if (isAutoCompleteResult) {
+            if (behavior.state == BottomSheetBehavior.STATE_EXPANDED && viewModel.isDetail.value)
+                behavior.state = BottomSheetBehavior.STATE_COLLAPSED
+            else {
+                viewModel.setDetail(false)
+                viewModel.setSearchMode(SearchMode.RECENT)
+                behavior.state = BottomSheetBehavior.STATE_EXPANDED
+                isAutoCompleteResult = false
+            }
+        } else {
+            when (value) {
+                SearchMode.RESULT -> {
+                    if (viewModel.isDetail.value) {
+                        if (behavior.state == BottomSheetBehavior.STATE_EXPANDED) {
+                            binding.isLineVisible = true
+                            behavior.peekHeight = resolutionMetrics.toPixel(155)
+                            behavior.state = BottomSheetBehavior.STATE_COLLAPSED
+                        } else {
+                            viewModel.setDetail(false)
+                            viewModel.setSearchMode(SearchMode.RESULT)
+                            behavior.state = BottomSheetBehavior.STATE_EXPANDED
+                        }
                     } else {
-                        viewModel.setDetail(false)
-                        viewModel.setSearchMode(SearchMode.RESULT)
+                        if (behavior.state == BottomSheetBehavior.STATE_COLLAPSED)
+                            viewModel.setSearchMode(SearchMode.RESULT)
+                        else
+                            viewModel.setSearchMode(SearchMode.RECENT)
                         behavior.state = BottomSheetBehavior.STATE_EXPANDED
                     }
-                } else {
-                    if (behavior.state == BottomSheetBehavior.STATE_COLLAPSED)
-                        viewModel.setSearchMode(SearchMode.RESULT)
-                    else
-                        viewModel.setSearchMode(SearchMode.RECENT)
-                    behavior.state = BottomSheetBehavior.STATE_EXPANDED
                 }
-            }
-            else -> {
-                finish()
+                SearchMode.AUTO_COMPLETE -> {
+                    viewModel.setSearchMode(SearchMode.RECENT)
+                }
+                else -> {
+                    finish()
+                }
             }
         }
     }
@@ -179,8 +217,6 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
         with(binding.etSearch) {
             addTextChangedListener {
                 if (it.isNullOrEmpty()) {
-                    closeKeyboard(this)
-                    this.clearFocus()
                     viewModel.setSearchMode(SearchMode.RECENT)
                 } else {
                     viewModel.setSearchMode(SearchMode.AUTO_COMPLETE)
@@ -196,7 +232,6 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
                 if (event.action == KeyEvent.ACTION_DOWN && keyCode == KEYCODE_ENTER) {
                     // TODO : 최근 검색어 추가 서버 통신 시 수정
                     viewModel.getSearchResultCardList(37.498095, 127.027610, text.toString())
-                    viewModel.insertKeyword(text.toString())
                     closeKeyboard(this)
                     binding.etSearch.clearFocus()
                     viewModel.setSearchMode(SearchMode.RESULT)
@@ -244,12 +279,15 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
                                 setKeywordListener {
                                     it.data.first
                                 }
-                                autoCompleteAdapter.submitList(it.data.second)
+                                submitList(it.data.second)
                                 // TODO : 추후 더 좋은 데이터 갱신 요망
                                 autoCompleteAdapter.notifyDataSetChanged()
                             }
                         }
                         is SearchViewModel.SearchUiState.Result -> {
+                            binding.layoutRestaurantListDialog.isResultEmpty = it.data.isEmpty()
+                            if (it.data.isNotEmpty())
+                                viewModel.insertKeyword(binding.etSearch.text.toString())
                             resultAdapter.submitList(it.data)
                         }
                         else -> {
@@ -334,5 +372,57 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
         // TODO : Collpased 높이 이상한거랑
         // TODO : hide 안되는 거
         startSearchModeBackEvent(viewModel.searchMode.value)
+    }
+
+    private fun initNaverMap() {
+        val fm = supportFragmentManager
+        val mapFragment = fm.findFragmentById(R.id.fragment_naver_map) as MapFragment?
+            ?: MapFragment.newInstance().also {
+                fm.commit {
+                    add<MapFragment>(R.id.fragment_naver_map)
+                    setReorderingAllowed(true)
+                }
+            }
+        mapFragment.getMapAsync(this)
+    }
+
+    override fun onMapReady(naverMap: NaverMap) {
+        this.naverMap = naverMap
+
+        naverMap.uiSettings.isZoomControlEnabled = false
+        naverMap.setOnMapClickListener { _, _ ->
+            behavior.state = BottomSheetBehavior.STATE_HIDDEN
+        }
+        naverMap.locationSource = locationSource
+        locationSource.lastLocation
+
+        if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION)
+            == PackageManager.PERMISSION_GRANTED
+        ) {
+            naverMap.cameraPosition = CameraPosition(
+                LatLng(
+                    naverMap.cameraPosition.target.latitude,
+                    naverMap.cameraPosition.target.longitude
+                ),
+                11.0
+            )
+            naverMap.locationTrackingMode = LocationTrackingMode.Follow
+        } else {
+            naverMap.cameraPosition = CameraPosition(LatLng(37.498095, 127.027610), 11.0)
+        }
+//        binding.fabLocation.setOnClickListener {
+//            naverMap.cameraPosition = CameraPosition(
+//                LatLng(
+//                    naverMap.cameraPosition.target.latitude,
+//                    naverMap.cameraPosition.target.longitude
+//                ),
+//                11.0
+//            )
+//            naverMap.locationTrackingMode = LocationTrackingMode.Follow
+//        }
+    }
+
+    companion object {
+        private const val LOCATION_PERMISSION_REQUEST_CODE = 1000
     }
 }

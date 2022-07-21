@@ -33,7 +33,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import org.helfoome.R
 import org.helfoome.databinding.ActivityMainBinding
 import org.helfoome.databinding.DialogLogoutBinding
-import org.helfoome.domain.entity.MenuInfo
 import org.helfoome.presentation.drawer.MyReviewActivity
 import org.helfoome.presentation.drawer.ProfileModifyActivity
 import org.helfoome.presentation.drawer.SettingActivity
@@ -67,17 +66,14 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                 binding.snvProfileModify.animation = animation
                 binding.snvProfileModify.setText("닉네임이 변경되었습니다")
                 animation.setAnimationListener(object : Animation.AnimationListener {
-                    override fun onAnimationStart(animation: Animation?) {
-                    }
-
+                    override fun onAnimationStart(animation: Animation?) = Unit
                     override fun onAnimationEnd(animation: Animation?) {
                         val bottomTopAnimation = AnimationUtils.loadAnimation(this@MainActivity, R.anim.anim_snackbar_bottom_top)
                         binding.snvProfileModify.animation = bottomTopAnimation
                         binding.snvProfileModify.setText("닉네임이 변경되었습니다")
                     }
 
-                    override fun onAnimationRepeat(p0: Animation?) {
-                    }
+                    override fun onAnimationRepeat(p0: Animation?) = Unit
                 })
             }
         }
@@ -91,12 +87,8 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
     private lateinit var naverMap: NaverMap
     private var mapSelectionBottomDialog: MapSelectionBottomDialogFragment? = null
     private val listener = object : TabLayout.OnTabSelectedListener {
-        override fun onTabReselected(tab: TabLayout.Tab?) {
-        }
-
-        override fun onTabUnselected(tab: TabLayout.Tab?) {
-        }
-
+        override fun onTabReselected(tab: TabLayout.Tab?) = Unit
+        override fun onTabUnselected(tab: TabLayout.Tab?) = Unit
         override fun onTabSelected(tab: TabLayout.Tab?) {
             // 리뷰 탭에서만 리뷰 작성 버튼 보여주기
             viewModel.setReviewTab(tab?.position == 2)
@@ -206,6 +198,13 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                 override fun onDrawerClosed(drawerView: View) = setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
                 override fun onDrawerStateChanged(newState: Int) = Unit
             })
+        }
+        viewModel.checkReview.observe(this) {
+            if (viewModel.checkReview.value == false) {
+                binding.layoutRestaurantDialog.btnWriteReview.isEnabled = true
+            } else if (viewModel.checkReview.value == true) {
+                binding.layoutRestaurantDialog.btnWriteReview.isEnabled = false
+            }
         }
 
         binding.fabBookmark.setOnClickListener {
@@ -337,6 +336,8 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                         this.map = naverMap
 
                         this.setOnClickListener {
+                            viewModel.getReviewCheck(marker.id)
+
                             viewModel.fetchSelectedRestaurantDetailInfo(marker.id, marker.latitude, marker.longitude)
 //                            viewModel.fetchSelectedRestaurantInfo(marker.id)
                             behavior.state = BottomSheetBehavior.STATE_COLLAPSED
