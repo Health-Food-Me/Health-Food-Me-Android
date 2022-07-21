@@ -119,8 +119,8 @@ class MainViewModel @Inject constructor(
                 restaurantRepository.fetchRestaurantDetail(restaurantId, hfmSharedPreference.id, latitude, longitude).getOrNull()
                     ?: return@launch
             _selectedRestaurant.postValue(restaurantInfo)
-            //  _menu.postValue(restaurantInfo.menuList ?: return@launch)
             _eatingOutTips.value = restaurantRepository.getEatingOutTips(restaurantId)
+            _menu.value = restaurantInfo.menuList?.sortedByDescending { it.isHealfoomePick } ?: return@launch
         }
     }
 

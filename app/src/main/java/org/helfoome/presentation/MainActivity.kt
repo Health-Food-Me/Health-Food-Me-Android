@@ -94,7 +94,6 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
         }
     }
 
-    private val restaurantMenuAdapter = RestaurantMenuAdapter()
     private var markerList: List<Pair<Marker, Boolean>> = listOf()
     private lateinit var locationSource: FusedLocationSource
     private lateinit var naverMap: NaverMap
@@ -313,10 +312,6 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
             with(binding.layoutRestaurantDialog) {
                 hashtag.setHashtag(it.tags, HashtagViewType.RESTAURANT_SUMMARY_TYPE)
             }
-        }
-
-        viewModel.menu.observe(this) { menuList ->
-            restaurantMenuAdapter.menuList = menuList
         }
 
         viewModel.isReviewTab.observe(this) {

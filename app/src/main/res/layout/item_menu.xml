@@ -28,6 +28,7 @@
                 android:layout_width="85dp"
                 android:layout_height="0dp"
                 android:layout_marginStart="16dp"
+                android:scaleType="centerCrop"
                 android:src="@drawable/ic_helfoome_place_holder"
                 app:imageUrl="@{menu.image}"
                 app:layout_constraintBottom_toBottomOf="parent"
