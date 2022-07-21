@@ -34,13 +34,14 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageButton
+                android:paddingVertical="12dp"
+                android:paddingHorizontal="@dimen/size_spacing_6"
+                style="@style/Button.Basic.Style"
                 android:id="@+id/btn_back"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="13dp"
-                android:layout_marginBottom="12dp"
-                android:background="@drawable/ic_before"
+                android:layout_height="match_parent"
+                android:layout_marginStart="14dp"
+                android:src="@drawable/ic_before"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -52,27 +53,28 @@
                 android:layout_marginEnd="20dp"
                 android:background="@drawable/selector_delete"
                 android:visibility="@{isDeleteButtonVisible? View.VISIBLE : View.GONE}"
-                app:layout_constraintBottom_toBottomOf="@+id/et_search"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/et_search" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <EditText
                 android:id="@+id/et_search"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="2dp"
                 android:background="@null"
                 android:fontFamily="@font/notosanskr_r"
-                android:hint="@string/search_restaurant_food"
+                android:hint="@string/main_search"
                 android:inputType="text"
                 android:maxLines="1"
                 android:textColor="@color/gray_800"
                 android:textColorHint="@color/gray_400"
                 android:textSize="15dp"
-                app:layout_constraintBottom_toBottomOf="@+id/btn_back"
+                android:layout_marginHorizontal="14dp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/btn_delete"
                 app:layout_constraintStart_toEndOf="@+id/btn_back"
-                app:layout_constraintTop_toTopOf="@+id/btn_back" />
+                app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.coordinatorlayout.widget.CoordinatorLayout
