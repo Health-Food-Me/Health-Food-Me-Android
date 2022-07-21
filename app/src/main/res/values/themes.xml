@@ -116,10 +116,13 @@
 
     <style name="Base.Widget.MaterialComponents.Chip.Style" parent="Widget.MaterialComponents.Chip.Choice">
         <item name="android:fontFamily">@font/notosanskr_r</item>
+        <item name="chipCornerRadius">38dp</item>
         <item name="android:textColor">@color/selector_chip_text</item>
         <item name="android:textSize">14dp</item>
         <item name="iconStartPadding">8dp</item>
-        <item name="elevation">2dp</item>
+        <item name="iconEndPadding">-4dp</item>
+        <item name="iconSize">24dp</item>
+        <item name="elevation">4dp</item>
         <item name="textEndPadding">12dp</item>
         <item name="android:elevation">2dp</item>
         <item name="chipIconVisible">true</item>
