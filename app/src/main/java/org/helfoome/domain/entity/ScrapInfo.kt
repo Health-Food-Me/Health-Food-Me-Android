@@ -1,9 +1,18 @@
 package org.helfoome.domain.entity
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class ScrapInfo(
     val id: String,
     val restaurantImg: String,
     val title: String,
     val location: String,
-    val isBookmarked: Boolean
-)
+    val isBookmarked: Boolean,
+    val category: String,
+    val hashtag: List<String>,
+    val latitude: Double,
+    val longitude: Double,
+    val score: Double,
+) : Parcelable

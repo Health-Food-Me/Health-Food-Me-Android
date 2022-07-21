@@ -15,13 +15,18 @@ data class ResponseScrapData(
     val longtitude: Double,
     val name: String,
     val score: Double,
-    val address: String
+    val address: String,
 ) {
     fun toScrapInfo() = ScrapInfo(
         id,
         logo,
         name,
         address,
-        true
+        true,
+        category,
+        hashtag,
+        latitude,
+        longtitude,
+        score
     )
 }
