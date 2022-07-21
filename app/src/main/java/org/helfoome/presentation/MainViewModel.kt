@@ -1,6 +1,9 @@
 package org.helfoome.presentation
 
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.naver.maps.geometry.LatLng
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -76,9 +79,9 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    fun getMapInfo(latLng: LatLng, category: String?) {
+    fun getMapInfo(latLng: LatLng, keyword: String? = null) {
         viewModelScope.launch(Dispatchers.IO) {
-            runCatching { mapRepository.getMap(latLng.latitude, latLng.longitude, 11, category) }
+            runCatching { mapRepository.getMap(latLng.latitude, latLng.longitude, 11, keyword) }
                 .onSuccess {
                     _location.postValue(
                         it.data.map { marker ->

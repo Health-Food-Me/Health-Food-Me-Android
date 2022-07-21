@@ -49,7 +49,10 @@ data class ResponseRestaurantDetail(
         time = restaurant.workTime,
         contact = restaurant.contact,
         distance = restaurant.distance,
+        menuList = menuList.map { menu ->
+            MenuInfo(menu.id, menu.name, menu.image, menu.price, menu.kcal, menu.per, menu.isPick)
         menuList = menuList?.map { menu -> MenuInfo(menu.id, menu.name, menu.image, menu.price, menu.kcal, menu.per, menu.isPick)
         },
-        score=restaurant.score)
+        score = restaurant.score
+    )
 }

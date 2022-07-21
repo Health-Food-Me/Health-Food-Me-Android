@@ -22,6 +22,8 @@ class RestaurantReviewWritingViewModel @Inject constructor(
     private val reviewService: ReviewService,
     private val hfmSharedPreference: HFMSharedPreference,
 ) : ViewModel() {
+    private val _isReviewModify = MutableLiveData<Boolean>()
+    val isReviewModify: LiveData<Boolean> = _isReviewModify
 
     private val _reviewId = MutableLiveData<String>()
     val reviewId get() = _reviewId
@@ -123,6 +125,7 @@ class RestaurantReviewWritingViewModel @Inject constructor(
                     imageListMultipartBody
                 )
             }.fold({
+                _isReviewModify.value = true
                 _isCompletedReviewUpload.value = true
             }, {
                 _isCompletedReviewUpload.value = false
@@ -161,6 +164,7 @@ class RestaurantReviewWritingViewModel @Inject constructor(
                     imageListMultipartBody
                 )
             }.fold({
+                _isReviewModify.value = true
                 _isCompletedReviewUpload.value = true
             }, {
                 _isCompletedReviewUpload.value = false

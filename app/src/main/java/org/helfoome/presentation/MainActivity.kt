@@ -113,6 +113,25 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
             }
         }
 
+    private val requestReviewWrite =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
+            if (activityResult.resultCode == Activity.RESULT_OK) {
+                val animation = AnimationUtils.loadAnimation(this, R.anim.anim_snackbar_top_down)
+                binding.snvProfileModify.animation = animation
+                binding.snvProfileModify.setText("리뷰가 작성되었습니다")
+                animation.setAnimationListener(object : Animation.AnimationListener {
+                    override fun onAnimationStart(animation: Animation?) = Unit
+                    override fun onAnimationEnd(animation: Animation?) {
+                        val bottomTopAnimation = AnimationUtils.loadAnimation(this@MainActivity, R.anim.anim_snackbar_bottom_top)
+                        binding.snvProfileModify.animation = bottomTopAnimation
+                        binding.snvProfileModify.setText("리뷰가 작성되었습니다")
+                    }
+
+                    override fun onAnimationRepeat(p0: Animation?) = Unit
+                })
+            }
+        }
+
     private val restaurantDetailAdapter = RestaurantTabAdapter(this)
     private val String.toChip: Chip
         get() = ChipFactory.create(layoutInflater).also { it.text = this }
@@ -131,6 +150,18 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
         initListeners()
         initObservers()
     }
+
+    private fun provideChipClickListener(chip: Chip) =
+        View.OnClickListener {
+            if (!chip.isChecked) {
+                binding.cgFoodTag.clearCheck()
+                viewModel.getMapInfo(naverMap.cameraPosition.target)
+            } else {
+                binding.cgFoodTag.clearCheck()
+                chip.isChecked = true
+                viewModel.getMapInfo(naverMap.cameraPosition.target, chip.text.toString())
+            }
+        }
 
     override fun onStart() {
         super.onStart()
@@ -154,7 +185,9 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
             tvNumber.paintFlags = tvNumber.paintFlags or Paint.UNDERLINE_TEXT_FLAG
 
             btnWriteReview.apply {
-                setOnClickListener { startActivity(Intent(this@MainActivity, ReviewWritingActivity::class.java)) }
+                setOnClickListener {
+                    requestReviewWrite.launch(Intent(this@MainActivity, ReviewWritingActivity::class.java))
+                }
             }
         }
         initChip()
@@ -175,16 +208,6 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
             }
         }
     }
-
-    private fun provideChipClickListener(chip: Chip) =
-        View.OnClickListener {
-            if (!chip.isChecked)
-                binding.cgFoodTag.clearCheck()
-            else {
-                binding.cgFoodTag.clearCheck()
-                chip.isChecked = true
-            }
-        }
 
     override fun onResume() {
         super.onResume()
@@ -317,6 +340,9 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
         }
 
         viewModel.location.observe(this) { markers ->
+            markerList.forEach {
+                it.first.map = null
+            }
             markerList = markers.map { marker ->
                 Pair(
                     Marker().apply {
@@ -404,7 +430,8 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
 
             if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                 cameraPosition = CameraPosition(
-                    LatLng(cameraPosition.target.latitude, cameraPosition.target.longitude), 11.0)
+                    LatLng(cameraPosition.target.latitude, cameraPosition.target.longitude), 11.0
+                )
                 locationTrackingMode = LocationTrackingMode.Follow
             } else {
                 cameraPosition = CameraPosition(LatLng(37.498095, 127.027610), 11.0)
@@ -412,12 +439,14 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
         }
 
         binding.fabLocation.setOnClickListener {
-            naverMap.cameraPosition = CameraPosition(LatLng(naverMap.cameraPosition.target.latitude, naverMap.cameraPosition.target.longitude), 11.0)
+            naverMap.cameraPosition =
+                CameraPosition(LatLng(naverMap.cameraPosition.target.latitude, naverMap.cameraPosition.target.longitude), 11.0)
             naverMap.locationTrackingMode = LocationTrackingMode.Follow
         }
         viewModel.getMapInfo(naverMap.cameraPosition.target, category)
         binding.fabLocationMain.setOnClickListener {
-            naverMap.cameraPosition = CameraPosition(LatLng(naverMap.cameraPosition.target.latitude, naverMap.cameraPosition.target.longitude), 11.0)
+            naverMap.cameraPosition =
+                CameraPosition(LatLng(naverMap.cameraPosition.target.latitude, naverMap.cameraPosition.target.longitude), 11.0)
             naverMap.locationTrackingMode = LocationTrackingMode.Follow
         }
         viewModel.getMapInfo(
