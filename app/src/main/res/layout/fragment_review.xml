@@ -69,7 +69,7 @@
 
                 <include
                     android:id="@+id/layout_empty_view"
-                    layout="@layout/view_eating_out_empty"
+                    layout="@layout/view_review_empty"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     app:layout_constraintTop_toBottomOf="@id/layout_tab_menu_background"

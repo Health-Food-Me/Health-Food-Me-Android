@@ -47,19 +47,16 @@ import org.helfoome.presentation.drawer.ProfileModifyActivity
 import org.helfoome.presentation.drawer.SettingActivity
 import org.helfoome.presentation.login.LoginActivity
 import org.helfoome.presentation.restaurant.MapSelectionBottomDialogFragment
-import org.helfoome.presentation.restaurant.adapter.RestaurantMenuAdapter
 import org.helfoome.presentation.restaurant.adapter.RestaurantTabAdapter
 import org.helfoome.presentation.review.ReviewWritingActivity
 import org.helfoome.presentation.scrap.MyScrapActivity
 import org.helfoome.presentation.search.SearchActivity
 import org.helfoome.presentation.type.FoodType
 import org.helfoome.presentation.type.HashtagViewType
-import org.helfoome.util.ChipFactory
-import org.helfoome.util.DialogUtil
-import org.helfoome.util.ResolutionMetrics
+import org.helfoome.util.*
 import org.helfoome.util.binding.BindingActivity
+import org.helfoome.util.ext.makeTransparentStatusBar
 import org.helfoome.util.ext.stringListFrom
-import org.helfoome.util.makeTransparentStatusBar
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -103,7 +100,6 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
         }
     }
 
-    private val restaurantMenuAdapter = RestaurantMenuAdapter()
     private var markerList: List<Pair<Marker, Boolean>> = listOf()
     private lateinit var locationSource: FusedLocationSource
     private lateinit var naverMap: NaverMap
@@ -358,12 +354,9 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
     private fun initObservers() {
         viewModel.selectedRestaurant.observe(this) {
             with(binding.layoutRestaurantDialog) {
+                layoutRestaurantTabMenu.selectTab(layoutRestaurantTabMenu.getTabAt(0))
                 hashtag.setHashtag(it.tags, HashtagViewType.RESTAURANT_SUMMARY_TYPE)
             }
-        }
-
-        viewModel.menu.observe(this) { menuList ->
-            restaurantMenuAdapter.menuList = menuList
         }
 
         viewModel.isReviewTab.observe(this) {
@@ -448,7 +441,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
 
     override fun onMapReady(naverMap: NaverMap) {
         this.naverMap = naverMap.apply {
-            uiSettings.isZoomControlEnabled = false
+            uiSettings.isZoomControlEnabled = true
             setOnMapClickListener { _, _ ->
                 behavior.state = BottomSheetBehavior.STATE_HIDDEN
                 markerList.forEach {
@@ -458,6 +451,9 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                     )
                 }
             }
+
+            minZoom = 5.0
+            maxZoom = 20.0
             this.locationSource = this@MainActivity.locationSource
 
             if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
@@ -468,17 +464,21 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
             } else {
                 cameraPosition = CameraPosition(LatLng(37.498095, 127.027610), 11.0)
             }
+
+            addOnCameraChangeListener { reason, _ ->
+
+            }
         }
 
         binding.btnLocation.setOnClickListener {
             naverMap.cameraPosition =
-                CameraPosition(LatLng(naverMap.cameraPosition.target.latitude, naverMap.cameraPosition.target.longitude), 11.0)
+                CameraPosition(LatLng(naverMap.cameraPosition.target.latitude, naverMap.cameraPosition.target.longitude), 14.0)
             naverMap.locationTrackingMode = LocationTrackingMode.Follow
         }
         viewModel.getMapInfo(naverMap.cameraPosition.target, category)
         binding.btnLocationMain.setOnClickListener {
             naverMap.cameraPosition =
-                CameraPosition(LatLng(naverMap.cameraPosition.target.latitude, naverMap.cameraPosition.target.longitude), 11.0)
+                CameraPosition(LatLng(naverMap.cameraPosition.target.latitude, naverMap.cameraPosition.target.longitude), 14.0)
             naverMap.locationTrackingMode = LocationTrackingMode.Follow
         }
         viewModel.getMapInfo(

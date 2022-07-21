@@ -28,6 +28,7 @@
                 android:layout_width="85dp"
                 android:layout_height="0dp"
                 android:layout_marginStart="16dp"
+                android:scaleType="centerCrop"
                 android:src="@drawable/ic_helfoome_place_holder"
                 app:imageUrl="@{menu.image}"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -84,6 +85,7 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <LinearLayout
+                android:visibility="@{menu.healfoomePick == true || menu.calorie != null}"
                 android:id="@+id/layout_calorie"
                 android:layout_width="55dp"
                 android:layout_height="0dp"
@@ -99,7 +101,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/notosanskr_b"
-                    android:text="@{menu.calorie == null ? `-` : Integer.toString(menu.calorie)}"
+                    android:text="@{menu.calorie == null ? `-` : Float.toString(menu.calorie)}"
                     android:textColor="@color/white"
                     android:textSize="16dp"
                     tools:text="219" />
