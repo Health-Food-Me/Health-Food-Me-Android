@@ -42,7 +42,7 @@
                 android:fontFamily="@font/notosanskr_b"
                 android:text='@{viewModel.isEditMode ? "리뷰편집" : "리뷰작성"}'
                 android:textColor="@color/gray_800"
-                android:textSize="15sp"
+                android:textSize="15dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

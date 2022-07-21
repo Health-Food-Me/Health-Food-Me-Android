@@ -1,4 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Base application theme. -->
     <style name="Theme.HealthFoodMe" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Primary brand color. -->
@@ -40,33 +40,34 @@
     <style name="TextView.Hashtag.TextAppearance" parent="">
         <item name="android:fontFamily">@font/notosanskr_m</item>
         <item name="android:textColor">@color/red_500</item>
-        <item name="android:textSize">10sp</item>
+        <item name="android:textSize">10dp</item>
     </style>
 
     <style name="TabItem.RestaurantTab.TextAppearance" parent="">
         <item name="android:fontFamily">@font/notosanskr_b</item>
-        <item name="android:textSize">14dp</item>
+        <item name="android:textSize">14dp</item>>
     </style>
 
     <style name="TabItem.MenuTab.TextAppearance" parent="">
         <item name="android:fontFamily">@font/notosanskr_m</item>
-        <item name="android:textSize">12sp</item>
+        <item name="android:textSize">12dp</item>
+        <item name="android:textColor">@color/gray_800</item>
     </style>
 
     <style name="TextView.Nutrient.TextAppearance" parent="">
         <item name="android:fontFamily">@font/notosanskr_b</item>
         <item name="android:textColor">@color/gray_800</item>
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">14dp</item>
     </style>
 
     <style name="TextView.Setting.TextAppearance_14" parent="">
         <item name="android:textColor">@color/gray_550</item>
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">14dp</item>
     </style>
 
     <style name="TextView.Setting.TextAppearance_16" parent="">
         <item name="android:textColor">@color/gray_800</item>
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">16dp</item>
     </style>
 
     <style name="TextView.OpeningTime.Appearance" parent="">
@@ -116,10 +117,13 @@
 
     <style name="Base.Widget.MaterialComponents.Chip.Style" parent="Widget.MaterialComponents.Chip.Choice">
         <item name="android:fontFamily">@font/notosanskr_r</item>
+        <item name="chipCornerRadius">38dp</item>
         <item name="android:textColor">@color/selector_chip_text</item>
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">14dp</item>
         <item name="iconStartPadding">8dp</item>
-        <item name="elevation">2dp</item>
+        <item name="iconEndPadding">-4dp</item>
+        <item name="iconSize">24dp</item>
+        <item name="elevation">4dp</item>
         <item name="textEndPadding">12dp</item>
         <item name="android:elevation">2dp</item>
         <item name="chipIconVisible">true</item>

@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             android:text="@string/my_scrap_explain_first"
             android:textColor="@color/gray_800"
-            android:textSize="16sp"
+            android:textSize="16dp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -29,7 +29,7 @@
             android:layout_marginTop="14dp"
             android:text="@string/my_scrap_explain_second"
             android:textColor="@color/gray_600"
-            android:textSize="13sp"
+            android:textSize="13dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_explain_first" />
@@ -43,7 +43,7 @@
             android:background="@drawable/rectangle_red_radius_36"
             android:text="@string/empty_go_scrap"
             android:textColor="@color/white"
-            android:textSize="15sp"
+            android:textSize="15dp"
             android:textStyle="bold"
             app:layout_constraintTop_toBottomOf="@id/tv_explain_second" />
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -23,23 +23,6 @@ class RestaurantReviewTabFragment : BindingFragment<FragmentReviewBinding>(R.lay
     private val viewModel: MainViewModel by activityViewModels()
     private val restaurantGeneralReviewAdapter = RestaurantGeneralReviewAdapter()
     private val restaurantBlogReviewAdapter = RestaurantBlogReviewAdapter(::moveToBlog)
-    private val listener = object : TabLayout.OnTabSelectedListener {
-        override fun onTabReselected(tab: TabLayout.Tab?) {
-        }
-
-        override fun onTabUnselected(tab: TabLayout.Tab?) {
-        }
-
-        override fun onTabSelected(tab: TabLayout.Tab?) {
-            // index가 아닌 enum class로 비교하기
-            viewModel.setGeneralReview(tab?.position == 0)
-        }
-    }
-
-    override fun onStart() {
-        super.onStart()
-        binding.layoutReviewTab.addOnTabSelectedListener(listener)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -74,16 +57,23 @@ class RestaurantReviewTabFragment : BindingFragment<FragmentReviewBinding>(R.lay
         viewModel.hfmReviews.observe(viewLifecycleOwner) { reviews ->
             binding.reviewList.adapter = restaurantGeneralReviewAdapter
             restaurantGeneralReviewAdapter.submitList(reviews)
+            showReviewEmptyView(reviews == null)
         }
         viewModel.blogReviews.observe(viewLifecycleOwner) { reviews ->
             binding.reviewList.adapter = restaurantBlogReviewAdapter
             restaurantBlogReviewAdapter.submitList(reviews)
+            showReviewEmptyView(reviews == null)
         }
     }
 
-    override fun onStop() {
-        super.onStop()
-        binding.layoutReviewTab.removeOnTabSelectedListener(listener)
+    private fun showReviewEmptyView(isShown: Boolean) {
+        if (isShown) {
+            binding.reviewList.visibility = View.INVISIBLE
+            binding.layoutEmptyView.layoutContainer.visibility = View.VISIBLE
+        } else {
+            binding.reviewList.visibility = View.VISIBLE
+            binding.layoutEmptyView.layoutContainer.visibility = View.INVISIBLE
+        }
     }
 
     private fun moveToBlog(review: BlogReviewInfo) {

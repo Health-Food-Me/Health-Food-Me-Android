@@ -30,7 +30,7 @@
             android:maxLines="1"
             android:text="@{review.nickname}"
             android:textColor="@color/gray_800"
-            android:textSize="13sp"
+            android:textSize="13dp"
             app:layout_constraintStart_toStartOf="@id/gl_start"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="나는 헬푸파미" />

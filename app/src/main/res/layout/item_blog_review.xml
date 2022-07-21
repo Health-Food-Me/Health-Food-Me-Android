@@ -27,7 +27,7 @@
             android:maxLines="1"
             android:text="@{review.title}"
             android:textColor="@color/gray_800"
-            android:textSize="13sp"
+            android:textSize="13dp"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="샐러디 안암점 나쵸가 씹히는 멕시칸랩" />
 

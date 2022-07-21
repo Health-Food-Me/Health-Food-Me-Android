@@ -2,7 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".presentation.restaurant.RestaurantMenuTabFragment">
+    tools:context=".presentation.restaurant.RestaurantReviewTabFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -43,7 +43,7 @@
                         app:tabRippleColor="@android:color/transparent"
                         app:tabSelectedTextColor="@color/gray_800"
                         app:tabTextAppearance="@style/TabItem.MenuTab.TextAppearance"
-                        app:tabTextColor="@color/gray_550">
+                        app:tabTextColor="@color/gray_800">
 
                         <com.google.android.material.tabs.TabItem
                             android:layout_width="wrap_content"
@@ -66,6 +66,14 @@
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintTop_toBottomOf="@id/layout_tab_menu_background"
                     tools:listitem="@layout/item_general_review" />
+
+                <include
+                    android:id="@+id/layout_empty_view"
+                    layout="@layout/view_eating_out_empty"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:layout_constraintTop_toBottomOf="@id/layout_tab_menu_background"
+                    tools:visibility="gone" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
     </androidx.constraintlayout.widget.ConstraintLayout>

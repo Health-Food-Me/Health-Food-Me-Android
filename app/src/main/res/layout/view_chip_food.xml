@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
-
-    <data>
-
-    </data>
 
     <com.google.android.material.chip.Chip
         android:id="@+id/chip_food"
@@ -12,6 +9,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:checked="false"
-        android:minHeight="24dp"
+        android:paddingVertical="4dp"
+        app:chipMinTouchTargetSize="0dp"
         tools:text="@string/retry" />
 </layout>

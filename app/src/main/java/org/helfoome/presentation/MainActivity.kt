@@ -58,8 +58,47 @@ import javax.inject.Inject
 class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main), OnMapReadyCallback {
     @Inject
     lateinit var resolutionMetrics: ResolutionMetrics
+    private val viewModel: MainViewModel by viewModels()
     private var category: String? = null
+    private lateinit var behavior: BottomSheetBehavior<ConstraintLayout>
+    private var mapSelectionBottomDialog: MapSelectionBottomDialogFragment? = null
+    private val tabSelectedListener = object : TabLayout.OnTabSelectedListener {
+        override fun onTabReselected(tab: TabLayout.Tab?) = Unit
+        override fun onTabUnselected(tab: TabLayout.Tab?) = Unit
+        override fun onTabSelected(tab: TabLayout.Tab?) {
+            // 리뷰 탭에서만 리뷰 작성 버튼 보여주기
+            viewModel.setReviewTab(tab?.position == 2)
+        }
+    }
+    private val appbarOffsetListener = AppBarLayout.OnOffsetChangedListener { _, verticalOffset ->
+        binding.layoutRestaurantDialog.tvRestaurantNameInToolbar.visibility = if (verticalOffset == 0) {
+            View.INVISIBLE
+        } else {
+            View.VISIBLE
+        }
+    }
+    private val bottomSheetCallback = object : BottomSheetBehavior.BottomSheetCallback() {
+        override fun onStateChanged(bottomSheet: View, newState: Int) {
+            binding.layoutRestaurantDialog.nvDetail.isNestedScrollingEnabled = false
+            viewModel.setExpendedBottomSheetDialog(newState == BottomSheetBehavior.STATE_EXPANDED)
+            behavior.isDraggable = true
+            if (newState == BottomSheetBehavior.STATE_COLLAPSED)
+                binding.isFloatingNotVisible = false
+            if (newState == BottomSheetBehavior.STATE_DRAGGING)
+                binding.isFloatingNotVisible = true
+            if (newState == BottomSheetBehavior.STATE_HIDDEN)
+                binding.isMainNotVisible = false
+        }
+
+        override fun onSlide(bottomSheetView: View, slideOffset: Float) {
+        }
+    }
+
     private val restaurantMenuAdapter = RestaurantMenuAdapter()
+    private var markerList: List<Pair<Marker, Boolean>> = listOf()
+    private lateinit var locationSource: FusedLocationSource
+    private lateinit var naverMap: NaverMap
+
     private val requestModifyNickname =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
             if (activityResult.resultCode == Activity.RESULT_OK) {
@@ -78,109 +117,30 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                 })
             }
         }
-    private var markerList: List<Pair<Marker, Boolean>> = listOf()
+
+    private val restaurantDetailAdapter = RestaurantTabAdapter(this)
     private val String.toChip: Chip
         get() = ChipFactory.create(layoutInflater).also { it.text = this }
-    private val viewModel: MainViewModel by viewModels()
-    private lateinit var behavior: BottomSheetBehavior<ConstraintLayout>
-    private val restaurantDetailAdapter = RestaurantTabAdapter(this)
-    private lateinit var locationSource: FusedLocationSource
-    private lateinit var naverMap: NaverMap
-    private var mapSelectionBottomDialog: MapSelectionBottomDialogFragment? = null
-    private val listener = object : TabLayout.OnTabSelectedListener {
-        override fun onTabReselected(tab: TabLayout.Tab?) {
-        }
-
-        override fun onTabUnselected(tab: TabLayout.Tab?) {
-        }
-
-        override fun onTabSelected(tab: TabLayout.Tab?) {
-            // 리뷰 탭에서만 리뷰 작성 버튼 보여주기
-            viewModel.setReviewTab(tab?.position == 2)
-        }
-    }
-
-    private val appbarOffsetListener = AppBarLayout.OnOffsetChangedListener { _, verticalOffset ->
-        binding.layoutRestaurantDialog.tvRestaurantNameInToolbar.visibility = if (verticalOffset == 0) {
-            View.INVISIBLE
-        } else {
-            View.VISIBLE
-        }
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding.viewModel = viewModel
         binding.layoutDrawerHeader.drawerViewModel = viewModel
         window.makeTransparentStatusBar()
+
+        locationSource = FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE)
         viewModel.getProfile()
 
-        locationSource =
-            FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE)
         initNaverMap()
         initView()
-        initChip()
         initListeners()
         initObservers()
-    }
-
-    private fun provideChipClickListener(chip: Chip) =
-        View.OnClickListener {
-            category = chip.text.toString()
-
-            for (i in markerList.indices) {
-                markerList[i].first.icon = OverlayImage.fromResource(R.drawable.ic_bookmark)
-                markerList[i].first.map = null
-            }
-
-            if (!chip.isChecked) {
-                viewModel.getMapInfo(naverMap.cameraPosition.target, null)
-                binding.cgFoodTag.clearCheck()
-            } else {
-                viewModel.getMapInfo(naverMap.cameraPosition.target, category)
-                binding.cgFoodTag.clearCheck()
-                chip.isChecked = true
-            }
-        }
-
-    private fun initChip() {
-        for (i in FoodType.values().indices) {
-            with(binding.cgFoodTag) {
-                addView(
-                    stringListFrom(R.array.main_chip_group)[i].toChip.apply {
-                        setRippleColorResource(android.R.color.transparent)
-                        setOnClickListener(provideChipClickListener(this))
-                        setChipIconResource(FoodType.values()[i].icon)
-                        setChipIconTintResource(FoodType.values()[i].iconTint)
-                        setChipBackgroundColorResource(FoodType.values()[i].color)
-                    }
-                )
-            }
-        }
-    }
-
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<String>,
-        grantResults: IntArray,
-    ) {
-        if (locationSource.onRequestPermissionsResult(
-                requestCode, permissions,
-                grantResults
-            )
-        ) {
-            if (!locationSource.isActivated) { // 권한 거부됨
-                naverMap.locationTrackingMode = LocationTrackingMode.None
-            }
-            return
-        }
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 
     override fun onStart() {
         super.onStart()
         behavior.addBottomSheetCallback(bottomSheetCallback)
-        binding.layoutRestaurantDialog.layoutRestaurantTabMenu.addOnTabSelectedListener(listener)
+        binding.layoutRestaurantDialog.layoutRestaurantTabMenu.addOnTabSelectedListener(tabSelectedListener)
         binding.layoutRestaurantDialog.layoutAppBar.addOnOffsetChangedListener(appbarOffsetListener)
     }
 
@@ -202,7 +162,34 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                 setOnClickListener { startActivity(Intent(this@MainActivity, ReviewWritingActivity::class.java)) }
             }
         }
+        initChip()
     }
+
+    private fun initChip() {
+        for (i in FoodType.values().indices) {
+            with(binding.cgFoodTag) {
+                addView(
+                    stringListFrom(R.array.main_chip_group)[i].toChip.apply {
+                        setRippleColorResource(android.R.color.transparent)
+                        setOnClickListener(provideChipClickListener(this))
+                        setChipIconResource(FoodType.values()[i].icon)
+                        setChipIconTintResource(FoodType.values()[i].iconTint)
+                        setChipBackgroundColorResource(FoodType.values()[i].color)
+                    }
+                )
+            }
+        }
+    }
+
+    private fun provideChipClickListener(chip: Chip) =
+        View.OnClickListener {
+            if (!chip.isChecked)
+                binding.cgFoodTag.clearCheck()
+            else {
+                binding.cgFoodTag.clearCheck()
+                chip.isChecked = true
+            }
+        }
 
     override fun onResume() {
         super.onResume()
@@ -215,22 +202,6 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
     }
 
     private fun initListeners() {
-        with(binding.layoutDrawer) {
-            addDrawerListener(object : DrawerLayout.DrawerListener {
-                override fun onDrawerSlide(drawerView: View, slideOffset: Float) = Unit
-                override fun onDrawerOpened(drawerView: View) = setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
-                override fun onDrawerClosed(drawerView: View) = setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
-                override fun onDrawerStateChanged(newState: Int) = Unit
-            })
-        }
-        viewModel.checkReview.observe(this) {
-            if (viewModel.checkReview.value == false) {
-                binding.layoutRestaurantDialog.btnWriteReview.isEnabled = true
-            } else if (viewModel.checkReview.value == true) {
-                binding.layoutRestaurantDialog.btnWriteReview.isEnabled = false
-            }
-        }
-
         binding.fabBookmark.setOnClickListener {
             it.isSelected = !it.isSelected
         }
@@ -239,8 +210,11 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
             it.isSelected = !it.isSelected
         }
 
-        with(binding.layoutRestaurantDialog) {
+        binding.btnHamburger.setOnClickListener {
+            binding.layoutDrawer.open()
+        }
 
+        with(binding.layoutRestaurantDialog) {
             layoutAppBar.setOnClickListener {
                 if (behavior.state == BottomSheetBehavior.STATE_COLLAPSED) {
                     binding.isFloatingNotVisible = true
@@ -260,56 +234,57 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                 startActivity(Intent(this@MainActivity, SearchActivity::class.java))
             }
 
-            with(binding) {
-                btnHamburger.setOnClickListener {
-                    layoutDrawer.open()
-                }
-            }
-
             btnNavi.setOnClickListener {
                 showMapSelectionBottomDialog()
             }
+        }
 
-            with(binding.layoutDrawerHeader) {
+        with(binding.layoutDrawer) {
+            addDrawerListener(object : DrawerLayout.DrawerListener {
+                override fun onDrawerSlide(drawerView: View, slideOffset: Float) = Unit
+                override fun onDrawerOpened(drawerView: View) = setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
+                override fun onDrawerClosed(drawerView: View) = setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+                override fun onDrawerStateChanged(newState: Int) = Unit
+            })
+        }
+        with(binding.layoutDrawerHeader) {
+            btnEdit.setOnClickListener {
+                requestModifyNickname.launch(Intent(this@MainActivity, ProfileModifyActivity::class.java))
+            }
+            tvReview.setOnClickListener {
+                startActivity(Intent(this@MainActivity, MyReviewActivity::class.java))
+            }
+            tvScrap.setOnClickListener {
+                startActivity(Intent(this@MainActivity, MyScrapActivity::class.java))
+            }
+            tvReport.setOnClickListener {
+                sendGmail()
+            }
+            tvModifyReport.setOnClickListener {
+                sendGmail()
+            }
+            tvSetting.setOnClickListener {
+                startActivity(Intent(this@MainActivity, SettingActivity::class.java))
+            }
+            tvLogout.setOnClickListener {
+                val bind = DialogLogoutBinding.inflate(LayoutInflater.from(this@MainActivity))
+                val dialog =
+                    DialogUtil.makeDialog(this@MainActivity, bind, resolutionMetrics.toPixel(288), resolutionMetrics.toPixel(241))
 
-                btnEdit.setOnClickListener {
-                    requestModifyNickname.launch(Intent(this@MainActivity, ProfileModifyActivity::class.java))
-                }
-                tvReview.setOnClickListener {
-                    startActivity(Intent(this@MainActivity, MyReviewActivity::class.java))
-                }
-                tvScrap.setOnClickListener {
-                    startActivity(Intent(this@MainActivity, MyScrapActivity::class.java))
-                }
-                tvReport.setOnClickListener {
-                    sendGmail()
-                }
-                tvModifyReport.setOnClickListener {
-                    sendGmail()
-                }
-                tvSetting.setOnClickListener {
-                    startActivity(Intent(this@MainActivity, SettingActivity::class.java))
-                }
-                tvLogout.setOnClickListener {
-                    val bind = DialogLogoutBinding.inflate(LayoutInflater.from(this@MainActivity))
-                    val dialog =
-                        DialogUtil.makeDialog(this@MainActivity, bind, resolutionMetrics.toPixel(288), resolutionMetrics.toPixel(241))
-
-                    bind.btnYes.setOnClickListener {
-                        NaverIdLoginSDK.logout()
-                        UserApiClient.instance.logout { error ->
-                            if (error != null) {
-                                Timber.e(error, "로그아웃 실패. SDK에서 토큰 삭제됨")
-                            } else {
-                                Timber.i("로그아웃 성공. SDK에서 토큰 삭제됨")
-                            }
+                bind.btnYes.setOnClickListener {
+                    NaverIdLoginSDK.logout()
+                    UserApiClient.instance.logout { error ->
+                        if (error != null) {
+                            Timber.e(error, "로그아웃 실패. SDK에서 토큰 삭제됨")
+                        } else {
+                            Timber.i("로그아웃 성공. SDK에서 토큰 삭제됨")
                         }
-                        startActivity(Intent(this@MainActivity, LoginActivity::class.java))
-                        finish()
                     }
-                    bind.btnNo.setOnClickListener {
-                        dialog.dismiss()
-                    }
+                    startActivity(Intent(this@MainActivity, LoginActivity::class.java))
+                    finish()
+                }
+                bind.btnNo.setOnClickListener {
+                    dialog.dismiss()
                 }
             }
         }
@@ -344,10 +319,11 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
             restaurantMenuAdapter.menuList = menuList
         }
 
-        viewModel.isVisibleReviewButton.observe(this) { isVisible ->
+        viewModel.isReviewTab.observe(this) {
             binding.layoutRestaurantDialog.layoutReviewBtnBackground.visibility =
-                if (isVisible.peekContent()) View.VISIBLE else View.INVISIBLE
+                if (it.peekContent()) View.VISIBLE else View.INVISIBLE
         }
+
         viewModel.location.observe(this) { markers ->
             markerList = markers.map { marker ->
                 Pair(
@@ -357,13 +333,12 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                             if (marker.isDietRestaurant) R.drawable.ic_marker_green_small
                             else R.drawable.ic_marker_red_small
                         )
-                        this.map = naverMap
+                        map = naverMap
 
-                        this.setOnClickListener {
+                        setOnClickListener {
                             viewModel.getReviewCheck(marker.id)
-
                             viewModel.fetchSelectedRestaurantDetailInfo(marker.id, marker.latitude, marker.longitude)
-//                            viewModel.fetchSelectedRestaurantInfo(marker.id)
+
                             behavior.state = BottomSheetBehavior.STATE_COLLAPSED
                             binding.isMainNotVisible = true
                             markerList.forEach {
@@ -376,21 +351,21 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                                 if (marker.isDietRestaurant) R.drawable.ic_marker_green_big
                                 else R.drawable.ic_marker_red_big
                             )
-                            viewModel.markerId(this.position)?.let { id ->
-//                        bottomsheet(id)
-                            }
+                            viewModel.markerId(this.position)?.let { id -> }
                             true
                         }
                     },
                     marker.isDietRestaurant
                 )
             }
-//                .forEach { marker ->
-//                marker.setOnClickListener {
-//                    behavior.state = BottomSheetBehavior.STATE_COLLAPSED
-//                    viewModel.fetchSelectedRestaurantInfo()
-//                    true
-//            }
+        }
+
+        viewModel.checkReview.observe(this) {
+            if (viewModel.checkReview.value == false) {
+                binding.layoutRestaurantDialog.btnWriteReview.isEnabled = true
+            } else if (viewModel.checkReview.value == true) {
+                binding.layoutRestaurantDialog.btnWriteReview.isEnabled = false
+            }
         }
     }
 
@@ -405,25 +380,8 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
     override fun onStop() {
         super.onStop()
         behavior.removeBottomSheetCallback(bottomSheetCallback)
-        binding.layoutRestaurantDialog.layoutRestaurantTabMenu.removeOnTabSelectedListener(listener)
+        binding.layoutRestaurantDialog.layoutRestaurantTabMenu.removeOnTabSelectedListener(tabSelectedListener)
         binding.layoutRestaurantDialog.layoutAppBar.removeOnOffsetChangedListener(appbarOffsetListener)
-    }
-
-    private val bottomSheetCallback = object : BottomSheetBehavior.BottomSheetCallback() {
-        override fun onStateChanged(bottomSheet: View, newState: Int) {
-            binding.layoutRestaurantDialog.nvDetail.isNestedScrollingEnabled = false
-            viewModel.setExpendedBottomSheetDialog(newState == BottomSheetBehavior.STATE_EXPANDED)
-            behavior.isDraggable = true
-            if (newState == BottomSheetBehavior.STATE_COLLAPSED)
-                binding.isFloatingNotVisible = false
-            if (newState == BottomSheetBehavior.STATE_DRAGGING)
-                binding.isFloatingNotVisible = true
-            if (newState == BottomSheetBehavior.STATE_HIDDEN)
-                binding.isMainNotVisible = false
-        }
-
-        override fun onSlide(bottomSheetView: View, slideOffset: Float) {
-        }
     }
 
     private fun initNaverMap() {
@@ -439,54 +397,35 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
     }
 
     override fun onMapReady(naverMap: NaverMap) {
-        this.naverMap = naverMap
+        this.naverMap = naverMap.apply {
+            uiSettings.isZoomControlEnabled = false
+            setOnMapClickListener { _, _ ->
+                behavior.state = BottomSheetBehavior.STATE_HIDDEN
+                markerList.forEach {
+                    it.first.icon = OverlayImage.fromResource(
+                        if (it.second) R.drawable.ic_marker_green_small
+                        else R.drawable.ic_marker_red_small
+                    )
+                }
+            }
+            this.locationSource = this@MainActivity.locationSource
 
-        naverMap.uiSettings.isZoomControlEnabled = false
-        naverMap.setOnMapClickListener { _, _ ->
-            behavior.state = BottomSheetBehavior.STATE_HIDDEN
-            markerList.forEach {
-                it.first.icon = OverlayImage.fromResource(
-                    if (it.second) R.drawable.ic_marker_green_small
-                    else R.drawable.ic_marker_red_small
-                )
+            if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                cameraPosition = CameraPosition(
+                    LatLng(cameraPosition.target.latitude, cameraPosition.target.longitude), 11.0)
+                locationTrackingMode = LocationTrackingMode.Follow
+            } else {
+                cameraPosition = CameraPosition(LatLng(37.498095, 127.027610), 11.0)
             }
         }
-        naverMap.locationSource = locationSource
-        locationSource.lastLocation
 
-        if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION)
-            == PackageManager.PERMISSION_GRANTED
-        ) {
-            naverMap.cameraPosition = CameraPosition(
-                LatLng(
-                    naverMap.cameraPosition.target.latitude,
-                    naverMap.cameraPosition.target.longitude
-                ),
-                11.0
-            )
-            naverMap.locationTrackingMode = LocationTrackingMode.Follow
-        } else {
-            naverMap.cameraPosition = CameraPosition(LatLng(37.498095, 127.027610), 11.0)
-        }
         binding.fabLocation.setOnClickListener {
-            naverMap.cameraPosition = CameraPosition(
-                LatLng(
-                    naverMap.cameraPosition.target.latitude,
-                    naverMap.cameraPosition.target.longitude
-                ),
-                11.0
-            )
+            naverMap.cameraPosition = CameraPosition(LatLng(naverMap.cameraPosition.target.latitude, naverMap.cameraPosition.target.longitude), 11.0)
             naverMap.locationTrackingMode = LocationTrackingMode.Follow
         }
         viewModel.getMapInfo(naverMap.cameraPosition.target, category)
         binding.fabLocationMain.setOnClickListener {
-            naverMap.cameraPosition = CameraPosition(
-                LatLng(
-                    naverMap.cameraPosition.target.latitude,
-                    naverMap.cameraPosition.target.longitude
-                ),
-                11.0
-            )
+            naverMap.cameraPosition = CameraPosition(LatLng(naverMap.cameraPosition.target.latitude, naverMap.cameraPosition.target.longitude), 11.0)
             naverMap.locationTrackingMode = LocationTrackingMode.Follow
         }
         viewModel.getMapInfo(
@@ -496,6 +435,20 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
             ),
             category
         )
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray,
+    ) {
+        if (locationSource.onRequestPermissionsResult(requestCode, permissions, grantResults)) {
+            if (!locationSource.isActivated) { // 권한 거부됨
+                naverMap.locationTrackingMode = LocationTrackingMode.None
+            }
+            return
+        }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 
     companion object {

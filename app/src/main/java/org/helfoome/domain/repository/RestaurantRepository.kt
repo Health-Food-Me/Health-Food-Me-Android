@@ -10,6 +10,6 @@ interface RestaurantRepository {
     suspend fun fetchRestaurantDetail(restaurantId: String, userId: String, latitude: Double, longitude: Double): Result<RestaurantInfo?>
     suspend fun updateRestaurantScrap(restaurantId: String, userId: String): List<String>?
     suspend fun getEatingOutTips(restaurantId: String): EatingOutTipInfo?
-    suspend fun fetchHFMReview(restaurantId: String): Result<List<HFMReviewInfo>>
-    suspend fun fetchBlogReview(restaurantId: String): Result<List<BlogReviewInfo>>
+    suspend fun fetchHFMReview(restaurantId: String): Result<List<HFMReviewInfo>?>
+    suspend fun fetchBlogReview(restaurantId: String): Result<List<BlogReviewInfo>?>
 }

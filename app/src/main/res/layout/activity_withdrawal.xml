@@ -51,7 +51,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
-            android:textSize="14sp"
+            android:textSize="14dp"
             android:textColor="@color/gray_800"
             android:lineSpacingExtra="4dp"
             android:text="@string/withdraw_description"
@@ -72,7 +72,7 @@
             android:paddingStart="16dp"
             android:paddingEnd="149dp"
             android:textColor="@color/gray_400"
-            android:textSize="16sp"
+            android:textSize="16dp"
             app:layout_constraintTop_toBottomOf="@id/tv_description" />
 
         <androidx.appcompat.widget.AppCompatButton
@@ -88,7 +88,7 @@
             android:paddingBottom="10dp"
             android:text="@string/withdraw_confirm"
             android:textColor="@color/white"
-            android:textSize="16sp"
+            android:textSize="16dp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent" />
 

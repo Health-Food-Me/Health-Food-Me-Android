@@ -75,7 +75,7 @@ class RestaurantRepositoryImpl @Inject constructor(
         })
     }
 
-    override suspend fun fetchBlogReview(restaurantId: String): Result<List<BlogReviewInfo>> {
+    override suspend fun fetchBlogReview(restaurantId: String): Result<List<BlogReviewInfo>?> {
         return runCatching {
             restaurantDataSource.getBlogReview(restaurantId)
         }.fold({
