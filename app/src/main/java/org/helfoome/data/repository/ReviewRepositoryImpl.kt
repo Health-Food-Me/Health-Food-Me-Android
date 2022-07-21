@@ -1,7 +1,6 @@
 package org.helfoome.data.repository
 
 import org.helfoome.data.model.response.BaseResponse
-import org.helfoome.data.model.response.ResponseMyReviewEdit
 import org.helfoome.data.model.response.ResponseMyReviewList
 import org.helfoome.data.model.response.ResponseReviewCheck
 import org.helfoome.data.service.ReviewService
@@ -29,10 +28,6 @@ class ReviewRepositoryImpl @Inject constructor(
 
     override suspend fun deleteReview(reviewId: String) = runCatching {
         reviewService.deleteReview(reviewId).success
-    }
-
-    override suspend fun putMyReviewEdit(reviewId: String): BaseResponse<ResponseMyReviewEdit> {
-        return reviewService.putMyReviewEdit(reviewId)
     }
 
     override suspend fun getReviewCheck(reviewId: String, restaurantId: String): BaseResponse<ResponseReviewCheck> {
