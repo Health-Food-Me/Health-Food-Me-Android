@@ -469,7 +469,6 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
             }
 
             addOnCameraChangeListener { reason, _ ->
-
             }
         }
         binding.btnLocation.setOnClickListener {
