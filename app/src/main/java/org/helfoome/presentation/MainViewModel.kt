@@ -47,10 +47,8 @@ class MainViewModel @Inject constructor(
     val hfmReviews: LiveData<List<HFMReviewInfo>> = _hfmReviews
     private val _blogReviews = MutableLiveData<List<BlogReviewInfo>>()
     val blogReviews: LiveData<List<BlogReviewInfo>> = _blogReviews
-    private val isGeneralReview = MutableLiveData(true)
-    private val isReviewTab = MutableLiveData(false)
-    private val _isVisibleReviewButton = MediatorLiveData<Event<Boolean>>()
-    val isVisibleReviewButton get() = _isVisibleReviewButton
+    private val _isReviewTab = MutableLiveData(Event(false))
+    val isReviewTab: LiveData<Event<Boolean>> get() = _isReviewTab
 
     // Menu
     private val _menu = MutableLiveData<List<MenuInfo>>()
@@ -62,12 +60,11 @@ class MainViewModel @Inject constructor(
         fetchMenuList()
         fetchHFMReviewList()
         fetchBlogReviewList()
-        initVisibleReviewButton()
     }
 
     fun getReviewCheck(restaurantId: String) {
         viewModelScope.launch {
-            kotlin.runCatching { reviewRepository.getReviewCheck(sharedPreferences.id, restaurantId) }
+            runCatching { reviewRepository.getReviewCheck(sharedPreferences.id, restaurantId) }
                 .onSuccess {
                     _checkReview.value = it.data.hasReview
                 }.onFailure {
@@ -101,18 +98,6 @@ class MainViewModel @Inject constructor(
                 }
         }
     }
-
-    private fun initVisibleReviewButton() {
-        _isVisibleReviewButton.addSource(isGeneralReview) { isGeneral ->
-            _isVisibleReviewButton.value = Event(combineVisibleReviewButton(isGeneral, isReviewTab.value ?: return@addSource))
-        }
-        _isVisibleReviewButton.addSource(isReviewTab) { isReviewTab ->
-            _isVisibleReviewButton.value = Event(combineVisibleReviewButton(isGeneralReview.value ?: return@addSource, isReviewTab))
-        }
-    }
-
-    private fun combineVisibleReviewButton(isGeneralReview: Boolean, isVisibleReviewButton: Boolean): Boolean =
-        isGeneralReview && isVisibleReviewButton
 
     fun markerId(position: LatLng) = storeIdHash[position]
 
@@ -168,12 +153,8 @@ class MainViewModel @Inject constructor(
         _isExpandedDialog.value = Event(isExpended)
     }
 
-    fun setGeneralReview(isGeneral: Boolean) {
-        isGeneralReview.value = isGeneral
-    }
-
     fun setReviewTab(isReviewTab: Boolean) {
-        this.isReviewTab.value = isReviewTab
+        _isReviewTab.value = Event(isReviewTab)
     }
 
     private fun fetchMenuList() {

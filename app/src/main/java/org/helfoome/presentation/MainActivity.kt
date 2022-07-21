@@ -308,9 +308,9 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
             restaurantMenuAdapter.menuList = menuList
         }
 
-        viewModel.isVisibleReviewButton.observe(this) { isVisible ->
+        viewModel.isReviewTab.observe(this) {
             binding.layoutRestaurantDialog.layoutReviewBtnBackground.visibility =
-                if (isVisible.peekContent()) View.VISIBLE else View.INVISIBLE
+                if (it.peekContent()) View.VISIBLE else View.INVISIBLE
         }
 
         viewModel.location.observe(this) { markers ->
