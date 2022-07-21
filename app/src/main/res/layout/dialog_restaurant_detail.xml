@@ -263,7 +263,7 @@
                             android:drawableTop="@drawable/ic_navi"
                             android:drawablePadding="4dp"
                             android:fontFamily="@font/notosanskr_m"
-                            android:text="@{String.format(context.getString(R.string.restaurant_detail_navi_meter_format), 589)}"
+                            android:text="@{@string/restaurant_detail_navi_meter_format(viewModel.selectedRestaurant.distance)}"
                             android:textAllCaps="false"
                             android:textColor="@color/red_500"
                             android:textSize="12dp"
