@@ -425,7 +425,6 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
             ),
             category
         )
-        viewModel.getMapInfo(LatLng(naverMap.cameraPosition.target.latitude, naverMap.cameraPosition.target.longitude))
     }
 
     override fun onRequestPermissionsResult(
