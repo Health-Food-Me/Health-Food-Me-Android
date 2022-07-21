@@ -137,6 +137,18 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
         initObservers()
     }
 
+    private fun provideChipClickListener(chip: Chip) =
+        View.OnClickListener {
+            if (!chip.isChecked) {
+                binding.cgFoodTag.clearCheck()
+                viewModel.getMapInfo(naverMap.cameraPosition.target)
+            } else {
+                binding.cgFoodTag.clearCheck()
+                chip.isChecked = true
+                viewModel.getMapInfo(naverMap.cameraPosition.target, chip.text.toString())
+            }
+        }
+
     override fun onStart() {
         super.onStart()
         behavior.addBottomSheetCallback(bottomSheetCallback)
@@ -180,16 +192,6 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
             }
         }
     }
-
-    private fun provideChipClickListener(chip: Chip) =
-        View.OnClickListener {
-            if (!chip.isChecked)
-                binding.cgFoodTag.clearCheck()
-            else {
-                binding.cgFoodTag.clearCheck()
-                chip.isChecked = true
-            }
-        }
 
     override fun onResume() {
         super.onResume()
@@ -325,6 +327,9 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
         }
 
         viewModel.location.observe(this) { markers ->
+            markerList.forEach {
+                it.first.map = null
+            }
             markerList = markers.map { marker ->
                 Pair(
                     Marker().apply {
