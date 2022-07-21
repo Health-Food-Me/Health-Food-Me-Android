@@ -9,6 +9,7 @@ import kotlinx.coroutines.launch
 import org.helfoome.data.local.HFMSharedPreference
 import org.helfoome.data.model.request.RequestProfileModify
 import org.helfoome.domain.repository.ProfileModifyRepository
+import timber.log.Timber
 import java.util.regex.Pattern
 import javax.inject.Inject
 
@@ -38,6 +39,7 @@ class ProfileModifyViewModel @Inject constructor(
                     sharedPreferences.nickname = it.data.name
                     _isProfileModify.value = true
                 }.onFailure {
+                    Timber.i(it.message)
                     _isOverlapNickname.value = false
                 }
             }

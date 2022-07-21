@@ -136,7 +136,7 @@
                         android:id="@+id/fab_bookmark_main"
                         android:layout_width="56dp"
                         android:layout_height="56dp"
-                        android:layout_marginEnd="5dp"
+                        android:layout_marginEnd="20dp"
                         android:layout_marginBottom="16dp"
                         android:background="@drawable/rectangle_border_white"
                         android:elevation="4dp"
