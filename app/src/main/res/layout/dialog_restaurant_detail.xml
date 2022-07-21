@@ -106,6 +106,7 @@
                             app:layout_constraintTop_toTopOf="parent"
                             app:visibility="@{viewModel.isExpandedDialog().peekContent() != true}" />
 
+                        <!-- TODO 서버 쪽에서 더미데이터 작업 완료 후 app:imageUrl="@{viewModel.selectedRestaurant.image}" 추가 -->
                         <ImageView
                             android:id="@+id/iv_restaurant_image"
                             android:layout_width="116dp"
@@ -113,10 +114,10 @@
                             android:layout_marginStart="20dp"
                             android:layout_marginTop="12dp"
                             android:scaleType="centerCrop"
-                            app:imageUrl="@{viewModel.selectedRestaurant.image}"
+                            android:src="@drawable/ic_helfoome_place_holder"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/view_spacing"
-                            tools:src="@mipmap/ic_launcher" />
+                            tools:src="@drawable/ic_helfoome_place_holder" />
 
                         <androidx.appcompat.widget.AppCompatImageButton
                             android:id="@+id/btn_scrap"
