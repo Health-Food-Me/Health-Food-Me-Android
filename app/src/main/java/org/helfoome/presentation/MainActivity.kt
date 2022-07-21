@@ -46,6 +46,7 @@ import org.helfoome.presentation.type.FoodType
 import org.helfoome.presentation.type.HashtagViewType
 import org.helfoome.util.*
 import org.helfoome.util.binding.BindingActivity
+import org.helfoome.util.ext.makeTransparentStatusBar
 import org.helfoome.util.ext.stringListFrom
 import timber.log.Timber
 import javax.inject.Inject
@@ -416,7 +417,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
 
     override fun onMapReady(naverMap: NaverMap) {
         this.naverMap = naverMap.apply {
-            uiSettings.isZoomControlEnabled = false
+            uiSettings.isZoomControlEnabled = true
             setOnMapClickListener { _, _ ->
                 behavior.state = BottomSheetBehavior.STATE_HIDDEN
                 markerList.forEach {
@@ -426,6 +427,9 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                     )
                 }
             }
+
+            minZoom = 5.0
+            maxZoom = 20.0
             this.locationSource = this@MainActivity.locationSource
 
             if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
@@ -436,17 +440,21 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
             } else {
                 cameraPosition = CameraPosition(LatLng(37.498095, 127.027610), 11.0)
             }
+
+            addOnCameraChangeListener { reason, _ ->
+
+            }
         }
 
         binding.fabLocation.setOnClickListener {
             naverMap.cameraPosition =
-                CameraPosition(LatLng(naverMap.cameraPosition.target.latitude, naverMap.cameraPosition.target.longitude), 11.0)
+                CameraPosition(LatLng(naverMap.cameraPosition.target.latitude, naverMap.cameraPosition.target.longitude), 14.0)
             naverMap.locationTrackingMode = LocationTrackingMode.Follow
         }
         viewModel.getMapInfo(naverMap.cameraPosition.target, category)
         binding.fabLocationMain.setOnClickListener {
             naverMap.cameraPosition =
-                CameraPosition(LatLng(naverMap.cameraPosition.target.latitude, naverMap.cameraPosition.target.longitude), 11.0)
+                CameraPosition(LatLng(naverMap.cameraPosition.target.latitude, naverMap.cameraPosition.target.longitude), 14.0)
             naverMap.locationTrackingMode = LocationTrackingMode.Follow
         }
         viewModel.getMapInfo(
