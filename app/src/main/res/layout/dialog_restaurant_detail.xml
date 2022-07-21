@@ -114,7 +114,7 @@
                             android:layout_marginStart="20dp"
                             android:layout_marginTop="12dp"
                             android:scaleType="centerCrop"
-                            android:src="@drawable/ic_helfoome_place_holder"
+                            app:imageUrl="@{viewModel.selectedRestaurant.image}"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/view_spacing"
                             tools:src="@drawable/ic_helfoome_place_holder" />
