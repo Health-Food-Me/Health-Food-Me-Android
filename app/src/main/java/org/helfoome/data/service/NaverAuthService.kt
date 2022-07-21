@@ -1,7 +1,6 @@
 package org.helfoome.data.service
 
 import android.content.Context
-import android.util.Log
 import com.navercorp.nid.NaverIdLoginSDK
 import com.navercorp.nid.oauth.OAuthLoginCallback
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -42,7 +41,6 @@ class NaverAuthService @Inject constructor(
                 .onSuccess {
                     sharedPreferences.accessToken = it.data.accessToken
                     sharedPreferences.refreshToken = it.data.refreshToken
-                    Log.d("LEEE", NaverIdLoginSDK.getAccessToken().toString())
                     sharedPreferences.id = it.data.user.id
                     sharedPreferences.isLogin = true
                     sharedPreferences.nickname = it.data.user.name
