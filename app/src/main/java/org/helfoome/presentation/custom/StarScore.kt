@@ -38,6 +38,7 @@ class StarScore(context: Context, val attrs: AttributeSet? = null) : ConstraintL
 
     private fun setStarImage(score: Float) {
         with(binding) {
+            clearStarImage()
             val starViewList = listOf(ivStar1, ivStar2, ivStar3, ivStar4, ivStar5)
 
             // '2.5'과 같이 인소수점을 기준으로 정수와, 소수점 첫째자리 수를 가져옴(단, n.m 포맷의 실수여야함)
@@ -53,6 +54,16 @@ class StarScore(context: Context, val attrs: AttributeSet? = null) : ConstraintL
             // 소수점 첫째자리에 해당하는 아이콘 디스플레이
             if (score < 5.0f) {
                 starViewList[lastIdx + 1].setImageResource(getDecimalPointImageRes(firstDecimalPlace) ?: return)
+            }
+        }
+    }
+
+    /** 별점을 초기화하는 함수 */
+    private fun clearStarImage() {
+        with(binding) {
+            val starViewList = listOf(ivStar1, ivStar2, ivStar3, ivStar4, ivStar5)
+            for (i in 0 until 5) {
+                starViewList[i].setImageResource(R.drawable.ic_star_empty)
             }
         }
     }
