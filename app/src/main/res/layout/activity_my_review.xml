@@ -21,9 +21,9 @@
             android:id="@+id/iv_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="26dp"
-            android:layout_marginTop="16dp"
-            android:src="@drawable/ic_back"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="13dp"
+            android:src="@drawable/ic_before"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -44,9 +44,9 @@
             android:id="@+id/line_first"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="13dp"
             android:background="@color/gray_200"
-            app:layout_constraintTop_toBottomOf="@id/tv_my_review_title" />
+            app:layout_constraintTop_toBottomOf="@id/iv_back" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layout_empty_view"
@@ -94,10 +94,10 @@
                 android:background="@drawable/rectangle_red_radius_36"
                 android:paddingHorizontal="40dp"
                 android:paddingVertical="9dp"
+                android:stateListAnimator="@null"
                 android:text="@string/my_review_store"
                 android:textColor="@color/white"
                 android:textSize="15dp"
-                android:stateListAnimator="@null"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
