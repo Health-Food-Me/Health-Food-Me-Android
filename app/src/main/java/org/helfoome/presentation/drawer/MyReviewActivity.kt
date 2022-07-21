@@ -28,7 +28,7 @@ class MyReviewActivity : BindingActivity<ActivityMyReviewBinding>(R.layout.activ
     lateinit var resolutionMetrics: ResolutionMetrics
     private val viewModel by viewModels<MyReviewViewModel>()
 
-    private val requestModifyNickname =
+    private val requestModifyReview =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
             if (activityResult.resultCode == Activity.RESULT_OK) {
                 val animation = AnimationUtils.loadAnimation(this, R.anim.anim_snackbar_top_down)
@@ -63,7 +63,7 @@ class MyReviewActivity : BindingActivity<ActivityMyReviewBinding>(R.layout.activ
             val intent = Intent(this@MyReviewActivity, ReviewWritingActivity::class.java)
             intent.putExtra("REVIEW_ID", reviewId)
             intent.putExtra("REVIEW_TITLE", true)
-            requestModifyNickname.launch(intent)
+            requestModifyReview.launch(intent)
         }
     )
 
