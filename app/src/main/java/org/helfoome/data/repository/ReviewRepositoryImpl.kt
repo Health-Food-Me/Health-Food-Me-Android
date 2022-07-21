@@ -30,10 +30,6 @@ class ReviewRepositoryImpl @Inject constructor(
         reviewService.deleteReview(reviewId).success
     }
 
-    override suspend fun putMyReviewEdit(reviewId: String): BaseResponse<ResponseMyReviewEdit> {
-        return reviewService.putMyReviewEdit(reviewId)
-    }
-
     override suspend fun getReviewCheck(reviewId: String, restaurantId: String): BaseResponse<ResponseReviewCheck> {
         return reviewService.getReviewCheck(reviewId, restaurantId)
     }
