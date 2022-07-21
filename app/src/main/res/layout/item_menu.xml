@@ -85,6 +85,7 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <LinearLayout
+                android:visibility="@{menu.healfoomePick == true || menu.calorie != null}"
                 android:id="@+id/layout_calorie"
                 android:layout_width="55dp"
                 android:layout_height="0dp"
