@@ -2,6 +2,7 @@ package org.helfoome.presentation.login
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.animation.AnimationUtils
 import com.navercorp.nid.NaverIdLoginSDK
 import dagger.hilt.android.AndroidEntryPoint
 import org.helfoome.R
@@ -24,6 +25,9 @@ class LoginActivity : BindingActivity<ActivityLoginBinding>(R.layout.activity_lo
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        val splashAnimation = AnimationUtils.loadAnimation(this, R.anim.anim_splash_transparency_zero_to_one)
+        binding.tvLogo.animation = splashAnimation
+        binding.ivDescription.animation = splashAnimation
         initListeners()
     }
 

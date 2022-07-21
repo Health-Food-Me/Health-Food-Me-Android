@@ -11,6 +11,7 @@ buildscript {
         classpath(libs.plugin.navArgs)
         classpath(libs.plugin.googlegms.service)
         classpath(libs.plugin.crashlytics)
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.10")
     }
 }
 
