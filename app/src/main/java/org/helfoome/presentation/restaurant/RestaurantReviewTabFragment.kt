@@ -15,6 +15,7 @@ import org.helfoome.domain.entity.BlogReviewInfo
 import org.helfoome.presentation.MainViewModel
 import org.helfoome.presentation.restaurant.adapter.RestaurantBlogReviewAdapter
 import org.helfoome.presentation.restaurant.adapter.RestaurantGeneralReviewAdapter
+import org.helfoome.presentation.type.ReviewType
 import org.helfoome.util.ItemDecorationUtil
 import org.helfoome.util.binding.BindingFragment
 
@@ -40,29 +41,30 @@ class RestaurantReviewTabFragment : BindingFragment<FragmentReviewBinding>(R.lay
         binding.layoutReviewTab.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 when (tab?.position) {
-                    0 -> viewModel.fetchHFMReviewList()
-                    else -> viewModel.fetchBlogReviewList()
+                    0 -> viewModel.setReviewType(ReviewType.HFM_REVIEW) // viewModel.fetchHFMReviewList()
+                    else -> viewModel.setReviewType(ReviewType.BLOG_REVIEW) // viewModel.fetchBlogReviewList()
                 }
             }
-
-            override fun onTabUnselected(tab: TabLayout.Tab?) {
-            }
-
-            override fun onTabReselected(tab: TabLayout.Tab?) {
-            }
+            override fun onTabUnselected(tab: TabLayout.Tab?) {}
+            override fun onTabReselected(tab: TabLayout.Tab?) {}
         })
     }
 
     private fun initObservers() {
+        viewModel.reviewType.observe(viewLifecycleOwner) { reviewType ->
+            when (reviewType.peekContent()) {
+                ReviewType.HFM_REVIEW -> binding.reviewList.adapter = restaurantGeneralReviewAdapter
+                ReviewType.BLOG_REVIEW -> binding.reviewList.adapter = restaurantBlogReviewAdapter
+            }
+        }
+
         viewModel.hfmReviews.observe(viewLifecycleOwner) { reviews ->
-            binding.reviewList.adapter = restaurantGeneralReviewAdapter
             restaurantGeneralReviewAdapter.submitList(reviews)
-            showReviewEmptyView(reviews == null)
+            showReviewEmptyView(reviews.isEmpty())
         }
         viewModel.blogReviews.observe(viewLifecycleOwner) { reviews ->
-            binding.reviewList.adapter = restaurantBlogReviewAdapter
             restaurantBlogReviewAdapter.submitList(reviews)
-            showReviewEmptyView(reviews == null)
+            showReviewEmptyView(reviews.isEmpty())
         }
     }
 
