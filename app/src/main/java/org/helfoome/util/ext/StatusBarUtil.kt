@@ -1,4 +1,4 @@
-package org.helfoome.util
+package org.helfoome.util.ext
 
 import android.view.Window
 import android.view.WindowManager

@@ -11,8 +11,8 @@ import org.helfoome.data.local.HFMSharedPreference
 import org.helfoome.databinding.ActivitySplashBinding
 import org.helfoome.presentation.login.LoginActivity
 import org.helfoome.util.binding.BindingActivity
+import org.helfoome.util.ext.makeTransparentStatusBar
 import org.helfoome.util.ext.startActivity
-import org.helfoome.util.makeTransparentStatusBar
 import javax.inject.Inject
 
 @AndroidEntryPoint
