@@ -38,16 +38,13 @@ import org.helfoome.presentation.drawer.ProfileModifyActivity
 import org.helfoome.presentation.drawer.SettingActivity
 import org.helfoome.presentation.login.LoginActivity
 import org.helfoome.presentation.restaurant.MapSelectionBottomDialogFragment
-import org.helfoome.presentation.restaurant.adapter.RestaurantMenuAdapter
 import org.helfoome.presentation.restaurant.adapter.RestaurantTabAdapter
 import org.helfoome.presentation.review.ReviewWritingActivity
 import org.helfoome.presentation.scrap.MyScrapActivity
 import org.helfoome.presentation.search.SearchActivity
 import org.helfoome.presentation.type.FoodType
 import org.helfoome.presentation.type.HashtagViewType
-import org.helfoome.util.ChipFactory
-import org.helfoome.util.DialogUtil
-import org.helfoome.util.ResolutionMetrics
+import org.helfoome.util.*
 import org.helfoome.util.binding.BindingActivity
 import org.helfoome.util.ext.makeTransparentStatusBar
 import org.helfoome.util.ext.stringListFrom
@@ -94,7 +91,6 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
         }
     }
 
-    private val restaurantMenuAdapter = RestaurantMenuAdapter()
     private var markerList: List<Pair<Marker, Boolean>> = listOf()
     private lateinit var locationSource: FusedLocationSource
     private lateinit var naverMap: NaverMap
@@ -111,6 +107,25 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                         val bottomTopAnimation = AnimationUtils.loadAnimation(this@MainActivity, R.anim.anim_snackbar_bottom_top)
                         binding.snvProfileModify.animation = bottomTopAnimation
                         binding.snvProfileModify.setText("닉네임이 변경되었습니다")
+                    }
+
+                    override fun onAnimationRepeat(p0: Animation?) = Unit
+                })
+            }
+        }
+
+    private val requestReviewWrite =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
+            if (activityResult.resultCode == Activity.RESULT_OK) {
+                val animation = AnimationUtils.loadAnimation(this, R.anim.anim_snackbar_top_down)
+                binding.snvProfileModify.animation = animation
+                binding.snvProfileModify.setText("리뷰가 작성되었습니다")
+                animation.setAnimationListener(object : Animation.AnimationListener {
+                    override fun onAnimationStart(animation: Animation?) = Unit
+                    override fun onAnimationEnd(animation: Animation?) {
+                        val bottomTopAnimation = AnimationUtils.loadAnimation(this@MainActivity, R.anim.anim_snackbar_bottom_top)
+                        binding.snvProfileModify.animation = bottomTopAnimation
+                        binding.snvProfileModify.setText("리뷰가 작성되었습니다")
                     }
 
                     override fun onAnimationRepeat(p0: Animation?) = Unit
@@ -171,7 +186,9 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
             tvNumber.paintFlags = tvNumber.paintFlags or Paint.UNDERLINE_TEXT_FLAG
 
             btnWriteReview.apply {
-                setOnClickListener { startActivity(Intent(this@MainActivity, ReviewWritingActivity::class.java)) }
+                setOnClickListener {
+                    requestReviewWrite.launch(Intent(this@MainActivity, ReviewWritingActivity::class.java))
+                }
             }
         }
         initChip()
@@ -313,12 +330,9 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
     private fun initObservers() {
         viewModel.selectedRestaurant.observe(this) {
             with(binding.layoutRestaurantDialog) {
+                layoutRestaurantTabMenu.selectTab(layoutRestaurantTabMenu.getTabAt(0))
                 hashtag.setHashtag(it.tags, HashtagViewType.RESTAURANT_SUMMARY_TYPE)
             }
-        }
-
-        viewModel.menu.observe(this) { menuList ->
-            restaurantMenuAdapter.menuList = menuList
         }
 
         viewModel.isReviewTab.observe(this) {
@@ -420,7 +434,8 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
 
             if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                 cameraPosition = CameraPosition(
-                    LatLng(cameraPosition.target.latitude, cameraPosition.target.longitude), 11.0)
+                    LatLng(cameraPosition.target.latitude, cameraPosition.target.longitude), 11.0
+                )
                 locationTrackingMode = LocationTrackingMode.Follow
             } else {
                 cameraPosition = CameraPosition(LatLng(37.498095, 127.027610), 11.0)

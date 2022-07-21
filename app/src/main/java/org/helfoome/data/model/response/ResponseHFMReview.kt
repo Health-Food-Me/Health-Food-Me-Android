@@ -6,12 +6,10 @@ import org.helfoome.domain.entity.HFMReviewInfo
 
 @Serializable
 data class ResponseHFMReview(
-    @SerialName("_id")
     val id: String,
     val writer: String,
     val score: Float,
     val content: String,
-    val name: String,
     val image: List<ReviewImage>,
     val taste: String,
     val good: List<String>,
@@ -26,7 +24,7 @@ data class ResponseHFMReview(
 
     fun toReviewInfo() = HFMReviewInfo(
         id,
-        name,
+        writer,
         score,
         listOf(taste) + good,
         content,

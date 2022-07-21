@@ -13,7 +13,8 @@ data class ResponseMyReviewList(
     val image: List<Image>,
     val restaurant: String,
     val score: Float,
-    val taste: String
+    val taste: String,
+    val restaurantId: String
 ) {
     @Serializable
     data class Image(
