@@ -1,6 +1,7 @@
 package org.helfoome.presentation.review
 
 import android.Manifest
+import android.app.Activity
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
@@ -84,6 +85,12 @@ class ReviewWritingActivity : BindingActivity<ActivityReviewWritingBinding>(R.la
         }
         viewModel.isCompletedReviewUpload.observe(this) {
             if (it) onBackPressed()
+        }
+        viewModel.isReviewModify.observe(this) {
+            if (it) {
+                setResult(Activity.RESULT_OK)
+                finish()
+            }
         }
     }
 
