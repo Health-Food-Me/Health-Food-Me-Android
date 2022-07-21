@@ -294,7 +294,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                 controlHamburger.launch(Intent(this@MainActivity, MyReviewActivity::class.java))
             }
             tvScrap.setOnClickListener {
-                startActivity(Intent(this@MainActivity, MyScrapActivity::class.java))
+                controlHamburger.launch(Intent(this@MainActivity, MyScrapActivity::class.java))
             }
             tvReport.setOnClickListener {
                 sendGmail()
@@ -303,7 +303,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                 sendGmail()
             }
             tvSetting.setOnClickListener {
-                startActivity(Intent(this@MainActivity, SettingActivity::class.java))
+                controlHamburger.launch(Intent(this@MainActivity, SettingActivity::class.java))
             }
             tvLogout.setOnClickListener {
                 val bind = DialogLogoutBinding.inflate(LayoutInflater.from(this@MainActivity))
