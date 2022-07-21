@@ -81,6 +81,7 @@ class MyReviewActivity : BindingActivity<ActivityMyReviewBinding>(R.layout.activ
         }
     }
 
+    // 나중에 전체적으로 바꾸지 않게 하기
     override fun onResume() {
         super.onResume()
         viewModel.getMyReviewList()
