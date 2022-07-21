@@ -417,7 +417,8 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
 
             if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                 cameraPosition = CameraPosition(
-                    LatLng(cameraPosition.target.latitude, cameraPosition.target.longitude), 11.0)
+                    LatLng(cameraPosition.target.latitude, cameraPosition.target.longitude), 11.0
+                )
                 locationTrackingMode = LocationTrackingMode.Follow
             } else {
                 cameraPosition = CameraPosition(LatLng(37.498095, 127.027610), 11.0)
@@ -425,12 +426,14 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
         }
 
         binding.fabLocation.setOnClickListener {
-            naverMap.cameraPosition = CameraPosition(LatLng(naverMap.cameraPosition.target.latitude, naverMap.cameraPosition.target.longitude), 11.0)
+            naverMap.cameraPosition =
+                CameraPosition(LatLng(naverMap.cameraPosition.target.latitude, naverMap.cameraPosition.target.longitude), 11.0)
             naverMap.locationTrackingMode = LocationTrackingMode.Follow
         }
         viewModel.getMapInfo(naverMap.cameraPosition.target, category)
         binding.fabLocationMain.setOnClickListener {
-            naverMap.cameraPosition = CameraPosition(LatLng(naverMap.cameraPosition.target.latitude, naverMap.cameraPosition.target.longitude), 11.0)
+            naverMap.cameraPosition =
+                CameraPosition(LatLng(naverMap.cameraPosition.target.latitude, naverMap.cameraPosition.target.longitude), 11.0)
             naverMap.locationTrackingMode = LocationTrackingMode.Follow
         }
         viewModel.getMapInfo(
