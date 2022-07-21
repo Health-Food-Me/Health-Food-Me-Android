@@ -31,83 +31,94 @@
                 android:paddingBottom="43dp"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <ImageView
-                    android:id="@+id/iv_reason_for_recommendation"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/size_spacing_36"
-                    android:src="@drawable/ic_reason_for_recommendation"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/layout_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
-                <TextView
-                    android:id="@+id/tv_recommend_tip_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/size_spacing_4"
-                    android:fontFamily="@font/notosanskr_b"
-                    android:text="@string/restaurant_detail_eating_out_recommendation_title"
-                    android:textColor="@color/yellow_600"
-                    android:textSize="15dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/iv_reason_for_recommendation" />
+                    <ImageView
+                        android:id="@+id/iv_reason_for_recommendation"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/size_spacing_36"
+                        android:src="@drawable/ic_reason_for_recommendation"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                <org.helfoome.presentation.custom.EatingOutTipView
-                    android:id="@+id/view_recommendation_tip_list"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="30dp"
-                    android:layout_marginTop="15dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_recommend_tip_title" />
+                    <TextView
+                        android:id="@+id/tv_recommend_tip_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/size_spacing_4"
+                        android:fontFamily="@font/notosanskr_b"
+                        android:text="@string/restaurant_detail_eating_out_recommendation_title"
+                        android:textColor="@color/yellow_600"
+                        android:textSize="15dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/iv_reason_for_recommendation" />
 
-                <View
-                    android:id="@+id/line"
-                    android:layout_width="0dp"
-                    android:layout_height="1dp"
-                    android:layout_marginHorizontal="8dp"
-                    android:layout_marginTop="43dp"
-                    android:background="@drawable/rectangle_green_radius_5"
-                    android:backgroundTint="@color/gray_200"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/view_recommendation_tip_list" />
+                    <org.helfoome.presentation.custom.EatingOutTipView
+                        android:id="@+id/view_recommendation_tip_list"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="30dp"
+                        android:layout_marginTop="15dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_recommend_tip_title" />
 
-                <ImageView
-                    android:id="@+id/iv_reason_for_how_to_eat"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/size_spacing_36"
-                    android:src="@drawable/ic_how_to_eat"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/line" />
+                    <View
+                        android:id="@+id/line"
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_marginHorizontal="8dp"
+                        android:layout_marginTop="43dp"
+                        android:background="@drawable/rectangle_green_radius_5"
+                        android:backgroundTint="@color/gray_200"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/view_recommendation_tip_list" />
 
-                <TextView
-                    android:id="@+id/tv_eating_tip_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/size_spacing_4"
-                    android:fontFamily="@font/notosanskr_b"
-                    android:text="@string/restaurant_detail_eating_out_how_to_eat_title"
-                    android:textColor="@color/red_500"
-                    android:textSize="15dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/iv_reason_for_how_to_eat" />
+                    <ImageView
+                        android:id="@+id/iv_reason_for_how_to_eat"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/size_spacing_36"
+                        android:src="@drawable/ic_how_to_eat"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/line" />
 
-                <org.helfoome.presentation.custom.EatingOutTipView
-                    android:id="@+id/view_eating_tip_list"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="30dp"
-                    android:layout_marginTop="15dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_eating_tip_title" />
+                    <TextView
+                        android:id="@+id/tv_eating_tip_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/size_spacing_4"
+                        android:fontFamily="@font/notosanskr_b"
+                        android:text="@string/restaurant_detail_eating_out_how_to_eat_title"
+                        android:textColor="@color/red_500"
+                        android:textSize="15dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/iv_reason_for_how_to_eat" />
+
+                    <org.helfoome.presentation.custom.EatingOutTipView
+                        android:id="@+id/view_eating_tip_list"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="30dp"
+                        android:layout_marginTop="15dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_eating_tip_title" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <include
+                    android:id="@+id/layout_empty_view"
+                    layout="@layout/view_review_empty"
+                    tools:visibility="gone" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView

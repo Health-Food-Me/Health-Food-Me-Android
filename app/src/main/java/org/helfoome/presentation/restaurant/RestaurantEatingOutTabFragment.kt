@@ -19,7 +19,6 @@ class RestaurantEatingOutTabFragment : BindingFragment<FragmentEatingOutBinding>
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.viewModel = viewModel
-        //  viewModel.fetchEatingOutTips(viewModel.selectedRestaurant.value?.id ?: return)
 
         initObservers()
     }
@@ -29,9 +28,17 @@ class RestaurantEatingOutTabFragment : BindingFragment<FragmentEatingOutBinding>
             restaurantMenuAdapter.menuList = menuList
         }
 
+        // TODO 뷰모델에서 처리하기
         viewModel.eatingOutTips.observe(viewLifecycleOwner) { tips ->
-            binding.viewRecommendationTipList.setTips(tips.recommendTips, EatingOutTipType.RECOMMENDATION_TIP)
-            binding.viewEatingTipList.setTips(tips.eatingTips, EatingOutTipType.EATING_TIP)
+            if(tips.recommendTips == null || tips.eatingTips == null) {
+                binding.layoutEmptyView.layoutContainer.visibility = View.VISIBLE
+                binding.layoutContent.visibility = View.INVISIBLE
+            } else {
+                binding.layoutEmptyView.layoutContainer.visibility = View.INVISIBLE
+                binding.layoutContent.visibility = View.VISIBLE
+                binding.viewRecommendationTipList.setTips(tips.recommendTips, EatingOutTipType.RECOMMENDATION_TIP)
+                binding.viewEatingTipList.setTips(tips.eatingTips, EatingOutTipType.EATING_TIP)
+            }
         }
     }
 
