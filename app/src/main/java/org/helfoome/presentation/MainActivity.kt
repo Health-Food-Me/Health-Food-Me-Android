@@ -337,7 +337,6 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
 
                         this.setOnClickListener {
                             viewModel.getReviewCheck(marker.id)
-
                             viewModel.fetchSelectedRestaurantDetailInfo(marker.id, marker.latitude, marker.longitude)
 //                            viewModel.fetchSelectedRestaurantInfo(marker.id)
                             behavior.state = BottomSheetBehavior.STATE_COLLAPSED

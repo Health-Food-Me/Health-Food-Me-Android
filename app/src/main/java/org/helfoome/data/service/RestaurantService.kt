@@ -20,7 +20,7 @@ interface RestaurantService {
         @Path("userId") userId: String,
         @Query("latitude") latitude: Double,
         @Query("longitude") longitude: Double,
-    ): Response<BaseResponse<ResponseRestaurantSummary>>
+    ): Response<BaseResponse<ResponseRestaurantDetail>>
 
     @PUT("/user/{userId}/scrap/{restaurantId}")
     suspend fun updateRestaurantScrap(
