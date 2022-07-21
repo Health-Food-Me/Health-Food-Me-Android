@@ -11,7 +11,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -94,8 +93,10 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
     private val listener = object : TabLayout.OnTabSelectedListener {
         override fun onTabReselected(tab: TabLayout.Tab?) {
         }
+
         override fun onTabUnselected(tab: TabLayout.Tab?) {
         }
+
         override fun onTabSelected(tab: TabLayout.Tab?) {
             // 리뷰 탭에서만 리뷰 작성 버튼 보여주기
             viewModel.setReviewTab(tab?.position == 2)
@@ -130,7 +131,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
         View.OnClickListener {
             category = chip.text.toString()
 
-            for (i in markerList.indices){
+            for (i in markerList.indices) {
                 markerList[i].first.icon = OverlayImage.fromResource(R.drawable.ic_bookmark)
                 markerList[i].first.map = null
             }
@@ -138,7 +139,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
             if (!chip.isChecked) {
                 viewModel.getMapInfo(naverMap.cameraPosition.target, null)
                 binding.cgFoodTag.clearCheck()
-            }else {
+            } else {
                 viewModel.getMapInfo(naverMap.cameraPosition.target, category)
                 binding.cgFoodTag.clearCheck()
                 chip.isChecked = true
@@ -476,8 +477,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
             LatLng(
                 naverMap.cameraPosition.target.latitude,
                 naverMap.cameraPosition.target.longitude
-            )
-        ,category
+            ), category
         )
     }
 

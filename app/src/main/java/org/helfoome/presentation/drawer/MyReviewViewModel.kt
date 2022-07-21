@@ -1,22 +1,15 @@
 package org.helfoome.presentation.drawer
 
-import android.content.Context
-import android.net.Uri
 import androidx.lifecycle.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.MultipartBody
-import okhttp3.RequestBody.Companion.toRequestBody
 import org.helfoome.data.local.HFMSharedPreference
-import org.helfoome.data.model.request.RequestReviewEdit
 import org.helfoome.data.service.ReviewService
 import org.helfoome.domain.entity.MyReviewListInfo
 import org.helfoome.domain.repository.ReviewRepository
 import org.helfoome.presentation.type.GoodPointHashtagType
 import org.helfoome.presentation.type.TasteHashtagType
-import org.helfoome.util.ContentUriRequestBody
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -39,7 +32,13 @@ class MyReviewViewModel @Inject constructor(
     val isCompletedReviewUpload: LiveData<Boolean> get() = _isCompletedReviewUpload
 
     val selectedTasteTag = MutableLiveData<TasteHashtagType>()
-    val selectedGoodPointTags = MutableLiveData(hashMapOf(GoodPointHashtagType.NO_BURDEN to false, GoodPointHashtagType.EASY_TO_CONTROL to false, GoodPointHashtagType.FULL to false))
+    val selectedGoodPointTags = MutableLiveData(
+        hashMapOf(
+            GoodPointHashtagType.NO_BURDEN to false,
+            GoodPointHashtagType.EASY_TO_CONTROL to false,
+            GoodPointHashtagType.FULL to false
+        )
+    )
 
     fun getMyReviewList() {
         viewModelScope.launch(Dispatchers.IO) {
