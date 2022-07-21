@@ -11,7 +11,10 @@ import org.helfoome.presentation.type.HashtagViewType
 import org.helfoome.util.ItemDecorationUtil
 import org.helfoome.util.ItemDiffCallback
 
-class MyReviewAdapter(private val itemClickListener: ((Int) -> Unit), private val deleteClickListener: (String) -> Unit) :
+class MyReviewAdapter(
+    private val itemClickListener: ((Int) -> Unit), private val deleteClickListener: (String) -> Unit,
+    private val editClickListener: (String) -> Unit
+) :
     ListAdapter<MyReviewListInfo, MyReviewAdapter.MyReviewViewHolder>(
         ItemDiffCallback<MyReviewListInfo>(
             onContentsTheSame = { old, new -> old == new },
@@ -27,9 +30,6 @@ class MyReviewAdapter(private val itemClickListener: ((Int) -> Unit), private va
         val binding = ItemGeneralMyReviewBinding.inflate(inflater, parent, false)
         return MyReviewViewHolder(
             binding.apply {
-                tvEdit.setOnClickListener {
-                    itemClickListener.invoke(EDIT)
-                }
                 tvNickname.setOnClickListener {
                     itemClickListener.invoke(ENLARGE)
                 }
@@ -38,11 +38,14 @@ class MyReviewAdapter(private val itemClickListener: ((Int) -> Unit), private va
     }
 
     override fun onBindViewHolder(holder: MyReviewViewHolder, position: Int) {
-        holder.onBind(getItem(position), deleteClickListener)
+        holder.onBind(getItem(position), deleteClickListener, editClickListener)
     }
 
     class MyReviewViewHolder(private val binding: ItemGeneralMyReviewBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun onBind(myReviewData: MyReviewListInfo, deleteClickListener: (String) -> Unit) {
+        fun onBind(
+            myReviewData: MyReviewListInfo, deleteClickListener: (String) -> Unit,
+            editClickListener: (String) -> Unit
+        ) {
             with(binding) {
                 val adapter = RestaurantImageAdapter().apply {
                     imageList = myReviewData.photoList
@@ -55,13 +58,15 @@ class MyReviewAdapter(private val itemClickListener: ((Int) -> Unit), private va
                 tvDelete.setOnClickListener {
                     deleteClickListener.invoke(myReviewData.id)
                 }
+                tvEdit.setOnClickListener {
+                    editClickListener.invoke(myReviewData.id)
+                }
                 binding.hashtag.setHashtag(listOf(myReviewData.tags, myReviewData.good.joinToString()), HashtagViewType.REVIEW_TAB_TYPE)
             }
         }
     }
 
     companion object {
-        const val EDIT = 0
-        const val ENLARGE = 1
+        const val ENLARGE = 0
     }
 }

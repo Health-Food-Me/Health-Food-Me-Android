@@ -2,6 +2,7 @@ package org.helfoome.data.service
 
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import org.helfoome.data.model.request.RequestReviewEdit
 import org.helfoome.data.model.response.BaseResponse
 import org.helfoome.data.model.response.EmptyResponse
 
@@ -44,8 +45,15 @@ interface ReviewService {
         @Path("reviewId") reviewId: String,
     ): EmptyResponse
 
+    @Multipart
     @PUT("/review/{reviewId}")
     suspend fun putMyReviewEdit(
-        @Path("reviewId") reviewId: String
+        @Path("reviewId") reviewId: String,
+        @Part("score") score: RequestBody,
+        @Part("taste") taste: RequestBody,
+        @Part("good") good: RequestBody,
+        @Part("content") content: RequestBody,
+        @Part("nameList") nameList: RequestBody,
+        @Part image: List<MultipartBody.Part>
     ): BaseResponse<ResponseMyReviewEdit>
 }

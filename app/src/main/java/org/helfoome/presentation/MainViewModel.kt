@@ -61,9 +61,9 @@ class MainViewModel @Inject constructor(
         initVisibleReviewButton()
     }
 
-    fun getMapInfo(latLng: LatLng) {
+    fun getMapInfo(latLng: LatLng, category: String?) {
         viewModelScope.launch(Dispatchers.IO) {
-            runCatching { mapRepository.getMap(latLng.latitude, latLng.longitude, 11, null) }
+            runCatching { mapRepository.getMap(latLng.latitude, latLng.longitude, 11, category) }
                 .onSuccess {
                     _location.postValue(
                         it.data.map { marker ->

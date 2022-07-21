@@ -1,8 +1,14 @@
 package org.helfoome.data.model.response
 
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class ResponseMyReviewEdit(
-    val __v: Int,
-    val _id: String,
+    @SerialName("__v")
+    val v: Int,
+    @SerialName("_id")
+    val id: String,
     val content: String,
     val good: List<String>,
     val image: List<Image>,
@@ -11,8 +17,10 @@ data class ResponseMyReviewEdit(
     val taste: String,
     val writer: String
 ) {
+    @Serializable
     data class Image(
-        val _id: String,
+        @SerialName("_id")
+        val id: String,
         val name: String,
         val url: String
     )

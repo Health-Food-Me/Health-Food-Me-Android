@@ -6,9 +6,7 @@
     <data>
 
         <import type="org.helfoome.R" />
-
         <import type="org.helfoome.presentation.type.TasteHashtagType" />
-
         <import type="org.helfoome.presentation.type.GoodPointHashtagType" />
 
         <variable
@@ -38,10 +36,11 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
+                android:id="@+id/tv_top_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/notosanskr_b"
-                android:text="@string/review_writing_title"
+                android:text='@{viewModel.isEditMode ? "리뷰편집" : "리뷰작성"}'
                 android:textColor="@color/gray_800"
                 android:textSize="15sp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -162,7 +161,7 @@
                     android:text="@string/review_writing_taste_hashtag_taste_not_bad"
                     app:isSelected="@{viewModel.selectedTasteTag == TasteHashtagType.NOT_BAD}"
                     app:layout_constraintStart_toEndOf="@id/tv_hashtag_taste_good"
-                    app:layout_constraintTop_toTopOf="@id/tv_hashtag_taste_good" />]
+                    app:layout_constraintTop_toTopOf="@id/tv_hashtag_taste_good" />
 
                 <TextView
                     style="@style/TextView.Review.Writing.Hashtag.Style"

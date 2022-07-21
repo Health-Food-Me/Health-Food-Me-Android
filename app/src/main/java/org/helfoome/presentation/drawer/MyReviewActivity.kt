@@ -9,8 +9,8 @@ import org.helfoome.databinding.ActivityMyReviewBinding
 import org.helfoome.databinding.DialogMyReviewDeleteBinding
 import org.helfoome.presentation.MainActivity
 import org.helfoome.presentation.drawer.adapter.MyReviewAdapter
-import org.helfoome.presentation.drawer.adapter.MyReviewAdapter.Companion.EDIT
 import org.helfoome.presentation.drawer.adapter.MyReviewAdapter.Companion.ENLARGE
+import org.helfoome.presentation.review.ReviewWritingActivity
 import org.helfoome.util.DialogUtil
 import org.helfoome.util.ResolutionMetrics
 import org.helfoome.util.binding.BindingActivity
@@ -24,19 +24,21 @@ class MyReviewActivity : BindingActivity<ActivityMyReviewBinding>(R.layout.activ
     private val viewModel by viewModels<MyReviewViewModel>()
 
     private val myReviewAdapter = MyReviewAdapter(
-        ::adapterClickListener
-    ) { reviewId ->
-        val bind = DialogMyReviewDeleteBinding.inflate(LayoutInflater.from(this@MyReviewActivity))
-        val dialog = DialogUtil.makeDialog(this, bind, resolutionMetrics.toPixel(288), resolutionMetrics.toPixel(223))
+        ::adapterClickListener, { reviewId ->
+            val bind = DialogMyReviewDeleteBinding.inflate(LayoutInflater.from(this@MyReviewActivity))
+            val dialog = DialogUtil.makeDialog(this, bind, resolutionMetrics.toPixel(288), resolutionMetrics.toPixel(223))
 
-        bind.btnYes.setOnClickListener {
-            viewModel.deleteReview(reviewId)
-            dialog.dismiss()
+            bind.btnYes.setOnClickListener {
+                viewModel.deleteReview(reviewId)
+                dialog.dismiss()
+            }
+            bind.btnNo.setOnClickListener {
+                dialog.dismiss()
+            }
+        }, { reviewId ->
+            startActivity<ReviewWritingActivity>(Pair("REVIEW_ID", reviewId), Pair("REVIEW_TITLE", true))
         }
-        bind.btnNo.setOnClickListener {
-            dialog.dismiss()
-        }
-    }
+    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,9 +58,6 @@ class MyReviewActivity : BindingActivity<ActivityMyReviewBinding>(R.layout.activ
 
     private fun adapterClickListener(it: Int) {
         when (it) {
-            EDIT -> {
-                startActivity<MainActivity>()
-            }
             ENLARGE -> {
                 startActivity<MainActivity>()
             }
