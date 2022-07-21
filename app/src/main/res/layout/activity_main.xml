@@ -114,20 +114,19 @@
                         android:id="@+id/fab_bookmark_main"
                         android:layout_width="56dp"
                         android:layout_height="56dp"
-                        android:layout_marginEnd="5dp"
-                        android:layout_marginBottom="16dp"
+                        android:layout_marginEnd="20dp"
+                        android:layout_marginBottom="12dp"
                         android:background="@drawable/rectangle_border_white"
                         android:elevation="4dp"
                         android:src="@drawable/selector_btn_scrap"
                         android:visibility="@{isMainNotVisible? View.GONE : View.VISIBLE}"
                         app:layout_constraintBottom_toTopOf="@+id/fab_location_main"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_goneMarginBottom="12dp" />
+                        app:layout_constraintEnd_toEndOf="parent" />
 
                     <com.google.android.material.floatingactionbutton.FloatingActionButton
                         android:id="@+id/fab_location_main"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="56dp"
+                        android:layout_height="56dp"
                         android:layout_marginBottom="16dp"
                         android:backgroundTint="@color/white"
                         android:src="@drawable/ic_currentposition"
@@ -162,12 +161,12 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-
                     <com.google.android.material.floatingactionbutton.FloatingActionButton
                         android:id="@+id/fab_location"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="56dp"
+                        android:layout_height="56dp"
                         android:layout_marginTop="12dp"
+                        android:layout_marginBottom="@dimen/size_spacing_16"
                         android:backgroundTint="@color/white"
                         android:src="@drawable/ic_currentposition"
                         android:visibility="@{isFloatingNotVisible? View.GONE : View.VISIBLE}"
