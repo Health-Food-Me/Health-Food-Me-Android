@@ -118,6 +118,25 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
             }
         }
 
+    private val requestReviewWrite =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
+            if (activityResult.resultCode == Activity.RESULT_OK) {
+                val animation = AnimationUtils.loadAnimation(this, R.anim.anim_snackbar_top_down)
+                binding.snvProfileModify.animation = animation
+                binding.snvProfileModify.setText("리뷰가 작성되었습니다")
+                animation.setAnimationListener(object : Animation.AnimationListener {
+                    override fun onAnimationStart(animation: Animation?) = Unit
+                    override fun onAnimationEnd(animation: Animation?) {
+                        val bottomTopAnimation = AnimationUtils.loadAnimation(this@MainActivity, R.anim.anim_snackbar_bottom_top)
+                        binding.snvProfileModify.animation = bottomTopAnimation
+                        binding.snvProfileModify.setText("리뷰가 작성되었습니다")
+                    }
+
+                    override fun onAnimationRepeat(p0: Animation?) = Unit
+                })
+            }
+        }
+
     private val restaurantDetailAdapter = RestaurantTabAdapter(this)
     private val String.toChip: Chip
         get() = ChipFactory.create(layoutInflater).also { it.text = this }
@@ -171,7 +190,9 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
             tvNumber.paintFlags = tvNumber.paintFlags or Paint.UNDERLINE_TEXT_FLAG
 
             btnWriteReview.apply {
-                setOnClickListener { startActivity(Intent(this@MainActivity, ReviewWritingActivity::class.java)) }
+                setOnClickListener {
+                    requestReviewWrite.launch(Intent(this@MainActivity, ReviewWritingActivity::class.java))
+                }
             }
         }
         initChip()
