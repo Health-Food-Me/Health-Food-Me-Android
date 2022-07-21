@@ -101,6 +101,7 @@
             android:enabled="@{viewModel.nickname.length() > 0 ? true : false}"
             android:paddingTop="11dp"
             android:paddingBottom="10dp"
+            android:stateListAnimator="@null"
             android:text="@string/profile_modify"
             android:textColor="@color/white"
             android:textSize="16dp"

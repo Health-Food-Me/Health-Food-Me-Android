@@ -100,6 +100,7 @@ class MyReviewActivity : BindingActivity<ActivityMyReviewBinding>(R.layout.activ
             finish()
         }
         binding.btnGoToStore.setOnClickListener {
+            setResult(Activity.RESULT_OK)
             finish()
         }
         binding.ivBack.setOnClickListener {

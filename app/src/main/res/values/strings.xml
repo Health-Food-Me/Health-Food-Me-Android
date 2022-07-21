@@ -93,7 +93,7 @@
     <string name="withdraw_dialog_caution">정말로 탈퇴하실건가요?</string>
     <string name="withdraw_dialog_caution_description">탈퇴 시 헬푸미의 새로운 정보를\n얻을 수 없습니다</string>
     <string name="withdraw_dialog_no">아니요</string>
-    <string name="withdraw_dialog_yes">네 탈퇴할게요</string>
+    <string name="withdraw_dialog_yes"><u>네 탈퇴할게요</u></string>
 
     <!-- MyReview Edit Dialog -->
     <string name="my_edit_dialog_caution">리뷰편집을 취소하시겠습니까?</string>

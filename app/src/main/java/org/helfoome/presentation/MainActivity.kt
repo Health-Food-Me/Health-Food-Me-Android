@@ -19,7 +19,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
-import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.add
 import androidx.fragment.app.commit
@@ -120,6 +119,13 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
 
                     override fun onAnimationRepeat(p0: Animation?) = Unit
                 })
+            }
+        }
+
+    private val controlHamburger =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
+            if (activityResult.resultCode == Activity.RESULT_OK) {
+                binding.layoutDrawer.close()
             }
         }
 
@@ -283,7 +289,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                 requestModifyNickname.launch(Intent(this@MainActivity, ProfileModifyActivity::class.java))
             }
             tvReview.setOnClickListener {
-                startActivity(Intent(this@MainActivity, MyReviewActivity::class.java))
+                controlHamburger.launch(Intent(this@MainActivity, MyReviewActivity::class.java))
             }
             tvScrap.setOnClickListener {
                 startActivity(Intent(this@MainActivity, MyScrapActivity::class.java))
