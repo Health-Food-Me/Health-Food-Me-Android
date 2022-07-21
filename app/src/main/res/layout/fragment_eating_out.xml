@@ -117,7 +117,7 @@
 
                 <include
                     android:id="@+id/layout_empty_view"
-                    layout="@layout/view_review_empty"
+                    layout="@layout/view_eating_out_empty"
                     tools:visibility="gone" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
