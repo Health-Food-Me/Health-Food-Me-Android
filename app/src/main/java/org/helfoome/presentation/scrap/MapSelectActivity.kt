@@ -8,5 +8,9 @@ import org.helfoome.util.binding.BindingActivity
 class MapSelectActivity : BindingActivity<ActivityMapSelectBinding>(R.layout.activity_map_select) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        binding.ibBack.setOnClickListener {
+            finish()
+        }
     }
 }

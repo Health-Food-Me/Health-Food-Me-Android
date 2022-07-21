@@ -39,8 +39,7 @@ data class ResponseRestaurantDetail(
         val per: Int? = null,
     )
 
-    fun toRestaurantInfo() = RestaurantInfo(
-        restaurant.id,
+    fun toRestaurantInfo() = RestaurantInfo(restaurant.id,
         restaurant.logo,
         restaurant.name,
         restaurant.category,
@@ -51,7 +50,8 @@ data class ResponseRestaurantDetail(
         contact = restaurant.contact,
         distance = restaurant.distance,
         menuList = menuList?.map { menu ->
-                MenuInfo(menu.id, menu.name, menu.image, menu.price, menu.kcal, menu.per, menu.isPick)
-            }, score = restaurant.score
+            MenuInfo(menu.id, menu.name, menu.image, menu.price, menu.kcal, menu.per, menu.isPick)
+        },
+        score = restaurant.score
     )
 }

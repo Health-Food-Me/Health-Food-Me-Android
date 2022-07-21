@@ -26,7 +26,6 @@
             android:fontFamily="@font/notosanskr_r"
             android:text="@{isCollapsed? @string/search_look_list : @string/search_look_map}"
             android:textColor="@color/gray_600"
-            android:foregroundTint="@color/red_500"
             android:textSize="13dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -43,6 +42,7 @@
             app:layout_constraintDimensionRatio="10:13"
             app:layout_constraintEnd_toStartOf="@+id/tv_recent_word"
             app:layout_constraintTop_toTopOf="@+id/tv_recent_word"
+            app:tint="@color/red_500"
             tools:src="@drawable/ic_menu" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

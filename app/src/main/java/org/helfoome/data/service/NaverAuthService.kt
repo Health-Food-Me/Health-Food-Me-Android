@@ -42,14 +42,12 @@ class NaverAuthService @Inject constructor(
                     sharedPreferences.accessToken = it.data.accessToken
                     sharedPreferences.refreshToken = it.data.refreshToken
                     sharedPreferences.id = it.data.user.id
-                    sharedPreferences.isLogin = true
                     sharedPreferences.nickname = it.data.user.name
                     loginListener?.invoke()
                     cancel()
                 }
                 .onFailure {
                     Timber.d(it.message)
-                    sharedPreferences.isLogin = false
                     cancel()
                 }
         }
