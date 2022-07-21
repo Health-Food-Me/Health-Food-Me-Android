@@ -204,6 +204,16 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.getProfile()
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        viewModel.getProfile()
+    }
+
     private fun initListeners() {
         with(binding.layoutDrawer) {
             addDrawerListener(object : DrawerLayout.DrawerListener {
