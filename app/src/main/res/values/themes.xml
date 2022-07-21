@@ -1,4 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Base application theme. -->
     <style name="Theme.HealthFoodMe" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Primary brand color. -->
@@ -45,12 +45,13 @@
 
     <style name="TabItem.RestaurantTab.TextAppearance" parent="">
         <item name="android:fontFamily">@font/notosanskr_b</item>
-        <item name="android:textSize">14dp</item>
+        <item name="android:textSize">14dp</item>>
     </style>
 
     <style name="TabItem.MenuTab.TextAppearance" parent="">
         <item name="android:fontFamily">@font/notosanskr_m</item>
         <item name="android:textSize">12dp</item>
+        <item name="android:textColor">@color/gray_800</item>
     </style>
 
     <style name="TextView.Nutrient.TextAppearance" parent="">

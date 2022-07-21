@@ -43,7 +43,7 @@
                         app:tabRippleColor="@android:color/transparent"
                         app:tabSelectedTextColor="@color/gray_800"
                         app:tabTextAppearance="@style/TabItem.MenuTab.TextAppearance"
-                        app:tabTextColor="@color/gray_550">
+                        app:tabTextColor="@color/gray_800">
 
                         <com.google.android.material.tabs.TabItem
                             android:layout_width="wrap_content"
