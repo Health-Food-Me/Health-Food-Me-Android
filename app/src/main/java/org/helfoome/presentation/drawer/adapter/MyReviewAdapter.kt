@@ -31,7 +31,7 @@ class MyReviewAdapter(
         val binding = ItemGeneralMyReviewBinding.inflate(inflater, parent, false)
         return MyReviewViewHolder(
             binding.apply {
-                tvNickname.setOnClickListener {
+                tvTitle.setOnClickListener {
                     itemClickListener.invoke(ENLARGE)
                 }
             }

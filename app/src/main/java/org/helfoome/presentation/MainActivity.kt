@@ -37,6 +37,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import org.helfoome.R
 import org.helfoome.databinding.ActivityMainBinding
 import org.helfoome.databinding.DialogLogoutBinding
+import org.helfoome.domain.entity.HFMReviewInfo
 import org.helfoome.presentation.drawer.MyReviewActivity
 import org.helfoome.presentation.drawer.ProfileModifyActivity
 import org.helfoome.presentation.drawer.SettingActivity
@@ -151,6 +152,11 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
 
                     override fun onAnimationRepeat(p0: Animation?) = Unit
                 })
+                val data = activityResult.data ?: return@registerForActivityResult
+
+                data.getParcelableExtra<HFMReviewInfo>(ARG_HFM_REVIEW)?.let {
+                    viewModel.addHFMReviewList(it)
+                }
             }
         }
 
@@ -207,7 +213,8 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
 
             btnWriteReview.apply {
                 setOnClickListener {
-                    requestReviewWrite.launch(Intent(this@MainActivity, ReviewWritingActivity::class.java))
+                    requestReviewWrite.launch(Intent(this@MainActivity, ReviewWritingActivity::class.java).putExtra(ARG_RESTAURANT_ID,
+                        viewModel?.selectedRestaurant?.value?.id ?: return@setOnClickListener))
                 }
             }
         }
@@ -511,5 +518,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
         const val GANGNAM_X = 37.498095
         const val GANGNAM_Y = 127.027610
         private const val LOCATION_PERMISSION_REQUEST_CODE = 1000
+        private const val ARG_RESTAURANT_ID = "restaurantId"
+        private const val ARG_HFM_REVIEW = "hfmReview"
     }
 }

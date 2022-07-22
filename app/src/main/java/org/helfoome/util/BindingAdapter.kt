@@ -9,12 +9,8 @@ import org.helfoome.R
 
 @BindingAdapter("app:imageUrl")
 fun ImageView.setImage(imageUrl: String?) {
-    imageUrl?.let {
-        if (imageUrl == "")
-            load(R.drawable.ic_empty)
-        else
-            load(imageUrl)
-    }
+    if(imageUrl == null || imageUrl == "") return
+    load(imageUrl)
 }
 
 @BindingAdapter("app:visibility")

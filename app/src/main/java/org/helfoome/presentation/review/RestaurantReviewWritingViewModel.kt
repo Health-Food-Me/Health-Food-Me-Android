@@ -11,6 +11,7 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import org.helfoome.data.local.HFMSharedPreference
 import org.helfoome.data.service.ReviewService
+import org.helfoome.domain.entity.HFMReviewInfo
 import org.helfoome.presentation.type.GoodPointHashtagType
 import org.helfoome.presentation.type.TasteHashtagType
 import org.helfoome.util.ContentUriRequestBody
@@ -27,6 +28,9 @@ class RestaurantReviewWritingViewModel @Inject constructor(
 
     private val _reviewId = MutableLiveData<String>()
     val reviewId get() = _reviewId
+
+    private val _restaurantId = MutableLiveData<String>()
+    val restaurantId get() = _restaurantId
 
     private val _review = MutableLiveData<String>()
     val review get() = _review
@@ -51,6 +55,9 @@ class RestaurantReviewWritingViewModel @Inject constructor(
 
     private val _isCompletedReviewUpload = MutableLiveData<Boolean>()
     val isCompletedReviewUpload: LiveData<Boolean> get() = _isCompletedReviewUpload
+
+    private val _hfmReviews = MutableLiveData<HFMReviewInfo>()
+    val hfmReviews: LiveData<HFMReviewInfo> = _hfmReviews
 
     fun setReviewId(reviewId: String) {
         _reviewId.value = reviewId
@@ -152,11 +159,12 @@ class RestaurantReviewWritingViewModel @Inject constructor(
             imageListMultipartBody.add(imageMultipartBody)
         }
 
+        Timber.d("${restaurantId.value}")
         viewModelScope.launch {
             runCatching {
                 reviewService.postHFMReview(
                     hfmSharedPreference.id,
-                    "62d26c9bd11146a81ef18eb5",
+                    restaurantId.value ?: return@launch,
                     scoreRequestBody,
                     tasteRequestBody,
                     goodRequestBody,
@@ -164,12 +172,17 @@ class RestaurantReviewWritingViewModel @Inject constructor(
                     imageListMultipartBody
                 )
             }.fold({
+                _hfmReviews.value = it.data.toReviewInfo()
                 _isReviewModify.value = true
                 _isCompletedReviewUpload.value = true
             }, {
                 _isCompletedReviewUpload.value = false
             })
         }
+    }
+
+    fun setRestaurantId(restaurantId: String) {
+        _restaurantId.value = restaurantId
     }
 
     private fun String?.toPlainRequestBody() = requireNotNull(this).toRequestBody("text/plain".toMediaTypeOrNull())

@@ -19,6 +19,7 @@ class HashtagView(context: Context, attrs: AttributeSet? = null) : FlexboxLayout
     }
 
     fun setHashtag(hashtag: List<String>, viewType: HashtagViewType) {
+        this.removeAllViews()
         for (i in hashtag.indices) {
             val binding = when (viewType) {
                 HashtagViewType.REVIEW_TAB_TYPE -> ItemHashtagReviewTabBinding.inflate(inflater, this, false).apply {
