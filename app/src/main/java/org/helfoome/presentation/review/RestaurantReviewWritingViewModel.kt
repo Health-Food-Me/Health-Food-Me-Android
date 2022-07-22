@@ -8,6 +8,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
+import okhttp3.MultipartBody.Part.Companion.createFormData
 import okhttp3.RequestBody.Companion.toRequestBody
 import org.helfoome.data.local.HFMSharedPreference
 import org.helfoome.data.service.ReviewService
@@ -92,7 +93,6 @@ class RestaurantReviewWritingViewModel @Inject constructor(
         score: Float,
         image: List<Uri?>,
     ) {
-        Timber.d("${_isEditMode.value}")
         if (_isEditMode.value == true) {
             editReview(context, score, image)
         } else {
@@ -148,9 +148,6 @@ class RestaurantReviewWritingViewModel @Inject constructor(
         val scoreRequestBody = score.toString().toPlainRequestBody()
         val contentRequestBody = review.value.toPlainRequestBody()
         val tasteRequestBody = context.getString(selectedTasteTag.value?.strRes ?: return).replace("# ", "").toPlainRequestBody()
-        val goodRequestBody = selectedGoodPointTags.value?.filter { it.value }?.keys?.map {
-            context.getString(it.strRes).replace("# ", "")
-        }.toString().toPlainRequestBody()
         val imageListMultipartBody = mutableListOf<MultipartBody.Part>()
 
         for (element in image) {
@@ -159,7 +156,14 @@ class RestaurantReviewWritingViewModel @Inject constructor(
             imageListMultipartBody.add(imageMultipartBody)
         }
 
-        Timber.d("${restaurantId.value}")
+        val goodListMultipartBody = mutableListOf<MultipartBody.Part>()
+        val goodList = selectedGoodPointTags.value?.filter { it.value }?.keys?.map {
+            context.getString(it.strRes).replace("# ", "")
+        } ?: return
+        for (good in goodList) {
+            goodListMultipartBody.add(createFormData("good", good))
+        }
+
         viewModelScope.launch {
             runCatching {
                 reviewService.postHFMReview(
@@ -167,7 +171,7 @@ class RestaurantReviewWritingViewModel @Inject constructor(
                     restaurantId.value ?: return@launch,
                     scoreRequestBody,
                     tasteRequestBody,
-                    goodRequestBody,
+                    goodListMultipartBody,
                     contentRequestBody,
                     imageListMultipartBody
                 )
