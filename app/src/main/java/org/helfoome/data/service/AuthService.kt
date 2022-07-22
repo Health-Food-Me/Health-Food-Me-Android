@@ -11,7 +11,10 @@ interface AuthService {
     suspend fun login(@Body requestLogin: RequestLogin): BaseResponse<ResponseLogin>
 
     @DELETE("/auth/withdrawal/{userId}")
-    suspend fun withdrawal(@Path("userId") userId: String): EmptyResponse
+    suspend fun withdrawal(
+        @Path("userId") userId: String,
+        @Header("token") token: String
+    ): EmptyResponse
 
     @GET("/user/{userId}/profile")
     suspend fun getProfile(@Path("userId") userId: String): BaseResponse<ResponseProfile>

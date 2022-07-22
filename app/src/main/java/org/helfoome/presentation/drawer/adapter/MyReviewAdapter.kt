@@ -19,7 +19,7 @@ class MyReviewAdapter(
     ListAdapter<MyReviewListInfo, MyReviewAdapter.MyReviewViewHolder>(
         ItemDiffCallback<MyReviewListInfo>(
             onContentsTheSame = { old, new -> old == new },
-            onItemsTheSame = { old, new -> old.id == new.id }
+            onItemsTheSame = { old, new -> old.restaurant == new.restaurant }
         )
     ) {
     private lateinit var inflater: LayoutInflater
