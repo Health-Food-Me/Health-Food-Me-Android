@@ -139,6 +139,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
     private val requestReviewWrite =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
             if (activityResult.resultCode == Activity.RESULT_OK) {
+                viewModel.fetchHFMReviewList()
                 val animation = AnimationUtils.loadAnimation(this, R.anim.anim_snackbar_top_down)
                 binding.snvProfileModify.animation = animation
                 binding.snvProfileModify.setText("리뷰가 작성되었습니다")
@@ -153,10 +154,6 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                     override fun onAnimationRepeat(p0: Animation?) = Unit
                 })
                 val data = activityResult.data ?: return@registerForActivityResult
-
-                data.getParcelableExtra<HFMReviewInfo>(ARG_HFM_REVIEW)?.let {
-                    viewModel.addHFMReviewList(it)
-                }
             }
         }
 
@@ -519,6 +516,5 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
         const val GANGNAM_Y = 127.027610
         private const val LOCATION_PERMISSION_REQUEST_CODE = 1000
         private const val ARG_RESTAURANT_ID = "restaurantId"
-        private const val ARG_HFM_REVIEW = "hfmReview"
     }
 }

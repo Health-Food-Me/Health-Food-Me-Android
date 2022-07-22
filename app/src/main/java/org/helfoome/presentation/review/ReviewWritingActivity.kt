@@ -91,10 +91,6 @@ class ReviewWritingActivity : BindingActivity<ActivityReviewWritingBinding>(R.la
         }
         viewModel.isReviewModify.observe(this) {
             if (it) {
-                val intent = Intent(this, MainActivity::class.java)
-                intent.putExtra(ARG_HFM_REVIEW, viewModel.hfmReviews.value)
-                setResult(RESULT_OK, intent)
-                finish()
                 setResult(Activity.RESULT_OK)
                 finish()
             }
@@ -171,6 +167,5 @@ class ReviewWritingActivity : BindingActivity<ActivityReviewWritingBinding>(R.la
 
     companion object {
         private const val ARG_RESTAURANT_ID = "restaurantId"
-        private const val ARG_HFM_REVIEW = "hfmReview"
     }
 }
