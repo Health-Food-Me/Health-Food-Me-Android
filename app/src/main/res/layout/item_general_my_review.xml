@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/notosanskr_m"
             android:maxLines="1"
-            android:text="@{data.id}"
+            android:text="@{data.restaurant}"
             android:textColor="@color/gray_800"
             android:textSize="13dp"
             app:layout_constraintStart_toStartOf="@id/gl_start"

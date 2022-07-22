@@ -81,7 +81,7 @@ class MainViewModel @Inject constructor(
 
     fun getMapInfo(latLng: LatLng, keyword: String? = null) {
         viewModelScope.launch(Dispatchers.IO) {
-            runCatching { mapRepository.getMap(latLng.latitude, latLng.longitude, 11, keyword) }
+            runCatching { mapRepository.getMap(latLng.latitude, latLng.longitude, 12, keyword) }
                 .onSuccess {
                     _location.postValue(
                         it.data.map { marker ->
