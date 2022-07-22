@@ -66,7 +66,7 @@
             app:layout_constraintTop_toBottomOf="@id/hashtag"
             tools:listitem="@layout/item_review_image" />
 
-        <TextView
+        <kr.co.prnd.readmore.ReadMoreTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
@@ -75,6 +75,8 @@
             android:text="@{review.description}"
             android:textColor="@color/gray_800"
             android:textSize="12dp"
+            app:readMoreMaxLine="3"
+            app:readMoreText="   더보기"
             app:layout_constraintTop_toBottomOf="@id/rv_photo_list"
             tools:text="블라블라 만약에 이 내용이 너무 길어진다면 ..? 그게 고민...이었는데 말이죠 해결됐어요. 왜냐면 더보기를 누르면 되니까요! 제 뻘소리를 더 보고 싶으시다면 더보기를 함 눌러볼텨?" />
 
