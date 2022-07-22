@@ -69,13 +69,11 @@ class ProfileModifyActivity : BindingActivity<ActivityProfileModifyBinding>(R.la
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
-        setResult(Activity.RESULT_OK)
         return super.onKeyDown(keyCode, event)
     }
 
     private fun initListener() {
         binding.ivBack.setOnClickListener {
-            setResult(Activity.RESULT_OK)
             finish()
         }
 
