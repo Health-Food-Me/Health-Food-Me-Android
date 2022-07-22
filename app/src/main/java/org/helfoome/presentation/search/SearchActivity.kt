@@ -9,19 +9,15 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.KeyEvent.KEYCODE_ENTER
-import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.EditText
-import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.add
 import androidx.fragment.app.commit
 import androidx.lifecycle.flowWithLifecycle
@@ -29,42 +25,31 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.ConcatAdapter
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.snackbar.BaseTransientBottomBar
-import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
-import com.kakao.sdk.user.UserApiClient
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.*
 import com.naver.maps.map.overlay.Marker
 import com.naver.maps.map.overlay.OverlayImage
 import com.naver.maps.map.util.FusedLocationSource
-import com.navercorp.nid.NaverIdLoginSDK
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import org.helfoome.R
 import org.helfoome.databinding.ActivitySearchBinding
-import org.helfoome.databinding.DialogLogoutBinding
 import org.helfoome.presentation.MainActivity
 import org.helfoome.presentation.MainViewModel
-import org.helfoome.presentation.drawer.MyReviewActivity
-import org.helfoome.presentation.drawer.ProfileModifyActivity
-import org.helfoome.presentation.drawer.SettingActivity
-import org.helfoome.presentation.login.LoginActivity
 import org.helfoome.presentation.restaurant.MapSelectionBottomDialogFragment
 import org.helfoome.presentation.restaurant.adapter.RestaurantTabAdapter
 import org.helfoome.presentation.review.ReviewWritingActivity
-import org.helfoome.presentation.scrap.MyScrapActivity
 import org.helfoome.presentation.search.adapter.*
 import org.helfoome.presentation.search.type.SearchMode
 import org.helfoome.presentation.type.HashtagViewType
-import org.helfoome.util.DialogUtil
 import org.helfoome.util.ResolutionMetrics
 import org.helfoome.util.binding.BindingActivity
 import org.helfoome.util.ext.closeKeyboard
+import org.helfoome.util.ext.markerFilter
 import org.helfoome.util.ext.showKeyboard
-import timber.log.Timber
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -77,6 +62,48 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
     private lateinit var behavior: BottomSheetBehavior<ConstraintLayout>
     private val searchViewModel: SearchViewModel by viewModels()
     private lateinit var naverMap: NaverMap
+
+    private val mainViewModel: MainViewModel by viewModels()
+    private var category: String? = null
+    private val tabSelectedListener = object : TabLayout.OnTabSelectedListener {
+        override fun onTabReselected(tab: TabLayout.Tab?) = Unit
+        override fun onTabUnselected(tab: TabLayout.Tab?) = Unit
+        override fun onTabSelected(tab: TabLayout.Tab?) {
+            // 리뷰 탭에서만 리뷰 작성 버튼 보여주기
+            mainViewModel.setReviewTab(tab?.position == 2)
+        }
+    }
+    private val appbarOffsetListener = AppBarLayout.OnOffsetChangedListener { _, verticalOffset ->
+        binding.layoutRestaurantDialog.tvRestaurantNameInToolbar.visibility = if (verticalOffset == 0) {
+            View.INVISIBLE
+        } else {
+            View.VISIBLE
+        }
+    }
+
+    private var markerList: List<Pair<Marker, Pair<String, Boolean>>> = listOf()
+
+    private val requestReviewWrite =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
+            if (activityResult.resultCode == Activity.RESULT_OK) {
+                val animation = AnimationUtils.loadAnimation(this, R.anim.anim_snackbar_top_down)
+                binding.snvProfileModify.animation = animation
+                binding.snvProfileModify.setText("리뷰가 작성되었습니다")
+                animation.setAnimationListener(object : Animation.AnimationListener {
+                    override fun onAnimationStart(animation: Animation?) = Unit
+                    override fun onAnimationEnd(animation: Animation?) {
+                        val bottomTopAnimation = AnimationUtils.loadAnimation(this@SearchActivity, R.anim.anim_snackbar_bottom_top)
+                        binding.snvProfileModify.animation = bottomTopAnimation
+                        binding.snvProfileModify.setText("리뷰가 작성되었습니다")
+                    }
+
+                    override fun onAnimationRepeat(p0: Animation?) = Unit
+                })
+            }
+        }
+
+    private val restaurantDetailAdapter = RestaurantTabAdapter(this)
+
     private lateinit var locationSource: FusedLocationSource
     private var mapSelectionBottomDialog: MapSelectionBottomDialogFragment? = null
     private val autoCompleteAdapter = AutoCompleteAdapter {
@@ -95,10 +122,28 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
     ) {
         searchViewModel.removeKeyword(it)
     }
-    private val resultAdapter = ResultAdapter {
+    private val resultAdapter = ResultAdapter { restaurantId ->
         // TODO : 서버 통신 주의
-        if (behavior.state == BottomSheetBehavior.STATE_EXPANDED)
+        if (behavior.state == BottomSheetBehavior.STATE_EXPANDED) {
+            mainViewModel.getReviewCheck(restaurantId)
+            val location = mainViewModel.location.value?.filter {
+                it.id == restaurantId
+            }?.get(0)
+            location?.let {
+                markerList.forEach { marker ->
+                    if(marker.second.first == it.name) {
+                        marker.first.icon = OverlayImage.fromResource(
+                            if (marker.second.second) R.drawable.ic_marker_green_big
+                            else R.drawable.ic_marker_red_big
+                        )
+                    }
+                }
+                mainViewModel.fetchSelectedRestaurantDetailInfo(restaurantId,
+                    it.latitude,
+                    it.longitude)
+            }
             searchViewModel.setDetail(true)
+        }
     }
 
     private val searchMapTopAdapter = SearchMapTopAdapter {
@@ -106,8 +151,8 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
             behavior.state = BottomSheetBehavior.STATE_EXPANDED
             behavior.isDraggable = false
         } else {
+            behavior.peekHeight = resolutionMetrics.toPixel(203)
             behavior.state = BottomSheetBehavior.STATE_COLLAPSED
-            behavior.peekHeight = resolutionMetrics.toPixel(135)
             behavior.isDraggable = true
         }
     }
@@ -123,15 +168,27 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
                 behavior.isDraggable = this
                 binding.isLineVisible = this
 
+                binding.layoutRestaurantDialog.viewSpacing.visibility = when (this) {
+                    true -> View.VISIBLE
+                    else -> View.GONE
+                }
+
                 binding.layoutRestaurantDialog.nvDetail.isNestedScrollingEnabled = false
-                viewModel.setExpendedBottomSheetDialog(newState == BottomSheetBehavior.STATE_EXPANDED)
+                mainViewModel.setExpendedBottomSheetDialog(newState == BottomSheetBehavior.STATE_EXPANDED)
                 behavior.isDraggable = true
                 if (newState == BottomSheetBehavior.STATE_COLLAPSED)
-                    binding.isFloatingNotVisible = false
-                if (newState == BottomSheetBehavior.STATE_DRAGGING)
-                    binding.isFloatingNotVisible = true
-                if (newState == BottomSheetBehavior.STATE_HIDDEN)
+                    binding.isFloatingVisible = true
+                if (newState == BottomSheetBehavior.STATE_DRAGGING || newState == BottomSheetBehavior.STATE_EXPANDED)
+                    binding.isFloatingVisible = false
+                if (newState == BottomSheetBehavior.STATE_HIDDEN) {
+                    markerList.forEach {
+                        it.first.icon = OverlayImage.fromResource(
+                            if (it.second.second) R.drawable.ic_marker_green_small
+                            else R.drawable.ic_marker_red_small
+                        )
+                    }
                     binding.isMainNotVisible = false
+                }
             }
         }
 
@@ -161,7 +218,7 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
         initKeyListeners()
         initTextChangeEvent()
         observeData()
-        binding.viewModel = viewModel
+        binding.viewModel = mainViewModel
 
         locationSource = FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE)
 
@@ -175,6 +232,7 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
     }
 
     private fun initView() {
+        binding.layoutRestaurantDialog.isSearch = true
         behavior = BottomSheetBehavior.from(binding.layoutBottomSheet)
         behavior.state = BottomSheetBehavior.STATE_EXPANDED
         behavior.isDraggable = false
@@ -248,7 +306,7 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
                     if (searchViewModel.isDetail.value) {
                         if (behavior.state == BottomSheetBehavior.STATE_EXPANDED) {
                             binding.isLineVisible = true
-                            behavior.peekHeight = resolutionMetrics.toPixel(155)
+                            behavior.peekHeight = resolutionMetrics.toPixel(236)
                             behavior.state = BottomSheetBehavior.STATE_COLLAPSED
                         } else {
                             searchViewModel.setDetail(false)
@@ -349,6 +407,55 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
                             if (it.data.isNotEmpty())
                                 searchViewModel.insertKeyword(binding.etSearch.text.toString())
                             resultAdapter.submitList(it.data)
+
+                            markerList.forEach {
+                                it.first.map = null
+                            }
+                            mainViewModel.location.value?.let { locationList ->
+                                markerList = locationList.markerFilter(
+                                    it.data.map { data ->
+                                        data.id
+                                    }
+                                ).map { marker ->
+                                    Pair(
+                                        Marker().apply {
+                                            position = LatLng(marker.latitude, marker.longitude)
+                                            icon = OverlayImage.fromResource(
+                                                if (marker.isDietRestaurant) R.drawable.ic_marker_green_small
+                                                else R.drawable.ic_marker_red_small
+                                            )
+                                            map = naverMap
+
+                                            setOnClickListener {
+                                                searchViewModel.setDetail(true)
+                                                mainViewModel.getReviewCheck(marker.id)
+                                                mainViewModel.fetchSelectedRestaurantDetailInfo(marker.id,
+                                                    marker.latitude,
+                                                    marker.longitude)
+
+                                                behavior.state = BottomSheetBehavior.STATE_COLLAPSED
+                                                binding.isMainNotVisible = true
+                                                markerList.forEach {
+                                                    it.first.icon = OverlayImage.fromResource(
+                                                        if (it.second.second) R.drawable.ic_marker_green_small
+                                                        else R.drawable.ic_marker_red_small
+                                                    )
+                                                }
+                                                icon = OverlayImage.fromResource(
+                                                    if (marker.isDietRestaurant) R.drawable.ic_marker_green_big
+                                                    else R.drawable.ic_marker_red_big
+                                                )
+                                                mainViewModel.markerId(this.position)?.let { id -> }
+                                                true
+                                            }
+                                        },
+                                        Pair(
+                                            marker.name,
+                                            marker.isDietRestaurant
+                                        )
+                                    )
+                                }
+                            }
                         }
                         else -> {
                             // TODO : Loading, Error 추후 구현
@@ -367,14 +474,16 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
                 .onEach {
                     when (it) {
                         true -> {
+                            binding.etSearch.isEnabled = false
                             binding.isDetail = true
-                            behavior.peekHeight = resolutionMetrics.toPixel(155)
+                            behavior.peekHeight = resolutionMetrics.toPixel(236)
                             behavior.isDraggable = true
-//                            behavior.isHideable = true
+                            behavior.isHideable = true
                             behavior.state = BottomSheetBehavior.STATE_COLLAPSED
                         }
                         else -> {
-//                            behavior.isHideable = false
+                            binding.etSearch.isEnabled = true
+                            behavior.isHideable = false
                             binding.isDetail = false
                         }
                     }
@@ -421,47 +530,6 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
         mapFragment.getMapAsync(this)
     }
 
-    private val viewModel: MainViewModel by viewModels()
-    private var category: String? = null
-    private val tabSelectedListener = object : TabLayout.OnTabSelectedListener {
-        override fun onTabReselected(tab: TabLayout.Tab?) = Unit
-        override fun onTabUnselected(tab: TabLayout.Tab?) = Unit
-        override fun onTabSelected(tab: TabLayout.Tab?) {
-            // 리뷰 탭에서만 리뷰 작성 버튼 보여주기
-            viewModel.setReviewTab(tab?.position == 2)
-        }
-    }
-    private val appbarOffsetListener = AppBarLayout.OnOffsetChangedListener { _, verticalOffset ->
-        binding.layoutRestaurantDialog.tvRestaurantNameInToolbar.visibility = if (verticalOffset == 0) {
-            View.INVISIBLE
-        } else {
-            View.VISIBLE
-        }
-    }
-
-    private var markerList: List<Pair<Marker, Boolean>> = listOf()
-
-    private val requestReviewWrite =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
-            if (activityResult.resultCode == Activity.RESULT_OK) {
-                val animation = AnimationUtils.loadAnimation(this, R.anim.anim_snackbar_top_down)
-                binding.snvProfileModify.animation = animation
-                binding.snvProfileModify.setText("리뷰가 작성되었습니다")
-                animation.setAnimationListener(object : Animation.AnimationListener {
-                    override fun onAnimationStart(animation: Animation?) = Unit
-                    override fun onAnimationEnd(animation: Animation?) {
-                        val bottomTopAnimation = AnimationUtils.loadAnimation(this@SearchActivity, R.anim.anim_snackbar_bottom_top)
-                        binding.snvProfileModify.animation = bottomTopAnimation
-                        binding.snvProfileModify.setText("리뷰가 작성되었습니다")
-                    }
-
-                    override fun onAnimationRepeat(p0: Animation?) = Unit
-                })
-            }
-        }
-
-    private val restaurantDetailAdapter = RestaurantTabAdapter(this)
-
     override fun onStart() {
         super.onStart()
         behavior.addBottomSheetCallback(bottomSheetCallback)
@@ -471,19 +539,19 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
 
     override fun onResume() {
         super.onResume()
-        viewModel.getProfile()
+        mainViewModel.getProfile()
     }
 
     override fun onRestart() {
         super.onRestart()
-        viewModel.getProfile()
+        mainViewModel.getProfile()
     }
 
     private fun initListeners() {
         with(binding.layoutRestaurantDialog) {
             layoutAppBar.setOnClickListener {
                 if (behavior.state == BottomSheetBehavior.STATE_COLLAPSED) {
-                    binding.isFloatingNotVisible = true
+                    binding.isFloatingVisible = true
                     behavior.state = BottomSheetBehavior.STATE_EXPANDED
                 }
             }
@@ -509,61 +577,22 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
     }
 
     private fun initObservers() {
-        viewModel.selectedRestaurant.observe(this) {
+        mainViewModel.selectedRestaurant.observe(this) {
             with(binding.layoutRestaurantDialog) {
                 layoutRestaurantTabMenu.selectTab(layoutRestaurantTabMenu.getTabAt(0))
                 hashtag.setHashtag(it.tags, HashtagViewType.RESTAURANT_SUMMARY_TYPE)
             }
         }
 
-        viewModel.isReviewTab.observe(this) {
+        mainViewModel.isReviewTab.observe(this) {
             binding.layoutRestaurantDialog.layoutReviewBtnBackground.visibility =
                 if (it.peekContent()) View.VISIBLE else View.INVISIBLE
         }
 
-        viewModel.location.observe(this) { markers ->
-            markerList.forEach {
-                it.first.map = null
-            }
-            markerList = markers.map { marker ->
-                Pair(
-                    Marker().apply {
-                        position = LatLng(marker.latitude, marker.longitude)
-                        icon = OverlayImage.fromResource(
-                            if (marker.isDietRestaurant) R.drawable.ic_marker_green_small
-                            else R.drawable.ic_marker_red_small
-                        )
-                        map = naverMap
-
-                        setOnClickListener {
-                            viewModel.getReviewCheck(marker.id)
-                            viewModel.fetchSelectedRestaurantDetailInfo(marker.id, marker.latitude, marker.longitude)
-
-                            behavior.state = BottomSheetBehavior.STATE_COLLAPSED
-                            binding.isMainNotVisible = true
-                            markerList.forEach {
-                                it.first.icon = OverlayImage.fromResource(
-                                    if (it.second) R.drawable.ic_marker_green_small
-                                    else R.drawable.ic_marker_red_small
-                                )
-                            }
-                            icon = OverlayImage.fromResource(
-                                if (marker.isDietRestaurant) R.drawable.ic_marker_green_big
-                                else R.drawable.ic_marker_red_big
-                            )
-                            viewModel.markerId(this.position)?.let { id -> }
-                            true
-                        }
-                    },
-                    marker.isDietRestaurant
-                )
-            }
-        }
-
-        viewModel.checkReview.observe(this) {
-            if (viewModel.checkReview.value == false) {
+        mainViewModel.checkReview.observe(this) {
+            if (mainViewModel.checkReview.value == false) {
                 binding.layoutRestaurantDialog.btnWriteReview.isEnabled = true
-            } else if (viewModel.checkReview.value == true) {
+            } else if (mainViewModel.checkReview.value == true) {
                 binding.layoutRestaurantDialog.btnWriteReview.isEnabled = false
             }
         }
@@ -580,10 +609,11 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
         this.naverMap = naverMap.apply {
             uiSettings.isZoomControlEnabled = false
             setOnMapClickListener { _, _ ->
-                behavior.state = BottomSheetBehavior.STATE_HIDDEN
+                if (searchViewModel.isDetail.value)
+                    behavior.state = BottomSheetBehavior.STATE_HIDDEN
                 markerList.forEach {
                     it.first.icon = OverlayImage.fromResource(
-                        if (it.second) R.drawable.ic_marker_green_small
+                        if (it.second.second) R.drawable.ic_marker_green_small
                         else R.drawable.ic_marker_red_small
                     )
                 }
@@ -595,11 +625,11 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
 
             if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                 cameraPosition = CameraPosition(
-                    LatLng(MainActivity.GANGNAM_X, MainActivity.GANGNAM_Y), 11.0
+                    LatLng(MainActivity.GANGNAM_X, MainActivity.GANGNAM_Y), 12.0
                 )
                 locationTrackingMode = LocationTrackingMode.Follow
             } else {
-                cameraPosition = CameraPosition(LatLng(MainActivity.GANGNAM_X, MainActivity.GANGNAM_Y), 11.0)
+                cameraPosition = CameraPosition(LatLng(MainActivity.GANGNAM_X, MainActivity.GANGNAM_Y), 12.0)
             }
 
             addOnCameraChangeListener { reason, _ ->
@@ -612,13 +642,13 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
                 CameraPosition(LatLng(naverMap.cameraPosition.target.latitude, naverMap.cameraPosition.target.longitude), 14.0)
             naverMap.locationTrackingMode = LocationTrackingMode.Follow
         }
-        viewModel.getMapInfo(naverMap.cameraPosition.target, category)
+        mainViewModel.getMapInfo(naverMap.cameraPosition.target, category)
         binding.btnLocationMain.setOnClickListener {
             naverMap.cameraPosition =
                 CameraPosition(LatLng(naverMap.cameraPosition.target.latitude, naverMap.cameraPosition.target.longitude), 14.0)
             naverMap.locationTrackingMode = LocationTrackingMode.Follow
         }
-        viewModel.getMapInfo(
+        mainViewModel.getMapInfo(
             LatLng(
                 naverMap.cameraPosition.target.latitude,
                 naverMap.cameraPosition.target.longitude
