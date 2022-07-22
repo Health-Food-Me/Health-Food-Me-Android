@@ -47,6 +47,7 @@ class ReviewWritingActivity : BindingActivity<ActivityReviewWritingBinding>(R.la
         Timber.d("${intent.getBooleanExtra("REVIEW_TITLE", false)}")
         viewModel.setReviewId(intent.getStringExtra("REVIEW_ID").toString())
         viewModel.setEditMode(intent.getBooleanExtra("REVIEW_TITLE", false))
+        viewModel.setRestaurantId(intent.getStringExtra(ARG_RESTAURANT_ID).toString())
     }
 
     private fun initView() {
@@ -160,5 +161,9 @@ class ReviewWritingActivity : BindingActivity<ActivityReviewWritingBinding>(R.la
     private val cameraLauncher = registerForActivityResult(ActivityResultContracts.TakePicture()) { isSuccess ->
         if (isSuccess)
             galleryImageAdapter.setUriList(listOf(photoUri))
+    }
+
+    companion object {
+        private const val ARG_RESTAURANT_ID = "restaurantId"
     }
 }

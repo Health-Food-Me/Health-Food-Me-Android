@@ -199,7 +199,8 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
 
             btnWriteReview.apply {
                 setOnClickListener {
-                    requestReviewWrite.launch(Intent(this@MainActivity, ReviewWritingActivity::class.java))
+                    requestReviewWrite.launch(Intent(this@MainActivity, ReviewWritingActivity::class.java).putExtra(ARG_RESTAURANT_ID,
+                        viewModel?.selectedRestaurant?.value?.id ?: return@setOnClickListener))
                 }
             }
         }
@@ -509,5 +510,6 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
         private const val GANGNAM_X = 37.498095
         private const val GANGNAM_Y = 127.027610
         private const val LOCATION_PERMISSION_REQUEST_CODE = 1000
+        private const val ARG_RESTAURANT_ID = "restaurantId"
     }
 }

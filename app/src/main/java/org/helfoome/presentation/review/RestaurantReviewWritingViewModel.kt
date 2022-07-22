@@ -28,6 +28,9 @@ class RestaurantReviewWritingViewModel @Inject constructor(
     private val _reviewId = MutableLiveData<String>()
     val reviewId get() = _reviewId
 
+    private val _restaurantId = MutableLiveData<String>()
+    val restaurantId get() = _restaurantId
+
     private val _review = MutableLiveData<String>()
     val review get() = _review
 
@@ -152,11 +155,12 @@ class RestaurantReviewWritingViewModel @Inject constructor(
             imageListMultipartBody.add(imageMultipartBody)
         }
 
+        Timber.d("${restaurantId.value}")
         viewModelScope.launch {
             runCatching {
                 reviewService.postHFMReview(
                     hfmSharedPreference.id,
-                    "62d26c9bd11146a81ef18eb5",
+                    restaurantId.value ?: return@launch,
                     scoreRequestBody,
                     tasteRequestBody,
                     goodRequestBody,
@@ -170,6 +174,10 @@ class RestaurantReviewWritingViewModel @Inject constructor(
                 _isCompletedReviewUpload.value = false
             })
         }
+    }
+
+    fun setRestaurantId(restaurantId: String) {
+        _restaurantId.value = restaurantId
     }
 
     private fun String?.toPlainRequestBody() = requireNotNull(this).toRequestBody("text/plain".toMediaTypeOrNull())
