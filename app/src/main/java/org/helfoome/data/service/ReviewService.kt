@@ -47,7 +47,7 @@ interface ReviewService {
         @Path("reviewId") reviewId: String,
         @Part("score") score: RequestBody,
         @Part("taste") taste: RequestBody,
-        @Part("good") good: RequestBody,
+        @Part good: List<MultipartBody.Part>,
         @Part("content") content: RequestBody,
         @Part("nameList") nameList: RequestBody,
         @Part image: List<MultipartBody.Part>

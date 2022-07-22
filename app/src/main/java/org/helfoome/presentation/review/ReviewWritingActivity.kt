@@ -79,10 +79,8 @@ class ReviewWritingActivity : BindingActivity<ActivityReviewWritingBinding>(R.la
     private fun initObservers() {
         viewModel.isEnabledWritingCompleteButton.observe(this) { isEnabled ->
             if (isEnabled) {
-                Timber.d("initObservers: 리뷰 작성 요건 충족")
                 viewModel.uploadReview(context, binding.ratingBar.rating, galleryImageAdapter.imageList)
             } else {
-                Timber.d("initObservers: 리뷰 작성 요건 충족 못함")
                 showToast(getString(R.string.review_writing_complete_condition_toast_text))
             }
         }
