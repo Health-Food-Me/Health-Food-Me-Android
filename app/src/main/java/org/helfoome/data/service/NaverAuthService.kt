@@ -40,12 +40,15 @@ class NaverAuthService @Inject constructor(
         CoroutineScope(Dispatchers.IO).launch {
             runCatching { authService.login(RequestLogin("naver", NaverIdLoginSDK.getAccessToken().toString())) }
                 .onSuccess {
-                    sharedPreferences.accessToken = it.data.accessToken
-                    sharedPreferences.refreshToken = it.data.refreshToken
-                    sharedPreferences.id = it.data.user.id
-                    sharedPreferences.nickname = it.data.user.name
-                    loginListener?.invoke()
-                    cancel()
+                    if (it.data.user.email == null) {
+                        sharedPreferences.accessToken = it.data.accessToken
+                        sharedPreferences.refreshToken = it.data.refreshToken
+                        sharedPreferences.id = it.data.user.id
+                        sharedPreferences.nickname = it.data.user.name
+                        loginListener?.invoke()
+                        Timber.d(it.message)
+                        cancel()
+                    }
                 }
                 .onFailure {
                     Timber.d(it.message)

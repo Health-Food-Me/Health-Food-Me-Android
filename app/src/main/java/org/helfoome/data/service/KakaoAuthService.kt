@@ -1,6 +1,7 @@
 package org.helfoome.data.service
 
 import android.content.Context
+import android.util.Log
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.model.ClientError
 import com.kakao.sdk.common.model.ClientErrorCause
@@ -30,16 +31,20 @@ class KakaoAuthService @Inject constructor(
                     runCatching { authService.login(RequestLogin("kakao", token.accessToken)) }
                         .onSuccess {
                             val response = it.data
-                            with(sharedPreferences) {
-                                accessToken = response.accessToken
-                                refreshToken = response.refreshToken
-                                id = response.user.id
-                                nickname = response.user.name
+                            if (response.user.email == null) {
+                                with(sharedPreferences) {
+                                    accessToken = response.accessToken
+                                    refreshToken = response.refreshToken
+                                    id = response.user.id
+                                    nickname = response.user.name
+                                }
+                                loginListener?.invoke()
+                                Timber.d(it.message)
+                                cancel()
                             }
-                            loginListener?.invoke()
-                            cancel()
                         }
                         .onFailure {
+                            Timber.d(it.message)
                             cancel()
                         }
                 }
@@ -64,14 +69,17 @@ class KakaoAuthService @Inject constructor(
                         runCatching { authService.login(RequestLogin("kakao", token.accessToken)) }
                             .onSuccess {
                                 val response = it.data
-                                with(sharedPreferences) {
-                                    accessToken = response.accessToken
-                                    refreshToken = response.refreshToken
-                                    id = response.user.id
-                                    nickname = response.user.name
+                                if (response.user.email == null) {
+                                    with(sharedPreferences) {
+                                        accessToken = response.accessToken
+                                        refreshToken = response.refreshToken
+                                        id = response.user.id
+                                        nickname = response.user.name
+                                    }
+                                    loginListener?.invoke()
+                                    Timber.d(it.message)
+                                    cancel()
                                 }
-                                loginListener?.invoke()
-                                cancel()
                             }
                             .onFailure {
                                 Timber.i(it.message)
