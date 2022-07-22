@@ -31,17 +31,15 @@ class KakaoAuthService @Inject constructor(
                     runCatching { authService.login(RequestLogin("kakao", token.accessToken)) }
                         .onSuccess {
                             val response = it.data
-                            if (response.user.email == null) {
-                                with(sharedPreferences) {
-                                    accessToken = response.accessToken
-                                    refreshToken = response.refreshToken
-                                    id = response.user.id
-                                    nickname = response.user.name
-                                }
-                                loginListener?.invoke()
-                                Timber.d(it.message)
-                                cancel()
+                            with(sharedPreferences) {
+                                accessToken = response.accessToken
+                                refreshToken = response.refreshToken
+                                id = response.user.id
+                                nickname = response.user.name
                             }
+                            loginListener?.invoke()
+                            Timber.d(it.message)
+                            cancel()
                         }
                         .onFailure {
                             Timber.d(it.message)
@@ -69,17 +67,15 @@ class KakaoAuthService @Inject constructor(
                         runCatching { authService.login(RequestLogin("kakao", token.accessToken)) }
                             .onSuccess {
                                 val response = it.data
-                                if (response.user.email == null) {
-                                    with(sharedPreferences) {
-                                        accessToken = response.accessToken
-                                        refreshToken = response.refreshToken
-                                        id = response.user.id
-                                        nickname = response.user.name
-                                    }
-                                    loginListener?.invoke()
-                                    Timber.d(it.message)
-                                    cancel()
+                                with(sharedPreferences) {
+                                    accessToken = response.accessToken
+                                    refreshToken = response.refreshToken
+                                    id = response.user.id
+                                    nickname = response.user.name
                                 }
+                                loginListener?.invoke()
+                                Timber.d(it.message)
+                                cancel()
                             }
                             .onFailure {
                                 Timber.i(it.message)
