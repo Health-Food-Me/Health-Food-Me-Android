@@ -5,11 +5,10 @@ import android.widget.ImageView
 import androidx.core.view.isVisible
 import androidx.databinding.BindingAdapter
 import coil.load
-import org.helfoome.R
 
 @BindingAdapter("app:imageUrl")
 fun ImageView.setImage(imageUrl: String?) {
-    if(imageUrl == null || imageUrl == "") return
+    if (imageUrl == null || imageUrl == "") return
     load(imageUrl)
 }
 

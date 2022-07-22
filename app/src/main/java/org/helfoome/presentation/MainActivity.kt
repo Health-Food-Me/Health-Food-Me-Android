@@ -37,7 +37,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import org.helfoome.R
 import org.helfoome.databinding.ActivityMainBinding
 import org.helfoome.databinding.DialogLogoutBinding
-import org.helfoome.domain.entity.HFMReviewInfo
 import org.helfoome.presentation.drawer.MyReviewActivity
 import org.helfoome.presentation.drawer.ProfileModifyActivity
 import org.helfoome.presentation.drawer.SettingActivity
@@ -210,8 +209,12 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
 
             btnWriteReview.apply {
                 setOnClickListener {
-                    requestReviewWrite.launch(Intent(this@MainActivity, ReviewWritingActivity::class.java).putExtra(ARG_RESTAURANT_ID,
-                        viewModel?.selectedRestaurant?.value?.id ?: return@setOnClickListener))
+                    requestReviewWrite.launch(
+                        Intent(this@MainActivity, ReviewWritingActivity::class.java).putExtra(
+                            ARG_RESTAURANT_ID,
+                            viewModel?.selectedRestaurant?.value?.id ?: return@setOnClickListener
+                        )
+                    )
                 }
             }
         }

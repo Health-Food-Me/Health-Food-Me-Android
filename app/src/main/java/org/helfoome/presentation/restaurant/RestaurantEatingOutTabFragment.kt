@@ -25,7 +25,7 @@ class RestaurantEatingOutTabFragment : BindingFragment<FragmentEatingOutBinding>
 
     private fun initObservers() {
         viewModel.menu.observe(viewLifecycleOwner) { menuList ->
-            if(menuList == null) return@observe
+            if (menuList == null) return@observe
             restaurantMenuAdapter.menuList = menuList
         }
 

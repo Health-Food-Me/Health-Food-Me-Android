@@ -2,7 +2,6 @@ package org.helfoome.presentation.review
 
 import android.Manifest
 import android.app.Activity
-import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
@@ -17,7 +16,6 @@ import gun0912.tedimagepicker.builder.TedImagePicker
 import gun0912.tedimagepicker.util.ToastUtil.context
 import org.helfoome.R
 import org.helfoome.databinding.ActivityReviewWritingBinding
-import org.helfoome.presentation.MainActivity
 import org.helfoome.presentation.type.ReviewImageType
 import org.helfoome.util.ItemDecorationUtil
 import org.helfoome.util.binding.BindingActivity
