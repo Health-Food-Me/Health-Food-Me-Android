@@ -267,7 +267,6 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
                     startSearchModeBackEvent(searchMode.value)
                 }
 
-
                 btnDelete.setOnClickListener {
                     when (searchMode.value) {
                         SearchMode.AUTO_COMPLETE -> {
@@ -637,7 +636,6 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
             }
 
             addOnCameraChangeListener { reason, _ ->
-
             }
         }
 
