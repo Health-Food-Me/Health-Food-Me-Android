@@ -80,7 +80,8 @@ class RestaurantReviewWritingViewModel @Inject constructor(
     }
 
     fun checkReviewCompletion() {
-        _isEnabledWritingCompleteButton.value = selectedTasteTag.value != null && selectedGoodPointTags.value?.containsValue(true) == true
+        val review = review.value?.trim()
+        _isEnabledWritingCompleteButton.value = selectedTasteTag.value != null && selectedGoodPointTags.value?.containsValue(true) == true && !(review.isNullOrBlank())
     }
 
     // TODO delete
