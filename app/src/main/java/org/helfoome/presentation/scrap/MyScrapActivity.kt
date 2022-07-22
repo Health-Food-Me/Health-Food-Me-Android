@@ -21,7 +21,7 @@ class MyScrapActivity : BindingActivity<ActivityMyScrapBinding>(R.layout.activit
     private val myScrapAdapter = MyScrapAdapter(
         {
             // TODO : 다음 액티비티에서 받아서 그려줌
-            startActivity<MapSelectActivity>(Pair("RESTAURANT_ID", it))
+            // startActivity<MapSelectActivity>(Pair("RESTAURANT_ID", it))
         }
     ) {
         viewModel.putScrap(it)
