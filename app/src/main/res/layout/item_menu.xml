@@ -121,7 +121,7 @@
                     android:fontFamily="@font/notosanskr_m"
                     android:text="@{menu.gramPerPerson == null ? context.getString(R.string.restaurant_detail_gram_per_person_for_empty) : String.format(context.getString(R.string.restaurant_detail_gram_per_person), menu.gramPerPerson)}"
                     android:textColor="@color/white"
-                    android:textSize="8dp"
+                    android:textSize="10dp"
                     tools:text="(50g당)" />
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
