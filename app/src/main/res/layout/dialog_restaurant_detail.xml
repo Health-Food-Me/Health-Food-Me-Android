@@ -228,7 +228,21 @@
                             android:layout_marginTop="8dp"
                             android:text="@{viewModel.selectedRestaurant.time}"
                             app:layout_constraintStart_toEndOf="@id/iv_time"
-                            app:layout_constraintTop_toBottomOf="@id/tv_location" />
+                            app:layout_constraintTop_toBottomOf="@id/tv_location"
+                            app:visibility="@{viewModel.selectedRestaurant.time != null &amp;&amp; viewModel.selectedRestaurant.time.empty == false}" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="8dp"
+                            android:fontFamily="@font/notosanskr_m"
+                            android:text="영업정보 없음"
+                            android:textColor="@color/gray_600"
+                            android:textSize="12dp"
+                            app:layout_constraintStart_toEndOf="@id/iv_time"
+                            app:layout_constraintTop_toBottomOf="@id/tv_location"
+                            app:visibility="@{viewModel.selectedRestaurant.time == null || viewModel.selectedRestaurant.time.empty}" />
 
                         <ImageView
                             android:id="@+id/iv_call"
