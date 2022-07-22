@@ -23,7 +23,7 @@
             app:layout_constraintGuide_begin="20dp" />
 
         <TextView
-            android:id="@+id/tv_nickname"
+            android:id="@+id/tv_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/notosanskr_m"
@@ -40,9 +40,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="6dp"
             android:background="@drawable/ic_go"
-            app:layout_constraintBottom_toBottomOf="@id/tv_nickname"
-            app:layout_constraintStart_toEndOf="@id/tv_nickname"
-            app:layout_constraintTop_toTopOf="@id/tv_nickname" />
+            app:layout_constraintBottom_toBottomOf="@id/tv_title"
+            app:layout_constraintStart_toEndOf="@id/tv_title"
+            app:layout_constraintTop_toTopOf="@id/tv_title" />
 
         <org.helfoome.presentation.custom.StarScore
             android:id="@+id/rb_my_review"
@@ -50,8 +50,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:layout_marginTop="8dp"
-            app:layout_constraintStart_toStartOf="@id/tv_nickname"
-            app:layout_constraintTop_toBottomOf="@id/tv_nickname"
+            app:layout_constraintStart_toStartOf="@id/tv_title"
+            app:layout_constraintTop_toBottomOf="@id/tv_title"
             app:score="@{data.score}" />
 
         <TextView
@@ -62,9 +62,9 @@
             android:text="@string/my_review_edit"
             android:textColor="@color/gray_600"
             android:textSize="10dp"
-            app:layout_constraintBottom_toBottomOf="@id/tv_nickname"
+            app:layout_constraintBottom_toBottomOf="@id/tv_title"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/tv_nickname" />
+            app:layout_constraintTop_toTopOf="@id/tv_title" />
 
         <View
             android:id="@+id/line_horizontal"
@@ -84,9 +84,9 @@
             android:text="@string/my_review_delete"
             android:textColor="@color/gray_600"
             android:textSize="10sp"
-            app:layout_constraintBottom_toBottomOf="@id/tv_nickname"
+            app:layout_constraintBottom_toBottomOf="@id/tv_title"
             app:layout_constraintEnd_toStartOf="@id/line_horizontal"
-            app:layout_constraintTop_toTopOf="@id/tv_nickname" />
+            app:layout_constraintTop_toTopOf="@id/tv_title" />
 
         <org.helfoome.presentation.custom.HashtagView
             android:id="@+id/hashtag"

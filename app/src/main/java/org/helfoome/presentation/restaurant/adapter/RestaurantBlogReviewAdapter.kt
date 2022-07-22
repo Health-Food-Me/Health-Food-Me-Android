@@ -1,5 +1,6 @@
 package org.helfoome.presentation.restaurant.adapter
 
+import android.text.Html
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
@@ -20,7 +21,9 @@ class RestaurantBlogReviewAdapter(private val onClickListener: (BlogReviewInfo) 
     class ReviewViewHolder(private val binding: ItemBlogReviewBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(review: BlogReviewInfo, onClickListener: (BlogReviewInfo) -> (Unit)) {
-            binding.review = review
+            binding.review = review // TODO delete
+            binding.tvTitle.text = Html.fromHtml(review.title).toString()
+            binding.tvDescription.text = Html.fromHtml(review.description).toString()
             binding.layoutReviewContainer.setOnClickListener {
                 onClickListener(review)
             }
