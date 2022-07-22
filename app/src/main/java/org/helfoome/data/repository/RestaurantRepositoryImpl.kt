@@ -64,9 +64,9 @@ class RestaurantRepositoryImpl @Inject constructor(
         })
     }
 
-    override suspend fun fetchHFMReview(restaurantId: String): Result<List<HFMReviewInfo>> {
+    override suspend fun fetchHFMReview(userId: String): Result<List<HFMReviewInfo>> {
         return runCatching {
-            restaurantDataSource.getHFMReview(restaurantId)
+            restaurantDataSource.getHFMReview(userId)
         }.fold({
             Result.success(it.data.map { review -> review.toReviewInfo() })
         }, {
@@ -75,9 +75,9 @@ class RestaurantRepositoryImpl @Inject constructor(
         })
     }
 
-    override suspend fun fetchBlogReview(restaurantId: String): Result<List<BlogReviewInfo>?> {
+    override suspend fun fetchBlogReview(name: String): Result<List<BlogReviewInfo>?> {
         return runCatching {
-            restaurantDataSource.getBlogReview(restaurantId)
+            restaurantDataSource.getBlogReview(name)
         }.fold({
             Result.success(it.data.toBlogReviewInfo())
         }, {
