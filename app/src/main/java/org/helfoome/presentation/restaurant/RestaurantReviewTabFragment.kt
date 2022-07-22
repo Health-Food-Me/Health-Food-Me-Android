@@ -24,6 +24,7 @@ class RestaurantReviewTabFragment : BindingFragment<FragmentReviewBinding>(R.lay
     private val viewModel: MainViewModel by activityViewModels()
     private val restaurantGeneralReviewAdapter = RestaurantGeneralReviewAdapter()
     private val restaurantBlogReviewAdapter = RestaurantBlogReviewAdapter(::moveToBlog)
+    private var currentReviewTab = ReviewType.HFM_REVIEW
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -53,14 +54,21 @@ class RestaurantReviewTabFragment : BindingFragment<FragmentReviewBinding>(R.lay
     private fun initObservers() {
         viewModel.reviewType.observe(viewLifecycleOwner) { reviewType ->
             when (reviewType.peekContent()) {
-                ReviewType.HFM_REVIEW -> binding.reviewList.adapter = restaurantGeneralReviewAdapter
-                ReviewType.BLOG_REVIEW -> binding.reviewList.adapter = restaurantBlogReviewAdapter
+                ReviewType.HFM_REVIEW ->  {
+                    binding.reviewList.adapter = restaurantGeneralReviewAdapter
+                    currentReviewTab = ReviewType.HFM_REVIEW
+                }
+                ReviewType.BLOG_REVIEW -> {
+                    binding.reviewList.adapter = restaurantBlogReviewAdapter
+                    currentReviewTab = ReviewType.BLOG_REVIEW
+                }
             }
         }
 
         viewModel.hfmReviews.observe(viewLifecycleOwner) { reviews ->
             restaurantGeneralReviewAdapter.submitList(reviews)
             showReviewEmptyView(reviews.isEmpty())
+            binding.layoutReviewTab.selectTab(binding.layoutReviewTab.getTabAt(0))
         }
         viewModel.blogReviews.observe(viewLifecycleOwner) { reviews ->
             restaurantBlogReviewAdapter.submitList(reviews)

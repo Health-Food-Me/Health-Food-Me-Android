@@ -9,7 +9,7 @@ data class ResponseBlogReview(
     val start: Int,
     val display: Int,
     @SerialName("items")
-    val reviews: List<Review>?,
+    val reviews: List<Review>,
 ) {
     @Serializable
     data class Review(
@@ -23,5 +23,6 @@ data class ResponseBlogReview(
         val postdate: String,
     )
 
-    fun toBlogReviewInfo() = reviews?.map { review -> BlogReviewInfo(review.title, review.description, review.link) }
+    fun toBlogReviewInfo() = reviews.map { review ->
+        BlogReviewInfo(review.title, review.description, review.link) }
 }
