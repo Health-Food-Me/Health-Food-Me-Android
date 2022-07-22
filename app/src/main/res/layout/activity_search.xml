@@ -19,12 +19,106 @@
         <variable
             name="isDetail"
             type="boolean" />
+
+        <variable
+            name="isFloatingNotVisible"
+            type="boolean" />
+
+        <variable
+            name="isMainNotVisible"
+            type="boolean" />
+
+        <variable
+            name="viewModel"
+            type="org.helfoome.presentation.MainViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".presentation.search.SearchActivity">
+
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:id="@+id/layout_main"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".presentation.MainActivity">>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <fragment
+                    android:id="@+id/fragment_naver_map"
+                    android:name="com.naver.maps.map.MapFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/btn_location_main"
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginBottom="12dp"
+                    android:backgroundTint="@color/white"
+                    android:src="@drawable/ic_currentposition"
+                    android:visibility="@{isMainNotVisible? View.GONE : View.VISIBLE}"
+                    app:borderWidth="0dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_dodgeInsetEdges="bottom" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layout_bottom_sheet"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fillViewport="true"
+                android:overScrollMode="never"
+                app:behavior_hideable="true"
+                app:behavior_peekHeight="304dp"
+                app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+                tools:visibility="visible">
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/btn_location"
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:layout_marginEnd="20dp"
+                    android:backgroundTint="@color/white"
+                    android:src="@drawable/ic_currentposition"
+                    android:visibility="@{isFloatingNotVisible? View.GONE : View.VISIBLE}"
+                    app:borderWidth="0dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_dodgeInsetEdges="bottom" />
+
+                <View
+                    android:id="@+id/line"
+                    android:layout_width="match_parent"
+                    android:layout_height="12dp"
+                    android:visibility="@{isFloatingNotVisible? View.GONE : View.VISIBLE}"
+                    app:layout_constraintTop_toBottomOf="@+id/btn_location" />
+
+                <include
+                    android:id="@+id/layout_restaurant_dialog"
+                    layout="@layout/dialog_restaurant_detail"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/line"
+                    bind:viewModel="@{viewModel}" />
+
+                <include
+                    android:id="@+id/layout_restaurant_list_dialog"
+                    layout="@layout/dialog_restaurant_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="@{isDetail? View.GONE : View.VISIBLE}"
+                    bind:isLineVisible="@{isLineVisible}" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layout_search"
@@ -34,13 +128,13 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageButton
-                android:paddingVertical="12dp"
-                android:paddingHorizontal="@dimen/size_spacing_6"
-                style="@style/Button.Basic.Style"
                 android:id="@+id/btn_back"
+                style="@style/Button.Basic.Style"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginStart="14dp"
+                android:paddingHorizontal="@dimen/size_spacing_6"
+                android:paddingVertical="12dp"
                 android:src="@drawable/ic_before"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -61,6 +155,7 @@
                 android:id="@+id/et_search"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="14dp"
                 android:layout_marginStart="2dp"
                 android:background="@null"
                 android:fontFamily="@font/notosanskr_r"
@@ -70,52 +165,19 @@
                 android:textColor="@color/gray_800"
                 android:textColorHint="@color/gray_400"
                 android:textSize="15dp"
-                android:layout_marginHorizontal="14dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/btn_delete"
                 app:layout_constraintStart_toEndOf="@+id/btn_back"
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <androidx.coordinatorlayout.widget.CoordinatorLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/layout_search">
-
-            <fragment
-                android:id="@+id/fragment_naver_map"
-                android:name="com.naver.maps.map.MapFragment"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/layout_bottom_sheet"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:fillViewport="true"
-                android:overScrollMode="never"
-                app:behavior_hideable="false"
-                app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
-                tools:visibility="visible">
-
-                <include
-                    android:id="@+id/layout_restaurant_list_dialog"
-                    layout="@layout/dialog_restaurant_list"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:visibility="@{isDetail? View.GONE : View.VISIBLE}"
-                    bind:isLineVisible="@{isLineVisible}" />
-
-                <include
-                    android:id="@+id/layout_restaurant_detail_dialog"
-                    layout="@layout/dialog_search_restaurant_detail"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:visibility="@{isDetail? View.VISIBLE : View.GONE}"
-                    bind:isLineVisible="@{isLineVisible}" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+        <org.helfoome.presentation.custom.SnackBarView
+            android:id="@+id/snv_profile_modify"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

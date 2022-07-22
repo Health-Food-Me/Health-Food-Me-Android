@@ -7,9 +7,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.helfoome.R
+import org.helfoome.SplashSecondActivity
 import org.helfoome.data.local.HFMSharedPreference
 import org.helfoome.databinding.ActivitySplashBinding
-import org.helfoome.presentation.login.LoginActivity
 import org.helfoome.util.binding.BindingActivity
 import org.helfoome.util.ext.makeTransparentStatusBar
 import org.helfoome.util.ext.startActivity
@@ -27,7 +27,8 @@ class SplashActivity : BindingActivity<ActivitySplashBinding>(R.layout.activity_
 
         lifecycleScope.launch(Dispatchers.Main) {
             delay(2500)
-            startActivity<LoginActivity>()
+            startActivity<SplashSecondActivity>()
+            overridePendingTransition(0, 0)
             finish()
         }
     }
