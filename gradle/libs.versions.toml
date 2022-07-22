@@ -74,6 +74,7 @@ flexbox = "com.google.android.flexbox:flexbox:3.0.0"
 gson = "com.google.code.gson:gson:2.8.9"
 image-picker = "io.github.ParkSangGwon:tedimagepicker:1.2.4"
 junit = "junit:junit:4.13.2"
+heydeal = "kr.co.prnd:readmore-textview:1.0.0"
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "androidStudioGradlePlugin" }

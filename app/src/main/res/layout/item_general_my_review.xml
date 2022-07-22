@@ -110,7 +110,7 @@
             app:layout_constraintTop_toBottomOf="@id/hashtag"
             tools:listitem="@layout/item_review_image" />
 
-        <TextView
+        <kr.co.prnd.readmore.ReadMoreTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
@@ -118,6 +118,8 @@
             android:fontFamily="@font/notosanskr_r"
             android:gravity="start"
             android:text="@{data.description}"
+            app:readMoreMaxLine="3"
+            app:readMoreText="   더보기"
             android:textColor="@color/gray_800"
             android:textSize="12dp"
             app:layout_constraintTop_toBottomOf="@id/rv_photo_list"
