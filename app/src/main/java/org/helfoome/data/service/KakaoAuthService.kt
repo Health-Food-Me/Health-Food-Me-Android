@@ -37,9 +37,11 @@ class KakaoAuthService @Inject constructor(
                                 nickname = response.user.name
                             }
                             loginListener?.invoke()
+                            Timber.d(it.message)
                             cancel()
                         }
                         .onFailure {
+                            Timber.d(it.message)
                             cancel()
                         }
                 }
@@ -71,6 +73,7 @@ class KakaoAuthService @Inject constructor(
                                     nickname = response.user.name
                                 }
                                 loginListener?.invoke()
+                                Timber.d(it.message)
                                 cancel()
                             }
                             .onFailure {

@@ -128,14 +128,16 @@ class MainViewModel @Inject constructor(
             }
             _eatingOutTips.value = restaurantRepository.getEatingOutTips(restaurantId)
             _menu.value = restaurantInfo?.menuList?.sortedByDescending { it.isHealfoomePick }
-           // _hfmReviews.value = restaurantRepository.fetchHFMReview(restaurantId).getOrNull()?.toMutableList()
-           // _blogReviews.value = restaurantRepository.fetchBlogReview(selectedRestaurant.value?.name ?: return@launch).getOrNull()
+            // _hfmReviews.value = restaurantRepository.fetchHFMReview(restaurantId).getOrNull()?.toMutableList()
+            // _blogReviews.value = restaurantRepository.fetchBlogReview(selectedRestaurant.value?.name ?: return@launch).getOrNull()
         }
     }
 
     fun fetchHFMReviewList() {
         viewModelScope.launch(Dispatchers.IO) {
-            _hfmReviews.postValue(restaurantRepository.fetchHFMReview(selectedRestaurant.value?.id ?: return@launch).getOrNull()?.toMutableList())
+            _hfmReviews.postValue(
+                restaurantRepository.fetchHFMReview(selectedRestaurant.value?.id ?: return@launch).getOrNull()?.toMutableList()
+            )
         }
     }
 

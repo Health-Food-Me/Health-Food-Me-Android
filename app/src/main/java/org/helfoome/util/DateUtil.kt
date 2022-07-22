@@ -18,7 +18,7 @@ object DateUtil {
             else -> DayOfWeekType.SAT
         }
 
-    fun convertIndexToDayOfWeek(index: Int): DayOfWeekType = when(index) {
+    fun convertIndexToDayOfWeek(index: Int): DayOfWeekType = when (index) {
         DayOfWeekType.MON.index -> DayOfWeekType.MON
         DayOfWeekType.TUE.index -> DayOfWeekType.TUE
         DayOfWeekType.WED.index -> DayOfWeekType.WED

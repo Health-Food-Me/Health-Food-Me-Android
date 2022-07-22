@@ -44,6 +44,7 @@ class NaverAuthService @Inject constructor(
                     sharedPreferences.id = it.data.user.id
                     sharedPreferences.nickname = it.data.user.name
                     loginListener?.invoke()
+                    Timber.d(it.message)
                     cancel()
                 }
                 .onFailure {

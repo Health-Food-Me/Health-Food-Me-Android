@@ -8,7 +8,6 @@ import org.helfoome.presentation.login.LoginActivity
 import org.helfoome.util.binding.BindingActivity
 import org.helfoome.util.ext.startActivity
 
-
 class SplashSecondActivity : BindingActivity<ActivitySplashSecondBinding>(R.layout.activity_splash_second) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

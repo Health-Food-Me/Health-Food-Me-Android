@@ -11,4 +11,4 @@ data class HFMReviewInfo(
     val tags: List<String>,
     val description: String,
     val photoList: List<ReviewImage>,
-): Parcelable
+) : Parcelable

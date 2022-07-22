@@ -131,16 +131,18 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
             }?.get(0)
             location?.let {
                 markerList.forEach { marker ->
-                    if(marker.second.first == it.name) {
+                    if (marker.second.first == it.name) {
                         marker.first.icon = OverlayImage.fromResource(
                             if (marker.second.second) R.drawable.ic_marker_green_big
                             else R.drawable.ic_marker_red_big
                         )
                     }
                 }
-                mainViewModel.fetchSelectedRestaurantDetailInfo(restaurantId,
+                mainViewModel.fetchSelectedRestaurantDetailInfo(
+                    restaurantId,
                     it.latitude,
-                    it.longitude)
+                    it.longitude
+                )
             }
             searchViewModel.setDetail(true)
         }
@@ -264,7 +266,6 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
                 layoutRestaurantDialog.btnBack.setOnClickListener {
                     startSearchModeBackEvent(searchMode.value)
                 }
-
 
                 btnDelete.setOnClickListener {
                     when (searchMode.value) {
@@ -429,9 +430,11 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
                                             setOnClickListener {
                                                 searchViewModel.setDetail(true)
                                                 mainViewModel.getReviewCheck(marker.id)
-                                                mainViewModel.fetchSelectedRestaurantDetailInfo(marker.id,
+                                                mainViewModel.fetchSelectedRestaurantDetailInfo(
+                                                    marker.id,
                                                     marker.latitude,
-                                                    marker.longitude)
+                                                    marker.longitude
+                                                )
 
                                                 behavior.state = BottomSheetBehavior.STATE_COLLAPSED
                                                 binding.isMainNotVisible = true
@@ -633,7 +636,6 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
             }
 
             addOnCameraChangeListener { reason, _ ->
-
             }
         }
 

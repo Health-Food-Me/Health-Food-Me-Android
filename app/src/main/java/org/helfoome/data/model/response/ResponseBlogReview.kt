@@ -24,5 +24,6 @@ data class ResponseBlogReview(
     )
 
     fun toBlogReviewInfo() = reviews.map { review ->
-        BlogReviewInfo(review.title, review.description, review.link) }
+        BlogReviewInfo(review.title, review.description, review.link)
+    }
 }

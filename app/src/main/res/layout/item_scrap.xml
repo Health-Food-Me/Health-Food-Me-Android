@@ -35,15 +35,15 @@
                     android:id="@+id/iv_photo"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    app:strokeWidth="1dp"
-                    app:strokeColor="@color/gray_200"
                     android:background="@color/white"
-                    app:shapeAppearance="@style/ShapeAppearanceOverlay.App.TopCornerRadius8"
                     app:imageUrl="@{data.restaurantImg}"
                     app:layout_constraintDimensionRatio="1:1"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
+                    app:shapeAppearance="@style/ShapeAppearanceOverlay.App.TopCornerRadius8"
+                    app:strokeColor="@color/gray_200"
+                    app:strokeWidth="1dp"
                     tools:src="@drawable/ic_how_to_eat" />
 
                 <ImageView
