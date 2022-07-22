@@ -80,7 +80,8 @@ class RestaurantReviewWritingViewModel @Inject constructor(
     }
 
     fun checkReviewCompletion() {
-        _isEnabledWritingCompleteButton.value = selectedTasteTag.value != null && selectedGoodPointTags.value?.containsValue(true) == true
+        val review = review.value?.trim()
+        _isEnabledWritingCompleteButton.value = selectedTasteTag.value != null && selectedGoodPointTags.value?.containsValue(true) == true && !(review.isNullOrBlank())
     }
 
     // TODO delete
@@ -108,9 +109,13 @@ class RestaurantReviewWritingViewModel @Inject constructor(
         val scoreRequestBody = score.toString().toPlainRequestBody()
         val contentRequestBody = review.value.toPlainRequestBody()
         val tasteRequestBody = context.getString(selectedTasteTag.value?.strRes ?: return).replace("# ", "").toPlainRequestBody()
-        val goodRequestBody = selectedGoodPointTags.value?.filter { it.value }?.keys?.map {
+        val goodListMultipartBody = mutableListOf<MultipartBody.Part>()
+        val goodList = selectedGoodPointTags.value?.filter { it.value }?.keys?.map {
             context.getString(it.strRes).replace("# ", "")
-        }.toString().toPlainRequestBody()
+        } ?: return
+        for (good in goodList) {
+            goodListMultipartBody.add(createFormData("good", good))
+        }
         val nameRequestBody = listOf("테스트", "테스트2").toString().toPlainRequestBody()
         val imageListMultipartBody = mutableListOf<MultipartBody.Part>()
 
@@ -126,7 +131,7 @@ class RestaurantReviewWritingViewModel @Inject constructor(
                     _reviewId.value.toString(),
                     scoreRequestBody,
                     tasteRequestBody,
-                    goodRequestBody,
+                    goodListMultipartBody,
                     contentRequestBody,
                     nameRequestBody,
                     imageListMultipartBody
