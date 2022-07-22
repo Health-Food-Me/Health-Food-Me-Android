@@ -47,8 +47,8 @@ class MainViewModel @Inject constructor(
     val nickname get() = _nickname
 
     // Review
-    private val _hfmReviews = MutableLiveData<List<HFMReviewInfo>>()
-    val hfmReviews: LiveData<List<HFMReviewInfo>> = _hfmReviews
+    private val _hfmReviews = MutableLiveData<MutableList<HFMReviewInfo>>(mutableListOf())
+    val hfmReviews: LiveData<MutableList<HFMReviewInfo>> = _hfmReviews
     private val _blogReviews = MutableLiveData<List<BlogReviewInfo>>()
     val blogReviews: LiveData<List<BlogReviewInfo>> = _blogReviews
     private val _isReviewTab = MutableLiveData(Event(false))
@@ -128,14 +128,14 @@ class MainViewModel @Inject constructor(
             }
             _eatingOutTips.value = restaurantRepository.getEatingOutTips(restaurantId)
             _menu.value = restaurantInfo?.menuList?.sortedByDescending { it.isHealfoomePick }
-            _hfmReviews.value = restaurantRepository.fetchHFMReview(restaurantId).getOrNull()
+            _hfmReviews.value = restaurantRepository.fetchHFMReview(restaurantId).getOrNull()?.toMutableList()
             _blogReviews.value = restaurantRepository.fetchBlogReview(restaurantId).getOrNull()
         }
     }
 
     fun fetchHFMReviewList() {
         viewModelScope.launch(Dispatchers.IO) {
-            _hfmReviews.postValue(restaurantRepository.fetchHFMReview(selectedRestaurant.value?.id ?: return@launch).getOrNull())
+            _hfmReviews.postValue(restaurantRepository.fetchHFMReview(selectedRestaurant.value?.id ?: return@launch).getOrNull()?.toMutableList())
         }
     }
 
@@ -168,6 +168,11 @@ class MainViewModel @Inject constructor(
 
     fun setReviewType(reviewType: ReviewType) {
         _reviewType.value = Event(reviewType)
+    }
+
+    fun addHFMReviewList(review: HFMReviewInfo) {
+        _hfmReviews.value?.add(0, review)
+        _hfmReviews.value = hfmReviews.value
     }
 
 //    private fun fetchMenuList() {
