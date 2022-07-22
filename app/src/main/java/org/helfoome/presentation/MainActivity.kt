@@ -506,8 +506,8 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
     }
 
     companion object {
-        private const val GANGNAM_X = 37.498095
-        private const val GANGNAM_Y = 127.027610
+        const val GANGNAM_X = 37.498095
+        const val GANGNAM_Y = 127.027610
         private const val LOCATION_PERMISSION_REQUEST_CODE = 1000
     }
 }
