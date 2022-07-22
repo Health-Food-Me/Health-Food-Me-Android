@@ -18,6 +18,7 @@ import org.helfoome.presentation.drawer.adapter.MyReviewAdapter
 import org.helfoome.presentation.drawer.adapter.MyReviewAdapter.Companion.ENLARGE
 import org.helfoome.presentation.review.ReviewWritingActivity
 import org.helfoome.util.DialogUtil
+import org.helfoome.util.ItemDecorationUtil
 import org.helfoome.util.ResolutionMetrics
 import org.helfoome.util.binding.BindingActivity
 import org.helfoome.util.ext.startActivity
@@ -73,8 +74,8 @@ class MyReviewActivity : BindingActivity<ActivityMyReviewBinding>(R.layout.activ
         super.onCreate(savedInstanceState)
         viewModel.getMyReviewList()
 
-        initObservers()
         initAdapter()
+        initObservers()
         initListeners()
     }
 
@@ -99,7 +100,10 @@ class MyReviewActivity : BindingActivity<ActivityMyReviewBinding>(R.layout.activ
     }
 
     private fun initAdapter() {
-        binding.rcvReview.adapter = myReviewAdapter
+        binding.rcvReview.apply {
+            adapter = myReviewAdapter
+            addItemDecoration(ItemDecorationUtil.ItemDecoration(3f, 100f, context.getColor(R.color.gray_100), 100))
+        }
     }
 
     private fun initListeners() {

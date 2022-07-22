@@ -109,12 +109,12 @@
             android:id="@+id/rcv_review"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="20dp"
+            android:clipToPadding="false"
             android:overScrollMode="never"
+            android:paddingBottom="@dimen/size_spacing_28"
             android:visibility="@{isEmptyVisible? View.GONE : View.VISIBLE}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintTop_toBottomOf="@id/line_first"
-            tools:layout_editor_absoluteX="37dp"
             tools:listitem="@layout/item_general_my_review" />
 
         <org.helfoome.presentation.custom.SnackBarView

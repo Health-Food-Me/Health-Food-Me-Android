@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
 import org.helfoome.databinding.ViewOpeningTimeBinding
+import org.helfoome.util.DateUtil
 
 class OpeningTimeView(context: Context, attrs: AttributeSet? = null) : ConstraintLayout(context, attrs) {
     private lateinit var binding: ViewOpeningTimeBinding
@@ -49,14 +50,13 @@ class OpeningTimeView(context: Context, attrs: AttributeSet? = null) : Constrain
     }
 
     fun setText(timeList: List<String>?) {
-        if (timeList == null) return
-        // TODO 서버 응답값 확인 후 로직 구현 예정
-        binding.tvToday.text = timeList[0]
-        binding.tvNextday1.text = timeList[1]
-        binding.tvNextday2.text = timeList[2]
-        binding.tvNextday3.text = timeList[3]
-        binding.tvNextday4.text = timeList[4]
-        binding.tvNextday5.text = timeList[5]
-        binding.tvNextday6.text = timeList[6]
+        if (timeList == null || timeList.isEmpty()) return
+        val tvDayOfWeek = with(binding) { listOf(tvToday, tvNextday1, tvNextday2, tvNextday3, tvNextday4, tvNextday5, tvNextday6) }
+        val today = DateUtil.getTodayDayOfWeek()
+
+        for (i in timeList.indices) {
+            val day = (today.index + i) % timeList.size
+            tvDayOfWeek[i].text = "${context.getString(DateUtil.convertIndexToDayOfWeek(day).strRes)} ${timeList[day]}"
+        }
     }
 }

@@ -36,13 +36,21 @@ class RestaurantReviewTabFragment : BindingFragment<FragmentReviewBinding>(R.lay
     private fun initView() {
         binding.reviewList.apply {
             adapter = restaurantGeneralReviewAdapter
-            addItemDecoration(ItemDecorationUtil.ItemDecoration(1f, 100f, context.getColor(R.color.gray_500), 100))
+            addItemDecoration(ItemDecorationUtil.ItemDecoration(3f, 100f, context.getColor(R.color.gray_100), 100))
         }
         binding.layoutReviewTab.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 when (tab?.position) {
-                    0 -> viewModel.setReviewType(ReviewType.HFM_REVIEW) // viewModel.fetchHFMReviewList()
-                    else -> viewModel.setReviewType(ReviewType.BLOG_REVIEW) // viewModel.fetchBlogReviewList()
+                    0 -> {
+                        binding.reviewList.adapter = restaurantGeneralReviewAdapter
+                        viewModel.setReviewType(ReviewType.HFM_REVIEW)
+                        viewModel.fetchHFMReviewList()
+                    }
+                    else -> {
+                        binding.reviewList.adapter = restaurantBlogReviewAdapter
+                        viewModel.setReviewType(ReviewType.BLOG_REVIEW)
+                        viewModel.fetchBlogReviewList()
+                    }
                 }
             }
             override fun onTabUnselected(tab: TabLayout.Tab?) {}
@@ -51,19 +59,13 @@ class RestaurantReviewTabFragment : BindingFragment<FragmentReviewBinding>(R.lay
     }
 
     private fun initObservers() {
-        viewModel.reviewType.observe(viewLifecycleOwner) { reviewType ->
-            when (reviewType.peekContent()) {
-                ReviewType.HFM_REVIEW -> binding.reviewList.adapter = restaurantGeneralReviewAdapter
-                ReviewType.BLOG_REVIEW -> binding.reviewList.adapter = restaurantBlogReviewAdapter
-            }
-        }
-
         viewModel.hfmReviews.observe(viewLifecycleOwner) { reviews ->
-            restaurantGeneralReviewAdapter.submitList(reviews)
+            restaurantGeneralReviewAdapter.submitList(reviews.toMutableList())
             showReviewEmptyView(reviews.isEmpty())
+            binding.layoutReviewTab.selectTab(binding.layoutReviewTab.getTabAt(0))
         }
         viewModel.blogReviews.observe(viewLifecycleOwner) { reviews ->
-            restaurantBlogReviewAdapter.submitList(reviews)
+            restaurantBlogReviewAdapter.submitList(reviews.toMutableList())
             showReviewEmptyView(reviews.isEmpty())
         }
     }

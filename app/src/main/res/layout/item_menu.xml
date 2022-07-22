@@ -28,8 +28,8 @@
                 android:layout_width="85dp"
                 android:layout_height="0dp"
                 android:layout_marginStart="16dp"
+                android:background="@drawable/ic_helfoome_place_holder"
                 android:scaleType="centerCrop"
-                android:src="@drawable/ic_helfoome_place_holder"
                 app:imageUrl="@{menu.image}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintDimensionRatio="1:1"
@@ -52,7 +52,7 @@
                     android:id="@+id/iv_healfoome_pick"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingBottom="7dp"
+                    android:paddingBottom="@dimen/size_spacing_4"
                     android:src="@drawable/img_healfoome_pick"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -85,13 +85,13 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <LinearLayout
-                android:visibility="@{menu.healfoomePick == true || menu.calorie != null}"
                 android:id="@+id/layout_calorie"
                 android:layout_width="55dp"
                 android:layout_height="0dp"
                 android:background="@drawable/rectangle_green_right_radius_15"
                 android:gravity="center"
                 android:orientation="vertical"
+                android:visibility="@{menu.healfoomePick == true || menu.calorie != null}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -101,7 +101,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/notosanskr_b"
-                    android:text="@{menu.calorie == null ? `-` : Float.toString(menu.calorie)}"
+                    android:text="@{menu.calorie == null ? `-` : Integer.toString(menu.calorie)}"
                     android:textColor="@color/white"
                     android:textSize="16dp"
                     tools:text="219" />
@@ -121,8 +121,8 @@
                     android:fontFamily="@font/notosanskr_m"
                     android:text="@{menu.gramPerPerson == null ? context.getString(R.string.restaurant_detail_gram_per_person_for_empty) : String.format(context.getString(R.string.restaurant_detail_gram_per_person), menu.gramPerPerson)}"
                     android:textColor="@color/white"
-                    android:textSize="8dp"
-                    tools:text="(50g당)"/>
+                    android:textSize="10dp"
+                    tools:text="(50g당)" />
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -40,7 +40,7 @@
                         android:id="@+id/iv_reason_for_recommendation"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/size_spacing_36"
+                        android:layout_marginTop="52dp"
                         android:src="@drawable/ic_reason_for_recommendation"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
