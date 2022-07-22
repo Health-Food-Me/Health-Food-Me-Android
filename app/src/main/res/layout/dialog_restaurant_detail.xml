@@ -106,8 +106,7 @@
                             app:layout_constraintTop_toTopOf="parent"
                             app:visibility="@{viewModel.isExpandedDialog().peekContent() != true}" />
 
-                        <!-- TODO 서버 쪽에서 더미데이터 작업 완료 후 app:imageUrl="@{viewModel.selectedRestaurant.image}" 추가 -->
-                        <ImageView
+                        <com.google.android.material.imageview.ShapeableImageView
                             android:id="@+id/iv_restaurant_image"
                             android:layout_width="116dp"
                             android:layout_height="116dp"
@@ -117,6 +116,7 @@
                             app:imageUrl="@{viewModel.selectedRestaurant.image}"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/view_spacing"
+                            app:shapeAppearanceOverlay="@style/CircleImageView.Radius.5.Style"
                             tools:src="@drawable/ic_helfoome_place_holder" />
 
                         <androidx.appcompat.widget.AppCompatImageButton
