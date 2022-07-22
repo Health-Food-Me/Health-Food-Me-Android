@@ -7,9 +7,15 @@
 
         <import type="org.helfoome.R" />
 
+        <import type="android.view.View" />
+
         <variable
             name="viewModel"
             type="org.helfoome.presentation.MainViewModel" />
+
+        <variable
+            name="isSearch"
+            type="boolean" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -17,12 +23,18 @@
         android:layout_height="match_parent"
         android:background="@{context.getDrawable(viewModel.isExpandedDialog().peekContent() == true ? R.drawable.rectangle_white : R.drawable.rectangle_white_top_radius_15)}">
 
+        <View
+            android:id="@+id/line_top_space"
+            android:layout_width="match_parent"
+            android:layout_height="24dp"
+            android:visibility="@{isSearch? View.GONE : View.VISIBLE}"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layout_toolbar"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:layout_marginTop="24dp"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toTopOf="@id/line_top_space"
             app:visibility="@{viewModel.isExpandedDialog().peekContent()}"
             tools:visibility="gone">
 

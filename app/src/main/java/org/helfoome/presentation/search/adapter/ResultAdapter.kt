@@ -33,7 +33,7 @@ class ResultAdapter(private val cardClickListener: ((String) -> Unit)) : ListAda
         fun onBind(cardClickListener: (String) -> Unit, data: SearchResultInfo) {
             binding.data = data
             binding.layoutCard.setOnClickListener {
-                cardClickListener.invoke(data.name)
+                cardClickListener.invoke(data.id)
             }
         }
     }

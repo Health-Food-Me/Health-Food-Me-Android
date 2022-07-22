@@ -54,6 +54,7 @@ import org.helfoome.util.DialogUtil
 import org.helfoome.util.ResolutionMetrics
 import org.helfoome.util.binding.BindingActivity
 import org.helfoome.util.ext.makeTransparentStatusBar
+import org.helfoome.util.ext.startActivity
 import org.helfoome.util.ext.stringListFrom
 import timber.log.Timber
 import javax.inject.Inject
@@ -90,8 +91,15 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                 binding.isFloatingNotVisible = false
             if (newState == BottomSheetBehavior.STATE_DRAGGING)
                 binding.isFloatingNotVisible = true
-            if (newState == BottomSheetBehavior.STATE_HIDDEN)
+            if (newState == BottomSheetBehavior.STATE_HIDDEN) {
                 binding.isMainNotVisible = false
+                markerList.forEach {
+                    it.first.icon = OverlayImage.fromResource(
+                        if (it.second) R.drawable.ic_marker_green_small
+                        else R.drawable.ic_marker_red_small
+                    )
+                }
+            }
         }
 
         override fun onSlide(bottomSheetView: View, slideOffset: Float) {
@@ -272,7 +280,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
             }
 
             binding.layoutSearch.setOnClickListener {
-                startActivity(Intent(this@MainActivity, SearchActivity::class.java))
+                startActivity<SearchActivity>()
             }
 
             btnNavi.setOnClickListener {
@@ -454,12 +462,6 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
             uiSettings.isZoomControlEnabled = false
             setOnMapClickListener { _, _ ->
                 behavior.state = BottomSheetBehavior.STATE_HIDDEN
-                markerList.forEach {
-                    it.first.icon = OverlayImage.fromResource(
-                        if (it.second) R.drawable.ic_marker_green_small
-                        else R.drawable.ic_marker_red_small
-                    )
-                }
             }
 
             minZoom = 5.0
@@ -468,11 +470,11 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
 
             if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                 cameraPosition = CameraPosition(
-                    LatLng(GANGNAM_X, GANGNAM_Y), 11.0
+                    LatLng(GANGNAM_X, GANGNAM_Y), 12.0
                 )
                 locationTrackingMode = LocationTrackingMode.Follow
             } else {
-                cameraPosition = CameraPosition(LatLng(GANGNAM_X, GANGNAM_Y), 11.0)
+                cameraPosition = CameraPosition(LatLng(GANGNAM_X, GANGNAM_Y), 12.0)
             }
 
             addOnCameraChangeListener { reason, _ ->
