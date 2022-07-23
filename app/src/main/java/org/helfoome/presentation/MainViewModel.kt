@@ -94,6 +94,10 @@ class MainViewModel @Inject constructor(
         }
     }
 
+    fun setMapInfo(markerInfo: ArrayList<MarkerInfo>) {
+        _location.value = markerInfo
+    }
+
     fun getProfile() {
         viewModelScope.launch {
             runCatching { profileRepository.getProfile(sharedPreferences.id) }

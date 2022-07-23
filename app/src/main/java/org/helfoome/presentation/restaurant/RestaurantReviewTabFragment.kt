@@ -60,8 +60,10 @@ class RestaurantReviewTabFragment : BindingFragment<FragmentReviewBinding>(R.lay
 
     private fun initObservers() {
         viewModel.hfmReviews.observe(viewLifecycleOwner) { reviews ->
-            restaurantGeneralReviewAdapter.submitList(reviews.toMutableList())
-            showReviewEmptyView(reviews.isEmpty())
+            reviews?.let {
+                restaurantGeneralReviewAdapter.submitList(it)
+                showReviewEmptyView(it.isEmpty())
+            }
             binding.layoutReviewTab.selectTab(binding.layoutReviewTab.getTabAt(0))
         }
         viewModel.blogReviews.observe(viewLifecycleOwner) { reviews ->

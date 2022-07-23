@@ -9,7 +9,7 @@ import org.helfoome.domain.entity.AutoCompleteKeywordInfo
 import org.helfoome.util.ItemDiffCallback
 import org.helfoome.util.ext.setAutoKeyword
 
-class AutoCompleteAdapter(private val itemClickListener: (String) -> Unit) :
+class AutoCompleteAdapter(private val itemClickListener: (String, String) -> Unit) :
     ListAdapter<AutoCompleteKeywordInfo, AutoCompleteAdapter.AutoCompleteViewHolder>(
         ItemDiffCallback<AutoCompleteKeywordInfo>(
             onContentsTheSame = { old, new -> old == new },
@@ -28,24 +28,23 @@ class AutoCompleteAdapter(private val itemClickListener: (String) -> Unit) :
             inflater = LayoutInflater.from(parent.context)
 
         val binding = ItemAutoCompleteWordBinding.inflate(inflater, parent, false)
-        return AutoCompleteViewHolder(
-            binding.apply {
-                root.setOnClickListener {
-                    itemClickListener.invoke(tvKeyword.text.toString())
-                }
-            }
-        )
+        return AutoCompleteViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: AutoCompleteViewHolder, position: Int) {
-        holder.onBind(getItem(position), setKeywordListener)
+        holder.onBind(getItem(position), setKeywordListener, itemClickListener)
     }
 
     class AutoCompleteViewHolder(private val binding: ItemAutoCompleteWordBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun onBind(data: AutoCompleteKeywordInfo, setKeywordListener: (() -> String)?) {
-            binding.data = data
-            binding.tvKeyword.setAutoKeyword(data.name, setKeywordListener?.invoke())
+        fun onBind(data: AutoCompleteKeywordInfo, setKeywordListener: (() -> String)?, itemClickListener: (String, String) -> Unit) {
+            with(binding) {
+                this.data = data
+                tvKeyword.setAutoKeyword(data.name, setKeywordListener?.invoke())
+                root.setOnClickListener {
+                    itemClickListener.invoke(data.name, data.id)
+                }
+            }
         }
     }
 }

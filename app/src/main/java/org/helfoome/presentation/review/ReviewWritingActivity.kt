@@ -48,6 +48,7 @@ class ReviewWritingActivity : BindingActivity<ActivityReviewWritingBinding>(R.la
         viewModel.setReviewId(intent.getStringExtra("REVIEW_ID").toString())
         viewModel.setEditMode(intent.getBooleanExtra("REVIEW_TITLE", false))
         viewModel.setRestaurantId(intent.getStringExtra(ARG_RESTAURANT_ID).toString())
+        binding.restaurantTitle = intent.getStringExtra("RESTAURANT_NAME")
     }
 
     private fun initView() {

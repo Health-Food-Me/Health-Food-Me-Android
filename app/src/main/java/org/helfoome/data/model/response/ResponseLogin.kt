@@ -19,6 +19,7 @@ data class ResponseLogin(
         val email: String?,
         val social: String,
         val socialId: String,
+        val email: String?,
         val scrapRestaurants: List<String>,
         val refreshToken: String,
         val __v: Int

@@ -37,7 +37,9 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import org.helfoome.R
 import org.helfoome.databinding.ActivitySearchBinding
+import org.helfoome.domain.entity.MarkerInfo
 import org.helfoome.presentation.MainActivity
+import org.helfoome.presentation.MainActivity.Companion.MARKER_INFO
 import org.helfoome.presentation.MainViewModel
 import org.helfoome.presentation.restaurant.MapSelectionBottomDialogFragment
 import org.helfoome.presentation.restaurant.adapter.RestaurantTabAdapter
@@ -106,11 +108,28 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
 
     private lateinit var locationSource: FusedLocationSource
     private var mapSelectionBottomDialog: MapSelectionBottomDialogFragment? = null
-    private val autoCompleteAdapter = AutoCompleteAdapter {
+    private val autoCompleteAdapter = AutoCompleteAdapter { name, restaurantId ->
         isAutoCompleteResult = true
-        searchViewModel.insertKeyword(it)
+        searchViewModel.insertKeyword(name)
         searchViewModel.setDetail(true)
         searchViewModel.setSearchMode(SearchMode.RESULT)
+        val location = mainViewModel.location.value?.filter {
+            it.id == restaurantId
+        }?.get(0)
+        location?.let {
+            markerList.forEach { marker ->
+                if (marker.second.first == it.name) {
+                    marker.first.icon = OverlayImage.fromResource(
+                        if (marker.second.second) R.drawable.ic_marker_green_big
+                        else R.drawable.ic_marker_red_big
+                    )
+                }
+            }
+            mainViewModel.fetchSelectedRestaurantDetailInfo(restaurantId,
+                it.latitude,
+                it.longitude)
+        }
+        searchViewModel.setDetail(true)
     }
     private val recentAdapter = RecentAdapter(
         {
@@ -209,7 +228,6 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         initView()
         locationSource =
             FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE)
@@ -234,6 +252,7 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
     }
 
     private fun initView() {
+        intent.getParcelableArrayListExtra<MarkerInfo>(MARKER_INFO)?.let { mainViewModel.setMapInfo(it) }
         binding.layoutRestaurantDialog.isSearch = true
         behavior = BottomSheetBehavior.from(binding.layoutBottomSheet)
         behavior.state = BottomSheetBehavior.STATE_EXPANDED
@@ -366,12 +385,14 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
                 .onEach {
                     when (it) {
                         SearchMode.RECENT -> {
+                            behavior.isDraggable = false
                             isDeleteButtonVisible = false
                             etSearch.text.clear()
                             layoutRestaurantListDialog.rvSearch.adapter = recentConcatAdapter
                         }
                         SearchMode.AUTO_COMPLETE -> {
                             // TODO : 자동완성 서버 통신
+                            behavior.isDraggable = false
                             btnDelete.isSelected = false
                             isDeleteButtonVisible = true
                             layoutRestaurantListDialog.rvSearch.adapter = autoCompleteAdapter
@@ -381,6 +402,7 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
                             binding.etSearch.clearFocus()
                             btnDelete.isSelected = true
                             isDeleteButtonVisible = true
+                            behavior.isDraggable = true
                             layoutRestaurantListDialog.rvSearch.adapter = resultConcatAdapter
                             closeKeyboard(binding.etSearch)
                         }
@@ -644,19 +666,11 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
                 CameraPosition(LatLng(naverMap.cameraPosition.target.latitude, naverMap.cameraPosition.target.longitude), 14.0)
             naverMap.locationTrackingMode = LocationTrackingMode.Follow
         }
-        mainViewModel.getMapInfo(naverMap.cameraPosition.target, category)
         binding.btnLocationMain.setOnClickListener {
             naverMap.cameraPosition =
                 CameraPosition(LatLng(naverMap.cameraPosition.target.latitude, naverMap.cameraPosition.target.longitude), 14.0)
             naverMap.locationTrackingMode = LocationTrackingMode.Follow
         }
-        mainViewModel.getMapInfo(
-            LatLng(
-                naverMap.cameraPosition.target.latitude,
-                naverMap.cameraPosition.target.longitude
-            ),
-            category
-        )
     }
 
     override fun onRequestPermissionsResult(

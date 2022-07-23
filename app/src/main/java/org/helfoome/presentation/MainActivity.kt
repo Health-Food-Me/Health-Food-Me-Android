@@ -22,7 +22,7 @@ import androidx.fragment.app.commit
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.chip.Chip
-import com.google.android.material.snackbar.BaseTransientBottomBar.*
+import com.google.android.material.snackbar.BaseTransientBottomBar.ANIMATION_MODE_SLIDE
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
@@ -209,12 +209,9 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
 
             btnWriteReview.apply {
                 setOnClickListener {
-                    requestReviewWrite.launch(
-                        Intent(this@MainActivity, ReviewWritingActivity::class.java).putExtra(
-                            ARG_RESTAURANT_ID,
-                            viewModel?.selectedRestaurant?.value?.id ?: return@setOnClickListener
-                        )
-                    )
+                    requestReviewWrite.launch(Intent(this@MainActivity, ReviewWritingActivity::class.java).putExtra(ARG_RESTAURANT_ID,
+                        viewModel?.selectedRestaurant?.value?.id ?: return@setOnClickListener)
+                        .putExtra("RESTAURANT_NAME", binding.layoutRestaurantDialog.tvRestaurantName.text.toString()))
                 }
             }
         }
@@ -280,7 +277,9 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
             }
 
             binding.layoutSearch.setOnClickListener {
-                startActivity<SearchActivity>()
+                viewModel?.location?.value?.let {
+                    startActivity<SearchActivity>(Pair(MARKER_INFO, it))
+                }
             }
 
             btnNavi.setOnClickListener {
@@ -515,6 +514,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
     }
 
     companion object {
+        const val MARKER_INFO = "MARKER_INFO"
         const val GANGNAM_X = 37.498095
         const val GANGNAM_Y = 127.027610
         private const val LOCATION_PERMISSION_REQUEST_CODE = 1000
