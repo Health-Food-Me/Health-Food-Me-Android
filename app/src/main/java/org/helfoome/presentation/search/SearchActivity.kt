@@ -125,9 +125,7 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
                     )
                 }
             }
-            mainViewModel.fetchSelectedRestaurantDetailInfo(restaurantId,
-                it.latitude,
-                it.longitude)
+            mainViewModel.fetchSelectedRestaurantDetailInfo(restaurantId, it.latitude, it.longitude)
         }
         searchViewModel.setDetail(true)
     }

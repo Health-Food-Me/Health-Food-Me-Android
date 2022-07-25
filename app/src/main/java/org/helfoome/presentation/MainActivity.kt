@@ -209,9 +209,11 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
 
             btnWriteReview.apply {
                 setOnClickListener {
-                    requestReviewWrite.launch(Intent(this@MainActivity, ReviewWritingActivity::class.java).putExtra(ARG_RESTAURANT_ID,
-                        viewModel?.selectedRestaurant?.value?.id ?: return@setOnClickListener)
-                        .putExtra("RESTAURANT_NAME", binding.layoutRestaurantDialog.tvRestaurantName.text.toString()))
+                    requestReviewWrite.launch(
+                        Intent(this@MainActivity, ReviewWritingActivity::class.java)
+                            .putExtra(ARG_RESTAURANT_ID, viewModel?.selectedRestaurant?.value?.id ?: return@setOnClickListener)
+                            .putExtra("RESTAURANT_NAME", binding.layoutRestaurantDialog.tvRestaurantName.text.toString())
+                    )
                 }
             }
         }
@@ -397,7 +399,11 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
 
                         setOnClickListener {
                             viewModel.getReviewCheck(marker.id)
-                            viewModel.fetchSelectedRestaurantDetailInfo(marker.id, locationSource.lastLocation?.latitude ?: marker.latitude, locationSource.lastLocation?.longitude ?: marker.longitude)
+                            viewModel.fetchSelectedRestaurantDetailInfo(
+                                marker.id,
+                                locationSource.lastLocation?.latitude ?: marker.latitude,
+                                locationSource.lastLocation?.longitude ?: marker.longitude
+                            )
 
                             behavior.state = BottomSheetBehavior.STATE_COLLAPSED
                             binding.isMainNotVisible = true

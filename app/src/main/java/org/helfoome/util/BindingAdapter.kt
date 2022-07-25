@@ -30,11 +30,10 @@ fun View.setSelected(isSelected: Boolean?) {
 fun TextView.setDistance(distance: Int?) {
     if (distance == null) return
     this.text = if (distance >= 1000) {
-        val df = DecimalFormat("#.#");
+        val df = DecimalFormat("#.#")
         val result = distance / 1000.0
         "${df.format(result)}km"
-    }
-    else {
+    } else {
         "${distance}m"
     }
 }
