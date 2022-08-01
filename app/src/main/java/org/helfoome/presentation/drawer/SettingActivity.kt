@@ -8,7 +8,7 @@ import com.naver.maps.map.app.LegalNoticeActivity
 import com.naver.maps.map.app.OpenSourceLicenseActivity
 import org.helfoome.R
 import org.helfoome.databinding.ActivitySettingBinding
-import org.helfoome.presentation.WithdrawalActivity
+import org.helfoome.presentation.withdrawal.WithdrawalActivity
 import org.helfoome.util.binding.BindingActivity
 
 class SettingActivity : BindingActivity<ActivitySettingBinding>(R.layout.activity_setting) {

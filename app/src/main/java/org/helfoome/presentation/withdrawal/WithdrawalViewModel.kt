@@ -1,4 +1,4 @@
-package org.helfoome.presentation
+package org.helfoome.presentation.withdrawal
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
