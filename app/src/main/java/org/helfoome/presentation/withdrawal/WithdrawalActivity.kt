@@ -1,4 +1,4 @@
-package org.helfoome.presentation
+package org.helfoome.presentation.withdrawal
 
 import android.content.Intent
 import android.os.Bundle

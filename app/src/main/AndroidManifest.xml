@@ -36,7 +36,7 @@
             android:name=".presentation.scrap.MapSelectActivity"
             android:exported="false" />
         <activity
-            android:name=".presentation.WithdrawalActivity"
+            android:name=".presentation.withdrawal.WithdrawalActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
