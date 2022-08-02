@@ -3,8 +3,6 @@ package org.helfoome.presentation.drawer
 import android.app.Activity
 import android.os.Bundle
 import android.view.KeyEvent
-import android.view.animation.Animation
-import android.view.animation.AnimationUtils
 import androidx.activity.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import org.helfoome.R
