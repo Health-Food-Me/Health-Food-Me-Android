@@ -83,9 +83,7 @@ class MainViewModel @Inject constructor(
                         }
                     )
                 }
-                .onFailure {
-
-                }
+                .onFailure { }
         }
     }
 
