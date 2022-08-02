@@ -60,7 +60,7 @@ class MapSelectionBottomDialogFragment : BottomSheetDialogFragment() {
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
         intent.addCategory(Intent.CATEGORY_BROWSABLE)
 
-        val list = requireActivity().packageManager.queryIntentActivities(intent, 0) //PackageManager.MATCH_DEFAULT_ONLY
+        val list = requireActivity().packageManager.queryIntentActivities(intent, 0)
         startActivity(if (list.isEmpty()) Intent(Intent.ACTION_VIEW, Uri.parse(marketUrl)) else intent)
     }
 

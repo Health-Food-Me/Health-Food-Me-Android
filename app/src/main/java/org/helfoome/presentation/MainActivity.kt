@@ -372,8 +372,10 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
         if (mapSelectionBottomDialog?.isAdded == true) return
         mapSelectionBottomDialog = MapSelectionBottomDialogFragment().apply {
             locationSource.lastLocation?.let {
-                arguments = bundleOf(ARG_START_POINT to LocationPointInfo(it.latitude, it.longitude),
-                    ARG_END_POINT to viewModel.selectedRestaurantPoint)
+                arguments = bundleOf(
+                    ARG_START_POINT to LocationPointInfo(it.latitude, it.longitude),
+                    ARG_END_POINT to viewModel.selectedRestaurantPoint
+                )
             }
         }
 
