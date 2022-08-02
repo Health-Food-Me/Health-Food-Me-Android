@@ -5,8 +5,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.LayoutInflater
-import android.view.animation.Animation
-import android.view.animation.AnimationUtils
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import dagger.hilt.android.AndroidEntryPoint
@@ -20,6 +18,7 @@ import org.helfoome.presentation.review.ReviewWritingActivity
 import org.helfoome.util.DialogUtil
 import org.helfoome.util.ItemDecorationUtil
 import org.helfoome.util.ResolutionMetrics
+import org.helfoome.util.SnackBarTopDown
 import org.helfoome.util.binding.BindingActivity
 import org.helfoome.util.ext.startActivity
 import javax.inject.Inject
@@ -33,19 +32,7 @@ class MyReviewActivity : BindingActivity<ActivityMyReviewBinding>(R.layout.activ
     private val requestModifyReview =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
             if (activityResult.resultCode == Activity.RESULT_OK) {
-                val animation = AnimationUtils.loadAnimation(this, R.anim.anim_snackbar_top_down)
-                binding.snvReviewModify.animation = animation
-                binding.snvReviewModify.setText("리뷰 편집이 완료되었습니다")
-                animation.setAnimationListener(object : Animation.AnimationListener {
-                    override fun onAnimationStart(animation: Animation?) = Unit
-                    override fun onAnimationEnd(animation: Animation?) {
-                        val bottomTopAnimation = AnimationUtils.loadAnimation(this@MyReviewActivity, R.anim.anim_snackbar_bottom_top)
-                        binding.snvReviewModify.animation = bottomTopAnimation
-                        binding.snvReviewModify.setText("리뷰 편집이 완료되었습니다")
-                    }
-
-                    override fun onAnimationRepeat(p0: Animation?) = Unit
-                })
+                SnackBarTopDown.makeSnackBarTopDown(this, binding, R.id.snv_review_modify, "리뷰 편집이 완료되었습니다")
             }
         }
 

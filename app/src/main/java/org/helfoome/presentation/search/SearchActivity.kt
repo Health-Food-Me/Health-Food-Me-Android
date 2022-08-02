@@ -11,8 +11,6 @@ import android.view.KeyEvent
 import android.view.KeyEvent.KEYCODE_ENTER
 import android.view.MotionEvent
 import android.view.View
-import android.view.animation.Animation
-import android.view.animation.AnimationUtils
 import android.widget.EditText
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
@@ -48,6 +46,7 @@ import org.helfoome.presentation.search.adapter.*
 import org.helfoome.presentation.search.type.SearchMode
 import org.helfoome.presentation.type.HashtagViewType
 import org.helfoome.util.ResolutionMetrics
+import org.helfoome.util.SnackBarTopDown
 import org.helfoome.util.binding.BindingActivity
 import org.helfoome.util.ext.closeKeyboard
 import org.helfoome.util.ext.markerFilter
@@ -88,19 +87,7 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
     private val requestReviewWrite =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
             if (activityResult.resultCode == Activity.RESULT_OK) {
-                val animation = AnimationUtils.loadAnimation(this, R.anim.anim_snackbar_top_down)
-                binding.snvProfileModify.animation = animation
-                binding.snvProfileModify.setText("리뷰가 작성되었습니다")
-                animation.setAnimationListener(object : Animation.AnimationListener {
-                    override fun onAnimationStart(animation: Animation?) = Unit
-                    override fun onAnimationEnd(animation: Animation?) {
-                        val bottomTopAnimation = AnimationUtils.loadAnimation(this@SearchActivity, R.anim.anim_snackbar_bottom_top)
-                        binding.snvProfileModify.animation = bottomTopAnimation
-                        binding.snvProfileModify.setText("리뷰가 작성되었습니다")
-                    }
-
-                    override fun onAnimationRepeat(p0: Animation?) = Unit
-                })
+                SnackBarTopDown.makeSnackBarTopDown(this, binding, R.id.snv_profile_modify, "리뷰가 작성되었습니다")
             }
         }
 
