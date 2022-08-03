@@ -25,13 +25,13 @@ class ProfileModifyActivity : BindingActivity<ActivityProfileModifyBinding>(R.la
     private fun initObserve() {
         viewModel.isOverlapNickName.observe(this) {
             if (viewModel.isOverlapNickName.value == false) {
-                SnackBarTopDown.makeSnackBarTopDown(this, binding, R.id.snv_profile_modify, "중복된 닉네임 입니다")
+                SnackBarTopDown.makeSnackBarTopDown(this, binding.snvProfileModify, "중복된 닉네임 입니다")
             }
         }
 
         viewModel.isValidNickname.observe(this) {
             if (viewModel.isValidNickname.value == false) {
-                SnackBarTopDown.makeSnackBarTopDown(this, binding, R.id.snv_profile_modify, "닉네임 설정 기준에 적합하지 않습니다")
+                SnackBarTopDown.makeSnackBarTopDown(this, binding.snvProfileModify, "닉네임 설정 기준에 적합하지 않습니다")
             }
         }
 

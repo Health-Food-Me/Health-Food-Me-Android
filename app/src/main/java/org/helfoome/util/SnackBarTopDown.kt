@@ -3,16 +3,14 @@ package org.helfoome.util
 import android.content.Context
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
-import androidx.viewbinding.ViewBinding
 import org.helfoome.R
 import org.helfoome.presentation.custom.SnackBarView
 
 object SnackBarTopDown {
-    fun makeSnackBarTopDown(context: Context, binding: ViewBinding, id: Int, snackBarText: String) {
+    fun makeSnackBarTopDown(context: Context, snackBarView: SnackBarView, snackBarText: String) {
 
         val animation = AnimationUtils.loadAnimation(context, R.anim.anim_snackbar_top_down)
 
-        val snackBarView = binding.root.findViewById<SnackBarView>(id)
         snackBarView.animation = animation
         snackBarView.setText(snackBarText)
         animation.setAnimationListener(object : Animation.AnimationListener {

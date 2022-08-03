@@ -7,7 +7,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import org.helfoome.databinding.ViewSnackbarBinding
 
 class SnackBarView(context: Context, attrs: AttributeSet? = null) : ConstraintLayout(context, attrs) {
-    private var binding: ViewSnackbarBinding
+    var binding: ViewSnackbarBinding
     private lateinit var inflater: LayoutInflater
 
     init {

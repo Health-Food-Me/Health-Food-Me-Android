@@ -112,7 +112,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
     private val requestModifyNickname =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
             if (activityResult.resultCode == Activity.RESULT_OK) {
-                SnackBarTopDown.makeSnackBarTopDown(this, binding, R.id.snv_profile_modify, "닉네임이 변경되었습니다")
+                SnackBarTopDown.makeSnackBarTopDown(this, binding.snvProfileModify, "닉네임이 변경되었습니다")
             }
         }
 
@@ -127,7 +127,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
             if (activityResult.resultCode == Activity.RESULT_OK) {
                 viewModel.fetchHFMReviewList()
-                SnackBarTopDown.makeSnackBarTopDown(this, binding, R.id.snv_profile_modify, "리뷰가 작성되었습니다")
+                SnackBarTopDown.makeSnackBarTopDown(this, binding.snvProfileModify, "리뷰가 작성되었습니다")
                 val data = activityResult.data ?: return@registerForActivityResult
             }
         }
@@ -141,8 +141,6 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
         binding.viewModel = viewModel
         binding.layoutDrawerHeader.drawerViewModel = viewModel
         window.makeTransparentStatusBar()
-
-        findViewById<SnackBarView>(R.id.snv_profile_modify)
 
         locationSource = FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE)
 

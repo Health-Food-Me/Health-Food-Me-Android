@@ -32,7 +32,7 @@ class MyReviewActivity : BindingActivity<ActivityMyReviewBinding>(R.layout.activ
     private val requestModifyReview =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
             if (activityResult.resultCode == Activity.RESULT_OK) {
-                SnackBarTopDown.makeSnackBarTopDown(this, binding, R.id.snv_review_modify, "리뷰 편집이 완료되었습니다")
+                SnackBarTopDown.makeSnackBarTopDown(this, binding.snvReviewModify, "리뷰 편집이 완료되었습니다")
             }
         }
 

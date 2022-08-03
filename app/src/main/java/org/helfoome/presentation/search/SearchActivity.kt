@@ -87,7 +87,7 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
     private val requestReviewWrite =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
             if (activityResult.resultCode == Activity.RESULT_OK) {
-                SnackBarTopDown.makeSnackBarTopDown(this, binding, R.id.snv_profile_modify, "리뷰가 작성되었습니다")
+                SnackBarTopDown.makeSnackBarTopDown(this, binding.snvProfileModify, "리뷰가 작성되었습니다")
             }
         }
 
