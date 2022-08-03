@@ -9,8 +9,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
-import android.view.animation.Animation
-import android.view.animation.AnimationUtils
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
@@ -51,6 +49,7 @@ import org.helfoome.presentation.type.HashtagViewType
 import org.helfoome.util.ChipFactory
 import org.helfoome.util.DialogUtil
 import org.helfoome.util.ResolutionMetrics
+import org.helfoome.util.SnackBarTopDown
 import org.helfoome.util.binding.BindingActivity
 import org.helfoome.util.ext.makeTransparentStatusBar
 import org.helfoome.util.ext.startActivity
@@ -112,19 +111,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
     private val requestModifyNickname =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
             if (activityResult.resultCode == Activity.RESULT_OK) {
-                val animation = AnimationUtils.loadAnimation(this, R.anim.anim_snackbar_top_down)
-                binding.snvProfileModify.animation = animation
-                binding.snvProfileModify.setText("닉네임이 변경되었습니다")
-                animation.setAnimationListener(object : Animation.AnimationListener {
-                    override fun onAnimationStart(animation: Animation?) = Unit
-                    override fun onAnimationEnd(animation: Animation?) {
-                        val bottomTopAnimation = AnimationUtils.loadAnimation(this@MainActivity, R.anim.anim_snackbar_bottom_top)
-                        binding.snvProfileModify.animation = bottomTopAnimation
-                        binding.snvProfileModify.setText("닉네임이 변경되었습니다")
-                    }
-
-                    override fun onAnimationRepeat(p0: Animation?) = Unit
-                })
+                SnackBarTopDown.makeSnackBarTopDown(this, binding.snvProfileModify, "닉네임이 변경되었습니다")
             }
         }
 
@@ -139,19 +126,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
             if (activityResult.resultCode == Activity.RESULT_OK) {
                 viewModel.fetchHFMReviewList()
-                val animation = AnimationUtils.loadAnimation(this, R.anim.anim_snackbar_top_down)
-                binding.snvProfileModify.animation = animation
-                binding.snvProfileModify.setText("리뷰가 작성되었습니다")
-                animation.setAnimationListener(object : Animation.AnimationListener {
-                    override fun onAnimationStart(animation: Animation?) = Unit
-                    override fun onAnimationEnd(animation: Animation?) {
-                        val bottomTopAnimation = AnimationUtils.loadAnimation(this@MainActivity, R.anim.anim_snackbar_bottom_top)
-                        binding.snvProfileModify.animation = bottomTopAnimation
-                        binding.snvProfileModify.setText("리뷰가 작성되었습니다")
-                    }
-
-                    override fun onAnimationRepeat(p0: Animation?) = Unit
-                })
+                SnackBarTopDown.makeSnackBarTopDown(this, binding.snvProfileModify, "리뷰가 작성되었습니다")
                 val data = activityResult.data ?: return@registerForActivityResult
             }
         }
