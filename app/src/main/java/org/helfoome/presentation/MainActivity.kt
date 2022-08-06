@@ -221,15 +221,22 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
         viewModel.getProfile()
     }
 
+    private fun startScrapEvent(isSelected: Boolean) {
+        if (isSelected)
+            viewModel.getScrapList()
+        else
+            viewModel.getMapInfo(naverMap.cameraPosition.target)
+    }
+
     private fun initListeners() {
         binding.btnBookmark.setOnClickListener {
-            showScarpSnackBar()
             it.isSelected = !it.isSelected
+            startScrapEvent(it.isSelected)
         }
 
         binding.btnBookmarkMain.setOnClickListener {
-            showScarpSnackBar()
             it.isSelected = !it.isSelected
+            startScrapEvent(it.isSelected)
         }
 
         binding.btnHamburger.setOnClickListener {
@@ -358,6 +365,51 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                 if (it.peekContent()) View.VISIBLE else View.INVISIBLE
         }
 
+        viewModel.scrapList.observe(this) { markers ->
+            if (markers.isEmpty())
+                showScarpSnackBar()
+            markerList.forEach {
+                it.first.map = null
+            }
+            markerList = markers.map { marker ->
+                Pair(
+                    Marker().apply {
+                        position = LatLng(marker.latitude, marker.longitude)
+                        icon = OverlayImage.fromResource(
+                            if (marker.isDietRestaurant) R.drawable.ic_marker_green_small
+                            else R.drawable.ic_marker_red_small
+                        )
+                        map = naverMap
+
+                        setOnClickListener {
+                            viewModel.getReviewCheck(marker.id)
+                            viewModel.fetchSelectedRestaurantDetailInfo(
+                                marker.id,
+                                locationSource.lastLocation?.latitude ?: marker.latitude,
+                                locationSource.lastLocation?.longitude ?: marker.longitude
+                            )
+
+                            behavior.state = BottomSheetBehavior.STATE_COLLAPSED
+                            binding.isMainNotVisible = true
+                            markerList.forEach {
+                                it.first.icon = OverlayImage.fromResource(
+                                    if (it.second) R.drawable.ic_marker_green_small
+                                    else R.drawable.ic_marker_red_small
+                                )
+                            }
+                            icon = OverlayImage.fromResource(
+                                if (marker.isDietRestaurant) R.drawable.ic_marker_green_big
+                                else R.drawable.ic_marker_red_big
+                            )
+                            viewModel.markerId(this.position)?.let { id -> }
+                            true
+                        }
+                    },
+                    marker.isDietRestaurant
+                )
+            }
+        }
+
         viewModel.location.observe(this) { markers ->
             markerList.forEach {
                 it.first.map = null
@@ -452,7 +504,6 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                 cameraPosition = CameraPosition(
                     LatLng(GANGNAM_X, GANGNAM_Y), 12.0
                 )
-                locationTrackingMode = LocationTrackingMode.Follow
             } else {
                 cameraPosition = CameraPosition(LatLng(GANGNAM_X, GANGNAM_Y), 12.0)
             }
@@ -462,22 +513,13 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
         }
         binding.btnLocation.setOnClickListener {
             naverMap.cameraPosition =
-                CameraPosition(LatLng(naverMap.cameraPosition.target.latitude, naverMap.cameraPosition.target.longitude), 14.0)
-            naverMap.locationTrackingMode = LocationTrackingMode.Follow
+                CameraPosition(LatLng(GANGNAM_X, GANGNAM_Y), 14.0)
         }
-        viewModel.getMapInfo(naverMap.cameraPosition.target, category)
+        viewModel.getMapInfo(naverMap.cameraPosition.target)
         binding.btnLocationMain.setOnClickListener {
             naverMap.cameraPosition =
-                CameraPosition(LatLng(naverMap.cameraPosition.target.latitude, naverMap.cameraPosition.target.longitude), 14.0)
-            naverMap.locationTrackingMode = LocationTrackingMode.Follow
+                CameraPosition(LatLng(GANGNAM_X, GANGNAM_Y), 14.0)
         }
-        viewModel.getMapInfo(
-            LatLng(
-                naverMap.cameraPosition.target.latitude,
-                naverMap.cameraPosition.target.longitude
-            ),
-            category
-        )
     }
 
     override fun onRequestPermissionsResult(

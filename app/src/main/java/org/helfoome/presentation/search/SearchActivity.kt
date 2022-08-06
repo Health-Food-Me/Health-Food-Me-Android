@@ -154,6 +154,7 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
 
     private val searchMapTopAdapter = SearchMapTopAdapter {
         if (behavior.state == BottomSheetBehavior.STATE_COLLAPSED) {
+            binding.isFloatingVisible = false
             behavior.state = BottomSheetBehavior.STATE_EXPANDED
             behavior.isDraggable = false
         } else {
