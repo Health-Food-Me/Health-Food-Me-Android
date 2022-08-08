@@ -1,8 +1,9 @@
-package org.helfoome
+package org.helfoome.presentation.splash
 
 import android.os.Bundle
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import org.helfoome.R
 import org.helfoome.databinding.ActivitySplashSecondBinding
 import org.helfoome.presentation.login.LoginActivity
 import org.helfoome.util.binding.BindingActivity
