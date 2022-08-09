@@ -232,8 +232,7 @@ class MapSelectActivity : BindingActivity<ActivityMapSelectBinding>(R.layout.act
 
                             behavior.state = BottomSheetBehavior.STATE_COLLAPSED
                             binding.isMainNotVisible = true
-                        }
-                        else {
+                        } else {
                             icon = OverlayImage.fromResource(
                                 if (marker.isDietRestaurant) R.drawable.ic_marker_green_small
                                 else R.drawable.ic_marker_red_small
