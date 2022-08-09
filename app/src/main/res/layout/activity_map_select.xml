@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -14,9 +15,14 @@
         <variable
             name="isMainNotVisible"
             type="boolean" />
+
+        <variable
+            name="viewModel"
+            type="org.helfoome.presentation.MainViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".presentation.scrap.MapSelectActivity">
@@ -85,16 +91,16 @@
                     android:id="@+id/fab_location_main"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
                     android:layout_marginBottom="16dp"
                     android:backgroundTint="@color/white"
                     android:src="@drawable/ic_currentposition"
                     android:visibility="@{isMainNotVisible? View.GONE : View.VISIBLE}"
                     app:borderWidth="0dp"
-                    app:layout_goneMarginBottom="16dp"
-                    android:layout_marginEnd="5dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_dodgeInsetEdges="bottom" />
+                    app:layout_dodgeInsetEdges="bottom"
+                    app:layout_goneMarginBottom="16dp" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -105,17 +111,16 @@
                 android:fillViewport="true"
                 android:overScrollMode="never"
                 app:behavior_hideable="true"
-                app:behavior_peekHeight="304dp"
+                app:behavior_peekHeight="236dp"
                 app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
                 tools:visibility="visible">
-
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/fab_location"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="12dp"
                     android:layout_marginEnd="20dp"
+                    android:layout_marginBottom="12dp"
                     android:backgroundTint="@color/white"
                     android:src="@drawable/ic_currentposition"
                     android:visibility="@{isFloatingNotVisible? View.GONE : View.VISIBLE}"
@@ -137,11 +142,21 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/line" />
+                    app:layout_constraintTop_toBottomOf="@+id/line"
+                    bind:viewModel="@{viewModel}" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+        <org.helfoome.presentation.custom.SnackBarView
+            android:id="@+id/snv_profile_modify"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
