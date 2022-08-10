@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 import org.helfoome.databinding.DialogMapSelectionBinding
@@ -13,7 +14,8 @@ import org.helfoome.domain.entity.LocationPointInfo
 
 @AndroidEntryPoint
 class MapSelectionBottomDialogFragment : BottomSheetDialogFragment() {
-    private lateinit var binding: DialogMapSelectionBinding
+    private var _binding: DialogMapSelectionBinding? = null
+    private val binding: DialogMapSelectionBinding get() = requireNotNull(_binding)
     private lateinit var startPoint: LocationPointInfo
     private lateinit var endPoint: LocationPointInfo
 
@@ -30,7 +32,7 @@ class MapSelectionBottomDialogFragment : BottomSheetDialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        binding = DialogMapSelectionBinding.inflate(inflater, container, false)
+        _binding = DialogMapSelectionBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -62,6 +64,11 @@ class MapSelectionBottomDialogFragment : BottomSheetDialogFragment() {
 
         val list = requireActivity().packageManager.queryIntentActivities(intent, 0)
         startActivity(if (list.isEmpty()) Intent(Intent.ACTION_VIEW, Uri.parse(marketUrl)) else intent)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     companion object {
