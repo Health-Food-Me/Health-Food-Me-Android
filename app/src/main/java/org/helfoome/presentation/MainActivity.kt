@@ -14,7 +14,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
-import androidx.core.os.bundleOf
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.add
 import androidx.fragment.app.commit
@@ -36,14 +35,11 @@ import dagger.hilt.android.AndroidEntryPoint
 import org.helfoome.R
 import org.helfoome.databinding.ActivityMainBinding
 import org.helfoome.databinding.DialogLogoutBinding
-import org.helfoome.domain.entity.LocationPointInfo
 import org.helfoome.presentation.drawer.MyReviewActivity
 import org.helfoome.presentation.drawer.ProfileModifyActivity
 import org.helfoome.presentation.drawer.SettingActivity
 import org.helfoome.presentation.login.LoginActivity
 import org.helfoome.presentation.restaurant.MapSelectionBottomDialogFragment
-import org.helfoome.presentation.restaurant.MapSelectionBottomDialogFragment.Companion.ARG_END_POINT
-import org.helfoome.presentation.restaurant.MapSelectionBottomDialogFragment.Companion.ARG_START_POINT
 import org.helfoome.presentation.restaurant.adapter.RestaurantTabAdapter
 import org.helfoome.presentation.review.ReviewWritingActivity
 import org.helfoome.presentation.scrap.MyScrapActivity
@@ -354,10 +350,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
         if (mapSelectionBottomDialog?.isAdded == true) return
         mapSelectionBottomDialog = MapSelectionBottomDialogFragment().apply {
             locationSource.lastLocation?.let {
-                arguments = bundleOf(
-                    ARG_START_POINT to LocationPointInfo(it.latitude, it.longitude),
-                    ARG_END_POINT to viewModel.selectedRestaurantPoint
-                )
+                viewModel.setCurrentLocationPoint(it.latitude, it.longitude)
             }
         }
 
@@ -512,6 +505,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
             minZoom = 5.0
             maxZoom = 20.0
             this.locationSource = this@MainActivity.locationSource
+            naverMap.locationTrackingMode = LocationTrackingMode.Follow
 
             if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                 cameraPosition = CameraPosition(

@@ -43,8 +43,12 @@ class MainViewModel @Inject constructor(
     val cameraZoom: MutableLiveData<Event<Int>> = _cameraZoom
     private val _selectedRestaurant = MutableLiveData<RestaurantInfo>()
     val selectedRestaurant get() = _selectedRestaurant
-    var _selectedRestaurantPoint: LocationPointInfo? = null
-    val selectedRestaurantPoint get() = _selectedRestaurantPoint
+
+    private var _selectedRestaurantPoint = MutableLiveData<LocationPointInfo>()
+    val selectedRestaurantPoint: LiveData<LocationPointInfo> get() = _selectedRestaurantPoint
+    private var _currentPoint = MutableLiveData<LocationPointInfo>()
+    val currentPoint: LiveData<LocationPointInfo> get() = _currentPoint
+
     private val _isExpandedDialog = MutableLiveData<Event<Boolean>>()
     val isExpandedDialog: LiveData<Event<Boolean>> get() = _isExpandedDialog
     private val storeIdHash = HashMap<LatLng, Int>()
@@ -194,7 +198,11 @@ class MainViewModel @Inject constructor(
     }
 
     fun setSelectedLocationPoint(latitude: Double, longitude: Double) {
-        _selectedRestaurantPoint = LocationPointInfo(latitude, longitude)
+        _selectedRestaurantPoint.value = LocationPointInfo(latitude, longitude)
+    }
+
+    fun setCurrentLocationPoint(latitude: Double, longitude: Double) {
+        _currentPoint.value = LocationPointInfo(latitude, longitude)
     }
 
     fun addHFMReviewList(review: HFMReviewInfo) {

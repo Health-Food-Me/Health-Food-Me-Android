@@ -6,26 +6,20 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.activityViewModels
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 import org.helfoome.databinding.DialogMapSelectionBinding
 import org.helfoome.domain.entity.LocationPointInfo
+import org.helfoome.presentation.MainViewModel
 
 @AndroidEntryPoint
 class MapSelectionBottomDialogFragment : BottomSheetDialogFragment() {
     private var _binding: DialogMapSelectionBinding? = null
     private val binding: DialogMapSelectionBinding get() = requireNotNull(_binding)
+    private val viewModel: MainViewModel by activityViewModels()
     private lateinit var startPoint: LocationPointInfo
     private lateinit var endPoint: LocationPointInfo
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            startPoint = it.getParcelable(ARG_START_POINT) ?: return
-            endPoint = it.getParcelable(ARG_END_POINT) ?: return
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,6 +32,9 @@ class MapSelectionBottomDialogFragment : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        startPoint = viewModel.currentPoint.value ?: return
+        endPoint = viewModel.selectedRestaurantPoint.value ?: return
 
         addListeners()
     }
@@ -69,10 +66,5 @@ class MapSelectionBottomDialogFragment : BottomSheetDialogFragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    companion object {
-        const val ARG_START_POINT = "startPoint"
-        const val ARG_END_POINT = "endPoint"
     }
 }
