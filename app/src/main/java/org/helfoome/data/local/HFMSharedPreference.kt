@@ -48,6 +48,10 @@ class HFMSharedPreference @Inject constructor(@ApplicationContext context: Conte
         set(value) = dataStore.edit { putString("NICKNAME", value) }
         get() = dataStore.getString("NICKNAME", "") ?: ""
 
+    var restaurantId: String
+        set(value) = dataStore.edit { putString("RESTAURANT_ID", value) }
+        get() = dataStore.getString("RESTAURANT_ID", "") ?: ""
+
     companion object {
         const val FILE_NAME = "HFM"
     }

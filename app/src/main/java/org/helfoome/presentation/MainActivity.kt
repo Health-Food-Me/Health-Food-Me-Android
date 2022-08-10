@@ -7,6 +7,7 @@ import android.content.pm.PackageManager
 import android.graphics.Paint
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.TextView
@@ -33,6 +34,7 @@ import com.naver.maps.map.util.FusedLocationSource
 import com.navercorp.nid.NaverIdLoginSDK
 import dagger.hilt.android.AndroidEntryPoint
 import org.helfoome.R
+import org.helfoome.data.local.HFMSharedPreference
 import org.helfoome.databinding.ActivityMainBinding
 import org.helfoome.databinding.DialogLogoutBinding
 import org.helfoome.presentation.drawer.MyReviewActivity
@@ -63,6 +65,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
     lateinit var resolutionMetrics: ResolutionMetrics
     private val viewModel: MainViewModel by viewModels()
     private var category: String? = null
+    private lateinit var hfmSharedPreference: HFMSharedPreference
     private lateinit var behavior: BottomSheetBehavior<ConstraintLayout>
     private var mapSelectionBottomDialog: MapSelectionBottomDialogFragment? = null
     private val tabSelectedListener = object : TabLayout.OnTabSelectedListener {
@@ -137,8 +140,10 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        hfmSharedPreference = HFMSharedPreference(this@MainActivity)
         binding.viewModel = viewModel
         binding.layoutDrawerHeader.drawerViewModel = viewModel
+
         window.makeTransparentStatusBar()
 
         locationSource = FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE)
@@ -382,7 +387,8 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                         map = naverMap
 
                         setOnClickListener {
-                            viewModel.getReviewCheck(marker.id)
+                            hfmSharedPreference.restaurantId = marker.id
+                            viewModel.getReviewCheck(hfmSharedPreference.restaurantId)
                             viewModel.fetchSelectedRestaurantDetailInfo(
                                 marker.id,
                                 locationSource.lastLocation?.latitude ?: marker.latitude,
