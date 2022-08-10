@@ -348,7 +348,12 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
 
     private fun showMapSelectionBottomDialog() {
         if (mapSelectionBottomDialog?.isAdded == true) return
-        mapSelectionBottomDialog = MapSelectionBottomDialogFragment()
+        mapSelectionBottomDialog = MapSelectionBottomDialogFragment().apply {
+            locationSource.lastLocation?.let {
+                viewModel.setCurrentLocationPoint(it.latitude, it.longitude)
+            }
+        }
+
         mapSelectionBottomDialog?.show(supportFragmentManager, "MapSelectionBottomDialogFragment")
     }
 
@@ -426,6 +431,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
 
                         setOnClickListener {
                             viewModel.getReviewCheck(marker.id)
+                            viewModel.setSelectedLocationPoint(marker.latitude, marker.longitude)
                             viewModel.fetchSelectedRestaurantDetailInfo(
                                 marker.id,
                                 locationSource.lastLocation?.latitude ?: marker.latitude,
@@ -499,6 +505,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
             minZoom = 5.0
             maxZoom = 20.0
             this.locationSource = this@MainActivity.locationSource
+            naverMap.locationTrackingMode = LocationTrackingMode.Follow
 
             if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                 cameraPosition = CameraPosition(

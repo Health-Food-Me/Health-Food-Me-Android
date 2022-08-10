@@ -44,6 +44,11 @@ class MainViewModel @Inject constructor(
     private val _selectedRestaurant = MutableLiveData<RestaurantInfo>()
     val selectedRestaurant get() = _selectedRestaurant
 
+    private var _selectedRestaurantPoint = MutableLiveData<LocationPointInfo>()
+    val selectedRestaurantPoint: LiveData<LocationPointInfo> get() = _selectedRestaurantPoint
+    private var _currentPoint = MutableLiveData<LocationPointInfo>()
+    val currentPoint: LiveData<LocationPointInfo> get() = _currentPoint
+
     private val _isExpandedDialog = MutableLiveData<Event<Boolean>>()
     val isExpandedDialog: LiveData<Event<Boolean>> get() = _isExpandedDialog
     private val storeIdHash = HashMap<LatLng, Int>()
@@ -68,7 +73,6 @@ class MainViewModel @Inject constructor(
     val eatingOutTips get() = _eatingOutTips
 
     init {
-//        fetchMenuList()
         fetchHFMReviewList()
         fetchBlogReviewList()
     }
@@ -151,8 +155,6 @@ class MainViewModel @Inject constructor(
             }
             _eatingOutTips.value = restaurantRepository.getEatingOutTips(restaurantId)
             _menu.value = restaurantInfo?.menuList?.sortedByDescending { it.isHealfoomePick }
-            // _hfmReviews.value = restaurantRepository.fetchHFMReview(restaurantId).getOrNull()?.toMutableList()
-            // _blogReviews.value = restaurantRepository.fetchBlogReview(selectedRestaurant.value?.name ?: return@launch).getOrNull()
         }
     }
 
@@ -195,87 +197,16 @@ class MainViewModel @Inject constructor(
         _reviewType.value = Event(reviewType)
     }
 
+    fun setSelectedLocationPoint(latitude: Double, longitude: Double) {
+        _selectedRestaurantPoint.value = LocationPointInfo(latitude, longitude)
+    }
+
+    fun setCurrentLocationPoint(latitude: Double, longitude: Double) {
+        _currentPoint.value = LocationPointInfo(latitude, longitude)
+    }
+
     fun addHFMReviewList(review: HFMReviewInfo) {
         _hfmReviews.value?.add(0, review)
         _hfmReviews.value = hfmReviews.value
     }
-
-//    private fun fetchMenuList() {
-//        // TODO remote에서 특정 식당 메뉴정보 불러오기
-//        _menu.value = listOf(
-//            MenuInfo(
-//                "1",
-//                "연어 샐러디",
-//                "https://salady.com/superboard/data/product/thumb/3731617857_Xhu5dfOk_695bba70202d8f821fc2862641575ddced9316e9.jpg",
-//                8400,
-//                245,
-//                26,
-//                true
-//            ),
-//            MenuInfo(
-//                "2",
-//                "탄단지 샐러디",
-//                "https://salady.com/superboard/data/product/thumb/3731617857_BfKg76Zq_efc7ededf088253bbceff22901cd7cf02baac553.jpg",
-//                7600,
-//                270,
-//                27,
-//                true
-//            ),
-//            MenuInfo(
-//                "3",
-//                "리코타 치즈 샐러디",
-//                "https://salady.com/superboard/data/product/thumb/3731617857_zB4Hvtl7_a207fa684b30ebe9b56981dc1d88a1e5ae47322f.jpg",
-//                8100,
-//                462,
-//                26,
-//                true
-//            ),
-//            MenuInfo(
-//                "4",
-//                "콥 샐러디",
-//                "https://salady.com/superboard/data/product/thumb/3731617857_1epsjcm2_d79e57ca53061076a729c03d00aa123312ca9d0f.jpg",
-//                6300,
-//                23,
-//                22
-//            ),
-//            MenuInfo(
-//                "5",
-//                "치킨토마토 샌드위치",
-//                "https://salady.com/superboard/data/product/thumb/3731617857_P6qao2j4_1e3ff731c9a1d91414ac0bbc9ea101dc885d6bd5.jpg",
-//                8200,
-//                24,
-//                23
-//            ),
-//            MenuInfo(
-//                "6",
-//                "맥시칸 랩",
-//                "https://salady.com/superboard/data/product/thumb/3731617857_gzSGH7wP_0faa0c8288336e920f21d8502e96c302a2b0c3f2.png",
-//                8200,
-//                25,
-//                24
-//            ),
-//            MenuInfo("7", "할라피뇨치킨 웜랩", null, 8200, 25, 24),
-//            MenuInfo("8", "포테이토 피자", null, 15200, 25, 24)
-//        )
-//    }
-
-//    private fun fetchMenuList() {
-//        // TODO remote에서 특정 식당 메뉴정보 불러오기
-//        _menu.value = listOf(
-//            MenuInfo(1, "연어 샐러디", "https://salady.com/superboard/data/product/thumb/3731617857_Xhu5dfOk_695bba70202d8f821fc2862641575ddced9316e9.jpg", 8400, 24, 26, 15, null, 50, true),
-//            MenuInfo(2, "탄단지 샐러디", "https://salady.com/superboard/data/product/thumb/3731617857_BfKg76Zq_efc7ededf088253bbceff22901cd7cf02baac553.jpg", 7600, 27, 27, 18, 371, 60, true),
-//            MenuInfo(3, "리코타 치즈 샐러디", "https://salady.com/superboard/data/product/thumb/3731617857_zB4Hvtl7_a207fa684b30ebe9b56981dc1d88a1e5ae47322f.jpg", 8100, 25, 26, 24, 462, 70, true),
-//            MenuInfo(4, "콥 샐러디", "https://salady.com/superboard/data/product/thumb/3731617857_1epsjcm2_d79e57ca53061076a729c03d00aa123312ca9d0f.jpg", 6300, 23, 22, 15, 291, 70, true),
-//            MenuInfo(5, "치킨토마토 샌드위치", "https://salady.com/superboard/data/product/thumb/3731617857_P6qao2j4_1e3ff731c9a1d91414ac0bbc9ea101dc885d6bd5.jpg", 8200, 24, 23, 16, 307, 60),
-//            MenuInfo(6, "맥시칸 랩", "https://salady.com/superboard/data/product/thumb/3731617857_gzSGH7wP_0faa0c8288336e920f21d8502e96c302a2b0c3f2.png", 8200, 25, 24, 18, 307, 40),
-//            MenuInfo(7, "할라피뇨치킨 웜랩", null, 8200, 25, 24, 18, 307, null),
-//            MenuInfo(8, "포테이토 피자", null, 15200, 25, 24, 18, 307, 40, isGeneralMenu = true)
-//        )
-//    }
-
-//    fun fetchEatingOutTips(restaurantId: String) {
-//        viewModelScope.launch(Dispatchers.IO) {
-//            _eatingOutTips.postValue(restaurantRepository.getEatingOutTips(restaurantId))
-//        }
-//    }
 }
