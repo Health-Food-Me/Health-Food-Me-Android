@@ -7,13 +7,13 @@
 
         <variable
             name="viewModel"
-            type="org.helfoome.presentation.WithdrawalViewModel" />
+            type="org.helfoome.presentation.withdrawal.WithdrawalViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".presentation.WithdrawalActivity">
+        tools:context=".presentation.withdrawal.WithdrawalActivity">
 
         <ImageView
             android:id="@+id/iv_back"

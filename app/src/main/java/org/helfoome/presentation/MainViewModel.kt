@@ -14,8 +14,10 @@ import org.helfoome.domain.repository.MapRepository
 import org.helfoome.domain.repository.ProfileRepository
 import org.helfoome.domain.repository.RestaurantRepository
 import org.helfoome.domain.repository.ReviewRepository
+import org.helfoome.domain.usecase.ScrapListUseCase
 import org.helfoome.presentation.type.ReviewType
 import org.helfoome.util.Event
+import org.helfoome.util.ext.markerFilter
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -26,8 +28,11 @@ class MainViewModel @Inject constructor(
     private val restaurantRepository: RestaurantRepository,
     private val reviewRepository: ReviewRepository,
     private val mapRepository: MapRepository,
+    private val scrapListUseCase: ScrapListUseCase,
     private val hfmSharedPreference: HFMSharedPreference,
 ) : ViewModel() {
+    private val _scrapList = MutableLiveData<List<MarkerInfo>>()
+    val scrapList: LiveData<List<MarkerInfo>> = _scrapList
     private val _checkReview = MutableLiveData<Boolean>()
     val checkReview: LiveData<Boolean> = _checkReview
     private val _location = MutableLiveData<List<MarkerInfo>>()
@@ -66,6 +71,20 @@ class MainViewModel @Inject constructor(
     init {
         fetchHFMReviewList()
         fetchBlogReviewList()
+    }
+
+    fun getScrapList() {
+        viewModelScope.launch {
+            scrapListUseCase.execute(hfmSharedPreference.id)
+                .onSuccess {
+                    _scrapList.value = _location.value?.markerFilter(
+                        it.map {
+                            it.id
+                        }
+                    )
+                }
+                .onFailure { }
+        }
     }
 
     fun getReviewCheck(restaurantId: String) {

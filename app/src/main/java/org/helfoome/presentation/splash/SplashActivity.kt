@@ -1,4 +1,4 @@
-package org.helfoome.presentation
+package org.helfoome.presentation.splash
 
 import android.os.Bundle
 import androidx.lifecycle.lifecycleScope
@@ -7,7 +7,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.helfoome.R
-import org.helfoome.SplashSecondActivity
 import org.helfoome.data.local.HFMSharedPreference
 import org.helfoome.databinding.ActivitySplashBinding
 import org.helfoome.util.binding.BindingActivity

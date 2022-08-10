@@ -9,8 +9,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
-import android.view.animation.Animation
-import android.view.animation.AnimationUtils
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
@@ -55,6 +53,7 @@ import org.helfoome.presentation.type.HashtagViewType
 import org.helfoome.util.ChipFactory
 import org.helfoome.util.DialogUtil
 import org.helfoome.util.ResolutionMetrics
+import org.helfoome.util.SnackBarTopDown
 import org.helfoome.util.binding.BindingActivity
 import org.helfoome.util.ext.makeTransparentStatusBar
 import org.helfoome.util.ext.startActivity
@@ -116,19 +115,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
     private val requestModifyNickname =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
             if (activityResult.resultCode == Activity.RESULT_OK) {
-                val animation = AnimationUtils.loadAnimation(this, R.anim.anim_snackbar_top_down)
-                binding.snvProfileModify.animation = animation
-                binding.snvProfileModify.setText("닉네임이 변경되었습니다")
-                animation.setAnimationListener(object : Animation.AnimationListener {
-                    override fun onAnimationStart(animation: Animation?) = Unit
-                    override fun onAnimationEnd(animation: Animation?) {
-                        val bottomTopAnimation = AnimationUtils.loadAnimation(this@MainActivity, R.anim.anim_snackbar_bottom_top)
-                        binding.snvProfileModify.animation = bottomTopAnimation
-                        binding.snvProfileModify.setText("닉네임이 변경되었습니다")
-                    }
-
-                    override fun onAnimationRepeat(p0: Animation?) = Unit
-                })
+                SnackBarTopDown.makeSnackBarTopDown(this, binding.snvProfileModify, "닉네임이 변경되었습니다")
             }
         }
 
@@ -143,19 +130,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
             if (activityResult.resultCode == Activity.RESULT_OK) {
                 viewModel.fetchHFMReviewList()
-                val animation = AnimationUtils.loadAnimation(this, R.anim.anim_snackbar_top_down)
-                binding.snvProfileModify.animation = animation
-                binding.snvProfileModify.setText("리뷰가 작성되었습니다")
-                animation.setAnimationListener(object : Animation.AnimationListener {
-                    override fun onAnimationStart(animation: Animation?) = Unit
-                    override fun onAnimationEnd(animation: Animation?) {
-                        val bottomTopAnimation = AnimationUtils.loadAnimation(this@MainActivity, R.anim.anim_snackbar_bottom_top)
-                        binding.snvProfileModify.animation = bottomTopAnimation
-                        binding.snvProfileModify.setText("리뷰가 작성되었습니다")
-                    }
-
-                    override fun onAnimationRepeat(p0: Animation?) = Unit
-                })
+                SnackBarTopDown.makeSnackBarTopDown(this, binding.snvProfileModify, "리뷰가 작성되었습니다")
                 val data = activityResult.data ?: return@registerForActivityResult
             }
         }
@@ -250,15 +225,22 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
         viewModel.getProfile()
     }
 
+    private fun startScrapEvent(isSelected: Boolean) {
+        if (isSelected)
+            viewModel.getScrapList()
+        else
+            viewModel.getMapInfo(naverMap.cameraPosition.target)
+    }
+
     private fun initListeners() {
         binding.btnBookmark.setOnClickListener {
-            showScarpSnackBar()
             it.isSelected = !it.isSelected
+            startScrapEvent(it.isSelected)
         }
 
         binding.btnBookmarkMain.setOnClickListener {
-            showScarpSnackBar()
             it.isSelected = !it.isSelected
+            startScrapEvent(it.isSelected)
         }
 
         binding.btnHamburger.setOnClickListener {
@@ -395,6 +377,51 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                 if (it.peekContent()) View.VISIBLE else View.INVISIBLE
         }
 
+        viewModel.scrapList.observe(this) { markers ->
+            if (markers.isEmpty())
+                showScarpSnackBar()
+            markerList.forEach {
+                it.first.map = null
+            }
+            markerList = markers.map { marker ->
+                Pair(
+                    Marker().apply {
+                        position = LatLng(marker.latitude, marker.longitude)
+                        icon = OverlayImage.fromResource(
+                            if (marker.isDietRestaurant) R.drawable.ic_marker_green_small
+                            else R.drawable.ic_marker_red_small
+                        )
+                        map = naverMap
+
+                        setOnClickListener {
+                            viewModel.getReviewCheck(marker.id)
+                            viewModel.fetchSelectedRestaurantDetailInfo(
+                                marker.id,
+                                locationSource.lastLocation?.latitude ?: marker.latitude,
+                                locationSource.lastLocation?.longitude ?: marker.longitude
+                            )
+
+                            behavior.state = BottomSheetBehavior.STATE_COLLAPSED
+                            binding.isMainNotVisible = true
+                            markerList.forEach {
+                                it.first.icon = OverlayImage.fromResource(
+                                    if (it.second) R.drawable.ic_marker_green_small
+                                    else R.drawable.ic_marker_red_small
+                                )
+                            }
+                            icon = OverlayImage.fromResource(
+                                if (marker.isDietRestaurant) R.drawable.ic_marker_green_big
+                                else R.drawable.ic_marker_red_big
+                            )
+                            viewModel.markerId(this.position)?.let { id -> }
+                            true
+                        }
+                    },
+                    marker.isDietRestaurant
+                )
+            }
+        }
+
         viewModel.location.observe(this) { markers ->
             markerList.forEach {
                 it.first.map = null
@@ -490,7 +517,6 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                 cameraPosition = CameraPosition(
                     LatLng(GANGNAM_X, GANGNAM_Y), 12.0
                 )
-                locationTrackingMode = LocationTrackingMode.Follow
             } else {
                 cameraPosition = CameraPosition(LatLng(GANGNAM_X, GANGNAM_Y), 12.0)
             }
@@ -500,22 +526,13 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
         }
         binding.btnLocation.setOnClickListener {
             naverMap.cameraPosition =
-                CameraPosition(LatLng(naverMap.cameraPosition.target.latitude, naverMap.cameraPosition.target.longitude), 14.0)
-            naverMap.locationTrackingMode = LocationTrackingMode.Follow
+                CameraPosition(LatLng(GANGNAM_X, GANGNAM_Y), 14.0)
         }
-        viewModel.getMapInfo(naverMap.cameraPosition.target, category)
+        viewModel.getMapInfo(naverMap.cameraPosition.target)
         binding.btnLocationMain.setOnClickListener {
             naverMap.cameraPosition =
-                CameraPosition(LatLng(naverMap.cameraPosition.target.latitude, naverMap.cameraPosition.target.longitude), 14.0)
-            naverMap.locationTrackingMode = LocationTrackingMode.Follow
+                CameraPosition(LatLng(GANGNAM_X, GANGNAM_Y), 14.0)
         }
-        viewModel.getMapInfo(
-            LatLng(
-                naverMap.cameraPosition.target.latitude,
-                naverMap.cameraPosition.target.longitude
-            ),
-            category
-        )
     }
 
     override fun onRequestPermissionsResult(
