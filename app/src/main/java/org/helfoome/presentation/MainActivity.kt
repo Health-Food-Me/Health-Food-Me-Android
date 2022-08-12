@@ -219,6 +219,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
     override fun onResume() {
         super.onResume()
         viewModel.getProfile()
+        viewModel.getReviewCheck(viewModel.restaurantId.value ?: "")
     }
 
     override fun onRestart() {
@@ -387,8 +388,8 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                         map = naverMap
 
                         setOnClickListener {
-                            hfmSharedPreference.restaurantId = marker.id
-                            viewModel.getReviewCheck(hfmSharedPreference.restaurantId)
+                            viewModel.restaurantId.value = marker.id
+                            viewModel.getReviewCheck(marker.id)
                             viewModel.fetchSelectedRestaurantDetailInfo(
                                 marker.id,
                                 locationSource.lastLocation?.latitude ?: marker.latitude,
@@ -431,6 +432,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                         map = naverMap
 
                         setOnClickListener {
+                            viewModel.restaurantId.value = marker.id
                             viewModel.getReviewCheck(marker.id)
                             viewModel.fetchSelectedRestaurantDetailInfo(
                                 marker.id,

@@ -66,10 +66,17 @@ class MainViewModel @Inject constructor(
     private val _eatingOutTips = MutableLiveData<EatingOutTipInfo>()
     val eatingOutTips get() = _eatingOutTips
 
+    private val _restaurantId = MutableLiveData<String>()
+    val restaurantId get() = _restaurantId
+
     init {
 //        fetchMenuList()
         fetchHFMReviewList()
         fetchBlogReviewList()
+    }
+
+    fun setRestaurantId(restaurantId: String) {
+        _restaurantId.value = restaurantId
     }
 
     fun getScrapList() {
