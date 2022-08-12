@@ -42,6 +42,8 @@ class MainViewModel @Inject constructor(
     val cameraZoom: MutableLiveData<Event<Int>> = _cameraZoom
     private val _selectedRestaurant = MutableLiveData<RestaurantInfo>()
     val selectedRestaurant get() = _selectedRestaurant
+    private val _restaurantId = MutableLiveData<String>()
+    val restaurantId get() = _restaurantId
 
     private val _isExpandedDialog = MutableLiveData<Event<Boolean>>()
     val isExpandedDialog: LiveData<Event<Boolean>> get() = _isExpandedDialog
@@ -65,9 +67,6 @@ class MainViewModel @Inject constructor(
     val menu: LiveData<List<MenuInfo>> = _menu
     private val _eatingOutTips = MutableLiveData<EatingOutTipInfo>()
     val eatingOutTips get() = _eatingOutTips
-
-    private val _restaurantId = MutableLiveData<String>()
-    val restaurantId get() = _restaurantId
 
     init {
 //        fetchMenuList()
