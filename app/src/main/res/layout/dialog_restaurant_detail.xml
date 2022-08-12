@@ -379,7 +379,7 @@
                 style="@style/Button.FullButton.Style"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/review_writing_write_btn_text"
+                android:text='@{viewModel.checkReview ? "리뷰 쓰기 완료" : "리뷰 쓰기"}'
                 app:layout_constraintBottom_toBottomOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
