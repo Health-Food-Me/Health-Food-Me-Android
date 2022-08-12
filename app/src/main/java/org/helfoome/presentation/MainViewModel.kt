@@ -75,10 +75,6 @@ class MainViewModel @Inject constructor(
         fetchBlogReviewList()
     }
 
-    fun setRestaurantId(restaurantId: String) {
-        _restaurantId.value = restaurantId
-    }
-
     fun getScrapList() {
         viewModelScope.launch {
             scrapListUseCase.execute(hfmSharedPreference.id)
