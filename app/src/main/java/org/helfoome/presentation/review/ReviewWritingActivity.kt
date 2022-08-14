@@ -78,6 +78,7 @@ class ReviewWritingActivity : BindingActivity<ActivityReviewWritingBinding>(R.la
     private fun initObservers() {
         viewModel.isEnabledWritingCompleteButton.observe(this) { isEnabled ->
             if (isEnabled) {
+                setResult(Activity.RESULT_OK)
                 viewModel.uploadReview(context, binding.ratingBar.rating, galleryImageAdapter.imageList)
             } else {
                 showToast(getString(R.string.review_writing_complete_condition_toast_text))

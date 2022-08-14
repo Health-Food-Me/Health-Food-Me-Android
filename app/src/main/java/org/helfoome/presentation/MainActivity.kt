@@ -100,9 +100,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                 }
             }
         }
-
-        override fun onSlide(bottomSheetView: View, slideOffset: Float) {
-        }
+        override fun onSlide(bottomSheetView: View, slideOffset: Float) = Unit
     }
 
     private var markerList: List<Pair<Marker, Boolean>> = listOf()
@@ -127,6 +125,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
             if (activityResult.resultCode == Activity.RESULT_OK) {
                 viewModel.fetchHFMReviewList()
+                viewModel.getReviewCheck(viewModel.restaurantId.value ?: "")
                 SnackBarTopDown.makeSnackBarTopDown(this, binding.snvProfileModify, "리뷰가 작성되었습니다")
                 val data = activityResult.data ?: return@registerForActivityResult
             }
@@ -140,6 +139,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
         super.onCreate(savedInstanceState)
         binding.viewModel = viewModel
         binding.layoutDrawerHeader.drawerViewModel = viewModel
+
         window.makeTransparentStatusBar()
 
         locationSource = FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE)
@@ -167,6 +167,18 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
         behavior.addBottomSheetCallback(bottomSheetCallback)
         binding.layoutRestaurantDialog.layoutRestaurantTabMenu.addOnTabSelectedListener(tabSelectedListener)
         binding.layoutRestaurantDialog.layoutAppBar.addOnOffsetChangedListener(appbarOffsetListener)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.getProfile()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        behavior.removeBottomSheetCallback(bottomSheetCallback)
+        binding.layoutRestaurantDialog.layoutRestaurantTabMenu.removeOnTabSelectedListener(tabSelectedListener)
+        binding.layoutRestaurantDialog.layoutAppBar.removeOnOffsetChangedListener(appbarOffsetListener)
     }
 
     private fun initView() {
@@ -210,16 +222,6 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                 )
             }
         }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        viewModel.getProfile()
-    }
-
-    override fun onRestart() {
-        super.onRestart()
-        viewModel.getProfile()
     }
 
     private fun startScrapEvent(isSelected: Boolean) {
@@ -392,13 +394,15 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                         map = naverMap
 
                         setOnClickListener {
-                            viewModel.getReviewCheck(marker.id)
-                            viewModel.fetchSelectedRestaurantDetailInfo(
-                                marker.id,
-                                locationSource.lastLocation?.latitude ?: marker.latitude,
-                                locationSource.lastLocation?.longitude ?: marker.longitude
-                            )
-
+                            with(viewModel) {
+                                setRestaurantId(marker.id)
+                                getReviewCheck(marker.id)
+                                fetchSelectedRestaurantDetailInfo(
+                                    marker.id,
+                                    locationSource.lastLocation?.latitude ?: marker.latitude,
+                                    locationSource.lastLocation?.longitude ?: marker.longitude
+                                )
+                            }
                             behavior.state = BottomSheetBehavior.STATE_COLLAPSED
                             binding.isMainNotVisible = true
                             markerList.forEach {
@@ -435,13 +439,15 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                         map = naverMap
 
                         setOnClickListener {
-                            viewModel.getReviewCheck(marker.id)
-                            viewModel.setSelectedLocationPoint(marker.latitude, marker.longitude)
-                            viewModel.fetchSelectedRestaurantDetailInfo(
-                                marker.id,
-                                locationSource.lastLocation?.latitude ?: marker.latitude,
-                                locationSource.lastLocation?.longitude ?: marker.longitude
-                            )
+                            with(viewModel) {
+                                setRestaurantId(marker.id)
+                                getReviewCheck(marker.id)
+                                fetchSelectedRestaurantDetailInfo(
+                                    marker.id,
+                                    locationSource.lastLocation?.latitude ?: marker.latitude,
+                                    locationSource.lastLocation?.longitude ?: marker.longitude
+                                )
+                            }
 
                             behavior.state = BottomSheetBehavior.STATE_COLLAPSED
                             binding.isMainNotVisible = true
@@ -479,13 +485,6 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
             BottomSheetBehavior.STATE_EXPANDED -> behavior.state = BottomSheetBehavior.STATE_COLLAPSED
             BottomSheetBehavior.STATE_HIDDEN -> super.onBackPressed()
         }
-    }
-
-    override fun onStop() {
-        super.onStop()
-        behavior.removeBottomSheetCallback(bottomSheetCallback)
-        binding.layoutRestaurantDialog.layoutRestaurantTabMenu.removeOnTabSelectedListener(tabSelectedListener)
-        binding.layoutRestaurantDialog.layoutAppBar.removeOnOffsetChangedListener(appbarOffsetListener)
     }
 
     private fun initNaverMap() {

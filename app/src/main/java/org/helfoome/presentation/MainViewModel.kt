@@ -24,7 +24,6 @@ import javax.inject.Inject
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val profileRepository: ProfileRepository,
-    private val sharedPreferences: HFMSharedPreference,
     private val restaurantRepository: RestaurantRepository,
     private val reviewRepository: ReviewRepository,
     private val mapRepository: MapRepository,
@@ -43,6 +42,8 @@ class MainViewModel @Inject constructor(
     val cameraZoom: MutableLiveData<Event<Int>> = _cameraZoom
     private val _selectedRestaurant = MutableLiveData<RestaurantInfo>()
     val selectedRestaurant get() = _selectedRestaurant
+    private val _restaurantId = MutableLiveData<String>()
+    val restaurantId: LiveData<String> get() = _restaurantId
 
     private var _selectedRestaurantPoint = MutableLiveData<LocationPointInfo>()
     val selectedRestaurantPoint: LiveData<LocationPointInfo> get() = _selectedRestaurantPoint
@@ -77,6 +78,10 @@ class MainViewModel @Inject constructor(
         fetchBlogReviewList()
     }
 
+    fun setRestaurantId(restaurantId: String) {
+        _restaurantId.value = restaurantId
+    }
+
     fun getScrapList() {
         viewModelScope.launch {
             scrapListUseCase.execute(hfmSharedPreference.id)
@@ -93,7 +98,7 @@ class MainViewModel @Inject constructor(
 
     fun getReviewCheck(restaurantId: String) {
         viewModelScope.launch {
-            runCatching { reviewRepository.getReviewCheck(sharedPreferences.id, restaurantId) }
+            runCatching { reviewRepository.getReviewCheck(hfmSharedPreference.id, restaurantId) }
                 .onSuccess {
                     _checkReview.value = it.data.hasReview
                 }.onFailure {
@@ -123,7 +128,7 @@ class MainViewModel @Inject constructor(
 
     fun getProfile() {
         viewModelScope.launch {
-            runCatching { profileRepository.getProfile(sharedPreferences.id) }
+            runCatching { profileRepository.getProfile(hfmSharedPreference.id) }
                 .onSuccess {
                     _nickname.value = it.data.name
                 }
