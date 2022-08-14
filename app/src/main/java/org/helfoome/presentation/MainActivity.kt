@@ -14,6 +14,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.add
 import androidx.fragment.app.commit
@@ -287,7 +288,11 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                 controlHamburger.launch(Intent(this@MainActivity, MyReviewActivity::class.java))
             }
             tvScrap.setOnClickListener {
-                controlHamburger.launch(Intent(this@MainActivity, MyScrapActivity::class.java))
+                controlHamburger.launch(
+                    Intent(this@MainActivity, MyScrapActivity::class.java).apply {
+                        putExtras(bundleOf(Pair(MARKER_INFO, viewModel.location.value)))
+                    }
+                )
             }
             tvReport.setOnClickListener {
                 sendGmail()

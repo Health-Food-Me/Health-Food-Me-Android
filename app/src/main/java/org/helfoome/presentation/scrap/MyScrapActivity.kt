@@ -11,16 +11,20 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import org.helfoome.R
 import org.helfoome.databinding.ActivityMyScrapBinding
+import org.helfoome.domain.entity.MarkerInfo
+import org.helfoome.presentation.MainActivity.Companion.MARKER_INFO
 import org.helfoome.presentation.scrap.adapter.MyScrapAdapter
 import org.helfoome.util.binding.BindingActivity
+import org.helfoome.util.ext.startActivity
 
 @AndroidEntryPoint
 class MyScrapActivity : BindingActivity<ActivityMyScrapBinding>(R.layout.activity_my_scrap) {
     private val viewModel: ScrapViewModel by viewModels()
+
     private val myScrapAdapter = MyScrapAdapter(
         {
             // TODO : 다음 액티비티에서 받아서 그려줌
-            // startActivity<MapSelectActivity>(Pair("RESTAURANT_ID", it))
+            startActivity<MapSelectActivity>(Pair("RESTAURANT_ID", it), Pair(MARKER_INFO, viewModel.scrapMarkerList.value))
         }
     ) {
         viewModel.putScrap(it)
@@ -29,21 +33,37 @@ class MyScrapActivity : BindingActivity<ActivityMyScrapBinding>(R.layout.activit
     // TODO : 서버 통신 연동 필요
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        initView()
+        initClickEvent()
+        observeData()
+    }
+
+    private fun initView() {
+        intent.getParcelableArrayListExtra<MarkerInfo>(MARKER_INFO)?.let { viewModel.setMapInfo(it) }
         viewModel.getScrapList()
         initAdapter()
+    }
+
+    private fun initClickEvent() {
         with(binding) {
             toolbarScrap.setNavigationOnClickListener {
-                setResult(Activity.RESULT_OK)
-                finish()
+                finishMyScrap()
             }
-            observeData()
 
             layoutEmpty.btnScrap.setOnClickListener {
                 // TODO : 홈으로 가서 지도 띄워주기
-                setResult(Activity.RESULT_OK)
-                finish()
+                finishMyScrap()
+            }
+
+            btnQuit.setOnClickListener {
+                finishMyScrap()
             }
         }
+    }
+
+    private fun finishMyScrap() {
+        setResult(Activity.RESULT_OK)
+        finish()
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
