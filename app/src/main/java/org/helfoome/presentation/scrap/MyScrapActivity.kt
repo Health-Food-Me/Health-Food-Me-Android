@@ -47,21 +47,23 @@ class MyScrapActivity : BindingActivity<ActivityMyScrapBinding>(R.layout.activit
     private fun initClickEvent() {
         with(binding) {
             toolbarScrap.setNavigationOnClickListener {
-                setResult(Activity.RESULT_OK)
-                finish()
+                finishMyScrap()
             }
 
             layoutEmpty.btnScrap.setOnClickListener {
                 // TODO : 홈으로 가서 지도 띄워주기
-                setResult(Activity.RESULT_OK)
-                finish()
+                finishMyScrap()
             }
 
             ibQuit.setOnClickListener {
-                setResult(Activity.RESULT_OK)
-                finish()
+                finishMyScrap()
             }
         }
+    }
+
+    private fun finishMyScrap() {
+        setResult(Activity.RESULT_OK)
+        finish()
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
