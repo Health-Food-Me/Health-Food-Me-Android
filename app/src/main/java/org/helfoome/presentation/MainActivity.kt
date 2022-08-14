@@ -64,7 +64,6 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
     lateinit var resolutionMetrics: ResolutionMetrics
     private val viewModel: MainViewModel by viewModels()
     private var category: String? = null
-    private lateinit var hfmSharedPreference: HFMSharedPreference
     private lateinit var behavior: BottomSheetBehavior<ConstraintLayout>
     private var mapSelectionBottomDialog: MapSelectionBottomDialogFragment? = null
     private val tabSelectedListener = object : TabLayout.OnTabSelectedListener {
@@ -101,9 +100,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                 }
             }
         }
-
-        override fun onSlide(bottomSheetView: View, slideOffset: Float) {
-        }
+        override fun onSlide(bottomSheetView: View, slideOffset: Float) = Unit
     }
 
     private var markerList: List<Pair<Marker, Boolean>> = listOf()
@@ -139,7 +136,6 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        hfmSharedPreference = HFMSharedPreference(this@MainActivity)
         binding.viewModel = viewModel
         binding.layoutDrawerHeader.drawerViewModel = viewModel
 
@@ -170,6 +166,19 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
         behavior.addBottomSheetCallback(bottomSheetCallback)
         binding.layoutRestaurantDialog.layoutRestaurantTabMenu.addOnTabSelectedListener(tabSelectedListener)
         binding.layoutRestaurantDialog.layoutAppBar.addOnOffsetChangedListener(appbarOffsetListener)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.getProfile()
+        viewModel.getReviewCheck(viewModel.restaurantId.value ?: "")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        behavior.removeBottomSheetCallback(bottomSheetCallback)
+        binding.layoutRestaurantDialog.layoutRestaurantTabMenu.removeOnTabSelectedListener(tabSelectedListener)
+        binding.layoutRestaurantDialog.layoutAppBar.removeOnOffsetChangedListener(appbarOffsetListener)
     }
 
     private fun initView() {
@@ -213,17 +222,6 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                 )
             }
         }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        viewModel.getProfile()
-        viewModel.getReviewCheck(viewModel.restaurantId.value ?: "")
-    }
-
-    override fun onRestart() {
-        super.onRestart()
-        viewModel.getProfile()
     }
 
     private fun startScrapEvent(isSelected: Boolean) {
@@ -387,14 +385,15 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                         map = naverMap
 
                         setOnClickListener {
-                            viewModel.restaurantId.value = marker.id
-                            viewModel.getReviewCheck(marker.id)
-                            viewModel.fetchSelectedRestaurantDetailInfo(
-                                marker.id,
-                                locationSource.lastLocation?.latitude ?: marker.latitude,
-                                locationSource.lastLocation?.longitude ?: marker.longitude
-                            )
-
+                            with(viewModel) {
+                                setRestaurantId(marker.id)
+                                getReviewCheck(marker.id)
+                                fetchSelectedRestaurantDetailInfo(
+                                    marker.id,
+                                    locationSource.lastLocation?.latitude ?: marker.latitude,
+                                    locationSource.lastLocation?.longitude ?: marker.longitude
+                                )
+                            }
                             behavior.state = BottomSheetBehavior.STATE_COLLAPSED
                             binding.isMainNotVisible = true
                             markerList.forEach {
@@ -431,14 +430,15 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                         map = naverMap
 
                         setOnClickListener {
-                            viewModel.restaurantId.value = marker.id
-                            viewModel.getReviewCheck(marker.id)
-                            viewModel.fetchSelectedRestaurantDetailInfo(
-                                marker.id,
-                                locationSource.lastLocation?.latitude ?: marker.latitude,
-                                locationSource.lastLocation?.longitude ?: marker.longitude
-                            )
-
+                            with(viewModel) {
+                                setRestaurantId(marker.id)
+                                getReviewCheck(marker.id)
+                                fetchSelectedRestaurantDetailInfo(
+                                    marker.id,
+                                    locationSource.lastLocation?.latitude ?: marker.latitude,
+                                    locationSource.lastLocation?.longitude ?: marker.longitude
+                                )
+                            }
                             behavior.state = BottomSheetBehavior.STATE_COLLAPSED
                             binding.isMainNotVisible = true
                             markerList.forEach {
@@ -475,13 +475,6 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
             BottomSheetBehavior.STATE_EXPANDED -> behavior.state = BottomSheetBehavior.STATE_COLLAPSED
             BottomSheetBehavior.STATE_HIDDEN -> super.onBackPressed()
         }
-    }
-
-    override fun onStop() {
-        super.onStop()
-        behavior.removeBottomSheetCallback(bottomSheetCallback)
-        binding.layoutRestaurantDialog.layoutRestaurantTabMenu.removeOnTabSelectedListener(tabSelectedListener)
-        binding.layoutRestaurantDialog.layoutAppBar.removeOnOffsetChangedListener(appbarOffsetListener)
     }
 
     private fun initNaverMap() {
