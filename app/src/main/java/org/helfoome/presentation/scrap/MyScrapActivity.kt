@@ -55,7 +55,7 @@ class MyScrapActivity : BindingActivity<ActivityMyScrapBinding>(R.layout.activit
                 finishMyScrap()
             }
 
-            ibQuit.setOnClickListener {
+            btnQuit.setOnClickListener {
                 finishMyScrap()
             }
         }
