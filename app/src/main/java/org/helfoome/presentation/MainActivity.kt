@@ -124,6 +124,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
             if (activityResult.resultCode == Activity.RESULT_OK) {
                 viewModel.fetchHFMReviewList()
+                viewModel.getReviewCheck(viewModel.restaurantId.value ?: "")
                 SnackBarTopDown.makeSnackBarTopDown(this, binding.snvProfileModify, "리뷰가 작성되었습니다")
                 val data = activityResult.data ?: return@registerForActivityResult
             }
@@ -170,7 +171,6 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
     override fun onResume() {
         super.onResume()
         viewModel.getProfile()
-        viewModel.getReviewCheck(viewModel.restaurantId.value ?: "")
     }
 
     override fun onStop() {
