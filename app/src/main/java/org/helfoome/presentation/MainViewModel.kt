@@ -43,7 +43,7 @@ class MainViewModel @Inject constructor(
     private val _selectedRestaurant = MutableLiveData<RestaurantInfo>()
     val selectedRestaurant get() = _selectedRestaurant
     private val _restaurantId = MutableLiveData<String>()
-    val restaurantId get() = _restaurantId
+    val restaurantId: LiveData<String> get() = _restaurantId
 
     private val _isExpandedDialog = MutableLiveData<Event<Boolean>>()
     val isExpandedDialog: LiveData<Event<Boolean>> get() = _isExpandedDialog
@@ -72,6 +72,10 @@ class MainViewModel @Inject constructor(
 //        fetchMenuList()
         fetchHFMReviewList()
         fetchBlogReviewList()
+    }
+
+    fun setRestaurantId(restaurantId: String) {
+        _restaurantId.value = restaurantId
     }
 
     fun getScrapList() {
