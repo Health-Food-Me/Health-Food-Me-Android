@@ -1,47 +1,53 @@
 package org.helfoome.presentation.restaurant
 
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 import org.helfoome.databinding.DialogMapSelectionBinding
+import org.helfoome.domain.entity.LocationPointInfo
+import org.helfoome.presentation.MainViewModel
 
 @AndroidEntryPoint
 class MapSelectionBottomDialogFragment : BottomSheetDialogFragment() {
-    private lateinit var binding: DialogMapSelectionBinding
+    private var _binding: DialogMapSelectionBinding? = null
+    private val binding: DialogMapSelectionBinding get() = requireNotNull(_binding)
+    private val viewModel: MainViewModel by activityViewModels()
+    private lateinit var startPoint: LocationPointInfo
+    private lateinit var endPoint: LocationPointInfo
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        binding = DialogMapSelectionBinding.inflate(inflater, container, false)
+        _binding = DialogMapSelectionBinding.inflate(inflater, container, false)
         return binding.root
-    }
-
-    override fun onStart() {
-        super.onStart()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        startPoint = viewModel.currentPoint.value ?: return
+        endPoint = viewModel.selectedRestaurantPoint.value ?: return
 
         addListeners()
     }
 
     private fun addListeners() {
         binding.tvKakao.setOnClickListener {
-            val kakaoMapScheme = "kakaomap://route?sp=37.537229,127.005515&ep=37.4979502,127.0276368&by=PUBLICTRANSIT"
+            val kakaoMapScheme =
+                "kakaomap://route?sp=${startPoint.lat},${startPoint.lng}&ep=${endPoint.lat},${endPoint.lng}&by=PUBLICTRANSIT"
             moveToUrl(kakaoMapScheme, "market://details?id=net.daum.android.map")
         }
         binding.tvNaver.setOnClickListener {
             val naverMapScheme =
-                "nmap://route/public?slat=37.4640070&slng=126.9522394&sname=%EC%84%9C%EC%9A%B8%EB%8C%80%ED%95%99%EA%B5%90&dlat=37.5209436&dlng=127.1230074&dname=%EC%98%AC%EB%A6%BC%ED%94%BD%EA%B3%B5%EC%9B%90&appname=org.sopt.healfoomedemo"
+                "nmap://route/public?slat=${startPoint.lat}&slng=${startPoint.lng}&dlat=${endPoint.lat}&dlng=${endPoint.lng}&appname=org.sopt.healfoomedemo"
             moveToUrl(naverMapScheme, "market://details?id=com.nhn.android.nmap")
         }
         binding.cancel.setOnClickListener {
@@ -53,12 +59,12 @@ class MapSelectionBottomDialogFragment : BottomSheetDialogFragment() {
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
         intent.addCategory(Intent.CATEGORY_BROWSABLE)
 
-        val list =
-            activity?.packageManager?.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY) ?: return
-        if (list.isEmpty()) {
-            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(marketUrl)))
-        } else {
-            startActivity(intent)
-        }
+        val list = requireActivity().packageManager.queryIntentActivities(intent, 0)
+        startActivity(if (list.isEmpty()) Intent(Intent.ACTION_VIEW, Uri.parse(marketUrl)) else intent)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
