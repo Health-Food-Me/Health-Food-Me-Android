@@ -111,6 +111,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
             if (activityResult.resultCode == Activity.RESULT_OK) {
                 SnackBarTopDown.makeSnackBarTopDown(this, binding.snvProfileModify, "닉네임이 변경되었습니다")
+                viewModel.getProfile()
             }
         }
 
@@ -167,11 +168,6 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
         behavior.addBottomSheetCallback(bottomSheetCallback)
         binding.layoutRestaurantDialog.layoutRestaurantTabMenu.addOnTabSelectedListener(tabSelectedListener)
         binding.layoutRestaurantDialog.layoutAppBar.addOnOffsetChangedListener(appbarOffsetListener)
-    }
-
-    override fun onResume() {
-        super.onResume()
-        viewModel.getProfile()
     }
 
     override fun onStop() {
