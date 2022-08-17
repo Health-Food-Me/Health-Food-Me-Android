@@ -1,76 +1,55 @@
 package org.helfoome.di
 
+import dagger.Binds
 import dagger.Module
-import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import org.helfoome.data.datasource.RemoteRestaurantDataSource
-import org.helfoome.data.datasource.RemoteScrapDataSource
-import org.helfoome.data.datasource.RemoteSearchDataSource
-import org.helfoome.data.local.HFMSharedPreference
-import org.helfoome.data.local.dao.SearchDao
 import org.helfoome.data.repository.*
-import org.helfoome.data.service.AuthService
-import org.helfoome.data.service.MapService
-import org.helfoome.data.service.RestaurantService
-import org.helfoome.data.service.ReviewService
 import org.helfoome.domain.repository.*
 import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object RepositoryModule {
-    @Provides
+interface RepositoryModule {
+    @Binds
     @Singleton
-    fun provideSearchRepository(
-        searchDao: SearchDao,
-        searchDataSource: RemoteSearchDataSource
-    ): SearchRepository =
-        SearchRepositoryImpl(searchDao, searchDataSource)
+    fun bindSearchRepository(
+        searchRepositoryImpl: SearchRepositoryImpl,
+    ): SearchRepository
+
+    @Binds
+    @Singleton
+    fun bindAuthRepository(
+        loginRepositoryImpl: LoginRepositoryImpl,
+    ): LoginRepository
 
     @Singleton
-    @Provides
-    fun provideAuthRepository(
-        authService: AuthService,
-    ): LoginRepository {
-        return LoginRepositoryImpl(authService)
-    }
+    @Binds
+    fun bindProfileRepository(
+        profileRepositoryImpl: ProfileRepositoryImpl,
+    ): ProfileRepository
 
+    @Binds
     @Singleton
-    @Provides
-    fun provideProfileRepository(
-        authService: AuthService
-    ): ProfileRepository {
-        return ProfileRepositoryImpl(authService)
-    }
+    fun bindRestaurantRepository(restaurantRepositoryImpl: RestaurantRepositoryImpl): RestaurantRepository
 
-    @Provides
+    @Binds
     @Singleton
-    fun provideRestaurantRepository(restaurantService: RestaurantService, dataSource: RemoteRestaurantDataSource): RestaurantRepository =
-        RestaurantRepositoryImpl(restaurantService, dataSource)
+    fun bindProfileModifyRepository(profileModifyRepositoryImpl: ProfileModifyRepositoryImpl): ProfileModifyRepository
 
-    @Provides
+    @Binds
     @Singleton
-    fun provideProfileModifyRepository(service: AuthService): ProfileModifyRepository =
-        ProfileModifyRepositoryImpl(service)
+    fun bindMapRepository(mapRepositoryImpl: MapRepositoryImpl): MapRepository
 
-    @Provides
+    @Binds
     @Singleton
-    fun provideMapRepository(service: MapService): MapRepository =
-        MapRepositoryImpl(service)
+    fun bindReviewRepository(reviewRepositoryImpl: ReviewRepositoryImpl): ReviewRepository
 
-    @Provides
+    @Binds
     @Singleton
-    fun provideReviewRepository(service: ReviewService): ReviewRepository =
-        ReviewRepositoryImpl(service)
+    fun bindWithdrawalRepository(withdrawalRepositoryImpl: WithdrawalRepositoryImpl): WithdrawalRepository
 
-    @Provides
+    @Binds
     @Singleton
-    fun provideWithdrawalRepository(service: AuthService, storage: HFMSharedPreference): WithdrawalRepository =
-        WithdrawalRepositoryImpl(service, storage)
-
-    @Provides
-    @Singleton
-    fun provideScrapRepository(dataSource: RemoteScrapDataSource): ScrapRepository =
-        ScrapRepositoryImpl(dataSource)
+    fun bindScrapRepository(scrapRepositoryImpl: ScrapRepositoryImpl): ScrapRepository
 }

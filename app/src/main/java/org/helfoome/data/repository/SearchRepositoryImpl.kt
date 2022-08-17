@@ -8,10 +8,11 @@ import org.helfoome.data.local.dao.SearchDao
 import org.helfoome.data.local.entity.SearchData
 import org.helfoome.domain.entity.RecentSearchInfo
 import org.helfoome.domain.repository.SearchRepository
+import javax.inject.Inject
 
-class SearchRepositoryImpl(
+class SearchRepositoryImpl @Inject constructor(
     private val searchDao: SearchDao,
-    private val searchDataSource: RemoteSearchDataSource
+    private val searchDataSource: RemoteSearchDataSource,
 ) : SearchRepository {
     override fun getRecentKeyword(): Flow<List<RecentSearchInfo>> = flow {
         searchDao.getAll().buffer().collect {
@@ -36,7 +37,7 @@ class SearchRepositoryImpl(
     override suspend fun getSearchRestaurantCard(
         longtitude: Double,
         latitude: Double,
-        keyword: String
+        keyword: String,
     ) = runCatching {
         searchDataSource.getSearchRestaurantCard(
             longtitude,
