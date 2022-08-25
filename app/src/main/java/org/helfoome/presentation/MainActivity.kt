@@ -389,6 +389,9 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                         )
                         map = naverMap
 
+                        isHideCollidedMarkers = true
+                        captionText = marker.name
+
                         setOnClickListener {
                             with(viewModel) {
                                 setRestaurantId(marker.id)
@@ -433,6 +436,9 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                             else R.drawable.ic_marker_red_small
                         )
                         map = naverMap
+
+                        isHideCollidedMarkers = true
+                        captionText = marker.name
 
                         setOnClickListener {
                             with(viewModel) {
