@@ -435,6 +435,9 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
                                             )
                                             map = naverMap
 
+                                            isHideCollidedMarkers = true
+                                            captionText = marker.name
+
                                             setOnClickListener {
                                                 searchViewModel.setDetail(true)
                                                 mainViewModel.getReviewCheck(marker.id)
