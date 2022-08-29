@@ -13,6 +13,7 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import org.helfoome.data.local.HFMSharedPreference
 import org.helfoome.data.service.ReviewService
 import org.helfoome.domain.entity.HFMReviewInfo
+import org.helfoome.domain.entity.MyReviewListInfo
 import org.helfoome.presentation.type.GoodPointHashtagType
 import org.helfoome.presentation.type.TasteHashtagType
 import org.helfoome.util.ContentUriRequestBody
@@ -26,13 +27,19 @@ class RestaurantReviewWritingViewModel @Inject constructor(
     private val _isReviewModify = MutableLiveData<Boolean>()
     val isReviewModify: LiveData<Boolean> = _isReviewModify
 
-    private val _reviewId = MutableLiveData<String>()
-    val reviewId get() = _reviewId
+//    private val _reviewId = MutableLiveData<String>()
+//    val reviewId get() = _reviewId
+
+    private var _restaurantTitle: String? = null
+    val restaurantTitle: String? get() = _restaurantTitle
+
+    private val _reviewInfo = MutableLiveData<MyReviewListInfo?>()
+    val reviewInfo get(): LiveData<MyReviewListInfo?> = _reviewInfo
 
     private val _restaurantId = MutableLiveData<String>()
     val restaurantId get() = _restaurantId
 
-    private val _review = MutableLiveData<String>()
+    private val _review = MutableLiveData<String>() // TODO _reviewInfo와 구분에 어려움이 있을 수 있으므로 변수명 수정 필요
     val review get() = _review
 
     private val _isEditMode = MutableLiveData<Boolean>()
@@ -59,8 +66,12 @@ class RestaurantReviewWritingViewModel @Inject constructor(
     private val _hfmReviews = MutableLiveData<HFMReviewInfo>()
     val hfmReviews: LiveData<HFMReviewInfo> = _hfmReviews
 
-    fun setReviewId(reviewId: String) {
-        _reviewId.value = reviewId
+    fun setReviewInfo(review: MyReviewListInfo, tasteTag: TasteHashtagType?, goodTags: List<GoodPointHashtagType?>) { // TODO need refactoring
+        _restaurantTitle = review.restaurant
+        _review.value = review.description
+        setSelectedTasteTag(tasteTag ?: return)
+        goodTags.forEach { setSelectedGoodPointTag(it ?: return) }
+
     }
 
     fun setEditMode(editMode: Boolean) {
@@ -80,7 +91,8 @@ class RestaurantReviewWritingViewModel @Inject constructor(
 
     fun checkReviewCompletion() {
         val review = review.value?.trim()
-        _isEnabledWritingCompleteButton.value = selectedTasteTag.value != null && selectedGoodPointTags.value?.containsValue(true) == true && !(review.isNullOrBlank())
+        _isEnabledWritingCompleteButton.value =
+            selectedTasteTag.value != null && selectedGoodPointTags.value?.containsValue(true) == true && !(review.isNullOrBlank())
     }
 
     // TODO delete
@@ -127,7 +139,7 @@ class RestaurantReviewWritingViewModel @Inject constructor(
         viewModelScope.launch {
             runCatching {
                 reviewService.putMyReviewEdit(
-                    _reviewId.value.toString(),
+                    reviewInfo.value?.id.toString(),
                     scoreRequestBody,
                     tasteRequestBody,
                     goodListMultipartBody,

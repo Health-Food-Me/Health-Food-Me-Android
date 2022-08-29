@@ -49,10 +49,9 @@ class MyReviewActivity : BindingActivity<ActivityMyReviewBinding>(R.layout.activ
                 dialog.dismiss()
             }
         },
-        { reviewId ->
+        { review ->
             val intent = Intent(this@MyReviewActivity, ReviewWritingActivity::class.java)
-            intent.putExtra("REVIEW_ID", reviewId)
-            intent.putExtra("REVIEW_TITLE", true)
+            intent.putExtra(ARG_REVIEW_INFO, review)
             requestModifyReview.launch(intent)
         }
     )
@@ -113,5 +112,9 @@ class MyReviewActivity : BindingActivity<ActivityMyReviewBinding>(R.layout.activ
     override fun onStart() {
         super.onStart()
         viewModel.getMyReviewList()
+    }
+
+    companion object {
+        private const val ARG_REVIEW_INFO = "reviewInfo"
     }
 }

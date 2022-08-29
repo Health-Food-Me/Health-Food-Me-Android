@@ -163,12 +163,12 @@
     <string name="review_writing_review_title">후기를 남겨주세요</string>
     <string name="review_writing_review_description">식당 이용 후기, 메뉴추천, 꿀팁 등 자유롭게 작성해주세요!</string>
 
-    <string name="review_writing_taste_hashtag_taste_good"># 맛 최고</string>
-    <string name="review_writing_taste_hashtag_taste_not_bad"># 맛 그럭저럭</string>
-    <string name="review_writing_taste_hashtag_taste_bad"># 맛 별로예요</string>
-    <string name="review_writing_taste_hashtag_taste_no_burden"># 약속 시 부담 없는</string>
-    <string name="review_writing_taste_hashtag_taste_easy_to_control"># 양 조절 쉬운</string>
-    <string name="review_writing_taste_hashtag_full"># 든든한</string>
+    <string name="review_writing_taste_hashtag_taste_good">맛 최고</string>
+    <string name="review_writing_taste_hashtag_taste_not_bad">맛 그럭저럭</string>
+    <string name="review_writing_taste_hashtag_taste_bad">맛 별로예요</string>
+    <string name="review_writing_taste_hashtag_taste_no_burden">약속 시 부담 없는</string>
+    <string name="review_writing_taste_hashtag_taste_easy_to_control">양 조절 쉬운</string>
+    <string name="review_writing_taste_hashtag_full">든든한</string>
 
     <string name="review_writing_photo_title">사진을 올려주세요</string>
     <string name="review_writing_photo_selection">(선택)</string>

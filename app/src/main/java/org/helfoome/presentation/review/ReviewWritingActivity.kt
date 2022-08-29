@@ -16,12 +16,13 @@ import gun0912.tedimagepicker.builder.TedImagePicker
 import gun0912.tedimagepicker.util.ToastUtil.context
 import org.helfoome.R
 import org.helfoome.databinding.ActivityReviewWritingBinding
+import org.helfoome.domain.entity.MyReviewListInfo
 import org.helfoome.presentation.type.ReviewImageType
+import org.helfoome.util.HashtagUtil
 import org.helfoome.util.ItemDecorationUtil
 import org.helfoome.util.binding.BindingActivity
 import org.helfoome.util.ext.closeKeyboard
 import org.helfoome.util.showToast
-import timber.log.Timber
 import java.io.File
 
 @AndroidEntryPoint
@@ -29,8 +30,7 @@ class ReviewWritingActivity : BindingActivity<ActivityReviewWritingBinding>(R.la
     private val viewModel: RestaurantReviewWritingViewModel by viewModels()
     private val galleryImageAdapter = GalleryImageAdapter(::showGalleryImageDialog)
     private var photoUri: Uri? = null
-    private var reviewId: String? = null
-    private var topTitle: String? = null
+    private var hashtagUtil = HashtagUtil(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,12 +43,14 @@ class ReviewWritingActivity : BindingActivity<ActivityReviewWritingBinding>(R.la
     }
 
     private fun initData() {
-        Timber.d("${intent.getStringExtra("REVIEW_ID")}")
-        Timber.d("${intent.getBooleanExtra("REVIEW_TITLE", false)}")
-        viewModel.setReviewId(intent.getStringExtra("REVIEW_ID").toString())
+        intent.getParcelableExtra<MyReviewListInfo>(ARG_REVIEW_INFO)?.let { reviewInfo ->
+            binding.ratingBar.rating = reviewInfo.score
+            viewModel.setReviewInfo(reviewInfo, hashtagUtil.convertStrToTasteTag(reviewInfo.tags), reviewInfo.good.map { hashtagUtil.convertStrToGoodTag(it) })
+            galleryImageAdapter.setUriList(reviewInfo.photoList.map { Uri.parse(it.url) })
+        }
         viewModel.setEditMode(intent.getBooleanExtra("REVIEW_TITLE", false))
         viewModel.setRestaurantId(intent.getStringExtra(ARG_RESTAURANT_ID).toString())
-        binding.restaurantTitle = intent.getStringExtra("RESTAURANT_NAME")
+//        binding.restaurantTitle = intent.getStringExtra("RESTAURANT_NAME")
     }
 
     private fun initView() {
@@ -165,5 +167,6 @@ class ReviewWritingActivity : BindingActivity<ActivityReviewWritingBinding>(R.la
 
     companion object {
         private const val ARG_RESTAURANT_ID = "restaurantId"
+        private const val ARG_REVIEW_INFO = "reviewInfo"
     }
 }

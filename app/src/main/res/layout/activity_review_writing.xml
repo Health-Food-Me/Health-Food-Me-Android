@@ -6,12 +6,10 @@
     <data>
 
         <import type="org.helfoome.R" />
-        <import type="org.helfoome.presentation.type.TasteHashtagType" />
-        <import type="org.helfoome.presentation.type.GoodPointHashtagType" />
 
-        <variable
-            name="restaurantTitle"
-            type="String" />
+        <import type="org.helfoome.presentation.type.TasteHashtagType" />
+
+        <import type="org.helfoome.presentation.type.GoodPointHashtagType" />
 
         <variable
             name="viewModel"
@@ -31,13 +29,13 @@
 
             <ImageView
                 android:id="@+id/btn_back"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:layout_marginBottom="12dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="13dp"
+                android:layout_marginBottom="12dp"
                 android:src="@drawable/ic_before"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -93,12 +91,13 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/size_spacing_20"
                     android:fontFamily="@font/notosanskr_b"
-                    android:text="@{restaurantTitle}"
+                    android:text="@{viewModel.restaurantTitle}"
                     android:textColor="@color/gray_800"
                     android:textSize="15dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="샐러디 태릉입구점" />
 
                 <RatingBar
                     android:id="@+id/rating_bar"
@@ -109,8 +108,8 @@
                     android:max="5"
                     android:numStars="5"
                     android:orientation="horizontal"
-                    android:stepSize="0.5"
                     android:rating="2.5"
+                    android:stepSize="0.5"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tv_restaurant_name" />
@@ -152,10 +151,11 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
                     android:onClick="@{() -> viewModel.setSelectedTasteTag(TasteHashtagType.GOOD)}"
-                    android:text="@string/review_writing_taste_hashtag_taste_good"
+                    android:text="@{@string/format_hashtag_with_blank(@string/review_writing_taste_hashtag_taste_good)}"
                     app:isSelected="@{viewModel.selectedTasteTag == TasteHashtagType.GOOD}"
                     app:layout_constraintStart_toStartOf="@id/gl_start"
-                    app:layout_constraintTop_toBottomOf="@id/tv_taste_description" />
+                    app:layout_constraintTop_toBottomOf="@id/tv_taste_description"
+                    tools:text="# 맛 최고" />
 
                 <TextView
                     android:id="@+id/tv_hashtag_taste_not_bad"
@@ -164,10 +164,11 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/size_spacing_6"
                     android:onClick="@{() -> viewModel.setSelectedTasteTag(TasteHashtagType.NOT_BAD)}"
-                    android:text="@string/review_writing_taste_hashtag_taste_not_bad"
+                    android:text="@{@string/format_hashtag_with_blank(@string/review_writing_taste_hashtag_taste_not_bad)}"
                     app:isSelected="@{viewModel.selectedTasteTag == TasteHashtagType.NOT_BAD}"
                     app:layout_constraintStart_toEndOf="@id/tv_hashtag_taste_good"
-                    app:layout_constraintTop_toTopOf="@id/tv_hashtag_taste_good" />
+                    app:layout_constraintTop_toTopOf="@id/tv_hashtag_taste_good"
+                    tools:text="# 맛 그럭저럭" />
 
                 <TextView
                     style="@style/TextView.Review.Writing.Hashtag.Style"
@@ -175,10 +176,11 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/size_spacing_6"
                     android:onClick="@{() -> viewModel.setSelectedTasteTag(TasteHashtagType.BAD)}"
-                    android:text="@string/review_writing_taste_hashtag_taste_bad"
+                    android:text="@{@string/format_hashtag_with_blank(@string/review_writing_taste_hashtag_taste_bad)}"
                     app:isSelected="@{viewModel.selectedTasteTag == TasteHashtagType.BAD}"
                     app:layout_constraintStart_toEndOf="@id/tv_hashtag_taste_not_bad"
-                    app:layout_constraintTop_toTopOf="@id/tv_hashtag_taste_not_bad" />
+                    app:layout_constraintTop_toTopOf="@id/tv_hashtag_taste_not_bad"
+                    tools:text="# 맛 별로예요" />
 
                 <TextView
                     android:id="@+id/tv_good_point_title"
@@ -327,8 +329,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
                     android:clipToPadding="false"
-                    android:paddingEnd="20dp"
                     android:orientation="horizontal"
+                    android:paddingEnd="20dp"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@id/gl_start"
