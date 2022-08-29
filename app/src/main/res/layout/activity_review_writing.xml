@@ -209,10 +209,11 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
                     android:onClick="@{() -> viewModel.setSelectedGoodPointTag(GoodPointHashtagType.NO_BURDEN)}"
-                    android:text="@string/review_writing_taste_hashtag_taste_no_burden"
+                    android:text="@{@string/format_hashtag_with_blank(@string/review_writing_taste_hashtag_taste_no_burden)}"
                     app:isSelected="@{viewModel.selectedGoodPointTags.get(GoodPointHashtagType.NO_BURDEN)}"
                     app:layout_constraintStart_toStartOf="@id/gl_start"
-                    app:layout_constraintTop_toBottomOf="@id/tv_good_point_description" />]
+                    app:layout_constraintTop_toBottomOf="@id/tv_good_point_description"
+                    tools:text="# 약속 시 부담 없는" />]
 
                 <TextView
                     android:id="@+id/tv_hashtag_good_point_adjusting_amount"
@@ -221,10 +222,11 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/size_spacing_6"
                     android:onClick="@{() -> viewModel.setSelectedGoodPointTag(GoodPointHashtagType.EASY_TO_CONTROL)}"
-                    android:text="@string/review_writing_taste_hashtag_taste_easy_to_control"
+                    android:text="@{@string/format_hashtag_with_blank(@string/review_writing_taste_hashtag_taste_easy_to_control)}"
                     app:isSelected="@{viewModel.selectedGoodPointTags.get(GoodPointHashtagType.EASY_TO_CONTROL)}"
                     app:layout_constraintStart_toEndOf="@id/tv_hashtag_good_point_no_burden"
-                    app:layout_constraintTop_toTopOf="@id/tv_hashtag_good_point_no_burden" />]
+                    app:layout_constraintTop_toTopOf="@id/tv_hashtag_good_point_no_burden"
+                    tools:text="# 양 조절 쉬운" />]
 
                 <TextView
                     style="@style/TextView.Review.Writing.Hashtag.Style"
@@ -232,10 +234,11 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/size_spacing_6"
                     android:onClick="@{() -> viewModel.setSelectedGoodPointTag(GoodPointHashtagType.FULL)}"
-                    android:text="@string/review_writing_taste_hashtag_full"
+                    android:text="@{@string/format_hashtag_with_blank(@string/review_writing_taste_hashtag_full)}"
                     app:isSelected="@{viewModel.selectedGoodPointTags.get(GoodPointHashtagType.FULL)}"
                     app:layout_constraintStart_toEndOf="@id/tv_hashtag_good_point_adjusting_amount"
-                    app:layout_constraintTop_toTopOf="@id/tv_hashtag_good_point_no_burden" />]
+                    app:layout_constraintTop_toTopOf="@id/tv_hashtag_good_point_no_burden"
+                    tools:text="# 든든한" />]
 
                 <TextView
                     android:id="@+id/tv_review_title"
