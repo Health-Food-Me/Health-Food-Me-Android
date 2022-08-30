@@ -12,7 +12,7 @@ import org.helfoome.util.ItemDecorationUtil
 import org.helfoome.util.ItemDiffCallback
 
 class MyReviewAdapter(
-    private val itemClickListener: ((Int) -> Unit),
+    private val itemClickListener: (Int) -> Unit,
     private val deleteClickListener: (String) -> Unit,
     private val editClickListener: (String) -> Unit
 ) :
