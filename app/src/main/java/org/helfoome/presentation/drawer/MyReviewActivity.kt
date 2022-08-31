@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.KeyEvent
-import android.view.LayoutInflater
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import dagger.hilt.android.AndroidEntryPoint
@@ -13,7 +12,6 @@ import org.helfoome.databinding.ActivityMyReviewBinding
 import org.helfoome.databinding.DialogMyReviewDeleteBinding
 import org.helfoome.presentation.MainActivity
 import org.helfoome.presentation.drawer.adapter.MyReviewAdapter
-import org.helfoome.presentation.drawer.adapter.MyReviewAdapter.Companion.ENLARGE
 import org.helfoome.presentation.review.ReviewWritingActivity
 import org.helfoome.util.DialogUtil
 import org.helfoome.util.ItemDecorationUtil
@@ -38,24 +36,7 @@ class MyReviewActivity : BindingActivity<ActivityMyReviewBinding>(R.layout.activ
         }
 
     private val myReviewAdapter = MyReviewAdapter(
-        ::adapterClickListener, { reviewId ->
-            val bind = DialogMyReviewDeleteBinding.inflate(LayoutInflater.from(this@MyReviewActivity))
-            val dialog = DialogUtil.makeDialog(this, bind, resolutionMetrics.toPixel(288), resolutionMetrics.toPixel(223))
-
-            bind.btnYes.setOnClickListener {
-                viewModel.deleteReview(reviewId)
-                dialog.dismiss()
-            }
-            bind.btnNo.setOnClickListener {
-                dialog.dismiss()
-            }
-        },
-        { reviewId ->
-            val intent = Intent(this@MyReviewActivity, ReviewWritingActivity::class.java)
-            intent.putExtra("REVIEW_ID", reviewId)
-            intent.putExtra("REVIEW_TITLE", true)
-            requestModifyReview.launch(intent)
-        }
+        ::startRestaurant, ::deleteReview, ::editReview
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -74,12 +55,29 @@ class MyReviewActivity : BindingActivity<ActivityMyReviewBinding>(R.layout.activ
         }
     }
 
-    private fun adapterClickListener(it: Int) {
-        when (it) {
-            ENLARGE -> {
-                startActivity<MainActivity>()
-            }
+    private fun startRestaurant() {
+        startActivity<MainActivity>()
+    }
+
+    private fun deleteReview(reviewId: String) {
+        val bind = DialogMyReviewDeleteBinding.inflate(layoutInflater)
+        val dialog = DialogUtil.makeDialog(this, bind, resolutionMetrics.toPixel(288), resolutionMetrics.toPixel(223))
+        bind.btnYes.setOnClickListener {
+            viewModel.deleteReview(reviewId)
+            dialog.dismiss()
         }
+        bind.btnNo.setOnClickListener {
+            dialog.dismiss()
+        }
+    }
+
+    private fun editReview(reviewId: String) {
+        requestModifyReview.launch(
+            Intent(this@MyReviewActivity, ReviewWritingActivity::class.java).apply {
+                putExtra("REVIEW_ID", reviewId)
+                putExtra("REVIEW_TITLE", true)
+            }
+        )
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
