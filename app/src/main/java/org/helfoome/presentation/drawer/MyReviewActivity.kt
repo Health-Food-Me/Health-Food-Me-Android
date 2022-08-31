@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.KeyEvent
-import android.view.LayoutInflater
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import dagger.hilt.android.AndroidEntryPoint
@@ -60,7 +59,7 @@ class MyReviewActivity : BindingActivity<ActivityMyReviewBinding>(R.layout.activ
     }
 
     private fun deleteReview(reviewId: String) {
-        val bind = DialogMyReviewDeleteBinding.inflate(LayoutInflater.from(this@MyReviewActivity))
+        val bind = DialogMyReviewDeleteBinding.inflate(layoutInflater)
         val dialog = DialogUtil.makeDialog(this, bind, resolutionMetrics.toPixel(288), resolutionMetrics.toPixel(223))
         bind.btnYes.setOnClickListener {
             viewModel.deleteReview(reviewId)
@@ -72,10 +71,12 @@ class MyReviewActivity : BindingActivity<ActivityMyReviewBinding>(R.layout.activ
     }
 
     private fun editReview(reviewId: String) {
-        val intent = Intent(this@MyReviewActivity, ReviewWritingActivity::class.java)
-        intent.putExtra("REVIEW_ID", reviewId)
-        intent.putExtra("REVIEW_TITLE", true)
-        requestModifyReview.launch(intent)
+        requestModifyReview.launch(
+            Intent(this@MyReviewActivity, ReviewWritingActivity::class.java).apply {
+                putExtra("REVIEW_ID", reviewId)
+                putExtra("REVIEW_TITLE", true)
+            }
+        )
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
