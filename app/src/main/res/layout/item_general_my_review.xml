@@ -36,6 +36,7 @@
             tools:text="나는 헬푸파미" />
 
         <ImageView
+            android:id="@+id/iv_restaurant"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="6dp"
