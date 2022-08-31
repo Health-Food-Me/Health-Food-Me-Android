@@ -20,7 +20,7 @@ import org.helfoome.presentation.type.ReviewImageType
 import org.helfoome.util.ItemDecorationUtil
 import org.helfoome.util.binding.BindingActivity
 import org.helfoome.util.ext.closeKeyboard
-import org.helfoome.util.showToast
+import org.helfoome.util.ext.showToast
 import timber.log.Timber
 import java.io.File
 
