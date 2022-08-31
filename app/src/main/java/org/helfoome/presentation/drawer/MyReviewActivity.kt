@@ -33,6 +33,7 @@ class MyReviewActivity : BindingActivity<ActivityMyReviewBinding>(R.layout.activ
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
             if (activityResult.resultCode == Activity.RESULT_OK) {
                 SnackBarTopDown.makeSnackBarTopDown(this, binding.snvReviewModify, "리뷰 편집이 완료되었습니다")
+                viewModel.getMyReviewList()
             }
         }
 
@@ -102,16 +103,5 @@ class MyReviewActivity : BindingActivity<ActivityMyReviewBinding>(R.layout.activ
             setResult(Activity.RESULT_OK)
             finish()
         }
-    }
-
-    // 나중에 전체적으로 바꾸지 않게 하기
-    override fun onResume() {
-        super.onResume()
-        viewModel.getMyReviewList()
-    }
-
-    override fun onStart() {
-        super.onStart()
-        viewModel.getMyReviewList()
     }
 }
