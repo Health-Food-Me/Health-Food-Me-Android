@@ -52,14 +52,13 @@ class ReviewWritingActivity : BindingActivity<ActivityReviewWritingBinding>(R.la
             viewModel.setRestaurantId(it)
         }
 
+        // 리뷰 편집 시 기존 리뷰 내용 전달 받기
         intent.getParcelableExtra<MyReviewListInfo>(ARG_REVIEW_INFO)?.let { reviewInfo ->
+            viewModel.setEditMode(true)
             binding.ratingBar.rating = reviewInfo.score
             viewModel.setReviewInfo(reviewInfo, hashtagUtil.convertStrToTasteTag(reviewInfo.tags), reviewInfo.good.map { hashtagUtil.convertStrToGoodTag(it) })
             galleryImageAdapter.setUriList(reviewInfo.photoList.map { Uri.parse(it.url) })
         }
-        viewModel.setEditMode(intent.getBooleanExtra("REVIEW_TITLE", false))
-        viewModel.setRestaurantId(intent.getStringExtra(ARG_RESTAURANT_ID).toString())
-//        binding.restaurantTitle = intent.getStringExtra("RESTAURANT_NAME")
     }
 
     private fun initView() {

@@ -67,11 +67,15 @@ class RestaurantReviewWritingViewModel @Inject constructor(
     val hfmReviews: LiveData<HFMReviewInfo> = _hfmReviews
 
     fun setReviewInfo(review: MyReviewListInfo, tasteTag: TasteHashtagType?, goodTags: List<GoodPointHashtagType?>) { // TODO need refactoring
+        _reviewInfo.value = review
         _restaurantTitle = review.restaurant
         _review.value = review.description
         setSelectedTasteTag(tasteTag ?: return)
         goodTags.forEach { setSelectedGoodPointTag(it ?: return) }
+    }
 
+    fun setRestaurantName(name: String) {
+        _restaurantTitle = name
     }
 
     fun setEditMode(editMode: Boolean) {
@@ -105,7 +109,7 @@ class RestaurantReviewWritingViewModel @Inject constructor(
         score: Float,
         image: List<Uri?>,
     ) {
-        if (_isEditMode.value == true) {
+        if (isEditMode.value == true) {
             editReview(context, score, image)
         } else {
             writeReview(context, score, image)
