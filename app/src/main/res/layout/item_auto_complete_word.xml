@@ -16,17 +16,17 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:paddingHorizontal="20dp"
+        android:paddingHorizontal="@dimen/size_spacing_20"
         android:layout_height="wrap_content">
 
         <TextView
             android:id="@+id/tv_keyword"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
+            android:layout_marginStart="@dimen/size_spacing_12"
             android:fontFamily="@font/notosanskr_r"
             android:textColor="@color/gray_800"
-            android:textSize="15dp"
+            android:textSize="@dimen/size_spacing_15"
             app:layout_constraintBottom_toBottomOf="@+id/iv_pin"
             app:layout_constraintStart_toEndOf="@+id/iv_pin"
             app:layout_constraintTop_toTopOf="@+id/iv_pin"
@@ -35,9 +35,9 @@
         <ImageView
             android:id="@+id/iv_pin"
             android:layout_width="@dimen/size_pin_16"
-            android:layout_height="0dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
+            android:layout_height="@dimen/size_spacing_0"
+            android:layout_marginTop="@dimen/size_spacing_16"
+            android:layout_marginBottom="@dimen/size_spacing_16"
             android:src="@{vm.NORMAL == data.category? @drawable/ic_marker_red : @drawable/ic_marker_green}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintDimensionRatio="16:20"

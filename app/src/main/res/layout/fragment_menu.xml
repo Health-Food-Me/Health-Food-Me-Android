@@ -16,10 +16,10 @@
                 android:id="@+id/menu_list"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginHorizontal="20dp"
+                android:layout_marginHorizontal="@dimen/size_spacing_20"
                 android:clipToPadding="false"
                 android:paddingTop="5dp"
-                android:paddingBottom="20dp"
+                android:paddingBottom="@dimen/size_spacing_20"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:listitem="@layout/item_menu" />
         </androidx.constraintlayout.widget.ConstraintLayout>

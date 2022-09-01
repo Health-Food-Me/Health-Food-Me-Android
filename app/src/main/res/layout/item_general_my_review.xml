@@ -20,7 +20,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_begin="20dp" />
+            app:layout_constraintGuide_begin="@dimen/size_spacing_20" />
 
         <TextView
             android:id="@+id/tv_title"
@@ -30,7 +30,7 @@
             android:maxLines="1"
             android:text="@{data.restaurant}"
             android:textColor="@color/gray_800"
-            android:textSize="13dp"
+            android:textSize="@dimen/size_spacing_13"
             app:layout_constraintStart_toStartOf="@id/gl_start"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="나는 헬푸파미" />
@@ -39,7 +39,7 @@
             android:id="@+id/iv_restaurant"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="6dp"
+            android:layout_marginStart="@dimen/size_spacing_6"
             android:background="@drawable/ic_go"
             app:layout_constraintBottom_toBottomOf="@id/tv_title"
             app:layout_constraintStart_toEndOf="@id/tv_title"
@@ -49,7 +49,7 @@
             android:id="@+id/rb_my_review"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="@dimen/size_spacing_8"
             app:layout_constraintStart_toStartOf="@id/tv_title"
             app:layout_constraintTop_toBottomOf="@id/tv_title"
             app:score="@{data.score}" />
@@ -59,17 +59,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/size_spacing_20"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="@dimen/size_spacing_8"
             app:layout_constraintTop_toBottomOf="@id/rb_my_review" />
 
         <TextView
             android:id="@+id/tv_delete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="20dp"
+            android:layout_marginEnd="@dimen/size_spacing_20"
             android:text="@string/my_review_edit"
             android:textColor="@color/gray_600"
-            android:textSize="10dp"
+            android:textSize="@dimen/size_spacing_10"
             app:layout_constraintBottom_toBottomOf="@id/tv_title"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/tv_title" />
@@ -77,8 +77,8 @@
         <View
             android:id="@+id/line_horizontal"
             android:layout_width="1dp"
-            android:layout_height="12dp"
-            android:layout_marginEnd="8dp"
+            android:layout_height="@dimen/size_spacing_12"
+            android:layout_marginEnd="@dimen/size_spacing_8"
             android:background="@color/gray_200"
             app:layout_constraintBottom_toBottomOf="@id/tv_delete"
             app:layout_constraintEnd_toStartOf="@id/tv_delete"
@@ -88,7 +88,7 @@
             android:id="@+id/tv_edit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
+            android:layout_marginEnd="@dimen/size_spacing_8"
             android:text="@string/my_review_delete"
             android:textColor="@color/gray_600"
             android:textSize="10sp"
@@ -98,9 +98,9 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_photo_list"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/size_spacing_0"
             android:layout_height="wrap_content"
-            android:layout_marginTop="14dp"
+            android:layout_marginTop="@dimen/size_spacing_14"
             android:clipToPadding="false"
             android:orientation="horizontal"
             android:paddingHorizontal="@dimen/size_spacing_20"
@@ -114,17 +114,17 @@
         <kr.co.prnd.readmore.ReadMoreTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="20dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginHorizontal="@dimen/size_spacing_20"
+            android:layout_marginTop="@dimen/size_spacing_15"
             android:fontFamily="@font/notosanskr_r"
             android:gravity="start"
             android:text="@{data.description}"
             app:readMoreMaxLine="3"
             app:readMoreText="   더보기"
             android:textColor="@color/gray_800"
-            android:textSize="12dp"
+            android:textSize="@dimen/size_spacing_12"
             app:layout_constraintTop_toBottomOf="@id/rv_photo_list"
-            tools:layout_editor_absoluteX="20dp"
+            tools:layout_editor_absoluteX="@dimen/size_spacing_20"
             tools:text="블라블라 만약에 이 내용이 너무 길어진다면 ..? 그게 고민...이었는데 말이죠 해결됐어요. 왜냐면 더보기를 누르면 되니까요! 제 뻘소리를 더 보고 싶으시다면 더보기를 함 눌러볼텨?" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

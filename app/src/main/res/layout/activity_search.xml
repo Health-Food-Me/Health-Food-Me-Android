@@ -41,7 +41,7 @@
         <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:id="@+id/layout_main"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="@dimen/size_spacing_0"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/layout_search"
             tools:context=".presentation.MainActivity">
@@ -58,14 +58,14 @@
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/btn_location_main"
-                    android:layout_width="56dp"
-                    android:layout_height="56dp"
-                    android:layout_marginEnd="20dp"
-                    android:layout_marginBottom="12dp"
+                    android:layout_width="@dimen/size_spacing_56"
+                    android:layout_height="@dimen/size_spacing_56"
+                    android:layout_marginEnd="@dimen/size_spacing_20"
+                    android:layout_marginBottom="@dimen/size_spacing_12"
                     android:backgroundTint="@color/white"
                     android:src="@drawable/ic_currentposition"
                     android:visibility="@{isMainNotVisible? View.GONE : View.VISIBLE}"
-                    app:borderWidth="0dp"
+                    app:borderWidth="@dimen/size_spacing_0"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_dodgeInsetEdges="bottom" />
@@ -85,13 +85,13 @@
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/btn_location"
-                    android:layout_width="56dp"
-                    android:layout_height="56dp"
-                    android:layout_marginEnd="20dp"
+                    android:layout_width="@dimen/size_spacing_56"
+                    android:layout_height="@dimen/size_spacing_56"
+                    android:layout_marginEnd="@dimen/size_spacing_20"
                     android:backgroundTint="@color/white"
                     android:src="@drawable/ic_currentposition"
                     android:visibility="@{isFloatingVisible? View.VISIBLE : View.GONE}"
-                    app:borderWidth="0dp"
+                    app:borderWidth="@dimen/size_spacing_0"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_dodgeInsetEdges="bottom" />
@@ -99,7 +99,7 @@
                 <View
                     android:id="@+id/line"
                     android:layout_width="match_parent"
-                    android:layout_height="12dp"
+                    android:layout_height="@dimen/size_spacing_12"
                     android:visibility="@{isFloatingVisible? View.VISIBLE : View.GONE}"
                     app:layout_constraintTop_toBottomOf="@+id/btn_location" />
 
@@ -107,7 +107,7 @@
                     android:id="@+id/layout_restaurant_dialog"
                     layout="@layout/dialog_restaurant_detail"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
+                    android:layout_height="@dimen/size_spacing_0"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/line"
                     bind:viewModel="@{viewModel}" />
@@ -116,7 +116,7 @@
                     android:id="@+id/layout_restaurant_list_dialog"
                     layout="@layout/dialog_restaurant_list"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
+                    android:layout_height="@dimen/size_spacing_0"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/line"
                     android:visibility="@{isDetail? View.GONE : View.VISIBLE}"
@@ -137,9 +137,9 @@
                 style="@style/Button.Basic.Style"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginStart="14dp"
+                android:layout_marginStart="@dimen/size_spacing_14"
                 android:paddingHorizontal="@dimen/size_spacing_6"
-                android:paddingVertical="12dp"
+                android:paddingVertical="@dimen/size_spacing_12"
                 android:src="@drawable/ic_before"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -149,7 +149,7 @@
                 android:id="@+id/btn_delete"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="20dp"
+                android:layout_marginEnd="@dimen/size_spacing_20"
                 android:background="@drawable/selector_delete"
                 android:visibility="@{isDeleteButtonVisible? View.VISIBLE : View.GONE}"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -158,9 +158,9 @@
 
             <EditText
                 android:id="@+id/et_search"
-                android:layout_width="0dp"
+                android:layout_width="@dimen/size_spacing_0"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="14dp"
+                android:layout_marginHorizontal="@dimen/size_spacing_14"
                 android:layout_marginStart="2dp"
                 android:background="@null"
                 android:fontFamily="@font/notosanskr_r"
@@ -169,7 +169,7 @@
                 android:maxLines="1"
                 android:textColor="@color/gray_800"
                 android:textColorHint="@color/gray_400"
-                android:textSize="15dp"
+                android:textSize="@dimen/size_spacing_15"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/btn_delete"
                 app:layout_constraintStart_toEndOf="@+id/btn_back"

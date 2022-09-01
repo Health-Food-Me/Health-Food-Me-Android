@@ -8,7 +8,6 @@
         <variable
             name="drawerViewModel"
             type="org.helfoome.presentation.MainViewModel" />
-
     </data>
 
     <com.google.android.material.navigation.NavigationView
@@ -26,10 +25,10 @@
                 style="@style/TextView.Drawer.TextAppearance"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
+                android:layout_marginStart="@dimen/size_spacing_20"
                 android:layout_marginTop="64dp"
                 android:text="@string/main_drawer_welcome"
-                android:textSize="16dp"
+                android:textSize="@dimen/size_spacing_16"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -38,12 +37,12 @@
                 style="@style/TextView.Drawer.TextAppearance"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="3dp"
+                android:layout_marginStart="@dimen/size_spacing_20"
+                android:layout_marginTop="@dimen/size_spacing_3"
                 android:fontFamily="@font/notosanskr_m"
                 android:maxLength="12"
                 android:text="@{drawerViewModel.nickname}"
-                android:textSize="16dp"
+                android:textSize="@dimen/size_spacing_16"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_hello"
                 tools:text="esf;lijdsg;lkadfjgl;aksdljsdg;lkajsdfdgalrkgr;glSdv;l" />
@@ -54,9 +53,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="2dp"
-                android:layout_marginTop="3dp"
+                android:layout_marginTop="@dimen/size_spacing_3"
                 android:text="@string/main_drawer_welcome_second"
-                android:textSize="16dp"
+                android:textSize="@dimen/size_spacing_16"
                 app:layout_constraintStart_toEndOf="@+id/tv_welcome"
                 app:layout_constraintTop_toBottomOf="@id/tv_hello" />
 
@@ -64,7 +63,7 @@
                 android:id="@+id/btn_edit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="@dimen/size_spacing_8"
                 android:src="@drawable/ic_edit"
                 app:layout_constraintBottom_toBottomOf="@id/tv_welcome"
                 app:layout_constraintStart_toEndOf="@id/tv_welcome_third"
@@ -75,10 +74,10 @@
                 style="@style/TextView.Drawer.TextAppearance"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="3dp"
+                android:layout_marginStart="@dimen/size_spacing_20"
+                android:layout_marginTop="@dimen/size_spacing_3"
                 android:text="@string/main_drawer_welcome_third"
-                android:textSize="16dp"
+                android:textSize="@dimen/size_spacing_16"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_welcome" />
 
@@ -86,7 +85,7 @@
                 android:id="@+id/line_first"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginTop="36dp"
+                android:layout_marginTop="@dimen/size_spacing_36"
                 android:background="@color/gray_200"
                 app:layout_constraintTop_toBottomOf="@id/tv_welcome_fourth" />
 
@@ -95,10 +94,10 @@
                 style="@style/TextView.Drawer.TextAppearance"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="24dp"
+                android:layout_marginStart="@dimen/size_spacing_20"
+                android:layout_marginTop="@dimen/size_spacing_24"
                 android:text="@string/main_drawer_scrap"
-                android:textSize="15dp"
+                android:textSize="@dimen/size_spacing_15"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/line_first" />
 
@@ -107,10 +106,10 @@
                 style="@style/TextView.Drawer.TextAppearance"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginStart="@dimen/size_spacing_20"
+                android:layout_marginTop="@dimen/size_spacing_20"
                 android:text="@string/main_drawer_review"
-                android:textSize="15dp"
+                android:textSize="@dimen/size_spacing_15"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_scrap" />
 
@@ -118,7 +117,7 @@
                 android:id="@+id/line_second"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="@dimen/size_spacing_24"
                 android:background="@color/gray_200"
                 app:layout_constraintTop_toBottomOf="@id/tv_review" />
 
@@ -127,10 +126,10 @@
                 style="@style/TextView.Drawer.TextAppearance"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="24dp"
+                android:layout_marginStart="@dimen/size_spacing_20"
+                android:layout_marginTop="@dimen/size_spacing_24"
                 android:text="@string/main_drawer_report"
-                android:textSize="15dp"
+                android:textSize="@dimen/size_spacing_15"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/line_second" />
 
@@ -139,10 +138,10 @@
                 style="@style/TextView.Drawer.TextAppearance"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginStart="@dimen/size_spacing_20"
+                android:layout_marginTop="@dimen/size_spacing_20"
                 android:text="@string/main_drawer_modify_report"
-                android:textSize="15dp"
+                android:textSize="@dimen/size_spacing_15"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_report" />
 
@@ -150,7 +149,7 @@
                 android:id="@+id/line_third"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="@dimen/size_spacing_24"
                 android:background="@color/gray_200"
                 app:layout_constraintTop_toBottomOf="@id/tv_modify_report" />
 
@@ -159,10 +158,10 @@
                 style="@style/TextView.Drawer.TextAppearance"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="24dp"
+                android:layout_marginStart="@dimen/size_spacing_20"
+                android:layout_marginTop="@dimen/size_spacing_24"
                 android:text="@string/main_drawer_setting"
-                android:textSize="16dp"
+                android:textSize="@dimen/size_spacing_16"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/line_third" />
 
@@ -170,12 +169,12 @@
                 android:id="@+id/tv_logout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginBottom="28dp"
+                android:layout_marginStart="@dimen/size_spacing_20"
+                android:layout_marginBottom="@dimen/size_spacing_28"
                 android:fontFamily="@font/notosanskr_r"
                 android:text="@string/main_drawer_logout"
                 android:textColor="@color/gray_600"
-                android:textSize="12dp"
+                android:textSize="@dimen/size_spacing_12"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
