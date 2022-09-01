@@ -43,6 +43,15 @@ class ReviewWritingActivity : BindingActivity<ActivityReviewWritingBinding>(R.la
     }
 
     private fun initData() {
+        // 새 리뷰 작성 시에는 레스토랑명 및 아이디를 전달 받음
+        intent.getStringExtra("RESTAURANT_NAME")?.let {
+            viewModel.setEditMode(false)
+            viewModel.setRestaurantName(it)
+        }
+        intent.getStringExtra(ARG_RESTAURANT_ID)?.let {
+            viewModel.setRestaurantId(it)
+        }
+
         intent.getParcelableExtra<MyReviewListInfo>(ARG_REVIEW_INFO)?.let { reviewInfo ->
             binding.ratingBar.rating = reviewInfo.score
             viewModel.setReviewInfo(reviewInfo, hashtagUtil.convertStrToTasteTag(reviewInfo.tags), reviewInfo.good.map { hashtagUtil.convertStrToGoodTag(it) })
