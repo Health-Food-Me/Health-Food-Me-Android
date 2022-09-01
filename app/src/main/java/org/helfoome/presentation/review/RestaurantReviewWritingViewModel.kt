@@ -126,7 +126,7 @@ class RestaurantReviewWritingViewModel @Inject constructor(
         val tasteRequestBody = context.getString(selectedTasteTag.value?.strRes ?: return).replace("# ", "").toPlainRequestBody()
         val goodListMultipartBody = mutableListOf<MultipartBody.Part>()
         val goodList = selectedGoodPointTags.value?.filter { it.value }?.keys?.map {
-            context.getString(it.strRes).replace("# ", "")
+            context.getString(it.strRes)
         } ?: return
         for (good in goodList) {
             goodListMultipartBody.add(createFormData("good", good))
@@ -178,7 +178,7 @@ class RestaurantReviewWritingViewModel @Inject constructor(
 
         val goodListMultipartBody = mutableListOf<MultipartBody.Part>()
         val goodList = selectedGoodPointTags.value?.filter { it.value }?.keys?.map {
-            context.getString(it.strRes).replace("# ", "")
+            context.getString(it.strRes)
         } ?: return
         for (good in goodList) {
             goodListMultipartBody.add(createFormData("good", good))
