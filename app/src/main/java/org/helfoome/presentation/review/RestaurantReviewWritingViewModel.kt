@@ -27,9 +27,6 @@ class RestaurantReviewWritingViewModel @Inject constructor(
     private val _isReviewModify = MutableLiveData<Boolean>()
     val isReviewModify: LiveData<Boolean> = _isReviewModify
 
-//    private val _reviewId = MutableLiveData<String>()
-//    val reviewId get() = _reviewId
-
     private var _restaurantTitle: String? = null
     val restaurantTitle: String? get() = _restaurantTitle
 
@@ -39,8 +36,8 @@ class RestaurantReviewWritingViewModel @Inject constructor(
     private val _restaurantId = MutableLiveData<String>()
     val restaurantId get() = _restaurantId
 
-    private val _review = MutableLiveData<String>() // TODO _reviewInfo와 구분에 어려움이 있을 수 있으므로 변수명 수정 필요
-    val review get() = _review
+    private val _reviewContent = MutableLiveData<String>()
+    val reviewContent get() = _reviewContent
 
     private val _isEditMode = MutableLiveData<Boolean>()
     val isEditMode get() = _isEditMode
@@ -69,7 +66,7 @@ class RestaurantReviewWritingViewModel @Inject constructor(
     fun setReviewInfo(review: MyReviewListInfo, tasteTag: TasteHashtagType?, goodTags: List<GoodPointHashtagType?>) { // TODO need refactoring
         _reviewInfo.value = review
         _restaurantTitle = review.restaurant
-        _review.value = review.description
+        _reviewContent.value = review.description
         setSelectedTasteTag(tasteTag ?: return)
         goodTags.forEach { setSelectedGoodPointTag(it ?: return) }
     }
@@ -94,7 +91,7 @@ class RestaurantReviewWritingViewModel @Inject constructor(
     }
 
     fun checkReviewCompletion() {
-        val review = review.value?.trim()
+        val review = reviewContent.value?.trim()
         _isEnabledWritingCompleteButton.value =
             selectedTasteTag.value != null && selectedGoodPointTags.value?.containsValue(true) == true && !(review.isNullOrBlank())
     }
@@ -122,7 +119,7 @@ class RestaurantReviewWritingViewModel @Inject constructor(
         image: List<Uri?>,
     ) {
         val scoreRequestBody = score.toString().toPlainRequestBody()
-        val contentRequestBody = review.value.toPlainRequestBody()
+        val contentRequestBody = reviewContent.value.toPlainRequestBody()
         val tasteRequestBody = context.getString(selectedTasteTag.value?.strRes ?: return).replace("# ", "").toPlainRequestBody()
         val goodListMultipartBody = mutableListOf<MultipartBody.Part>()
         val goodList = selectedGoodPointTags.value?.filter { it.value }?.keys?.map {
@@ -166,7 +163,7 @@ class RestaurantReviewWritingViewModel @Inject constructor(
         image: List<Uri?>,
     ) {
         val scoreRequestBody = score.toString().toPlainRequestBody()
-        val contentRequestBody = review.value.toPlainRequestBody()
+        val contentRequestBody = reviewContent.value.toPlainRequestBody()
         val tasteRequestBody = context.getString(selectedTasteTag.value?.strRes ?: return).replace("# ", "").toPlainRequestBody()
         val imageListMultipartBody = mutableListOf<MultipartBody.Part>()
 
