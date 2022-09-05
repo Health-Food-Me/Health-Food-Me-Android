@@ -20,7 +20,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_begin="20dp" />
+            app:layout_constraintGuide_begin="@dimen/size_spacing_20" />
 
         <TextView
             android:id="@+id/tv_title"
@@ -30,7 +30,7 @@
             android:maxLines="1"
             android:text="@{review.nickname}"
             android:textColor="@color/gray_800"
-            android:textSize="13dp"
+            android:textSize="@dimen/size_spacing_13"
             app:layout_constraintStart_toStartOf="@id/gl_start"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="나는 헬푸파미" />
@@ -38,7 +38,7 @@
         <org.helfoome.presentation.custom.StarScore
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
+            android:layout_marginStart="@dimen/size_spacing_4"
             app:layout_constraintBottom_toBottomOf="@id/tv_title"
             app:layout_constraintStart_toEndOf="@id/tv_title"
             app:layout_constraintTop_toTopOf="@id/tv_title"
@@ -49,17 +49,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/size_spacing_20"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="@dimen/size_spacing_10"
             app:layout_constraintTop_toBottomOf="@id/tv_title" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_photo_list"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/size_spacing_0"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="@dimen/size_spacing_10"
             android:clipToPadding="false"
             android:orientation="horizontal"
-            android:paddingHorizontal="14dp"
+            android:paddingHorizontal="@dimen/size_spacing_14"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -69,12 +69,12 @@
         <kr.co.prnd.readmore.ReadMoreTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="20dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginHorizontal="@dimen/size_spacing_20"
+            android:layout_marginTop="@dimen/size_spacing_12"
             android:fontFamily="@font/notosanskr_r"
             android:text="@{review.description}"
             android:textColor="@color/gray_800"
-            android:textSize="12dp"
+            android:textSize="@dimen/size_spacing_12"
             app:readMoreMaxLine="3"
             app:readMoreText="   더보기"
             app:layout_constraintTop_toBottomOf="@id/rv_photo_list"

@@ -9,7 +9,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:checked="false"
-        android:paddingVertical="4dp"
-        app:chipMinTouchTargetSize="0dp"
+        android:paddingVertical="@dimen/size_spacing_4"
+        app:chipMinTouchTargetSize="@dimen/size_spacing_0"
         tools:text="@string/retry" />
 </layout>
