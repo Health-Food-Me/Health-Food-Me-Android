@@ -20,6 +20,7 @@
     <dimen name="size_spacing_14">14dp</dimen>
     <dimen name="size_spacing_15">15dp</dimen>
     <dimen name="size_spacing_16">16dp</dimen>
+    <dimen name="size_spacing_17">17dp</dimen>
     <dimen name="size_spacing_18">18dp</dimen>
     <dimen name="size_spacing_20">20dp</dimen>
     <dimen name="size_spacing_24">24dp</dimen>
