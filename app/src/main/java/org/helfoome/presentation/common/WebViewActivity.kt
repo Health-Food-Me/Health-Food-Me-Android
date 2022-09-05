@@ -12,20 +12,16 @@ import org.helfoome.util.binding.BindingActivity
 
 @AndroidEntryPoint
 class WebViewActivity : BindingActivity<ActivityWebViewBinding>(R.layout.activity_web_view) {
-    private lateinit var webView: WebView
-    private var link: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        link = intent.getStringExtra(ARG_WEB_VIEW_LINK)
 
         initView()
     }
 
     @SuppressLint("SetJavaScriptEnabled")
     private fun initView() {
-        webView = binding.webView.apply {
+        binding.webView.apply {
             // 새 창 띄우지 않기
             webViewClient = WebViewClient()
             webChromeClient = WebChromeClient() // 크롬환경에 맞는 세팅을 해줌
@@ -38,7 +34,7 @@ class WebViewActivity : BindingActivity<ActivityWebViewBinding>(R.layout.activit
                 useWideViewPort = true
             }
 
-            link?.let { loadUrl(it) }
+            intent.getStringExtra(ARG_WEB_VIEW_LINK)?.let { loadUrl(it) }
         }
     }
 

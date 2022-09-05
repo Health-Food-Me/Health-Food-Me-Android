@@ -85,15 +85,11 @@ class RestaurantReviewTabFragment : BindingFragment<FragmentReviewBinding>(R.lay
 
     private fun moveToBlog(review: BlogReviewInfo) {
         if (!Patterns.WEB_URL.matcher(review.url).matches()) return
-        try {
+        startActivity(
             Intent(requireContext(), WebViewActivity::class.java).apply {
                 putExtra(ARG_WEB_VIEW_LINK, review.url)
-            }.let {
-                startActivity(it)
             }
-        } catch (e: ActivityNotFoundException) {
-            e.printStackTrace()
-        }
+        )
     }
 
     companion object {
