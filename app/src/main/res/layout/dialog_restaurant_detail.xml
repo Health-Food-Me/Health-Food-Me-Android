@@ -133,7 +133,7 @@
 
                         <androidx.appcompat.widget.AppCompatImageButton
                             android:id="@+id/btn_scrap"
-                            style="@style/Button.Navigation.Style"
+                            style="@style/Button.BottomSheet.Style"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="2dp"
                             android:layout_marginEnd="@dimen/size_spacing_3"
