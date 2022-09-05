@@ -59,7 +59,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/size_spacing_16"
                 android:fontFamily="@font/notosanskr_m"
-                android:text="@string/login_text_kakao"
+                android:text="@string/login_kakao"
                 android:textColor="@color/black"
                 android:textSize="@dimen/size_spacing_13"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -94,13 +94,36 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/size_spacing_16"
                 android:fontFamily="@font/notosanskr_m"
-                android:text="@string/login_text_naver"
+                android:text="@string/login_naver"
                 android:textColor="@color/white"
                 android:textSize="@dimen/size_spacing_13"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/iv_naver_logo"
                 app:layout_constraintTop_toTopOf="parent" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/tv_guest"
+            android:text="@string/login_guest"
+            app:layout_constraintTop_toBottomOf="@id/iv_naver_login"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="@dimen/size_spacing_16"
+            android:layout_width="wrap_content"
+            android:textSize="13dp"
+            android:textColor="@color/gray_550"
+            android:fontFamily="@font/notosanskr_r"
+            android:layout_height="wrap_content"/>
+
+        <View
+            app:layout_constraintStart_toStartOf="@id/tv_guest"
+            app:layout_constraintEnd_toEndOf="@id/tv_guest"
+            app:layout_constraintTop_toBottomOf="@id/tv_guest"
+            android:layout_width="0dp"
+            android:background="@color/gray_400"
+            android:layout_height="1dp"/>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -17,7 +17,6 @@
     <string name="main_chip_group_ricebowl">덮밥</string>
     <string name="main_chip_group_sandwich">샌드위치</string>
 
-
     <!-- Profile -->
     <string name="profile_title">프로필 편집</string>
     <string name="profile_description">변경할 닉네임을 설정해 주세요</string>
@@ -75,9 +74,10 @@
     <string name="main_drawer_welcome_third">오늘도 헬푸미하세요</string>
 
 
-    <!-- Login Text -->
-    <string name="login_text_kakao">카카오 계정으로 로그인</string>
-    <string name="login_text_naver">네이버 계정으로 로그인</string>
+    <!-- Login -->
+    <string name="login_kakao">카카오 계정으로 로그인</string>
+    <string name="login_naver">네이버 계정으로 로그인</string>
+    <string name="login_guest">둘러보기</string>
 
     <!-- Logout Dialog -->
     <string name="logout_dialog_caution">정말 로그아웃 하시겠어요?</string>
