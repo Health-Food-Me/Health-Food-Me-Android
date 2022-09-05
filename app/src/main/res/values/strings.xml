@@ -107,6 +107,9 @@
     <string name="my_review_dialog_no">아니요</string>
     <string name="my_review_dialog_yes">네</string>
 
+    <!-- Guest Login Dialog -->
+    <string name="guest_login_dialog_description">선택하신 기능은\n간편 로그인 후 이용 가능합니다!</string>
+
     <!-- Format -->
     <string name="format_hashtag">#%s</string>
     <string name="format_hashtag_with_blank"># %s</string>
