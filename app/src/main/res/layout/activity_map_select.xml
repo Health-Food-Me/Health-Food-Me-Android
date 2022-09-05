@@ -42,7 +42,7 @@
                 android:fontFamily="@font/notosanskr_b"
                 android:text="@string/my_scrap_title"
                 android:textColor="@color/black"
-                android:textSize="16dp"
+                android:textSize="@dimen/size_spacing_16"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/ib_quit"
                 app:layout_constraintStart_toEndOf="@+id/ib_back"
@@ -52,8 +52,8 @@
                 android:id="@+id/ib_back"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginVertical="12dp"
-                android:layout_marginStart="20dp"
+                android:layout_marginVertical="@dimen/size_spacing_12"
+                android:layout_marginStart="@dimen/size_spacing_20"
                 android:background="@drawable/ic_before"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -63,7 +63,7 @@
                 android:id="@+id/ib_quit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="20dp"
+                android:layout_marginEnd="@dimen/size_spacing_20"
                 android:background="@drawable/ic_x"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -72,7 +72,7 @@
 
         <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="@dimen/size_spacing_0"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/layout_map_select"
             tools:context=".presentation.MainActivity">
@@ -92,15 +92,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="5dp"
-                    android:layout_marginBottom="16dp"
+                    android:layout_marginBottom="@dimen/size_spacing_16"
                     android:backgroundTint="@color/white"
                     android:src="@drawable/ic_currentposition"
                     android:visibility="@{isMainNotVisible? View.GONE : View.VISIBLE}"
-                    app:borderWidth="0dp"
+                    app:borderWidth="@dimen/size_spacing_0"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_dodgeInsetEdges="bottom"
-                    app:layout_goneMarginBottom="16dp" />
+                    app:layout_goneMarginBottom="@dimen/size_spacing_16" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -119,12 +119,12 @@
                     android:id="@+id/fab_location"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="20dp"
-                    android:layout_marginBottom="12dp"
+                    android:layout_marginEnd="@dimen/size_spacing_20"
+                    android:layout_marginBottom="@dimen/size_spacing_12"
                     android:backgroundTint="@color/white"
                     android:src="@drawable/ic_currentposition"
                     android:visibility="@{isFloatingNotVisible? View.GONE : View.VISIBLE}"
-                    app:borderWidth="0dp"
+                    app:borderWidth="@dimen/size_spacing_0"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_dodgeInsetEdges="bottom" />
@@ -132,7 +132,7 @@
                 <View
                     android:id="@+id/line"
                     android:layout_width="match_parent"
-                    android:layout_height="12dp"
+                    android:layout_height="@dimen/size_spacing_12"
                     android:visibility="@{isFloatingNotVisible? View.GONE : View.VISIBLE}"
                     app:layout_constraintTop_toBottomOf="@+id/fab_location" />
 
@@ -140,7 +140,7 @@
                     android:id="@+id/layout_restaurant_dialog"
                     layout="@layout/dialog_restaurant_detail"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
+                    android:layout_height="@dimen/size_spacing_0"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/line"
                     bind:viewModel="@{viewModel}" />

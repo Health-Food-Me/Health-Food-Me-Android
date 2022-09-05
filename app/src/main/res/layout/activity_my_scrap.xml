@@ -32,14 +32,14 @@
                 android:fontFamily="@font/notosanskr_b"
                 android:text="@string/my_scrap_title"
                 android:textColor="@color/gray_800"
-                android:textSize="16dp" />
+                android:textSize="@dimen/size_spacing_16" />
 
             <ImageButton
                 android:id="@+id/btn_quit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
-                android:layout_marginEnd="20dp"
+                android:layout_marginEnd="@dimen/size_spacing_20"
                 android:background="@drawable/ic_x" />
         </androidx.appcompat.widget.Toolbar>
 
@@ -55,9 +55,9 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_scrap"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:paddingHorizontal="12dp"
-            android:paddingTop="20dp"
+            android:layout_height="@dimen/size_spacing_0"
+            android:paddingHorizontal="@dimen/size_spacing_12"
+            android:paddingTop="@dimen/size_spacing_20"
             android:visibility="@{isEmpty? View.GONE : View.VISIBLE}"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"

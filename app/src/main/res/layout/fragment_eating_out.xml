@@ -54,26 +54,26 @@
                         android:fontFamily="@font/notosanskr_b"
                         android:text="@string/restaurant_detail_eating_out_recommendation_title"
                         android:textColor="@color/yellow_600"
-                        android:textSize="15dp"
+                        android:textSize="@dimen/size_spacing_15"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/iv_reason_for_recommendation" />
 
                     <org.helfoome.presentation.custom.EatingOutTipView
                         android:id="@+id/view_recommendation_tip_list"
-                        android:layout_width="0dp"
+                        android:layout_width="@dimen/size_spacing_0"
                         android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="30dp"
-                        android:layout_marginTop="15dp"
+                        android:layout_marginHorizontal="@dimen/size_spacing_30"
+                        android:layout_marginTop="@dimen/size_spacing_15"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/tv_recommend_tip_title" />
 
                     <View
                         android:id="@+id/line"
-                        android:layout_width="0dp"
+                        android:layout_width="@dimen/size_spacing_0"
                         android:layout_height="1dp"
-                        android:layout_marginHorizontal="8dp"
+                        android:layout_marginHorizontal="@dimen/size_spacing_8"
                         android:layout_marginTop="43dp"
                         android:background="@drawable/rectangle_green_radius_5"
                         android:backgroundTint="@color/gray_200"
@@ -99,17 +99,17 @@
                         android:fontFamily="@font/notosanskr_b"
                         android:text="@string/restaurant_detail_eating_out_how_to_eat_title"
                         android:textColor="@color/red_500"
-                        android:textSize="15dp"
+                        android:textSize="@dimen/size_spacing_15"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/iv_reason_for_how_to_eat" />
 
                     <org.helfoome.presentation.custom.EatingOutTipView
                         android:id="@+id/view_eating_tip_list"
-                        android:layout_width="0dp"
+                        android:layout_width="@dimen/size_spacing_0"
                         android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="30dp"
-                        android:layout_marginTop="15dp"
+                        android:layout_marginHorizontal="@dimen/size_spacing_30"
+                        android:layout_marginTop="@dimen/size_spacing_15"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/tv_eating_tip_title" />
@@ -132,7 +132,7 @@
                 android:paddingVertical="@dimen/size_spacing_6"
                 android:text="@{@string/format_hashtag(viewModel.eatingOutTips.category)}"
                 android:textColor="@color/white"
-                android:textSize="15dp"
+                android:textSize="@dimen/size_spacing_15"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
