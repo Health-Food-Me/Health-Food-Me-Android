@@ -44,7 +44,7 @@ class ReviewWritingActivity : BindingActivity<ActivityReviewWritingBinding>(R.la
 
     private fun initData() {
         // 새 리뷰 작성 시에는 레스토랑명 및 아이디를 전달 받음
-        intent.getStringExtra("RESTAURANT_NAME")?.let {
+        intent.getStringExtra(ARG_RESTAURANT_NAME)?.let {
             viewModel.setEditMode(false)
             viewModel.setRestaurantName(it)
         }
@@ -176,5 +176,6 @@ class ReviewWritingActivity : BindingActivity<ActivityReviewWritingBinding>(R.la
     companion object {
         private const val ARG_RESTAURANT_ID = "restaurantId"
         private const val ARG_REVIEW_INFO = "reviewInfo"
+        private const val ARG_RESTAURANT_NAME = "restaurantName"
     }
 }
