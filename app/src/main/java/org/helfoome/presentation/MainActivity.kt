@@ -66,6 +66,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
     private var category: String? = null
     private lateinit var behavior: BottomSheetBehavior<ConstraintLayout>
     private var mapSelectionBottomDialog: MapSelectionBottomDialogFragment? = null
+    private var selectedRestaurantId: String = ""
     private val tabSelectedListener = object : TabLayout.OnTabSelectedListener {
         override fun onTabReselected(tab: TabLayout.Tab?) = Unit
         override fun onTabUnselected(tab: TabLayout.Tab?) = Unit
@@ -363,7 +364,12 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
     private fun initObservers() {
         viewModel.selectedRestaurant.observe(this) {
             with(binding.layoutRestaurantDialog) {
-                layoutRestaurantTabMenu.selectTab(layoutRestaurantTabMenu.getTabAt(0))
+                // 스크랩 시 selectedRestaurant의 스크랩 상태 isScrap을 업데이트하면서 selectedRestaurant가 갱신됨에 따라 스크랩 버튼만 눌러도 메뉴 탭으로 이동하는 버그를 방지하고자 함
+                // TODO Config-Change에 따른 취약점 발생을 방지하고자 selectedRestaurantId 뷰모델에서 관리하도록 수정 필요
+                if (selectedRestaurantId != it.id) {
+                    selectedRestaurantId = it.id
+                    layoutRestaurantTabMenu.selectTab(layoutRestaurantTabMenu.getTabAt(0))
+                }
                 hashtag.setHashtag(it.tags, HashtagViewType.RESTAURANT_SUMMARY_TYPE)
             }
         }
