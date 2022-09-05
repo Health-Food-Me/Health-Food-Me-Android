@@ -1,6 +1,5 @@
 package org.helfoome.presentation.restaurant
 
-import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.os.Bundle
 import android.util.Patterns

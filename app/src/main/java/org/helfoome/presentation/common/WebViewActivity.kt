@@ -3,7 +3,6 @@ package org.helfoome.presentation.common
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.webkit.WebChromeClient
-import android.webkit.WebView
 import android.webkit.WebViewClient
 import dagger.hilt.android.AndroidEntryPoint
 import org.helfoome.R
