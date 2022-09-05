@@ -34,6 +34,9 @@ class MainViewModel @Inject constructor(
     val scrapList: LiveData<List<MarkerInfo>> = _scrapList
     private val _checkReview = MutableLiveData<Boolean>()
     val checkReview: LiveData<Boolean> = _checkReview
+
+    private val _defaultLocation = mutableListOf<MarkerInfo>()
+    val defaultLocation: List<MarkerInfo> = _defaultLocation
     private val _location = MutableLiveData<List<MarkerInfo>>()
     val location: LiveData<List<MarkerInfo>> = _location
     private val _isDietRestaurant = MutableLiveData<Boolean>()
@@ -116,6 +119,12 @@ class MainViewModel @Inject constructor(
                             marker.toMakerInfo()
                         }
                     )
+                    if (keyword == null) {
+                        with(_defaultLocation) {
+                            clear()
+                            addAll(it.data.map { marker -> marker.toMakerInfo() })
+                        }
+                    }
                 }.onFailure {
                     Timber.d(it.message)
                 }

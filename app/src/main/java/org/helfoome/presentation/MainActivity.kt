@@ -101,6 +101,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                 }
             }
         }
+
         override fun onSlide(bottomSheetView: View, slideOffset: Float) = Unit
     }
 
@@ -260,15 +261,13 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                 startActivity(Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + tvNumber.text)))
             }
 
-            binding.layoutSearch.setOnClickListener {
-                viewModel?.location?.value?.let {
-                    startActivity<SearchActivity>(Pair(MARKER_INFO, it))
-                }
-            }
-
             btnNavi.setOnClickListener {
                 showMapSelectionBottomDialog()
             }
+        }
+
+        binding.layoutSearch.setOnClickListener {
+            startActivity<SearchActivity>(MARKER_INFO to viewModel.defaultLocation)
         }
 
         with(binding.layoutDrawer) {
@@ -289,7 +288,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
             tvScrap.setOnClickListener {
                 controlHamburger.launch(
                     Intent(this@MainActivity, MyScrapActivity::class.java).apply {
-                        putExtras(bundleOf(Pair(MARKER_INFO, viewModel.location.value)))
+                        putExtras(bundleOf(MARKER_INFO to viewModel.defaultLocation))
                     }
                 )
             }
