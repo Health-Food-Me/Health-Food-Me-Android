@@ -10,7 +10,7 @@ import androidx.core.os.bundleOf
 
 fun Context.showKeyboard(view: View) {
     val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-    inputMethodManager.showSoftInput(view.findFocus(), 0)
+    inputMethodManager.showSoftInput(view, 0)
 }
 
 fun Context.closeKeyboard(view: View) {
