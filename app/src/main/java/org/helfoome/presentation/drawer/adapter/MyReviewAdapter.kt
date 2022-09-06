@@ -49,9 +49,8 @@ class MyReviewAdapter(
                 }
                 rvPhotoList.apply {
                     this.adapter = adapter
-                    addItemDecoration(ItemDecorationUtil.ItemDecoration(height = 0f, padding = 20, isVertical = false))
+                    addItemDecoration(ItemDecorationUtil.ItemDecoration(padding = 20, isVertical = false))
                 }
-                data = myReviewData
                 tvTitle.setOnClickListener {
                     startRestaurant.invoke()
                 }
@@ -62,6 +61,7 @@ class MyReviewAdapter(
                     editClickListener.invoke(myReviewData.id)
                 }
                 hashtag.setHashtag(listOf(myReviewData.tags, myReviewData.good.joinToString()), HashtagViewType.REVIEW_TAB_TYPE)
+                data = myReviewData
             }
         }
     }
