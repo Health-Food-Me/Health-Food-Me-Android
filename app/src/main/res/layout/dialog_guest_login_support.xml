@@ -1,0 +1,104 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/rectangle_white_radius_15">
+
+    <ImageView
+        android:id="@+id/iv_cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:padding="6dp"
+        android:src="@drawable/ic_delete_circle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_guest_support"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_spacing_32"
+        android:fontFamily="@font/notosanskr_m"
+        android:gravity="center"
+        android:text="@string/guest_login_dialog_description"
+        android:textColor="@color/gray_800"
+        android:textSize="@dimen/size_spacing_16"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/iv_kakao_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/size_spacing_20"
+        android:layout_marginTop="@dimen/size_spacing_24"
+        android:background="@drawable/rectangle_border_radius_5"
+        android:backgroundTint="@color/yellow_700"
+        android:paddingVertical="@dimen/size_spacing_14"
+        app:layout_constraintTop_toBottomOf="@id/tv_guest_support">
+
+        <ImageView
+            android:id="@+id/iv_kakao_logo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/size_spacing_13"
+            android:src="@drawable/ic_kakao"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/size_spacing_16"
+            android:fontFamily="@font/notosanskr_m"
+            android:text="@string/login_kakao"
+            android:textColor="@color/black"
+            android:textSize="@dimen/size_spacing_13"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/iv_kakao_logo"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/iv_naver_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginHorizontal="@dimen/size_spacing_20"
+        android:layout_marginTop="@dimen/size_spacing_8"
+        android:layout_marginBottom="@dimen/size_spacing_24"
+        android:background="@drawable/rectangle_border_radius_5"
+        android:backgroundTint="@color/green_500"
+        android:paddingVertical="@dimen/size_spacing_14"
+        app:layout_constraintTop_toBottomOf="@id/iv_kakao_login">
+
+        <ImageView
+            android:id="@+id/iv_naver_logo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/size_spacing_13"
+            android:src="@drawable/ic_btn_naver_login"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/size_spacing_16"
+            android:fontFamily="@font/notosanskr_m"
+            android:text="@string/login_naver"
+            android:textColor="@color/white"
+            android:textSize="@dimen/size_spacing_13"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/iv_naver_logo"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

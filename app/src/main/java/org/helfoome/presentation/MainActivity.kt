@@ -52,6 +52,7 @@ import org.helfoome.util.DialogUtil
 import org.helfoome.util.ResolutionMetrics
 import org.helfoome.util.SnackBarTopDown
 import org.helfoome.util.binding.BindingActivity
+import org.helfoome.util.ext.getScreenSize
 import org.helfoome.util.ext.makeTransparentStatusBar
 import org.helfoome.util.ext.startActivity
 import org.helfoome.util.ext.stringListFrom
@@ -303,8 +304,13 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
             }
             tvLogout.setOnClickListener {
                 val bind = DialogLogoutBinding.inflate(LayoutInflater.from(this@MainActivity))
-                val dialog =
-                    DialogUtil.makeDialog(this@MainActivity, bind, resolutionMetrics.toPixel(288), resolutionMetrics.toPixel(241))
+
+                val dialog = DialogUtil.makeDialog(
+                    this@MainActivity,
+                    bind,
+                    resolutionMetrics.toPixel(getScreenSize(72).first),
+                    resolutionMetrics.toPixel(getScreenSize(447).second)
+                )
 
                 bind.btnYes.setOnClickListener {
                     NaverIdLoginSDK.logout()

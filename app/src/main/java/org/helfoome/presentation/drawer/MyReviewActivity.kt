@@ -18,6 +18,7 @@ import org.helfoome.util.ItemDecorationUtil
 import org.helfoome.util.ResolutionMetrics
 import org.helfoome.util.SnackBarTopDown
 import org.helfoome.util.binding.BindingActivity
+import org.helfoome.util.ext.getScreenSize
 import org.helfoome.util.ext.startActivity
 import javax.inject.Inject
 
@@ -61,7 +62,12 @@ class MyReviewActivity : BindingActivity<ActivityMyReviewBinding>(R.layout.activ
 
     private fun deleteReview(reviewId: String) {
         val bind = DialogMyReviewDeleteBinding.inflate(layoutInflater)
-        val dialog = DialogUtil.makeDialog(this, bind, resolutionMetrics.toPixel(288), resolutionMetrics.toPixel(223))
+        val dialog = DialogUtil.makeDialog(
+            this,
+            bind,
+            resolutionMetrics.toPixel(getScreenSize(72).first),
+            resolutionMetrics.toPixel(getScreenSize(417).second)
+        )
         bind.btnYes.setOnClickListener {
             viewModel.deleteReview(reviewId)
             dialog.dismiss()
