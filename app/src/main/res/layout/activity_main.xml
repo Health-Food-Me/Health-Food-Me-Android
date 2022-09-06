@@ -53,16 +53,16 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="34dp"
-                        android:paddingHorizontal="14dp"
+                        android:paddingHorizontal="@dimen/size_spacing_14"
                         app:layout_constraintTop_toTopOf="parent">
 
                         <ImageButton
                             android:id="@+id/btn_hamburger"
                             android:layout_width="50dp"
-                            android:layout_height="0dp"
-                            android:layout_marginStart="6dp"
+                            android:layout_height="@dimen/size_spacing_0"
+                            android:layout_marginStart="@dimen/size_spacing_6"
                             android:background="@drawable/rectangle_white_radius_14"
-                            android:elevation="4dp"
+                            android:elevation="@dimen/size_spacing_4"
                             android:src="@drawable/ic_hamburger"
                             app:layout_constraintBottom_toBottomOf="@id/tv_search"
                             app:layout_constraintStart_toStartOf="parent"
@@ -70,20 +70,20 @@
 
                         <TextView
                             android:id="@+id/tv_search"
-                            android:layout_width="0dp"
+                            android:layout_width="@dimen/size_spacing_0"
                             android:layout_height="wrap_content"
-                            android:layout_marginVertical="6dp"
-                            android:layout_marginStart="8dp"
-                            android:layout_marginEnd="6dp"
+                            android:layout_marginVertical="@dimen/size_spacing_6"
+                            android:layout_marginStart="@dimen/size_spacing_8"
+                            android:layout_marginEnd="@dimen/size_spacing_6"
                             android:background="@drawable/rectangle_white_radius_14"
-                            android:drawablePadding="14dp"
-                            android:elevation="4dp"
+                            android:drawablePadding="@dimen/size_spacing_14"
+                            android:elevation="@dimen/size_spacing_4"
                             android:fontFamily="@font/notosanskr_r"
                             android:hint="@string/main_search"
-                            android:paddingHorizontal="16dp"
-                            android:paddingVertical="13dp"
+                            android:paddingHorizontal="@dimen/size_spacing_16"
+                            android:paddingVertical="@dimen/size_spacing_13"
                             android:textColor="@color/gray_400"
-                            android:textSize="15dp"
+                            android:textSize="@dimen/size_spacing_15"
                             app:drawableEndCompat="@drawable/ic_search"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -98,7 +98,7 @@
                         android:layout_marginTop="@dimen/size_spacing_4"
                         android:clipToPadding="false"
                         android:overScrollMode="never"
-                        android:paddingHorizontal="20dp"
+                        android:paddingHorizontal="@dimen/size_spacing_20"
                         android:scrollbars="none"
                         app:layout_constraintTop_toBottomOf="@id/layout_search">
 
@@ -106,19 +106,19 @@
                             android:id="@+id/cg_food_tag"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            app:chipSpacingHorizontal="10dp"
+                            app:chipSpacingHorizontal="@dimen/size_spacing_10"
                             app:singleLine="true"
                             app:singleSelection="true" />
                     </HorizontalScrollView>
 
                     <ImageButton
                         android:id="@+id/btn_bookmark_main"
-                        android:layout_width="56dp"
-                        android:layout_height="56dp"
-                        android:layout_marginEnd="20dp"
-                        android:layout_marginBottom="12dp"
+                        android:layout_width="@dimen/size_spacing_56"
+                        android:layout_height="@dimen/size_spacing_56"
+                        android:layout_marginEnd="@dimen/size_spacing_20"
+                        android:layout_marginBottom="@dimen/size_spacing_12"
                         android:background="@drawable/rectangle_border_white"
-                        android:elevation="4dp"
+                        android:elevation="@dimen/size_spacing_4"
                         android:src="@drawable/selector_btn_scrap"
                         android:visibility="@{isMainNotVisible? View.GONE : View.VISIBLE}"
                         app:layout_constraintBottom_toTopOf="@+id/btn_location_main"
@@ -126,13 +126,13 @@
 
                     <com.google.android.material.floatingactionbutton.FloatingActionButton
                         android:id="@+id/btn_location_main"
-                        android:layout_width="56dp"
-                        android:layout_height="56dp"
-                        android:layout_marginBottom="16dp"
+                        android:layout_width="@dimen/size_spacing_56"
+                        android:layout_height="@dimen/size_spacing_56"
+                        android:layout_marginBottom="@dimen/size_spacing_16"
                         android:backgroundTint="@color/white"
                         android:src="@drawable/ic_currentposition"
                         android:visibility="@{isMainNotVisible? View.GONE : View.VISIBLE}"
-                        app:borderWidth="0dp"
+                        app:borderWidth="@dimen/size_spacing_0"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="@id/btn_bookmark_main"
                         app:layout_dodgeInsetEdges="bottom" />
@@ -152,11 +152,11 @@
 
                     <ImageButton
                         android:id="@+id/btn_bookmark"
-                        android:layout_width="56dp"
-                        android:layout_height="56dp"
-                        android:layout_marginEnd="20dp"
+                        android:layout_width="@dimen/size_spacing_56"
+                        android:layout_height="@dimen/size_spacing_56"
+                        android:layout_marginEnd="@dimen/size_spacing_20"
                         android:background="@drawable/rectangle_border_white"
-                        android:elevation="4dp"
+                        android:elevation="@dimen/size_spacing_4"
                         android:src="@drawable/selector_btn_scrap"
                         android:visibility="@{isFloatingNotVisible? View.GONE : View.VISIBLE}"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -164,14 +164,14 @@
 
                     <com.google.android.material.floatingactionbutton.FloatingActionButton
                         android:id="@+id/btn_location"
-                        android:layout_width="56dp"
-                        android:layout_height="56dp"
-                        android:layout_marginTop="12dp"
+                        android:layout_width="@dimen/size_spacing_56"
+                        android:layout_height="@dimen/size_spacing_56"
+                        android:layout_marginTop="@dimen/size_spacing_12"
                         android:layout_marginBottom="@dimen/size_spacing_16"
                         android:backgroundTint="@color/white"
                         android:src="@drawable/ic_currentposition"
                         android:visibility="@{isFloatingNotVisible? View.GONE : View.VISIBLE}"
-                        app:borderWidth="0dp"
+                        app:borderWidth="@dimen/size_spacing_0"
                         app:layout_constraintEnd_toEndOf="@+id/btn_bookmark"
                         app:layout_constraintTop_toBottomOf="@id/btn_bookmark"
                         app:layout_dodgeInsetEdges="bottom" />
@@ -179,7 +179,7 @@
                     <View
                         android:id="@+id/line"
                         android:layout_width="match_parent"
-                        android:layout_height="12dp"
+                        android:layout_height="@dimen/size_spacing_12"
                         android:visibility="@{isFloatingNotVisible? View.GONE : View.VISIBLE}"
                         app:layout_constraintTop_toBottomOf="@+id/btn_location" />
 
@@ -187,7 +187,7 @@
                         android:id="@+id/layout_restaurant_dialog"
                         layout="@layout/dialog_restaurant_detail"
                         android:layout_width="match_parent"
-                        android:layout_height="0dp"
+                        android:layout_height="@dimen/size_spacing_0"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/line"
                         bind:viewModel="@{viewModel}" />

@@ -52,6 +52,7 @@ import org.helfoome.util.DialogUtil
 import org.helfoome.util.ResolutionMetrics
 import org.helfoome.util.SnackBarTopDown
 import org.helfoome.util.binding.BindingActivity
+import org.helfoome.util.ext.getScreenSize
 import org.helfoome.util.ext.makeTransparentStatusBar
 import org.helfoome.util.ext.startActivity
 import org.helfoome.util.ext.stringListFrom
@@ -66,6 +67,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
     private var category: String? = null
     private lateinit var behavior: BottomSheetBehavior<ConstraintLayout>
     private var mapSelectionBottomDialog: MapSelectionBottomDialogFragment? = null
+    private var selectedRestaurantId: String = ""
     private val tabSelectedListener = object : TabLayout.OnTabSelectedListener {
         override fun onTabReselected(tab: TabLayout.Tab?) = Unit
         override fun onTabUnselected(tab: TabLayout.Tab?) = Unit
@@ -260,15 +262,13 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                 startActivity(Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + tvNumber.text)))
             }
 
-            binding.layoutSearch.setOnClickListener {
-                viewModel?.location?.value?.let {
-                    startActivity<SearchActivity>(Pair(MARKER_INFO, it))
-                }
-            }
-
             btnNavi.setOnClickListener {
                 showMapSelectionBottomDialog()
             }
+        }
+
+        binding.layoutSearch.setOnClickListener {
+            startActivity<SearchActivity>(MARKER_INFO to viewModel.defaultLocation)
         }
 
         with(binding.layoutDrawer) {
@@ -289,7 +289,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
             tvScrap.setOnClickListener {
                 controlHamburger.launch(
                     Intent(this@MainActivity, MyScrapActivity::class.java).apply {
-                        putExtras(bundleOf(Pair(MARKER_INFO, viewModel.location.value)))
+                        putExtras(bundleOf(MARKER_INFO to viewModel.defaultLocation))
                     }
                 )
             }
@@ -304,8 +304,13 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
             }
             tvLogout.setOnClickListener {
                 val bind = DialogLogoutBinding.inflate(LayoutInflater.from(this@MainActivity))
-                val dialog =
-                    DialogUtil.makeDialog(this@MainActivity, bind, resolutionMetrics.toPixel(288), resolutionMetrics.toPixel(241))
+
+                val dialog = DialogUtil.makeDialog(
+                    this@MainActivity,
+                    bind,
+                    resolutionMetrics.toPixel(getScreenSize(72).first),
+                    resolutionMetrics.toPixel(getScreenSize(447).second)
+                )
 
                 bind.btnYes.setOnClickListener {
                     NaverIdLoginSDK.logout()
@@ -364,7 +369,12 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
     private fun initObservers() {
         viewModel.selectedRestaurant.observe(this) {
             with(binding.layoutRestaurantDialog) {
-                layoutRestaurantTabMenu.selectTab(layoutRestaurantTabMenu.getTabAt(0))
+                // 스크랩 시 selectedRestaurant의 스크랩 상태 isScrap을 업데이트하면서 selectedRestaurant가 갱신됨에 따라 스크랩 버튼만 눌러도 메뉴 탭으로 이동하는 버그를 방지하고자 함
+                // TODO Config-Change에 따른 취약점 발생을 방지하고자 selectedRestaurantId 뷰모델에서 관리하도록 수정 필요
+                if (selectedRestaurantId != it.id) {
+                    selectedRestaurantId = it.id
+                    layoutRestaurantTabMenu.selectTab(layoutRestaurantTabMenu.getTabAt(0))
+                }
                 hashtag.setHashtag(it.tags, HashtagViewType.RESTAURANT_SUMMARY_TYPE)
             }
         }
@@ -389,6 +399,9 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                             else R.drawable.ic_marker_red_small
                         )
                         map = naverMap
+
+                        isHideCollidedMarkers = true
+                        captionText = marker.name
 
                         setOnClickListener {
                             with(viewModel) {
@@ -434,6 +447,9 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                             else R.drawable.ic_marker_red_small
                         )
                         map = naverMap
+
+                        isHideCollidedMarkers = true
+                        captionText = marker.name
 
                         setOnClickListener {
                             with(viewModel) {

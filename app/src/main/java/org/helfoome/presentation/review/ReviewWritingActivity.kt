@@ -20,13 +20,18 @@ import org.helfoome.domain.entity.MyReviewListInfo
 import org.helfoome.presentation.type.ReviewImageType
 import org.helfoome.util.HashtagUtil
 import org.helfoome.util.ItemDecorationUtil
+import org.helfoome.util.ResolutionMetrics
 import org.helfoome.util.binding.BindingActivity
 import org.helfoome.util.ext.closeKeyboard
 import org.helfoome.util.showToast
+import org.helfoome.util.ext.showToast
 import java.io.File
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class ReviewWritingActivity : BindingActivity<ActivityReviewWritingBinding>(R.layout.activity_review_writing) {
+    @Inject
+    lateinit var resolutionMetrics: ResolutionMetrics
     private val viewModel: RestaurantReviewWritingViewModel by viewModels()
     private val galleryImageAdapter = GalleryImageAdapter(::showGalleryImageDialog)
     private var photoUri: Uri? = null
@@ -64,7 +69,12 @@ class ReviewWritingActivity : BindingActivity<ActivityReviewWritingBinding>(R.la
     private fun initView() {
         binding.rvPhotoList.apply {
             adapter = galleryImageAdapter
-            addItemDecoration(ItemDecorationUtil.ItemDecoration(0f, padding = 24, isVertical = false))
+            addItemDecoration(
+                ItemDecorationUtil.ItemDecoration(
+                    resolutionMetrics.toDP(0),
+                    padding = 24, isVertical = false
+                )
+            )
         }
     }
 

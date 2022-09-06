@@ -31,9 +31,9 @@
                 android:id="@+id/btn_back"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="13dp"
-                android:layout_marginBottom="12dp"
+                android:layout_marginStart="@dimen/size_spacing_20"
+                android:layout_marginTop="@dimen/size_spacing_13"
+                android:layout_marginBottom="@dimen/size_spacing_12"
                 android:src="@drawable/ic_before"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -46,7 +46,7 @@
                 android:fontFamily="@font/notosanskr_b"
                 android:text='@{viewModel.isEditMode ? "리뷰편집" : "리뷰작성"}'
                 android:textColor="@color/gray_800"
-                android:textSize="15dp"
+                android:textSize="@dimen/size_spacing_15"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -62,14 +62,14 @@
         <ScrollView
             android:id="@+id/layout_scroll_view"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="@dimen/size_spacing_0"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/layout_toolbar">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:paddingBottom="12dp">
+                android:paddingBottom="@dimen/size_spacing_12">
 
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/gl_start"
@@ -93,7 +93,7 @@
                     android:fontFamily="@font/notosanskr_b"
                     android:text="@{viewModel.restaurantTitle}"
                     android:textColor="@color/gray_800"
-                    android:textSize="15dp"
+                    android:textSize="@dimen/size_spacing_15"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -104,7 +104,7 @@
                     style="@style/RatingBar.HelFooMe.Style"
                     android:layout_width="wrap_content"
                     android:layout_height="37dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="@dimen/size_spacing_10"
                     android:max="5"
                     android:numStars="5"
                     android:orientation="horizontal"
@@ -149,7 +149,7 @@
                     style="@style/TextView.Review.Writing.Hashtag.Style"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
+                    android:layout_marginTop="@dimen/size_spacing_12"
                     android:onClick="@{() -> viewModel.setSelectedTasteTag(TasteHashtagType.GOOD)}"
                     android:text="@{@string/format_hashtag_with_blank(@string/review_writing_taste_hashtag_taste_good)}"
                     app:isSelected="@{viewModel.selectedTasteTag == TasteHashtagType.GOOD}"
@@ -207,7 +207,7 @@
                     style="@style/TextView.Review.Writing.Hashtag.Style"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
+                    android:layout_marginTop="@dimen/size_spacing_12"
                     android:onClick="@{() -> viewModel.setSelectedGoodPointTag(GoodPointHashtagType.NO_BURDEN)}"
                     android:text="@{@string/format_hashtag_with_blank(@string/review_writing_taste_hashtag_taste_no_burden)}"
                     app:isSelected="@{viewModel.selectedGoodPointTags.get(GoodPointHashtagType.NO_BURDEN)}"
@@ -262,13 +262,13 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/layout_review"
-                    android:layout_width="0dp"
+                    android:layout_width="@dimen/size_spacing_0"
                     android:layout_height="285dp"
-                    android:layout_marginTop="12dp"
+                    android:layout_marginTop="@dimen/size_spacing_12"
                     android:background="@drawable/rectangle_radius_8"
                     android:backgroundTint="#F6F6F6"
-                    android:paddingHorizontal="14dp"
-                    android:paddingVertical="10dp"
+                    android:paddingHorizontal="@dimen/size_spacing_14"
+                    android:paddingVertical="@dimen/size_spacing_10"
                     app:layout_constraintEnd_toEndOf="@id/gl_end"
                     app:layout_constraintStart_toStartOf="@id/gl_start"
                     app:layout_constraintTop_toBottomOf="@id/tv_review_description">
@@ -276,8 +276,8 @@
                     <EditText
                         android:id="@+id/et_review"
                         android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_marginBottom="14dp"
+                        android:layout_height="@dimen/size_spacing_0"
+                        android:layout_marginBottom="@dimen/size_spacing_14"
                         android:background="@android:color/transparent"
                         android:fontFamily="@font/notosanskr_r"
                         android:gravity="top"
@@ -286,7 +286,7 @@
                         android:text="@={viewModel.reviewContent}"
                         android:textColor="@color/gray_800"
                         android:textColorHint="@color/gray_550"
-                        android:textSize="12dp"
+                        android:textSize="@dimen/size_spacing_12"
                         app:layout_constraintBottom_toTopOf="@id/tv_length_condition"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -297,7 +297,7 @@
                         android:fontFamily="@font/notosanskr_r"
                         android:text="@{@string/restaurant_detail_review_length_format(viewModel.reviewContent.length)}"
                         android:textColor="@color/gray_550"
-                        android:textSize="12dp"
+                        android:textSize="@dimen/size_spacing_12"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         tools:text="(5/500자)" />
@@ -317,23 +317,22 @@
                     android:id="@+id/tv_selection"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="3dp"
+                    android:layout_marginStart="@dimen/size_spacing_3"
                     android:fontFamily="@font/notosanskr_b"
                     android:text="@string/review_writing_photo_selection"
                     android:textColor="@color/gray_550"
-                    android:textSize="12dp"
+                    android:textSize="@dimen/size_spacing_12"
                     app:layout_constraintBottom_toBottomOf="@id/tv_photo_title"
                     app:layout_constraintStart_toEndOf="@id/tv_photo_title"
                     app:layout_constraintTop_toTopOf="@id/tv_photo_title" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_photo_list"
-                    android:layout_width="0dp"
+                    android:layout_width="@dimen/size_spacing_0"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
+                    android:layout_marginTop="@dimen/size_spacing_12"
                     android:clipToPadding="false"
-                    android:orientation="horizontal"
-                    android:paddingEnd="20dp"
+                    android:paddingEnd="@dimen/size_spacing_20"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@id/gl_start"
@@ -344,9 +343,9 @@
                     style="@style/TextView.Review.Description.TextAppearance"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="@dimen/size_spacing_8"
                     android:text="@string/review_writing_photo_guide"
-                    android:textSize="10dp"
+                    android:textSize="@dimen/size_spacing_10"
                     app:layout_constraintStart_toStartOf="@id/gl_start"
                     app:layout_constraintTop_toBottomOf="@id/rv_photo_list" />
 
@@ -355,7 +354,7 @@
                     style="@style/Button.FullButton.Style"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="24dp"
+                    android:layout_marginTop="@dimen/size_spacing_24"
                     android:text="@string/review_writing_write_btn_text"
                     app:layout_constraintTop_toBottomOf="@id/tv_photo_guide" />
             </androidx.constraintlayout.widget.ConstraintLayout>

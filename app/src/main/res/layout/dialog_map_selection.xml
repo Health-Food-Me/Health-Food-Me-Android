@@ -33,6 +33,6 @@
             android:text="@string/cancel"
             android:textAppearance="@style/TextView.Map.TextAppearance"
             android:textColor="@color/gray_550"
-            android:textSize="17dp" />
+            android:textSize="@dimen/size_spacing_17" />
     </LinearLayout>
 </layout>

@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.KeyEvent
-import android.view.LayoutInflater
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import dagger.hilt.android.AndroidEntryPoint
@@ -13,13 +12,13 @@ import org.helfoome.databinding.ActivityMyReviewBinding
 import org.helfoome.databinding.DialogMyReviewDeleteBinding
 import org.helfoome.presentation.MainActivity
 import org.helfoome.presentation.drawer.adapter.MyReviewAdapter
-import org.helfoome.presentation.drawer.adapter.MyReviewAdapter.Companion.ENLARGE
 import org.helfoome.presentation.review.ReviewWritingActivity
 import org.helfoome.util.DialogUtil
 import org.helfoome.util.ItemDecorationUtil
 import org.helfoome.util.ResolutionMetrics
 import org.helfoome.util.SnackBarTopDown
 import org.helfoome.util.binding.BindingActivity
+import org.helfoome.util.ext.getScreenSize
 import org.helfoome.util.ext.startActivity
 import javax.inject.Inject
 
@@ -33,27 +32,12 @@ class MyReviewActivity : BindingActivity<ActivityMyReviewBinding>(R.layout.activ
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
             if (activityResult.resultCode == Activity.RESULT_OK) {
                 SnackBarTopDown.makeSnackBarTopDown(this, binding.snvReviewModify, "리뷰 편집이 완료되었습니다")
+                viewModel.getMyReviewList()
             }
         }
 
     private val myReviewAdapter = MyReviewAdapter(
-        ::adapterClickListener, { reviewId ->
-            val bind = DialogMyReviewDeleteBinding.inflate(LayoutInflater.from(this@MyReviewActivity))
-            val dialog = DialogUtil.makeDialog(this, bind, resolutionMetrics.toPixel(288), resolutionMetrics.toPixel(223))
-
-            bind.btnYes.setOnClickListener {
-                viewModel.deleteReview(reviewId)
-                dialog.dismiss()
-            }
-            bind.btnNo.setOnClickListener {
-                dialog.dismiss()
-            }
-        },
-        { review ->
-            val intent = Intent(this@MyReviewActivity, ReviewWritingActivity::class.java)
-            intent.putExtra(ARG_REVIEW_INFO, review)
-            requestModifyReview.launch(intent)
-        }
+        ::startRestaurant, ::deleteReview, ::editReview
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -72,12 +56,31 @@ class MyReviewActivity : BindingActivity<ActivityMyReviewBinding>(R.layout.activ
         }
     }
 
-    private fun adapterClickListener(it: Int) {
-        when (it) {
-            ENLARGE -> {
-                startActivity<MainActivity>()
-            }
+    private fun startRestaurant() {
+        startActivity<MainActivity>()
+    }
+
+    private fun deleteReview(reviewId: String) {
+        val bind = DialogMyReviewDeleteBinding.inflate(layoutInflater)
+        val dialog = DialogUtil.makeDialog(
+            this,
+            bind,
+            resolutionMetrics.toPixel(getScreenSize(72).first),
+            resolutionMetrics.toPixel(getScreenSize(417).second)
+        )
+        bind.btnYes.setOnClickListener {
+            viewModel.deleteReview(reviewId)
+            dialog.dismiss()
         }
+        bind.btnNo.setOnClickListener {
+            dialog.dismiss()
+        }
+    }
+
+    private fun editReview(reviewId: String) {
+        requestModifyReview.launch(Intent(this@MyReviewActivity, ReviewWritingActivity::class.java).apply {
+            intent.putExtra(ARG_REVIEW_INFO, review)
+        })
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
@@ -88,7 +91,14 @@ class MyReviewActivity : BindingActivity<ActivityMyReviewBinding>(R.layout.activ
     private fun initAdapter() {
         binding.rcvReview.apply {
             adapter = myReviewAdapter
-            addItemDecoration(ItemDecorationUtil.ItemDecoration(3f, 100f, context.getColor(R.color.gray_100), 100))
+            addItemDecoration(
+                ItemDecorationUtil.ItemDecoration(
+                    resolutionMetrics.toDP(1),
+                    resolutionMetrics.toDP(20),
+                    context.getColor(R.color.gray_100),
+                    26
+                )
+            )
         }
     }
 
@@ -101,17 +111,6 @@ class MyReviewActivity : BindingActivity<ActivityMyReviewBinding>(R.layout.activ
             setResult(Activity.RESULT_OK)
             finish()
         }
-    }
-
-    // 나중에 전체적으로 바꾸지 않게 하기
-    override fun onResume() {
-        super.onResume()
-        viewModel.getMyReviewList()
-    }
-
-    override fun onStart() {
-        super.onStart()
-        viewModel.getMyReviewList()
     }
 
     companion object {

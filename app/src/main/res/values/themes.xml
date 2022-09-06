@@ -19,18 +19,24 @@
 
     <style name="Button.Basic.Style" parent="">
         <item name="android:background">@android:color/transparent</item>
-        <item name="android:minWidth">0dp</item>
-        <item name="android:minHeight">0dp</item>
+        <item name="android:minWidth">@dimen/size_spacing_0</item>
+        <item name="android:minHeight">@dimen/size_spacing_0</item>
     </style>
 
     <style name="Button.Navigation.Style" parent="Button.Basic.Style">
-        <item name="android:padding">16dp</item>
+        <item name="android:padding">@dimen/size_spacing_16</item>
         <item name="android:layout_width">48dp</item>
+    </style>
+
+    <style name="BookMark" parent="Button.Basic.Style">
+        <item name="android:paddingHorizontal">@dimen/size_spacing_17</item>
+        <item name="android:paddingVertical">@dimen/size_spacing_15</item>
+        <item name="android:layout_width">wrap_content</item>
     </style>
 
     <style name="TextView.Hashtag.Style" parent="">
         <item name="android:layout_height">22dp</item>
-        <item name="android:paddingHorizontal">10dp</item>
+        <item name="android:paddingHorizontal">@dimen/size_spacing_10</item>
         <item name="android:background">@drawable/rectangle_border_radius_10</item>
         <item name="android:backgroundTint">#FFEAEA</item>
         <item name="android:textAppearance">@style/TextView.Hashtag.TextAppearance</item>
@@ -40,40 +46,40 @@
     <style name="TextView.Hashtag.TextAppearance" parent="">
         <item name="android:fontFamily">@font/notosanskr_m</item>
         <item name="android:textColor">@color/red_500</item>
-        <item name="android:textSize">10dp</item>
+        <item name="android:textSize">@dimen/size_spacing_10</item>
     </style>
 
     <style name="TabItem.RestaurantTab.TextAppearance" parent="">
         <item name="android:fontFamily">@font/notosanskr_b</item>
-        <item name="android:textSize">14dp</item>>
+        <item name="android:textSize">@dimen/size_spacing_14</item>>
     </style>
 
     <style name="TabItem.MenuTab.TextAppearance" parent="">
         <item name="android:fontFamily">@font/notosanskr_m</item>
-        <item name="android:textSize">12dp</item>
+        <item name="android:textSize">@dimen/size_spacing_12</item>
         <item name="android:textColor">@color/gray_800</item>
     </style>
 
     <style name="TextView.Nutrient.TextAppearance" parent="">
         <item name="android:fontFamily">@font/notosanskr_b</item>
         <item name="android:textColor">@color/gray_800</item>
-        <item name="android:textSize">14dp</item>
+        <item name="android:textSize">@dimen/size_spacing_14</item>
     </style>
 
     <style name="TextView.Setting.TextAppearance_14" parent="">
         <item name="android:textColor">@color/gray_550</item>
-        <item name="android:textSize">14dp</item>
+        <item name="android:textSize">@dimen/size_spacing_14</item>
     </style>
 
     <style name="TextView.Setting.TextAppearance_16" parent="">
         <item name="android:textColor">@color/gray_800</item>
-        <item name="android:textSize">16dp</item>
+        <item name="android:textSize">@dimen/size_spacing_16</item>
     </style>
 
     <style name="TextView.OpeningTime.Appearance" parent="">
         <item name="android:fontFamily">@font/notosanskr_m</item>
         <item name="android:textColor">@color/gray_600</item>
-        <item name="android:textSize">12dp</item>
+        <item name="android:textSize">@dimen/size_spacing_12</item>
     </style>
 
     <style name="TextView.Drawer.TextAppearance" parent="">
@@ -84,25 +90,25 @@
     <style name="TextView.Map.TextAppearance" parent="">
         <item name="android:fontFamily">@font/notosanskr_r</item>
         <item name="android:textColor">@color/gray_800</item>
-        <item name="android:textSize">17dp</item>
+        <item name="android:textSize">@dimen/size_spacing_17</item>
     </style>
 
     <style name="TextView.MapButton.Style" parent="">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:paddingVertical">14dp</item>
+        <item name="android:paddingVertical">@dimen/size_spacing_14</item>
         <item name="android:gravity">center_horizontal</item>
     </style>
 
     <style name="TextView.Review.Title.TextAppearance" parent="">
         <item name="android:fontFamily">@font/notosanskr_b</item>
         <item name="android:textColor">@color/gray_800</item>
-        <item name="android:textSize">14dp</item>
+        <item name="android:textSize">@dimen/size_spacing_14</item>
     </style>
 
     <style name="TextView.Review.Description.TextAppearance" parent="">
         <item name="android:fontFamily">@font/notosanskr_r</item>
         <item name="android:textColor">@color/gray_550</item>
-        <item name="android:textSize">12dp</item>
+        <item name="android:textSize">@dimen/size_spacing_12</item>
     </style>
 
     <style name="CircleImageView.Radius.8.Style" parent="">
@@ -119,12 +125,12 @@
         <item name="android:fontFamily">@font/notosanskr_r</item>
         <item name="chipCornerRadius">38dp</item>
         <item name="android:textColor">@color/selector_chip_text</item>
-        <item name="android:textSize">14dp</item>
-        <item name="iconStartPadding">8dp</item>
+        <item name="android:textSize">@dimen/size_spacing_14</item>
+        <item name="iconStartPadding">@dimen/size_spacing_8</item>
         <item name="iconEndPadding">-4dp</item>
-        <item name="iconSize">24dp</item>
-        <item name="elevation">4dp</item>
-        <item name="textEndPadding">12dp</item>
+        <item name="iconSize">@dimen/size_spacing_24</item>
+        <item name="elevation">@dimen/size_spacing_4</item>
+        <item name="textEndPadding">@dimen/size_spacing_12</item>
         <item name="android:elevation">2dp</item>
         <item name="chipIconVisible">true</item>
     </style>
@@ -133,37 +139,37 @@
         <item name="android:fontFamily">@font/notosanskr_m</item>
         <item name="android:textColor">@color/selector_tag_text_color</item>
         <item name="android:background">@drawable/selector_tag_background</item>
-        <item name="android:textSize">14dp</item>
-        <item name="android:paddingVertical">4dp</item>
-        <item name="android:paddingHorizontal">10dp</item>
-        <item name="android:layout_marginEnd">4dp</item>
+        <item name="android:textSize">@dimen/size_spacing_14</item>
+        <item name="android:paddingVertical">@dimen/size_spacing_4</item>
+        <item name="android:paddingHorizontal">@dimen/size_spacing_10</item>
+        <item name="android:layout_marginEnd">@dimen/size_spacing_4</item>
     </style>
 
     <style name="TextView.Hashtag.Basic.Style" parent="">
         <item name="android:textColor">@color/red_500</item>
         <item name="android:background">@drawable/rectangle_boarder_red_radius_14</item>
-        <item name="android:textSize">10dp</item>
-        <item name="android:paddingHorizontal">10dp</item>
+        <item name="android:textSize">@dimen/size_spacing_10</item>
+        <item name="android:paddingHorizontal">@dimen/size_spacing_10</item>
     </style>
 
     <style name="TextView.Blog.Review.Hashtag.Style" parent="TextView.Hashtag.Basic.Style">
         <item name="android:fontFamily">@font/notosanskr_r</item>
-        <item name="android:paddingVertical">4dp</item>
-        <item name="android:layout_marginEnd">6dp</item>
+        <item name="android:paddingVertical">@dimen/size_spacing_4</item>
+        <item name="android:layout_marginEnd">@dimen/size_spacing_6</item>
     </style>
 
     <style name="TextView.Restaurant.Summary.Hashtag.Style" parent="TextView.Hashtag.Basic.Style">
         <item name="android:fontFamily">@font/notosanskr_m</item>
         <item name="android:paddingVertical">2dp</item>
-        <item name="android:layout_marginEnd">4dp</item>
+        <item name="android:layout_marginEnd">@dimen/size_spacing_4</item>
     </style>
 
     <style name="ShapeAppearanceOverlay.App.Corner_14" parent="">
-        <item name="cornerSize">14dp</item>
+        <item name="cornerSize">@dimen/size_spacing_14</item>
     </style>
 
     <style name="ShapeAppearanceOverlay.App.CornerRadius8" parent="">
-        <item name="cornerSize">8dp</item>
+        <item name="cornerSize">@dimen/size_spacing_8</item>
         <item name="cornerFamily">rounded</item>
     </style>
 
@@ -197,17 +203,17 @@
 
     <style name="Button.FullButton.Style" parent="Button.Basic.Style">
         <item name="android:layout_marginHorizontal">@dimen/size_spacing_20</item>
-        <item name="android:paddingVertical">12dp</item>
+        <item name="android:paddingVertical">@dimen/size_spacing_12</item>
         <item name="android:background">@drawable/rectangle_transparent_radius_20</item>
         <item name="android:backgroundTint">@color/selector_btn_review</item>
         <item name="android:fontFamily">@font/notosanskr_b</item>
         <item name="android:textColor">@color/white</item>
-        <item name="android:textSize">14dp</item>
+        <item name="android:textSize">@dimen/size_spacing_14</item>
     </style>
 
     <style name="ShapeAppearanceOverlay.App.TopCornerRadius8" parent="">
-        <item name="cornerSizeTopLeft">8dp</item>
-        <item name="cornerSizeTopRight">8dp</item>
+        <item name="cornerSizeTopLeft">@dimen/size_spacing_8</item>
+        <item name="cornerSizeTopRight">@dimen/size_spacing_8</item>
         <item name="cornerFamilyTopRight">rounded</item>
     </style>
 </resources>

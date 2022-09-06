@@ -11,10 +11,17 @@ import org.helfoome.util.ItemDecorationUtil
 import org.helfoome.util.ItemDiffCallback
 
 class RestaurantGeneralReviewAdapter :
-    ListAdapter<HFMReviewInfo, RestaurantGeneralReviewAdapter.ReviewViewHolder>(ItemDiffCallback<HFMReviewInfo>(onContentsTheSame = { old, new -> old == new }, onItemsTheSame = { old, new -> old.id == new.id })) {
+    ListAdapter<HFMReviewInfo, RestaurantGeneralReviewAdapter.ReviewViewHolder>(
+        ItemDiffCallback<HFMReviewInfo>(
+            onContentsTheSame = { old, new -> old == new },
+            onItemsTheSame = { old, new -> old.id == new.id }
+        )
+    ) {
     private lateinit var inflater: LayoutInflater
 
-    class ReviewViewHolder(private val binding: ItemGeneralReviewBinding) :
+    class ReviewViewHolder(
+        private val binding: ItemGeneralReviewBinding
+    ) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(review: HFMReviewInfo) {
             binding.review = review
@@ -24,7 +31,7 @@ class RestaurantGeneralReviewAdapter :
             }
             binding.rvPhotoList.apply {
                 this.adapter = adapter
-                addItemDecoration(ItemDecorationUtil.ItemDecoration(height = 0f, padding = 20, isVertical = false))
+                addItemDecoration(ItemDecorationUtil.ItemDecoration(padding = 20, isVertical = false))
             }
         }
     }

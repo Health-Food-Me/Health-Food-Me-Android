@@ -239,6 +239,8 @@ class MapSelectActivity : BindingActivity<ActivityMapSelectBinding>(R.layout.act
                             )
                         }
                         map = naverMap
+                        isHideCollidedMarkers = true
+                        captionText = marker.name
 
                         setOnClickListener {
                             viewModel.getReviewCheck(marker.id)

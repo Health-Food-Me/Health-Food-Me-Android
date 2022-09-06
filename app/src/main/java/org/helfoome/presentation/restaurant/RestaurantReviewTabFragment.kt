@@ -1,8 +1,6 @@
 package org.helfoome.presentation.restaurant
 
-import android.content.ActivityNotFoundException
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.util.Patterns
 import android.view.View
@@ -13,14 +11,19 @@ import org.helfoome.R
 import org.helfoome.databinding.FragmentReviewBinding
 import org.helfoome.domain.entity.BlogReviewInfo
 import org.helfoome.presentation.MainViewModel
+import org.helfoome.presentation.common.WebViewActivity
 import org.helfoome.presentation.restaurant.adapter.RestaurantBlogReviewAdapter
 import org.helfoome.presentation.restaurant.adapter.RestaurantGeneralReviewAdapter
 import org.helfoome.presentation.type.ReviewType
 import org.helfoome.util.ItemDecorationUtil
+import org.helfoome.util.ResolutionMetrics
 import org.helfoome.util.binding.BindingFragment
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class RestaurantReviewTabFragment : BindingFragment<FragmentReviewBinding>(R.layout.fragment_review) {
+    @Inject
+    lateinit var resolutionMetrics: ResolutionMetrics
     private val viewModel: MainViewModel by activityViewModels()
     private val restaurantGeneralReviewAdapter = RestaurantGeneralReviewAdapter()
     private val restaurantBlogReviewAdapter = RestaurantBlogReviewAdapter(::moveToBlog)
@@ -36,7 +39,14 @@ class RestaurantReviewTabFragment : BindingFragment<FragmentReviewBinding>(R.lay
     private fun initView() {
         binding.reviewList.apply {
             adapter = restaurantGeneralReviewAdapter
-            addItemDecoration(ItemDecorationUtil.ItemDecoration(3f, 100f, context.getColor(R.color.gray_100), 100))
+            addItemDecoration(
+                ItemDecorationUtil.ItemDecoration(
+                    resolutionMetrics.toDP(3),
+                    resolutionMetrics.toDP(100),
+                    context.getColor(R.color.gray_100),
+                    100
+                )
+            )
         }
         binding.layoutReviewTab.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
@@ -53,6 +63,7 @@ class RestaurantReviewTabFragment : BindingFragment<FragmentReviewBinding>(R.lay
                     }
                 }
             }
+
             override fun onTabUnselected(tab: TabLayout.Tab?) {}
             override fun onTabReselected(tab: TabLayout.Tab?) {}
         })
@@ -83,13 +94,15 @@ class RestaurantReviewTabFragment : BindingFragment<FragmentReviewBinding>(R.lay
     }
 
     private fun moveToBlog(review: BlogReviewInfo) {
-        if (Patterns.WEB_URL.matcher(review.url).matches()) {
-            try {
-                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(review.url)))
-                return
-            } catch (e: ActivityNotFoundException) {
-                e.printStackTrace()
+        if (!Patterns.WEB_URL.matcher(review.url).matches()) return
+        startActivity(
+            Intent(requireContext(), WebViewActivity::class.java).apply {
+                putExtra(ARG_WEB_VIEW_LINK, review.url)
             }
-        }
+        )
+    }
+
+    companion object {
+        private const val ARG_WEB_VIEW_LINK = "link"
     }
 }

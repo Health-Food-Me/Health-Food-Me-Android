@@ -98,6 +98,9 @@
         <activity
             android:name=".presentation.review.ReviewWritingActivity"
             android:exported="false" />
+        <activity
+            android:name=".presentation.common.WebViewActivity"
+            android:exported="false" />
     </application>
 
 </manifest>

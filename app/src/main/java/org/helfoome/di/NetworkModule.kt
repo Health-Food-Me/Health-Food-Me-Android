@@ -21,11 +21,13 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
+    @OptIn(ExperimentalSerializationApi::class)
     @Provides
     @Singleton
     fun provideJson(): Json = Json {
         isLenient = true
         prettyPrint = true
+        explicitNulls = false
     }
 
     @Provides

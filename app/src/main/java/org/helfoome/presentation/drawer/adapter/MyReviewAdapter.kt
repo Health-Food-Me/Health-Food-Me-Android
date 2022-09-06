@@ -29,22 +29,17 @@ class MyReviewAdapter(
             inflater = LayoutInflater.from(parent.context)
 
         val binding = ItemGeneralMyReviewBinding.inflate(inflater, parent, false)
-        return MyReviewViewHolder(
-            binding.apply {
-                tvTitle.setOnClickListener {
-                    itemClickListener.invoke(ENLARGE)
-                }
-            }
-        )
+        return MyReviewViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: MyReviewViewHolder, position: Int) {
-        holder.onBind(getItem(position), deleteClickListener, editClickListener)
+        holder.onBind(getItem(position), startRestaurant, deleteReview, editReview)
     }
 
     class MyReviewViewHolder(private val binding: ItemGeneralMyReviewBinding) : RecyclerView.ViewHolder(binding.root) {
         fun onBind(
             myReviewData: MyReviewListInfo,
+            startRestaurant: () -> Unit,
             deleteClickListener: (String) -> Unit,
             editClickListener: (MyReviewListInfo) -> Unit
         ) {
@@ -52,9 +47,12 @@ class MyReviewAdapter(
                 val adapter = RestaurantImageAdapter().apply {
                     imageList = myReviewData.photoList
                 }
-                binding.rvPhotoList.apply {
+                rvPhotoList.apply {
                     this.adapter = adapter
-                    addItemDecoration(ItemDecorationUtil.ItemDecoration(height = 0f, padding = 20, isVertical = false))
+                    addItemDecoration(ItemDecorationUtil.ItemDecoration(padding = 20, isVertical = false))
+                }
+                tvTitle.setOnClickListener {
+                    startRestaurant.invoke()
                 }
                 data = myReviewData
                 tvDelete.setOnClickListener {
@@ -66,9 +64,5 @@ class MyReviewAdapter(
                 binding.hashtag.setHashtag(listOf(myReviewData.tags, myReviewData.good.joinToString()), HashtagViewType.REVIEW_TAB_TYPE)
             }
         }
-    }
-
-    companion object {
-        const val ENLARGE = 0
     }
 }

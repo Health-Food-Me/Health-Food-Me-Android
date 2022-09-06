@@ -8,12 +8,26 @@
     <dimen name="size_logout_dialog_height_241">241dp</dimen>
 
     <!-- Spacing -->
+    <dimen name="size_spacing_0">0dp</dimen>
+    <dimen name="size_spacing_3">3dp</dimen>
     <dimen name="size_spacing_4">4dp</dimen>
     <dimen name="size_spacing_6">6dp</dimen>
+    <dimen name="size_spacing_8">8dp</dimen>
+    <dimen name="size_spacing_10">10dp</dimen>
+    <dimen name="size_spacing_11">11dp</dimen>
+    <dimen name="size_spacing_12">12dp</dimen>
+    <dimen name="size_spacing_13">13dp</dimen>
+    <dimen name="size_spacing_14">14dp</dimen>
+    <dimen name="size_spacing_15">15dp</dimen>
     <dimen name="size_spacing_16">16dp</dimen>
+    <dimen name="size_spacing_17">17dp</dimen>
+    <dimen name="size_spacing_18">18dp</dimen>
     <dimen name="size_spacing_20">20dp</dimen>
     <dimen name="size_spacing_24">24dp</dimen>
     <dimen name="size_spacing_26">26dp</dimen>
     <dimen name="size_spacing_28">28dp</dimen>
+    <dimen name="size_spacing_30">30dp</dimen>
+    <dimen name="size_spacing_32">32dp</dimen>
     <dimen name="size_spacing_36">36dp</dimen>
+    <dimen name="size_spacing_56">56dp</dimen>
 </resources>
