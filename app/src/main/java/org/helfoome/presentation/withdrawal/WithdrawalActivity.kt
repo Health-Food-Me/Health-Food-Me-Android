@@ -12,6 +12,7 @@ import org.helfoome.presentation.login.LoginActivity
 import org.helfoome.util.DialogUtil
 import org.helfoome.util.ResolutionMetrics
 import org.helfoome.util.binding.BindingActivity
+import org.helfoome.util.ext.getScreenSize
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -45,7 +46,12 @@ class WithdrawalActivity : BindingActivity<ActivityWithdrawalBinding>(R.layout.a
 
         binding.btConfirm.setOnClickListener {
             val bind = DialogWithdrawBinding.inflate(LayoutInflater.from(this@WithdrawalActivity))
-            val dialog = DialogUtil.makeDialog(this, bind, resolutionMetrics.toPixel(288), resolutionMetrics.toPixel(222))
+            val dialog = DialogUtil.makeDialog(
+                this,
+                bind,
+                resolutionMetrics.toPixel(getScreenSize(72).first),
+                resolutionMetrics.toPixel(getScreenSize(418).second)
+            )
 
             bind.btnYes.setOnClickListener {
                 withdrawalViewModel.deleteUser()

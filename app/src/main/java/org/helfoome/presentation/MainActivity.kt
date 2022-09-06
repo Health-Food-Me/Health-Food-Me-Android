@@ -6,9 +6,13 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Paint
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
+import android.view.WindowInsets
+import android.view.WindowManager
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
@@ -52,6 +56,7 @@ import org.helfoome.util.DialogUtil
 import org.helfoome.util.ResolutionMetrics
 import org.helfoome.util.SnackBarTopDown
 import org.helfoome.util.binding.BindingActivity
+import org.helfoome.util.ext.getScreenSize
 import org.helfoome.util.ext.makeTransparentStatusBar
 import org.helfoome.util.ext.startActivity
 import org.helfoome.util.ext.stringListFrom
@@ -101,6 +106,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                 }
             }
         }
+
         override fun onSlide(bottomSheetView: View, slideOffset: Float) = Unit
     }
 
@@ -304,8 +310,13 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
             }
             tvLogout.setOnClickListener {
                 val bind = DialogLogoutBinding.inflate(LayoutInflater.from(this@MainActivity))
-                val dialog =
-                    DialogUtil.makeDialog(this@MainActivity, bind, resolutionMetrics.toPixel(288), resolutionMetrics.toPixel(241))
+
+                val dialog = DialogUtil.makeDialog(
+                    this@MainActivity,
+                    bind,
+                    resolutionMetrics.toPixel(getScreenSize(72).first),
+                    resolutionMetrics.toPixel(getScreenSize(447).second)
+                )
 
                 bind.btnYes.setOnClickListener {
                     NaverIdLoginSDK.logout()
