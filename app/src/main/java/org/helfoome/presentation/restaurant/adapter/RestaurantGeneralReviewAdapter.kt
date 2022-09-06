@@ -14,7 +14,8 @@ class RestaurantGeneralReviewAdapter :
     ListAdapter<HFMReviewInfo, RestaurantGeneralReviewAdapter.ReviewViewHolder>(
         ItemDiffCallback<HFMReviewInfo>(
             onContentsTheSame = { old, new -> old == new },
-            onItemsTheSame = { old, new -> old.id == new.id })
+            onItemsTheSame = { old, new -> old.id == new.id }
+        )
     ) {
     private lateinit var inflater: LayoutInflater
 
