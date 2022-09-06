@@ -28,6 +28,12 @@
         <item name="android:layout_width">48dp</item>
     </style>
 
+    <style name="BookMark" parent="Button.Basic.Style">
+        <item name="android:paddingHorizontal">@dimen/size_spacing_17</item>
+        <item name="android:paddingVertical">@dimen/size_spacing_15</item>
+        <item name="android:layout_width">wrap_content</item>
+    </style>
+
     <style name="TextView.Hashtag.Style" parent="">
         <item name="android:layout_height">22dp</item>
         <item name="android:paddingHorizontal">@dimen/size_spacing_10</item>
@@ -84,7 +90,7 @@
     <style name="TextView.Map.TextAppearance" parent="">
         <item name="android:fontFamily">@font/notosanskr_r</item>
         <item name="android:textColor">@color/gray_800</item>
-        <item name="android:textSize">17dp</item>
+        <item name="android:textSize">@dimen/size_spacing_17</item>
     </style>
 
     <style name="TextView.MapButton.Style" parent="">

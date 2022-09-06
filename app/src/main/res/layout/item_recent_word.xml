@@ -20,7 +20,7 @@
             android:layout_height="match_parent"
             android:paddingStart="19dp"
             android:paddingTop="@dimen/size_spacing_18"
-            android:paddingBottom="17dp"
+            android:paddingBottom="@dimen/size_spacing_17"
             android:fontFamily="@font/notosanskr_r"
             android:textColor="@color/gray_800"
             android:text="@{data.keyword}"
