@@ -111,7 +111,7 @@
             android:layout_height="wrap_content"
             android:clipToPadding="false"
             android:overScrollMode="never"
-            android:paddingBottom="@dimen/size_spacing_28"
+            android:paddingBottom="@dimen/size_spacing_15"
             android:visibility="@{isEmptyVisible? View.GONE : View.VISIBLE}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintTop_toBottomOf="@id/line_first"

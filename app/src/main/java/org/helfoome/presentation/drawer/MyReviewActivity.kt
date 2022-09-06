@@ -88,8 +88,7 @@ class MyReviewActivity : BindingActivity<ActivityMyReviewBinding>(R.layout.activ
     private fun initAdapter() {
         binding.rcvReview.apply {
             adapter = myReviewAdapter
-            addItemDecoration(ItemDecorationUtil.ItemDecoration(3f, 100f, context.getColor(R.color.gray_100), 100))
-        }
+            addItemDecoration(ItemDecorationUtil.ItemDecoration(1f, 20f, context.getColor(R.color.gray_100), 26))        }
     }
 
     private fun initListeners() {
