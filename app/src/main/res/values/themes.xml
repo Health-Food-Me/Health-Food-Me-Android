@@ -28,7 +28,7 @@
         <item name="android:layout_width">48dp</item>
     </style>
 
-    <style name="Button.BottomSheet.Style" parent="Button.Basic.Style">
+    <style name="BookMark" parent="Button.Basic.Style">
         <item name="android:paddingHorizontal">@dimen/size_spacing_17</item>
         <item name="android:paddingVertical">@dimen/size_spacing_15</item>
         <item name="android:layout_width">wrap_content</item>
