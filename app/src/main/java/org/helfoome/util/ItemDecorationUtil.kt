@@ -10,8 +10,8 @@ import androidx.recyclerview.widget.RecyclerView
 
 sealed class ItemDecorationUtil {
     class ItemDecoration(
-        private val height: Float,
-        private val dividerPadding: Float? = null,
+        private val height: Int = 0,
+        private val dividerPadding: Int? = null,
         @ColorInt
         private val color: Int = Color.TRANSPARENT,
         private val padding: Int,
@@ -64,7 +64,7 @@ sealed class ItemDecorationUtil {
                 val top = (child.bottom + params.bottomMargin).toFloat()
                 val bottom = top + height
 
-                c.drawRect(start, top, end, bottom, paint)
+                c.drawRect(start.toFloat(), top, end.toFloat(), bottom, paint)
             }
         }
     }

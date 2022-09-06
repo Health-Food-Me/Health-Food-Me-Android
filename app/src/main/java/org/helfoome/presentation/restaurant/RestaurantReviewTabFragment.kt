@@ -16,10 +16,14 @@ import org.helfoome.presentation.restaurant.adapter.RestaurantBlogReviewAdapter
 import org.helfoome.presentation.restaurant.adapter.RestaurantGeneralReviewAdapter
 import org.helfoome.presentation.type.ReviewType
 import org.helfoome.util.ItemDecorationUtil
+import org.helfoome.util.ResolutionMetrics
 import org.helfoome.util.binding.BindingFragment
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class RestaurantReviewTabFragment : BindingFragment<FragmentReviewBinding>(R.layout.fragment_review) {
+    @Inject
+    lateinit var resolutionMetrics: ResolutionMetrics
     private val viewModel: MainViewModel by activityViewModels()
     private val restaurantGeneralReviewAdapter = RestaurantGeneralReviewAdapter()
     private val restaurantBlogReviewAdapter = RestaurantBlogReviewAdapter(::moveToBlog)
@@ -35,7 +39,14 @@ class RestaurantReviewTabFragment : BindingFragment<FragmentReviewBinding>(R.lay
     private fun initView() {
         binding.reviewList.apply {
             adapter = restaurantGeneralReviewAdapter
-            addItemDecoration(ItemDecorationUtil.ItemDecoration(3f, 100f, context.getColor(R.color.gray_100), 100))
+            addItemDecoration(
+                ItemDecorationUtil.ItemDecoration(
+                    resolutionMetrics.toDP(3),
+                    resolutionMetrics.toDP(100),
+                    context.getColor(R.color.gray_100),
+                    100
+                )
+            )
         }
         binding.layoutReviewTab.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
