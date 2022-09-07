@@ -81,6 +81,8 @@ class MainViewModel @Inject constructor(
         fetchBlogReviewList()
     }
 
+    fun getIsGuestLogin() = hfmSharedPreference.isGuestLogin
+
     fun setRestaurantId(restaurantId: String) {
         _restaurantId.value = restaurantId
     }

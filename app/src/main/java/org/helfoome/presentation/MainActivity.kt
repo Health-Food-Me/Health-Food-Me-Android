@@ -34,6 +34,7 @@ import com.naver.maps.map.util.FusedLocationSource
 import com.navercorp.nid.NaverIdLoginSDK
 import dagger.hilt.android.AndroidEntryPoint
 import org.helfoome.R
+import org.helfoome.data.local.HFMSharedPreference
 import org.helfoome.databinding.ActivityMainBinding
 import org.helfoome.databinding.DialogLogoutBinding
 import org.helfoome.presentation.drawer.MyReviewActivity
@@ -47,10 +48,7 @@ import org.helfoome.presentation.scrap.MyScrapActivity
 import org.helfoome.presentation.search.SearchActivity
 import org.helfoome.presentation.type.FoodType
 import org.helfoome.presentation.type.HashtagViewType
-import org.helfoome.util.ChipFactory
-import org.helfoome.util.DialogUtil
-import org.helfoome.util.ResolutionMetrics
-import org.helfoome.util.SnackBarTopDown
+import org.helfoome.util.*
 import org.helfoome.util.binding.BindingActivity
 import org.helfoome.util.ext.getScreenSize
 import org.helfoome.util.ext.makeTransparentStatusBar
@@ -63,6 +61,9 @@ import javax.inject.Inject
 class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main), OnMapReadyCallback {
     @Inject
     lateinit var resolutionMetrics: ResolutionMetrics
+
+    @Inject
+    lateinit var storage: HFMSharedPreference
     private val viewModel: MainViewModel by viewModels()
     private var category: String? = null
     private lateinit var behavior: BottomSheetBehavior<ConstraintLayout>
@@ -143,13 +144,13 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
         super.onCreate(savedInstanceState)
         binding.viewModel = viewModel
         binding.layoutDrawerHeader.drawerViewModel = viewModel
-
         window.makeTransparentStatusBar()
-
         locationSource = FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE)
 
-        initNaverMap()
+        Timber.i(storage.isGuestLogin.toString())
+
         initView()
+        initNaverMap()
         initListeners()
         initObservers()
     }
@@ -196,11 +197,15 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
 
             btnWriteReview.apply {
                 setOnClickListener {
-                    requestReviewWrite.launch(
-                        Intent(this@MainActivity, ReviewWritingActivity::class.java)
-                            .putExtra(ARG_RESTAURANT_ID, viewModel?.selectedRestaurant?.value?.id ?: return@setOnClickListener)
-                            .putExtra("RESTAURANT_NAME", binding.layoutRestaurantDialog.tvRestaurantName.text.toString())
-                    )
+                    if (storage.isGuestLogin) {
+                        guestLoginSupport()
+                    } else {
+                        requestReviewWrite.launch(
+                            Intent(this@MainActivity, ReviewWritingActivity::class.java)
+                                .putExtra(ARG_RESTAURANT_ID, viewModel?.selectedRestaurant?.value?.id ?: return@setOnClickListener)
+                                .putExtra("RESTAURANT_NAME", binding.layoutRestaurantDialog.tvRestaurantName.text.toString())
+                        )
+                    }
                 }
             }
         }
@@ -232,13 +237,21 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
 
     private fun initListeners() {
         binding.btnBookmark.setOnClickListener {
-            it.isSelected = !it.isSelected
-            startScrapEvent(it.isSelected)
+            if (storage.isGuestLogin) {
+                guestLoginSupport()
+            } else {
+                it.isSelected = !it.isSelected
+                startScrapEvent(it.isSelected)
+            }
         }
 
         binding.btnBookmarkMain.setOnClickListener {
-            it.isSelected = !it.isSelected
-            startScrapEvent(it.isSelected)
+            if (storage.isGuestLogin) {
+                guestLoginSupport()
+            } else {
+                it.isSelected = !it.isSelected
+                startScrapEvent(it.isSelected)
+            }
         }
 
         binding.btnHamburger.setOnClickListener {
@@ -251,6 +264,21 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                 if (behavior.state == BottomSheetBehavior.STATE_COLLAPSED) {
                     binding.isFloatingNotVisible = true
                     behavior.state = BottomSheetBehavior.STATE_EXPANDED
+                }
+            }
+            btnScrapToolbar.setOnClickListener {
+                if (storage.isGuestLogin) {
+                    guestLoginSupport()
+                } else {
+                    viewModel?.updateRestaurantScrap()
+                }
+            }
+
+            btnScrap.setOnClickListener {
+                if (storage.isGuestLogin) {
+                    guestLoginSupport()
+                } else {
+                    viewModel?.updateRestaurantScrap()
                 }
             }
 
@@ -283,15 +311,26 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
             btnEdit.setOnClickListener {
                 requestModifyNickname.launch(Intent(this@MainActivity, ProfileModifyActivity::class.java))
             }
+            ivLogin.setOnClickListener {
+                guestLoginSupport()
+            }
             tvReview.setOnClickListener {
-                controlHamburger.launch(Intent(this@MainActivity, MyReviewActivity::class.java))
+                if (storage.isGuestLogin) {
+                    guestLoginSupport()
+                } else {
+                    controlHamburger.launch(Intent(this@MainActivity, MyReviewActivity::class.java))
+                }
             }
             tvScrap.setOnClickListener {
-                controlHamburger.launch(
-                    Intent(this@MainActivity, MyScrapActivity::class.java).apply {
-                        putExtras(bundleOf(MARKER_INFO to viewModel.defaultLocation))
-                    }
-                )
+                if (storage.isGuestLogin) {
+                    guestLoginSupport()
+                } else {
+                    controlHamburger.launch(
+                        Intent(this@MainActivity, MyScrapActivity::class.java).apply {
+                            putExtras(bundleOf(MARKER_INFO to viewModel.defaultLocation))
+                        }
+                    )
+                }
             }
             tvReport.setOnClickListener {
                 sendGmail()
@@ -329,6 +368,12 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                 }
             }
         }
+    }
+
+    private fun guestLoginSupport() {
+        GuestLoginFragmentDialog(this@MainActivity).show(
+            supportFragmentManager, "GuestLoginDialog"
+        )
     }
 
     private fun showScarpSnackBar() {
