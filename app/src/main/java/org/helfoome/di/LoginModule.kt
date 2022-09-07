@@ -13,6 +13,7 @@ import org.helfoome.data.local.HFMSharedPreference
 import org.helfoome.data.service.AuthService
 import org.helfoome.data.service.KakaoAuthService
 import org.helfoome.data.service.NaverAuthService
+import org.helfoome.util.DeviceInfo
 
 @Module
 @InstallIn(ActivityComponent::class)
@@ -26,13 +27,15 @@ object LoginModule {
         @ActivityContext context: Context,
         client: UserApiClient,
         sharedPreferences: HFMSharedPreference,
-        authService: AuthService
-    ) = KakaoAuthService(context, client, sharedPreferences, authService)
+        authService: AuthService,
+        deviceInfo: DeviceInfo
+    ) = KakaoAuthService(context, client, sharedPreferences, authService, deviceInfo)
 
     @Provides
     fun provideNaverAuthService(
         @ApplicationContext context: Context,
         sharedPreferences: HFMSharedPreference,
-        authService: AuthService
-    ) = NaverAuthService(context, sharedPreferences, authService)
+        authService: AuthService,
+        deviceInfo: DeviceInfo
+    ) = NaverAuthService(context, sharedPreferences, authService, deviceInfo)
 }

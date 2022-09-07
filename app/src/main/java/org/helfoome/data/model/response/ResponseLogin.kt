@@ -16,11 +16,7 @@ data class ResponseLogin(
         @SerialName("_id")
         val id: String,
         val name: String,
-        val social: String,
-        val socialId: String,
         val email: String? = null,
-        val scrapRestaurants: List<String>,
-        val refreshToken: String,
-        val __v: Int
+        val agent: String,
     )
 }

@@ -25,10 +25,14 @@ class LoginActivity : BindingActivity<ActivityLoginBinding>(R.layout.activity_lo
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        initAnimation()
+        initListeners()
+    }
+
+    private fun initAnimation() {
         val splashAnimation = AnimationUtils.loadAnimation(this, R.anim.anim_splash_transparency_zero_to_one)
         binding.tvLogo.animation = splashAnimation
         binding.ivDescription.animation = splashAnimation
-        initListeners()
     }
 
     private fun initListeners() {

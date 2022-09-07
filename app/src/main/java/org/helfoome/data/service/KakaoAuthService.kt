@@ -12,6 +12,7 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import org.helfoome.data.local.HFMSharedPreference
 import org.helfoome.data.model.request.RequestLogin
+import org.helfoome.util.DeviceInfo
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -19,7 +20,8 @@ class KakaoAuthService @Inject constructor(
     @ActivityContext private val context: Context,
     private val client: UserApiClient,
     private val sharedPreferences: HFMSharedPreference,
-    private val authService: AuthService
+    private val authService: AuthService,
+    private val deviceInfo: DeviceInfo
 ) {
     fun kakaoLogin(loginListener: (() -> Unit)? = null) {
         val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
@@ -27,7 +29,15 @@ class KakaoAuthService @Inject constructor(
                 Timber.e(error, "카카오계정으로 로그인 실패")
             } else if (token != null) {
                 CoroutineScope(Dispatchers.IO).launch {
-                    runCatching { authService.login(RequestLogin("kakao", token.accessToken)) }
+                    runCatching {
+                        authService.login(
+                            RequestLogin(
+                                "kakao",
+                                token.accessToken,
+                                "AOS; ${deviceInfo.getDeviceOs()}; ${deviceInfo.getDeviceModel()}; ${deviceInfo.getAppVersion()}"
+                            )
+                        )
+                    }
                         .onSuccess {
                             val response = it.data
                             with(sharedPreferences) {
@@ -63,7 +73,15 @@ class KakaoAuthService @Inject constructor(
                     client.loginWithKakaoAccount(context, callback = callback)
                 } else if (token != null) {
                     CoroutineScope(Dispatchers.IO).launch {
-                        runCatching { authService.login(RequestLogin("kakao", token.accessToken)) }
+                        runCatching {
+                            authService.login(
+                                RequestLogin(
+                                    "kakao",
+                                    token.accessToken,
+                                    "AOS; ${deviceInfo.getDeviceOs()}; ${deviceInfo.getDeviceModel()}; ${deviceInfo.getAppVersion()}"
+                                )
+                            )
+                        }
                             .onSuccess {
                                 val response = it.data
                                 with(sharedPreferences) {
