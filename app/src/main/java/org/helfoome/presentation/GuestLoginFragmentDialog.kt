@@ -1,4 +1,4 @@
-package org.helfoome.util
+package org.helfoome.presentation
 
 import android.content.Context
 import android.content.Intent
@@ -14,11 +14,10 @@ import org.helfoome.data.local.HFMSharedPreference
 import org.helfoome.data.service.KakaoAuthService
 import org.helfoome.data.service.NaverAuthService
 import org.helfoome.databinding.DialogGuestLoginSupportBinding
-import org.helfoome.presentation.MainActivity
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class GuestLoginFragmentDialog(context: Context): DialogFragment() {
+class GuestLoginFragmentDialog(context: Context) : DialogFragment() {
 
     @Inject
     lateinit var naverAuthService: NaverAuthService
