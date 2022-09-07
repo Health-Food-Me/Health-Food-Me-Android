@@ -72,7 +72,7 @@
     <string name="main_drawer_welcome">안녕하세요!</string>
     <string name="main_drawer_welcome_second">님</string>
     <string name="main_drawer_welcome_third">오늘도 헬푸미하세요</string>
-
+    <string name="main_drawer_login">로그인이 필요해요</string>
 
     <!-- Login -->
     <string name="login_kakao">카카오 계정으로 로그인</string>
