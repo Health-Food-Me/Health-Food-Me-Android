@@ -5,5 +5,6 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class RequestLogin(
     val social: String,
-    val token: String
+    val token: String,
+    val agent: String,
 )

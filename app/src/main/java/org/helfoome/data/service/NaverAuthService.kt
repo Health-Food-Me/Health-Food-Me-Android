@@ -11,13 +11,15 @@ import kotlinx.coroutines.launch
 import org.helfoome.BuildConfig.*
 import org.helfoome.data.local.HFMSharedPreference
 import org.helfoome.data.model.request.RequestLogin
+import org.helfoome.util.DeviceInfo
 import timber.log.Timber
 import javax.inject.Inject
 
 class NaverAuthService @Inject constructor(
     @ApplicationContext private val context: Context,
     private val sharedPreferences: HFMSharedPreference,
-    private val authService: AuthService
+    private val authService: AuthService,
+    private val deviceInfo: DeviceInfo
 ) : OAuthLoginCallback {
     var loginListener: (() -> Unit)? = null
 
@@ -37,7 +39,15 @@ class NaverAuthService @Inject constructor(
 
     override fun onSuccess() {
         CoroutineScope(Dispatchers.IO).launch {
-            runCatching { authService.login(RequestLogin("naver", NaverIdLoginSDK.getAccessToken().toString())) }
+            runCatching {
+                authService.login(
+                    RequestLogin(
+                        "naver",
+                        NaverIdLoginSDK.getAccessToken().toString(),
+                        "AOS; ${deviceInfo.getDeviceOs()}; ${deviceInfo.getDeviceModel()}; ${deviceInfo.getAppVersion()}"
+                    )
+                )
+            }
                 .onSuccess {
                     sharedPreferences.accessToken = it.data.accessToken
                     sharedPreferences.refreshToken = it.data.refreshToken
