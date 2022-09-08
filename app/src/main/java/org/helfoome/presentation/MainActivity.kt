@@ -199,7 +199,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                     requestReviewWrite.launch(
                         Intent(this@MainActivity, ReviewWritingActivity::class.java)
                             .putExtra(ARG_RESTAURANT_ID, viewModel?.selectedRestaurant?.value?.id ?: return@setOnClickListener)
-                            .putExtra("RESTAURANT_NAME", binding.layoutRestaurantDialog.tvRestaurantName.text.toString())
+                            .putExtra(ARG_RESTAURANT_NAME, binding.layoutRestaurantDialog.tvRestaurantName.text.toString())
                     )
                 }
             }
@@ -566,5 +566,6 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
         const val GANGNAM_Y = 127.027610
         private const val LOCATION_PERMISSION_REQUEST_CODE = 1000
         private const val ARG_RESTAURANT_ID = "restaurantId"
+        private const val ARG_RESTAURANT_NAME = "restaurantName"
     }
 }

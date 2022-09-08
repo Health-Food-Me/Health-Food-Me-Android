@@ -147,7 +147,7 @@ class MapSelectActivity : BindingActivity<ActivityMapSelectBinding>(R.layout.act
                     requestReviewWrite.launch(
                         Intent(this@MapSelectActivity, ReviewWritingActivity::class.java)
                             .putExtra(ARG_RESTAURANT_ID, viewModel?.selectedRestaurant?.value?.id ?: return@setOnClickListener)
-                            .putExtra("RESTAURANT_NAME", binding.layoutRestaurantDialog.tvRestaurantName.text.toString())
+                            .putExtra(ARG_RESTAURANT_NAME, binding.layoutRestaurantDialog.tvRestaurantName.text.toString())
                     )
                 }
             }
@@ -359,5 +359,6 @@ class MapSelectActivity : BindingActivity<ActivityMapSelectBinding>(R.layout.act
     companion object {
         private const val LOCATION_PERMISSION_REQUEST_CODE = 1000
         private const val ARG_RESTAURANT_ID = "restaurantId"
+        private const val ARG_RESTAURANT_NAME = "restaurantName"
     }
 }

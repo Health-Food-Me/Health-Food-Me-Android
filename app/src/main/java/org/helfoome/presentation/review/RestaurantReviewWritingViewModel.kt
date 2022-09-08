@@ -13,6 +13,7 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import org.helfoome.data.local.HFMSharedPreference
 import org.helfoome.data.service.ReviewService
 import org.helfoome.domain.entity.HFMReviewInfo
+import org.helfoome.domain.entity.MyReviewInfo
 import org.helfoome.presentation.type.GoodPointHashtagType
 import org.helfoome.presentation.type.TasteHashtagType
 import org.helfoome.util.ContentUriRequestBody
@@ -26,14 +27,17 @@ class RestaurantReviewWritingViewModel @Inject constructor(
     private val _isReviewModify = MutableLiveData<Boolean>()
     val isReviewModify: LiveData<Boolean> = _isReviewModify
 
-    private val _reviewId = MutableLiveData<String>()
-    val reviewId get() = _reviewId
+    private var _restaurantTitle: String? = null
+    val restaurantTitle: String? get() = _restaurantTitle
+
+    private val _reviewInfo = MutableLiveData<MyReviewInfo?>()
+    val reviewInfo get(): LiveData<MyReviewInfo?> = _reviewInfo
 
     private val _restaurantId = MutableLiveData<String>()
     val restaurantId get() = _restaurantId
 
-    private val _review = MutableLiveData<String>()
-    val review get() = _review
+    private val _reviewContent = MutableLiveData<String>()
+    val reviewContent get() = _reviewContent
 
     private val _isEditMode = MutableLiveData<Boolean>()
     val isEditMode get() = _isEditMode
@@ -59,8 +63,19 @@ class RestaurantReviewWritingViewModel @Inject constructor(
     private val _hfmReviews = MutableLiveData<HFMReviewInfo>()
     val hfmReviews: LiveData<HFMReviewInfo> = _hfmReviews
 
-    fun setReviewId(reviewId: String) {
-        _reviewId.value = reviewId
+    fun setReviewInfo(
+        review: MyReviewInfo,
+        tasteTag: TasteHashtagType?,
+        goodTags: List<GoodPointHashtagType?>,
+    ) { // TODO need refactoring
+        _reviewInfo.value = review
+        _reviewContent.value = review.description
+        setSelectedTasteTag(tasteTag ?: return)
+        goodTags.forEach { setSelectedGoodPointTag(it ?: return) }
+    }
+
+    fun setRestaurantName(name: String) {
+        _restaurantTitle = name
     }
 
     fun setEditMode(editMode: Boolean) {
@@ -79,8 +94,9 @@ class RestaurantReviewWritingViewModel @Inject constructor(
     }
 
     fun checkReviewCompletion() {
-        val review = review.value?.trim()
-        _isEnabledWritingCompleteButton.value = selectedTasteTag.value != null && selectedGoodPointTags.value?.containsValue(true) == true && !(review.isNullOrBlank())
+        val review = reviewContent.value?.trim()
+        _isEnabledWritingCompleteButton.value =
+            selectedTasteTag.value != null && selectedGoodPointTags.value?.containsValue(true) == true && !(review.isNullOrBlank())
     }
 
     // TODO delete
@@ -93,7 +109,7 @@ class RestaurantReviewWritingViewModel @Inject constructor(
         score: Float,
         image: List<Uri?>,
     ) {
-        if (_isEditMode.value == true) {
+        if (isEditMode.value == true) {
             editReview(context, score, image)
         } else {
             writeReview(context, score, image)
@@ -106,33 +122,37 @@ class RestaurantReviewWritingViewModel @Inject constructor(
         image: List<Uri?>,
     ) {
         val scoreRequestBody = score.toString().toPlainRequestBody()
-        val contentRequestBody = review.value.toPlainRequestBody()
-        val tasteRequestBody = context.getString(selectedTasteTag.value?.strRes ?: return).replace("# ", "").toPlainRequestBody()
+        val contentRequestBody = reviewContent.value.toPlainRequestBody()
+        val tasteRequestBody = context.getString(selectedTasteTag.value?.strRes ?: return).toPlainRequestBody()
         val goodListMultipartBody = mutableListOf<MultipartBody.Part>()
         val goodList = selectedGoodPointTags.value?.filter { it.value }?.keys?.map {
-            context.getString(it.strRes).replace("# ", "")
+            context.getString(it.strRes)
         } ?: return
         for (good in goodList) {
             goodListMultipartBody.add(createFormData("good", good))
         }
-        val nameRequestBody = listOf("테스트", "테스트2").toString().toPlainRequestBody()
+        val nameRequestBody = mutableListOf<String>()
         val imageListMultipartBody = mutableListOf<MultipartBody.Part>()
 
         for (element in image) {
-            val imageMultipartBody: MultipartBody.Part =
-                ContentUriRequestBody(context, element ?: continue).toFormData()
-            imageListMultipartBody.add(imageMultipartBody)
+            if (!element.toString().startsWith("content")) { // 기존 이미지
+                nameRequestBody.add(element.toString())
+            } else { // 새로 업로드할 이미지
+                val imageMultipartBody: MultipartBody.Part =
+                    ContentUriRequestBody(context, element ?: continue).toFormData()
+                imageListMultipartBody.add(imageMultipartBody)
+            }
         }
 
         viewModelScope.launch {
             runCatching {
                 reviewService.putMyReviewEdit(
-                    _reviewId.value.toString(),
+                    reviewInfo.value?.id.toString(),
                     scoreRequestBody,
                     tasteRequestBody,
                     goodListMultipartBody,
                     contentRequestBody,
-                    nameRequestBody,
+                    nameRequestBody.toString().toPlainRequestBody(),
                     imageListMultipartBody
                 )
             }.fold({
@@ -150,8 +170,8 @@ class RestaurantReviewWritingViewModel @Inject constructor(
         image: List<Uri?>,
     ) {
         val scoreRequestBody = score.toString().toPlainRequestBody()
-        val contentRequestBody = review.value.toPlainRequestBody()
-        val tasteRequestBody = context.getString(selectedTasteTag.value?.strRes ?: return).replace("# ", "").toPlainRequestBody()
+        val contentRequestBody = reviewContent.value.toPlainRequestBody()
+        val tasteRequestBody = context.getString(selectedTasteTag.value?.strRes ?: return).toPlainRequestBody()
         val imageListMultipartBody = mutableListOf<MultipartBody.Part>()
 
         for (element in image) {
@@ -162,7 +182,7 @@ class RestaurantReviewWritingViewModel @Inject constructor(
 
         val goodListMultipartBody = mutableListOf<MultipartBody.Part>()
         val goodList = selectedGoodPointTags.value?.filter { it.value }?.keys?.map {
-            context.getString(it.strRes).replace("# ", "")
+            context.getString(it.strRes)
         } ?: return
         for (good in goodList) {
             goodListMultipartBody.add(createFormData("good", good))

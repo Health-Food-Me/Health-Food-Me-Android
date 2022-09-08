@@ -5,19 +5,19 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import org.helfoome.databinding.ItemGeneralMyReviewBinding
-import org.helfoome.domain.entity.MyReviewListInfo
+import org.helfoome.domain.entity.MyReviewInfo
 import org.helfoome.presentation.restaurant.adapter.RestaurantImageAdapter
 import org.helfoome.presentation.type.HashtagViewType
 import org.helfoome.util.ItemDecorationUtil
 import org.helfoome.util.ItemDiffCallback
 
 class MyReviewAdapter(
-    private val startRestaurant: () -> Unit,
+    private val startRestaurant: (() -> Unit),
     private val deleteReview: (String) -> Unit,
-    private val editReview: (String) -> Unit
+    private val editReview: (MyReviewInfo) -> Unit
 ) :
-    ListAdapter<MyReviewListInfo, MyReviewAdapter.MyReviewViewHolder>(
-        ItemDiffCallback<MyReviewListInfo>(
+    ListAdapter<MyReviewInfo, MyReviewAdapter.MyReviewViewHolder>(
+        ItemDiffCallback<MyReviewInfo>(
             onContentsTheSame = { old, new -> old == new },
             onItemsTheSame = { old, new -> old.restaurant == new.restaurant }
         )
@@ -38,10 +38,10 @@ class MyReviewAdapter(
 
     class MyReviewViewHolder(private val binding: ItemGeneralMyReviewBinding) : RecyclerView.ViewHolder(binding.root) {
         fun onBind(
-            myReviewData: MyReviewListInfo,
+            myReviewData: MyReviewInfo,
             startRestaurant: () -> Unit,
             deleteClickListener: (String) -> Unit,
-            editClickListener: (String) -> Unit
+            editClickListener: (MyReviewInfo) -> Unit
         ) {
             with(binding) {
                 val adapter = RestaurantImageAdapter().apply {
@@ -54,14 +54,14 @@ class MyReviewAdapter(
                 tvTitle.setOnClickListener {
                     startRestaurant.invoke()
                 }
+                data = myReviewData
                 tvDelete.setOnClickListener {
                     deleteClickListener.invoke(myReviewData.id)
                 }
                 tvEdit.setOnClickListener {
-                    editClickListener.invoke(myReviewData.id)
+                    editClickListener.invoke(myReviewData)
                 }
-                hashtag.setHashtag(listOf(myReviewData.tags, myReviewData.good.joinToString()), HashtagViewType.REVIEW_TAB_TYPE)
-                data = myReviewData
+                binding.hashtag.setHashtag(listOf(myReviewData.taste, myReviewData.good.joinToString()), HashtagViewType.REVIEW_TAB_TYPE)
             }
         }
     }

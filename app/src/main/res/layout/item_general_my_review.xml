@@ -7,7 +7,7 @@
 
         <variable
             name="data"
-            type="org.helfoome.domain.entity.MyReviewListInfo" />
+            type="org.helfoome.domain.entity.MyReviewInfo" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
