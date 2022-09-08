@@ -16,13 +16,14 @@ import gun0912.tedimagepicker.builder.TedImagePicker
 import gun0912.tedimagepicker.util.ToastUtil.context
 import org.helfoome.R
 import org.helfoome.databinding.ActivityReviewWritingBinding
+import org.helfoome.domain.entity.MyReviewInfo
 import org.helfoome.presentation.type.ReviewImageType
+import org.helfoome.util.HashtagUtil
 import org.helfoome.util.ItemDecorationUtil
 import org.helfoome.util.ResolutionMetrics
 import org.helfoome.util.binding.BindingActivity
 import org.helfoome.util.ext.closeKeyboard
 import org.helfoome.util.ext.showToast
-import timber.log.Timber
 import java.io.File
 import javax.inject.Inject
 
@@ -33,8 +34,7 @@ class ReviewWritingActivity : BindingActivity<ActivityReviewWritingBinding>(R.la
     private val viewModel: RestaurantReviewWritingViewModel by viewModels()
     private val galleryImageAdapter = GalleryImageAdapter(::showGalleryImageDialog)
     private var photoUri: Uri? = null
-    private var reviewId: String? = null
-    private var topTitle: String? = null
+    private var hashtagUtil = HashtagUtil(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,12 +47,25 @@ class ReviewWritingActivity : BindingActivity<ActivityReviewWritingBinding>(R.la
     }
 
     private fun initData() {
-        Timber.d("${intent.getStringExtra("REVIEW_ID")}")
-        Timber.d("${intent.getBooleanExtra("REVIEW_TITLE", false)}")
-        viewModel.setReviewId(intent.getStringExtra("REVIEW_ID").toString())
-        viewModel.setEditMode(intent.getBooleanExtra("REVIEW_TITLE", false))
-        viewModel.setRestaurantId(intent.getStringExtra(ARG_RESTAURANT_ID).toString())
-        binding.restaurantTitle = intent.getStringExtra("RESTAURANT_NAME")
+        // 새 리뷰 작성 시에는 레스토랑명 및 아이디를 전달 받음
+        intent.getStringExtra(ARG_RESTAURANT_NAME)?.let {
+            viewModel.setEditMode(false)
+            viewModel.setRestaurantName(it)
+        }
+        intent.getStringExtra(ARG_RESTAURANT_ID)?.let {
+            viewModel.setRestaurantId(it)
+        }
+
+        // 리뷰 편집 시 기존 리뷰 내용 전달 받기
+        intent.getParcelableExtra<MyReviewInfo>(ARG_REVIEW_INFO)?.let { reviewInfo ->
+            viewModel.setEditMode(true)
+            viewModel.setReviewInfo(
+                reviewInfo,
+                hashtagUtil.convertStrToTasteTag(reviewInfo.taste),
+                reviewInfo.good.map { hashtagUtil.convertStrToGoodTag(it) }
+            )
+            galleryImageAdapter.setUriList(reviewInfo.photoList.map { Uri.parse(it.url) })
+        }
     }
 
     private fun initView() {
@@ -174,5 +187,7 @@ class ReviewWritingActivity : BindingActivity<ActivityReviewWritingBinding>(R.la
 
     companion object {
         private const val ARG_RESTAURANT_ID = "restaurantId"
+        private const val ARG_REVIEW_INFO = "reviewInfo"
+        private const val ARG_RESTAURANT_NAME = "restaurantName"
     }
 }

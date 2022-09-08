@@ -6,7 +6,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.helfoome.data.local.HFMSharedPreference
 import org.helfoome.data.service.ReviewService
-import org.helfoome.domain.entity.MyReviewListInfo
+import org.helfoome.domain.entity.MyReviewInfo
 import org.helfoome.domain.repository.ReviewRepository
 import org.helfoome.presentation.type.GoodPointHashtagType
 import org.helfoome.presentation.type.TasteHashtagType
@@ -19,8 +19,8 @@ class MyReviewViewModel @Inject constructor(
     private val reviewService: ReviewService,
     private val hfmSharedPreference: HFMSharedPreference
 ) : ViewModel() {
-    private val _myReviewInfo = MutableLiveData<List<MyReviewListInfo>>()
-    val myReviewInfo: LiveData<List<MyReviewListInfo>> = _myReviewInfo
+    private val _myReviewInfo = MutableLiveData<List<MyReviewInfo>>()
+    val myReviewInfo: LiveData<List<MyReviewInfo>> = _myReviewInfo
 
     private val _review = MutableLiveData<String>()
     val review get() = _review

@@ -607,5 +607,6 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
         const val GANGNAM_Y = 127.027610
         private const val LOCATION_PERMISSION_REQUEST_CODE = 1000
         private const val ARG_RESTAURANT_ID = "restaurantId"
+        private const val ARG_RESTAURANT_NAME = "restaurantName"
     }
 }
