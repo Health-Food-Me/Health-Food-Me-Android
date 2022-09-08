@@ -83,6 +83,10 @@ class MainViewModel @Inject constructor(
 
     fun getIsGuestLogin() = hfmSharedPreference.isGuestLogin
 
+    fun setIsGuestLogin(isGuestLogin: Boolean) {
+        hfmSharedPreference.isGuestLogin = isGuestLogin
+    }
+
     fun setRestaurantId(restaurantId: String) {
         _restaurantId.value = restaurantId
     }
