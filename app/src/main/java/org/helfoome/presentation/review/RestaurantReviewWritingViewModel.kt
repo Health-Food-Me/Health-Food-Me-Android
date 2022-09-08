@@ -123,7 +123,7 @@ class RestaurantReviewWritingViewModel @Inject constructor(
     ) {
         val scoreRequestBody = score.toString().toPlainRequestBody()
         val contentRequestBody = reviewContent.value.toPlainRequestBody()
-        val tasteRequestBody = context.getString(selectedTasteTag.value?.strRes ?: return).replace("# ", "").toPlainRequestBody()
+        val tasteRequestBody = context.getString(selectedTasteTag.value?.strRes ?: return).toPlainRequestBody()
         val goodListMultipartBody = mutableListOf<MultipartBody.Part>()
         val goodList = selectedGoodPointTags.value?.filter { it.value }?.keys?.map {
             context.getString(it.strRes)
@@ -171,7 +171,7 @@ class RestaurantReviewWritingViewModel @Inject constructor(
     ) {
         val scoreRequestBody = score.toString().toPlainRequestBody()
         val contentRequestBody = reviewContent.value.toPlainRequestBody()
-        val tasteRequestBody = context.getString(selectedTasteTag.value?.strRes ?: return).replace("# ", "").toPlainRequestBody()
+        val tasteRequestBody = context.getString(selectedTasteTag.value?.strRes ?: return).toPlainRequestBody()
         val imageListMultipartBody = mutableListOf<MultipartBody.Part>()
 
         for (element in image) {
