@@ -34,12 +34,12 @@ import com.naver.maps.map.util.FusedLocationSource
 import com.navercorp.nid.NaverIdLoginSDK
 import dagger.hilt.android.AndroidEntryPoint
 import org.helfoome.R
-import org.helfoome.data.local.HFMSharedPreference
 import org.helfoome.databinding.ActivityMainBinding
 import org.helfoome.databinding.DialogLogoutBinding
 import org.helfoome.presentation.drawer.MyReviewActivity
 import org.helfoome.presentation.drawer.ProfileModifyActivity
 import org.helfoome.presentation.drawer.SettingActivity
+import org.helfoome.presentation.login.GuestLoginFragmentDialog
 import org.helfoome.presentation.login.LoginActivity
 import org.helfoome.presentation.restaurant.MapSelectionBottomDialogFragment
 import org.helfoome.presentation.restaurant.adapter.RestaurantTabAdapter
@@ -62,8 +62,6 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
     @Inject
     lateinit var resolutionMetrics: ResolutionMetrics
 
-    @Inject
-    lateinit var storage: HFMSharedPreference
     private val viewModel: MainViewModel by viewModels()
     private var category: String? = null
     private lateinit var behavior: BottomSheetBehavior<ConstraintLayout>
@@ -147,8 +145,6 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
         window.makeTransparentStatusBar()
         locationSource = FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE)
 
-        Timber.i(storage.isGuestLogin.toString())
-
         initView()
         initNaverMap()
         initListeners()
@@ -197,8 +193,8 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
 
             btnWriteReview.apply {
                 setOnClickListener {
-                    if (storage.isGuestLogin) {
-                        guestLoginSupport()
+                    if (requireNotNull(viewModel).getIsGuestLogin()) {
+                        supportGuestLogin()
                     } else {
                         requestReviewWrite.launch(
                             Intent(this@MainActivity, ReviewWritingActivity::class.java)
@@ -237,8 +233,8 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
 
     private fun initListeners() {
         binding.btnBookmark.setOnClickListener {
-            if (storage.isGuestLogin) {
-                guestLoginSupport()
+            if (viewModel.getIsGuestLogin()) {
+                supportGuestLogin()
             } else {
                 it.isSelected = !it.isSelected
                 startScrapEvent(it.isSelected)
@@ -246,8 +242,8 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
         }
 
         binding.btnBookmarkMain.setOnClickListener {
-            if (storage.isGuestLogin) {
-                guestLoginSupport()
+            if (viewModel.getIsGuestLogin()) {
+                supportGuestLogin()
             } else {
                 it.isSelected = !it.isSelected
                 startScrapEvent(it.isSelected)
@@ -267,16 +263,16 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                 }
             }
             btnScrapToolbar.setOnClickListener {
-                if (storage.isGuestLogin) {
-                    guestLoginSupport()
+                if (requireNotNull(viewModel).getIsGuestLogin()) {
+                    supportGuestLogin()
                 } else {
                     viewModel?.updateRestaurantScrap()
                 }
             }
 
             btnScrap.setOnClickListener {
-                if (storage.isGuestLogin) {
-                    guestLoginSupport()
+                if (requireNotNull(viewModel).getIsGuestLogin()) {
+                    supportGuestLogin()
                 } else {
                     viewModel?.updateRestaurantScrap()
                 }
@@ -312,18 +308,18 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                 requestModifyNickname.launch(Intent(this@MainActivity, ProfileModifyActivity::class.java))
             }
             ivLogin.setOnClickListener {
-                guestLoginSupport()
+                supportGuestLogin()
             }
             tvReview.setOnClickListener {
-                if (storage.isGuestLogin) {
-                    guestLoginSupport()
+                if (viewModel.getIsGuestLogin()) {
+                    supportGuestLogin()
                 } else {
                     controlHamburger.launch(Intent(this@MainActivity, MyReviewActivity::class.java))
                 }
             }
             tvScrap.setOnClickListener {
-                if (storage.isGuestLogin) {
-                    guestLoginSupport()
+                if (viewModel.getIsGuestLogin()) {
+                    supportGuestLogin()
                 } else {
                     controlHamburger.launch(
                         Intent(this@MainActivity, MyScrapActivity::class.java).apply {
@@ -370,7 +366,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
         }
     }
 
-    private fun guestLoginSupport() {
+    private fun supportGuestLogin() {
         GuestLoginFragmentDialog(this@MainActivity).show(
             supportFragmentManager, "GuestLoginDialog"
         )

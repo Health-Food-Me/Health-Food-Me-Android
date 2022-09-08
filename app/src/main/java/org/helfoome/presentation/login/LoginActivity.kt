@@ -3,14 +3,15 @@ package org.helfoome.presentation.login
 import android.content.Intent
 import android.os.Bundle
 import android.view.animation.AnimationUtils
+import androidx.activity.viewModels
 import com.navercorp.nid.NaverIdLoginSDK
 import dagger.hilt.android.AndroidEntryPoint
 import org.helfoome.R
-import org.helfoome.data.local.HFMSharedPreference
 import org.helfoome.data.service.KakaoAuthService
 import org.helfoome.data.service.NaverAuthService
 import org.helfoome.databinding.ActivityLoginBinding
 import org.helfoome.presentation.MainActivity
+import org.helfoome.presentation.MainViewModel
 import org.helfoome.util.binding.BindingActivity
 import org.helfoome.util.ext.startActivity
 import javax.inject.Inject
@@ -24,8 +25,7 @@ class LoginActivity : BindingActivity<ActivityLoginBinding>(R.layout.activity_lo
     @Inject
     lateinit var kakaoAuthService: KakaoAuthService
 
-    @Inject
-    lateinit var storage: HFMSharedPreference
+    private val viewModel: MainViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,15 +42,15 @@ class LoginActivity : BindingActivity<ActivityLoginBinding>(R.layout.activity_lo
 
     private fun initListeners() {
         binding.ivNaverLogin.setOnClickListener {
-            storage.isGuestLogin = false
+            viewModel.setIsGuestLogin(false)
             naverLogin()
         }
         binding.ivKakaoLogin.setOnClickListener {
-            storage.isGuestLogin = false
+            viewModel.setIsGuestLogin(false)
             kakaoLogin()
         }
         binding.tvGuest.setOnClickListener {
-            storage.isGuestLogin = true
+            viewModel.setIsGuestLogin(true)
             startActivity<MainActivity>()
         }
     }
