@@ -65,7 +65,6 @@ class RestaurantReviewWritingViewModel @Inject constructor(
 
     fun setReviewInfo(review: MyReviewListInfo, tasteTag: TasteHashtagType?, goodTags: List<GoodPointHashtagType?>) { // TODO need refactoring
         _reviewInfo.value = review
-        _restaurantTitle = review.restaurant
         _reviewContent.value = review.description
         setSelectedTasteTag(tasteTag ?: return)
         goodTags.forEach { setSelectedGoodPointTag(it ?: return) }
@@ -128,13 +127,18 @@ class RestaurantReviewWritingViewModel @Inject constructor(
         for (good in goodList) {
             goodListMultipartBody.add(createFormData("good", good))
         }
-        val nameRequestBody = listOf("테스트", "테스트2").toString().toPlainRequestBody()
+        val nameRequestBody = mutableListOf<String>()
         val imageListMultipartBody = mutableListOf<MultipartBody.Part>()
 
         for (element in image) {
-            val imageMultipartBody: MultipartBody.Part =
-                ContentUriRequestBody(context, element ?: continue).toFormData()
-            imageListMultipartBody.add(imageMultipartBody)
+            if (!element.toString().startsWith("content")) { // 기존 이미지
+                nameRequestBody.add(element.toString())
+            }
+            else { // 새로 업로드할 이미지
+                val imageMultipartBody: MultipartBody.Part =
+                    ContentUriRequestBody(context, element ?: continue).toFormData()
+                imageListMultipartBody.add(imageMultipartBody)
+            }
         }
 
         viewModelScope.launch {
@@ -145,7 +149,7 @@ class RestaurantReviewWritingViewModel @Inject constructor(
                     tasteRequestBody,
                     goodListMultipartBody,
                     contentRequestBody,
-                    nameRequestBody,
+                    nameRequestBody.toString().toPlainRequestBody(),
                     imageListMultipartBody
                 )
             }.fold({

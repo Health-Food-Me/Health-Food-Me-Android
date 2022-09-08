@@ -10,6 +10,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import org.helfoome.R
 import org.helfoome.databinding.ActivityMyReviewBinding
 import org.helfoome.databinding.DialogMyReviewDeleteBinding
+import org.helfoome.domain.entity.MyReviewListInfo
 import org.helfoome.presentation.MainActivity
 import org.helfoome.presentation.drawer.adapter.MyReviewAdapter
 import org.helfoome.presentation.review.ReviewWritingActivity
@@ -77,9 +78,9 @@ class MyReviewActivity : BindingActivity<ActivityMyReviewBinding>(R.layout.activ
         }
     }
 
-    private fun editReview(reviewId: String) {
+    private fun editReview(review: MyReviewListInfo) {
         requestModifyReview.launch(Intent(this@MyReviewActivity, ReviewWritingActivity::class.java).apply {
-            intent.putExtra(ARG_REVIEW_INFO, review)
+            putExtra(ARG_REVIEW_INFO, review)
         })
     }
 
