@@ -79,9 +79,11 @@ class MyReviewActivity : BindingActivity<ActivityMyReviewBinding>(R.layout.activ
     }
 
     private fun editReview(review: MyReviewInfo) {
-        requestModifyReview.launch(Intent(this@MyReviewActivity, ReviewWritingActivity::class.java).apply {
-            putExtra(ARG_REVIEW_INFO, review)
-        })
+        requestModifyReview.launch(
+            Intent(this@MyReviewActivity, ReviewWritingActivity::class.java).apply {
+                putExtra(ARG_REVIEW_INFO, review)
+            }
+        )
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {

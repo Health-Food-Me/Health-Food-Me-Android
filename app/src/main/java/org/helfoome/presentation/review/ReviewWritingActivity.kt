@@ -59,9 +59,11 @@ class ReviewWritingActivity : BindingActivity<ActivityReviewWritingBinding>(R.la
         // 리뷰 편집 시 기존 리뷰 내용 전달 받기
         intent.getParcelableExtra<MyReviewInfo>(ARG_REVIEW_INFO)?.let { reviewInfo ->
             viewModel.setEditMode(true)
-            viewModel.setReviewInfo(reviewInfo,
+            viewModel.setReviewInfo(
+                reviewInfo,
                 hashtagUtil.convertStrToTasteTag(reviewInfo.taste),
-                reviewInfo.good.map { hashtagUtil.convertStrToGoodTag(it) })
+                reviewInfo.good.map { hashtagUtil.convertStrToGoodTag(it) }
+            )
             galleryImageAdapter.setUriList(reviewInfo.photoList.map { Uri.parse(it.url) })
         }
     }
