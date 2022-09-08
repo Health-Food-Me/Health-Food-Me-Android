@@ -32,6 +32,7 @@ class StarScore(context: Context, val attrs: AttributeSet? = null) : ConstraintL
     }
 
     fun setScore(score: Float) {
+        Timber.d(score.toString())
         if (score in 0f..5f) setStarImage(score)
         else Timber.d("Invalid Score: Error")
     }
@@ -53,7 +54,8 @@ class StarScore(context: Context, val attrs: AttributeSet? = null) : ConstraintL
 
             // 소수점 첫째자리에 해당하는 아이콘 디스플레이
             if (score < 5.0f) {
-                starViewList[lastIdx + 1].setImageResource(getDecimalPointImageRes(firstDecimalPlace) ?: return)
+                if (integer == 0) starViewList[lastIdx].setImageResource(getDecimalPointImageRes(firstDecimalPlace) ?: return)
+                else starViewList[lastIdx + 1].setImageResource(getDecimalPointImageRes(firstDecimalPlace) ?: return)
             }
         }
     }
