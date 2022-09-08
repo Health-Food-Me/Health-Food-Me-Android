@@ -5,6 +5,8 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="drawerViewModel"
             type="org.helfoome.presentation.MainViewModel" />
@@ -14,80 +16,121 @@
         android:id="@+id/nv_header"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="start">
+        android:layout_gravity="start"
+        android:overScrollMode="never">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_drawer"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/tv_hello"
-                style="@style/TextView.Drawer.TextAppearance"
-                android:layout_width="wrap_content"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layout_nickname"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/size_spacing_20"
-                android:layout_marginTop="64dp"
-                android:text="@string/main_drawer_welcome"
-                android:textSize="@dimen/size_spacing_16"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:visibility="@{drawerViewModel.getIsGuestLogin() ? View.GONE : View.VISIBLE}"
+                app:layout_constraintTop_toTopOf="@id/layout_drawer">
 
-            <TextView
-                android:id="@+id/tv_welcome"
-                style="@style/TextView.Drawer.TextAppearance"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/size_spacing_20"
-                android:layout_marginTop="@dimen/size_spacing_3"
-                android:fontFamily="@font/notosanskr_m"
-                android:maxLength="12"
-                android:text="@{drawerViewModel.nickname}"
-                android:textSize="@dimen/size_spacing_16"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_hello"
-                tools:text="esf;lijdsg;lkadfjgl;aksdljsdg;lkajsdfdgalrkgr;glSdv;l" />
+                <TextView
+                    android:id="@+id/tv_hello"
+                    style="@style/TextView.Drawer.TextAppearance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/size_spacing_20"
+                    android:layout_marginTop="64dp"
+                    android:text="@string/main_drawer_welcome"
+                    android:textSize="@dimen/size_spacing_16"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/tv_welcome_third"
-                style="@style/TextView.Drawer.TextAppearance"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="2dp"
-                android:layout_marginTop="@dimen/size_spacing_3"
-                android:text="@string/main_drawer_welcome_second"
-                android:textSize="@dimen/size_spacing_16"
-                app:layout_constraintStart_toEndOf="@+id/tv_welcome"
-                app:layout_constraintTop_toBottomOf="@id/tv_hello" />
+                <TextView
+                    android:id="@+id/tv_welcome"
+                    style="@style/TextView.Drawer.TextAppearance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/size_spacing_20"
+                    android:layout_marginTop="@dimen/size_spacing_3"
+                    android:maxLength="12"
+                    android:text="@{drawerViewModel.nickname}"
+                    android:textSize="@dimen/size_spacing_16"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_hello"
+                    tools:text="nickname" />
 
-            <ImageView
-                android:id="@+id/btn_edit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/size_spacing_8"
-                android:src="@drawable/ic_edit"
-                app:layout_constraintBottom_toBottomOf="@id/tv_welcome"
-                app:layout_constraintStart_toEndOf="@id/tv_welcome_third"
-                app:layout_constraintTop_toTopOf="@id/tv_welcome" />
+                <TextView
+                    android:id="@+id/tv_welcome_third"
+                    style="@style/TextView.Drawer.TextAppearance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginTop="@dimen/size_spacing_3"
+                    android:text="@string/main_drawer_welcome_second"
+                    android:textSize="@dimen/size_spacing_16"
+                    app:layout_constraintStart_toEndOf="@+id/tv_welcome"
+                    app:layout_constraintTop_toBottomOf="@id/tv_hello" />
 
-            <TextView
-                android:id="@+id/tv_welcome_fourth"
-                style="@style/TextView.Drawer.TextAppearance"
-                android:layout_width="wrap_content"
+                <ImageView
+                    android:id="@+id/btn_edit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/size_spacing_8"
+                    android:src="@drawable/ic_edit"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_welcome"
+                    app:layout_constraintStart_toEndOf="@id/tv_welcome_third"
+                    app:layout_constraintTop_toTopOf="@id/tv_welcome" />
+
+                <TextView
+                    android:id="@+id/tv_welcome_fourth"
+                    style="@style/TextView.Drawer.TextAppearance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/size_spacing_20"
+                    android:layout_marginTop="@dimen/size_spacing_3"
+                    android:text="@string/main_drawer_welcome_third"
+                    android:textSize="@dimen/size_spacing_16"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_welcome" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/size_spacing_20"
-                android:layout_marginTop="@dimen/size_spacing_3"
-                android:text="@string/main_drawer_welcome_third"
-                android:textSize="@dimen/size_spacing_16"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_welcome" />
+                android:visibility="@{drawerViewModel.getIsGuestLogin() ? View.VISIBLE : View.GONE}"
+                app:layout_constraintTop_toTopOf="@id/layout_drawer">
+
+                <TextView
+                    android:id="@+id/tv_guest_login"
+                    style="@style/TextView.Drawer.TextAppearance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/size_spacing_20"
+                    android:layout_marginTop="52dp"
+                    android:text="@string/main_drawer_login"
+                    android:textColor="@color/gray_800"
+                    android:textSize="@dimen/size_spacing_16"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/iv_login"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/size_spacing_8"
+                    android:src="@drawable/ic_go"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_guest_login"
+                    app:layout_constraintStart_toEndOf="@id/tv_guest_login"
+                    app:layout_constraintTop_toTopOf="@id/tv_guest_login" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <View
                 android:id="@+id/line_first"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginTop="@dimen/size_spacing_36"
                 android:background="@color/gray_200"
-                app:layout_constraintTop_toBottomOf="@id/tv_welcome_fourth" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_marginTop="@{drawerViewModel.getIsGuestLogin() ? 111 : 175}" />
 
             <TextView
                 android:id="@+id/tv_scrap"
@@ -175,6 +218,7 @@
                 android:text="@string/main_drawer_logout"
                 android:textColor="@color/gray_600"
                 android:textSize="@dimen/size_spacing_12"
+                android:visibility="@{drawerViewModel.getIsGuestLogin() ? View.INVISIBLE : View.VISIBLE}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>

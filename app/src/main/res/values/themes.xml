@@ -76,6 +76,10 @@
         <item name="android:textSize">@dimen/size_spacing_16</item>
     </style>
 
+    <style name="dialog_background" parent="Theme.AppCompat.Dialog">
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+
     <style name="TextView.OpeningTime.Appearance" parent="">
         <item name="android:fontFamily">@font/notosanskr_m</item>
         <item name="android:textColor">@color/gray_600</item>

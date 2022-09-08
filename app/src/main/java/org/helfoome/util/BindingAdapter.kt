@@ -1,6 +1,9 @@
 package org.helfoome.util
 
+import android.content.res.Resources
+import android.util.TypedValue
 import android.view.View
+import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.view.isVisible
@@ -18,6 +21,17 @@ fun ImageView.setImage(imageUrl: String?) {
 fun View.setVisibility(isVisible: Boolean?) {
     if (isVisible == null) return
     this.isVisible = isVisible
+}
+
+@BindingAdapter("app:layout_marginTop")
+fun View.layoutMarginTop(margin: Int) {
+    if (margin != 0) {
+        val layoutParams = this.layoutParams as ViewGroup.MarginLayoutParams
+        val metrics = Resources.getSystem().displayMetrics
+        layoutParams.topMargin = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, margin.toFloat(), metrics)
+            .toInt()
+        this.layoutParams = layoutParams
+    }
 }
 
 @BindingAdapter("app:isSelected")
