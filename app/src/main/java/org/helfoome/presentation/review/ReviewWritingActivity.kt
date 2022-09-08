@@ -16,7 +16,7 @@ import gun0912.tedimagepicker.builder.TedImagePicker
 import gun0912.tedimagepicker.util.ToastUtil.context
 import org.helfoome.R
 import org.helfoome.databinding.ActivityReviewWritingBinding
-import org.helfoome.domain.entity.MyReviewListInfo
+import org.helfoome.domain.entity.MyReviewInfo
 import org.helfoome.presentation.type.ReviewImageType
 import org.helfoome.util.HashtagUtil
 import org.helfoome.util.ItemDecorationUtil
@@ -57,10 +57,10 @@ class ReviewWritingActivity : BindingActivity<ActivityReviewWritingBinding>(R.la
         }
 
         // 리뷰 편집 시 기존 리뷰 내용 전달 받기
-        intent.getParcelableExtra<MyReviewListInfo>(ARG_REVIEW_INFO)?.let { reviewInfo ->
+        intent.getParcelableExtra<MyReviewInfo>(ARG_REVIEW_INFO)?.let { reviewInfo ->
             viewModel.setEditMode(true)
             viewModel.setReviewInfo(reviewInfo,
-                hashtagUtil.convertStrToTasteTag(reviewInfo.tags),
+                hashtagUtil.convertStrToTasteTag(reviewInfo.taste),
                 reviewInfo.good.map { hashtagUtil.convertStrToGoodTag(it) })
             galleryImageAdapter.setUriList(reviewInfo.photoList.map { Uri.parse(it.url) })
         }

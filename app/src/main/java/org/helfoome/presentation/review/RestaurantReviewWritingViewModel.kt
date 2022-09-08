@@ -13,7 +13,7 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import org.helfoome.data.local.HFMSharedPreference
 import org.helfoome.data.service.ReviewService
 import org.helfoome.domain.entity.HFMReviewInfo
-import org.helfoome.domain.entity.MyReviewListInfo
+import org.helfoome.domain.entity.MyReviewInfo
 import org.helfoome.presentation.type.GoodPointHashtagType
 import org.helfoome.presentation.type.TasteHashtagType
 import org.helfoome.util.ContentUriRequestBody
@@ -30,8 +30,8 @@ class RestaurantReviewWritingViewModel @Inject constructor(
     private var _restaurantTitle: String? = null
     val restaurantTitle: String? get() = _restaurantTitle
 
-    private val _reviewInfo = MutableLiveData<MyReviewListInfo?>()
-    val reviewInfo get(): LiveData<MyReviewListInfo?> = _reviewInfo
+    private val _reviewInfo = MutableLiveData<MyReviewInfo?>()
+    val reviewInfo get(): LiveData<MyReviewInfo?> = _reviewInfo
 
     private val _restaurantId = MutableLiveData<String>()
     val restaurantId get() = _restaurantId
@@ -64,7 +64,7 @@ class RestaurantReviewWritingViewModel @Inject constructor(
     val hfmReviews: LiveData<HFMReviewInfo> = _hfmReviews
 
     fun setReviewInfo(
-        review: MyReviewListInfo,
+        review: MyReviewInfo,
         tasteTag: TasteHashtagType?,
         goodTags: List<GoodPointHashtagType?>,
     ) { // TODO need refactoring

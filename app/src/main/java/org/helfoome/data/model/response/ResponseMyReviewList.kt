@@ -2,7 +2,7 @@ package org.helfoome.data.model.response
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import org.helfoome.domain.entity.MyReviewListInfo
+import org.helfoome.domain.entity.MyReviewInfo
 import org.helfoome.domain.entity.ReviewImage
 
 @Serializable
@@ -23,7 +23,7 @@ data class ResponseMyReviewList(
         val name: String,
         val url: String
     )
-    fun toMyReviewListInfo() = MyReviewListInfo(
+    fun toMyReviewListInfo() = MyReviewInfo(
         id,
         restaurant,
         score,
