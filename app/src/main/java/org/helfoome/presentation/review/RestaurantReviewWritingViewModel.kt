@@ -63,7 +63,11 @@ class RestaurantReviewWritingViewModel @Inject constructor(
     private val _hfmReviews = MutableLiveData<HFMReviewInfo>()
     val hfmReviews: LiveData<HFMReviewInfo> = _hfmReviews
 
-    fun setReviewInfo(review: MyReviewListInfo, tasteTag: TasteHashtagType?, goodTags: List<GoodPointHashtagType?>) { // TODO need refactoring
+    fun setReviewInfo(
+        review: MyReviewListInfo,
+        tasteTag: TasteHashtagType?,
+        goodTags: List<GoodPointHashtagType?>,
+    ) { // TODO need refactoring
         _reviewInfo.value = review
         _reviewContent.value = review.description
         setSelectedTasteTag(tasteTag ?: return)
@@ -133,8 +137,7 @@ class RestaurantReviewWritingViewModel @Inject constructor(
         for (element in image) {
             if (!element.toString().startsWith("content")) { // 기존 이미지
                 nameRequestBody.add(element.toString())
-            }
-            else { // 새로 업로드할 이미지
+            } else { // 새로 업로드할 이미지
                 val imageMultipartBody: MultipartBody.Part =
                     ContentUriRequestBody(context, element ?: continue).toFormData()
                 imageListMultipartBody.add(imageMultipartBody)
