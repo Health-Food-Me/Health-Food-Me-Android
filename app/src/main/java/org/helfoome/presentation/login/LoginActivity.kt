@@ -42,11 +42,9 @@ class LoginActivity : BindingActivity<ActivityLoginBinding>(R.layout.activity_lo
 
     private fun initListeners() {
         binding.ivNaverLogin.setOnClickListener {
-            viewModel.setIsGuestLogin(false)
             naverLogin()
         }
         binding.ivKakaoLogin.setOnClickListener {
-            viewModel.setIsGuestLogin(false)
             kakaoLogin()
         }
         binding.tvGuest.setOnClickListener {
