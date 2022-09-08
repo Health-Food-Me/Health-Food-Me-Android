@@ -19,7 +19,7 @@ class NaverAuthService @Inject constructor(
     @ApplicationContext private val context: Context,
     private val sharedPreferences: HFMSharedPreference,
     private val authService: AuthService,
-    private val deviceInfo: DeviceInfo
+    private val deviceInfo: DeviceInfo,
 ) : OAuthLoginCallback {
     var loginListener: (() -> Unit)? = null
 
@@ -49,10 +49,13 @@ class NaverAuthService @Inject constructor(
                 )
             }
                 .onSuccess {
-                    sharedPreferences.accessToken = it.data.accessToken
-                    sharedPreferences.refreshToken = it.data.refreshToken
-                    sharedPreferences.id = it.data.user.id
-                    sharedPreferences.nickname = it.data.user.name
+                    with(sharedPreferences) {
+                        isGuestLogin = false
+                        accessToken = it.data.accessToken
+                        refreshToken = it.data.refreshToken
+                        id = it.data.user.id
+                        nickname = it.data.user.name
+                    }
                     loginListener?.invoke()
                     Timber.d(it.message)
                     cancel()

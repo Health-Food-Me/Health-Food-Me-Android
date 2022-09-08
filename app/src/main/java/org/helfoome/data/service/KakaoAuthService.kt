@@ -21,7 +21,7 @@ class KakaoAuthService @Inject constructor(
     private val client: UserApiClient,
     private val sharedPreferences: HFMSharedPreference,
     private val authService: AuthService,
-    private val deviceInfo: DeviceInfo
+    private val deviceInfo: DeviceInfo,
 ) {
     fun kakaoLogin(loginListener: (() -> Unit)? = null) {
         val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
@@ -39,6 +39,7 @@ class KakaoAuthService @Inject constructor(
                         )
                     }
                         .onSuccess {
+                            sharedPreferences.isGuestLogin = false
                             val response = it.data
                             with(sharedPreferences) {
                                 accessToken = response.accessToken
@@ -83,6 +84,7 @@ class KakaoAuthService @Inject constructor(
                             )
                         }
                             .onSuccess {
+                                sharedPreferences.isGuestLogin = false
                                 val response = it.data
                                 with(sharedPreferences) {
                                     accessToken = response.accessToken
