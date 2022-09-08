@@ -1,5 +1,7 @@
 package org.helfoome.util
 
+import android.content.res.Resources
+import android.util.TypedValue
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -7,7 +9,6 @@ import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.databinding.BindingAdapter
 import coil.load
-import org.helfoome.util.ext.getDp
 import java.text.DecimalFormat
 
 @BindingAdapter("app:imageUrl")
@@ -22,11 +23,13 @@ fun View.setVisibility(isVisible: Boolean?) {
     this.isVisible = isVisible
 }
 
-@BindingAdapter("android:layout_marginTop")
+@BindingAdapter("app:layout_marginTop")
 fun View.layoutMarginTop(margin: Int) {
     if (margin != 0) {
         val layoutParams = this.layoutParams as ViewGroup.MarginLayoutParams
-        layoutParams.topMargin = margin.getDp
+        val metrics = Resources.getSystem().displayMetrics
+        layoutParams.topMargin = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, margin.toFloat(), metrics)
+            .toInt()
         this.layoutParams = layoutParams
     }
 }

@@ -50,7 +50,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/size_spacing_20"
                     android:layout_marginTop="@dimen/size_spacing_3"
-                    android:fontFamily="@font/notosanskr_m"
                     android:maxLength="12"
                     android:text="@{drawerViewModel.nickname}"
                     android:textSize="@dimen/size_spacing_16"
@@ -102,11 +101,11 @@
 
                 <TextView
                     android:id="@+id/tv_guest_login"
+                    style="@style/TextView.Drawer.TextAppearance"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/size_spacing_20"
                     android:layout_marginTop="52dp"
-                    android:fontFamily="@font/notosanskr_m"
                     android:text="@string/main_drawer_login"
                     android:textColor="@color/gray_800"
                     android:textSize="@dimen/size_spacing_16"
@@ -129,9 +128,9 @@
                 android:id="@+id/line_first"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginTop="@{drawerViewModel.getIsGuestLogin() ? 111 : 175}"
                 android:background="@color/gray_200"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_marginTop="@{drawerViewModel.getIsGuestLogin() ? 111 : 175}" />
 
             <TextView
                 android:id="@+id/tv_scrap"

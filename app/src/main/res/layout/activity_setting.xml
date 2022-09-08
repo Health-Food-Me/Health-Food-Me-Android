@@ -87,10 +87,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/size_spacing_20"
-            android:layout_marginTop="@{viewModel.getIsGuestLogin() ? 36 : 88}"
             android:text="@string/setting_declaration"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_inquiry" />
+            app:layout_constraintTop_toBottomOf="@id/tv_inquiry"
+            app:layout_marginTop="@{viewModel.getIsGuestLogin() ? 36 : 88}" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
