@@ -14,7 +14,7 @@ import org.helfoome.util.ItemDiffCallback
 class MyReviewAdapter(
     private val startRestaurant: (() -> Unit),
     private val deleteReview: (String) -> Unit,
-    private val editReview: (MyReviewInfo) -> Unit
+    private val editReview: (MyReviewInfo) -> Unit,
 ) :
     ListAdapter<MyReviewInfo, MyReviewAdapter.MyReviewViewHolder>(
         ItemDiffCallback<MyReviewInfo>(
@@ -41,7 +41,7 @@ class MyReviewAdapter(
             myReviewData: MyReviewInfo,
             startRestaurant: () -> Unit,
             deleteClickListener: (String) -> Unit,
-            editClickListener: (MyReviewInfo) -> Unit
+            editClickListener: (MyReviewInfo) -> Unit,
         ) {
             with(binding) {
                 val adapter = RestaurantImageAdapter().apply {
@@ -61,7 +61,7 @@ class MyReviewAdapter(
                 tvEdit.setOnClickListener {
                     editClickListener.invoke(myReviewData)
                 }
-                binding.hashtag.setHashtag(listOf(myReviewData.taste, myReviewData.good.joinToString()), HashtagViewType.REVIEW_TAB_TYPE)
+                binding.hashtag.setHashtag(listOf(myReviewData.taste) + myReviewData.good, HashtagViewType.REVIEW_TAB_TYPE)
             }
         }
     }
