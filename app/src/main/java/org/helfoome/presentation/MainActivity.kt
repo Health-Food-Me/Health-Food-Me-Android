@@ -199,7 +199,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                         requestReviewWrite.launch(
                             Intent(this@MainActivity, ReviewWritingActivity::class.java)
                                 .putExtra(ARG_RESTAURANT_ID, viewModel?.selectedRestaurant?.value?.id ?: return@setOnClickListener)
-                                .putExtra("RESTAURANT_NAME", binding.layoutRestaurantDialog.tvRestaurantName.text.toString())
+                                .putExtra(ARG_RESTAURANT_NAME, binding.layoutRestaurantDialog.tvRestaurantName.text.toString())
                         )
                     }
                 }
