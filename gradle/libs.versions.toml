@@ -10,7 +10,7 @@ navigation = "2.4.1"
 # 3rd-party
 coil = "2.1.0"
 dagger = "2.42"
-kotlin = "1.6.21"
+kotlin = "1.7.10"
 kotlin-coroutine = "1.6.3"
 okhttp = "4.9.3"
 retrofit = "2.9.0"
