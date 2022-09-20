@@ -56,16 +56,16 @@ class MapSelectActivity : BindingActivity<ActivityMapSelectBinding>(R.layout.act
         }
     }
     private val appbarOffsetListener = AppBarLayout.OnOffsetChangedListener { _, verticalOffset ->
-        binding.layoutRestaurantDialog.tvRestaurantNameInToolbar.visibility = if (verticalOffset == 0) {
-            View.INVISIBLE
-        } else {
-            View.VISIBLE
-        }
+//        binding.layoutRestaurantDialog.tvRestaurantNameInToolbar.visibility = if (verticalOffset == 0) {
+//            View.INVISIBLE
+//        } else {
+//            View.VISIBLE
+//        }
     }
 
     private val bottomSheetCallback = object : BottomSheetBehavior.BottomSheetCallback() {
         override fun onStateChanged(bottomSheet: View, newState: Int) {
-            binding.layoutRestaurantDialog.nvDetail.isNestedScrollingEnabled = false
+//            binding.layoutRestaurantDialog.nvDetail.isNestedScrollingEnabled = false
             viewModel.setExpendedBottomSheetDialog(newState == BottomSheetBehavior.STATE_EXPANDED)
             behavior.isDraggable = true
             if (newState == BottomSheetBehavior.STATE_COLLAPSED) {
@@ -125,56 +125,56 @@ class MapSelectActivity : BindingActivity<ActivityMapSelectBinding>(R.layout.act
     override fun onStart() {
         super.onStart()
         behavior.addBottomSheetCallback(bottomSheetCallback)
-        binding.layoutRestaurantDialog.layoutRestaurantTabMenu.addOnTabSelectedListener(tabSelectedListener)
-        binding.layoutRestaurantDialog.layoutAppBar.addOnOffsetChangedListener(appbarOffsetListener)
+//        binding.layoutRestaurantDialog.layoutRestaurantTabMenu.addOnTabSelectedListener(tabSelectedListener)
+//        binding.layoutRestaurantDialog.layoutAppBar.addOnOffsetChangedListener(appbarOffsetListener)
     }
 
     private fun initView() {
         behavior = BottomSheetBehavior.from(binding.layoutBottomSheet)
         behavior.state = BottomSheetBehavior.STATE_HIDDEN
 
-        with(binding.layoutRestaurantDialog) {
-            vpRestaurantDetail.adapter = restaurantDetailAdapter
-            TabLayoutMediator(layoutRestaurantTabMenu, vpRestaurantDetail) { tab, position ->
-                tab.text = resources.getStringArray(R.array.restaurant_detail_tab_titles)[position]
-                binding.layoutRestaurantDialog.btnWriteReview.visibility = if (position == 2) View.VISIBLE else View.INVISIBLE
-            }.attach()
-
-            tvNumber.paintFlags = tvNumber.paintFlags or Paint.UNDERLINE_TEXT_FLAG
-
-            btnWriteReview.apply {
-                setOnClickListener {
-                    requestReviewWrite.launch(
-                        Intent(this@MapSelectActivity, ReviewWritingActivity::class.java)
-                            .putExtra(ARG_RESTAURANT_ID, viewModel?.selectedRestaurant?.value?.id ?: return@setOnClickListener)
-                            .putExtra(ARG_RESTAURANT_NAME, binding.layoutRestaurantDialog.tvRestaurantName.text.toString())
-                    )
-                }
-            }
-        }
+//        with(binding.layoutRestaurantDialog) {
+//            vpRestaurantDetail.adapter = restaurantDetailAdapter
+//            TabLayoutMediator(layoutRestaurantTabMenu, vpRestaurantDetail) { tab, position ->
+//                tab.text = resources.getStringArray(R.array.restaurant_detail_tab_titles)[position]
+//                binding.layoutRestaurantDialog.btnWriteReview.visibility = if (position == 2) View.VISIBLE else View.INVISIBLE
+//            }.attach()
+//
+//            tvNumber.paintFlags = tvNumber.paintFlags or Paint.UNDERLINE_TEXT_FLAG
+//
+//            btnWriteReview.apply {
+//                setOnClickListener {
+//                    requestReviewWrite.launch(
+//                        Intent(this@MapSelectActivity, ReviewWritingActivity::class.java)
+//                            .putExtra(ARG_RESTAURANT_ID, viewModel?.selectedRestaurant?.value?.id ?: return@setOnClickListener)
+//                            .putExtra(ARG_RESTAURANT_NAME, binding.layoutRestaurantDialog.tvRestaurantName.text.toString())
+//                    )
+//                }
+//            }
+//        }
     }
 
     private fun initListeners() {
-        with(binding.layoutRestaurantDialog) {
-            layoutAppBar.setOnClickListener {
-                if (behavior.state == BottomSheetBehavior.STATE_COLLAPSED) {
-                    binding.isFloatingNotVisible = true
-                    behavior.state = BottomSheetBehavior.STATE_EXPANDED
-                }
-            }
-
-            btnBack.setOnClickListener {
-                behavior.state = BottomSheetBehavior.STATE_COLLAPSED
-            }
-
-            tvNumber.setOnClickListener {
-                startActivity(Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + tvNumber.text)))
-            }
-
-            btnNavi.setOnClickListener {
-                showMapSelectionBottomDialog()
-            }
-        }
+//        with(binding.layoutRestaurantDialog) {
+//            layoutAppBar.setOnClickListener {
+//                if (behavior.state == BottomSheetBehavior.STATE_COLLAPSED) {
+//                    binding.isFloatingNotVisible = true
+//                    behavior.state = BottomSheetBehavior.STATE_EXPANDED
+//                }
+//            }
+//
+//            btnBack.setOnClickListener {
+//                behavior.state = BottomSheetBehavior.STATE_COLLAPSED
+//            }
+//
+//            tvNumber.setOnClickListener {
+//                startActivity(Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + tvNumber.text)))
+//            }
+//
+//            btnNavi.setOnClickListener {
+//                showMapSelectionBottomDialog()
+//            }
+//        }
 
         binding.ibBack.setOnClickListener {
             finish()
@@ -198,15 +198,15 @@ class MapSelectActivity : BindingActivity<ActivityMapSelectBinding>(R.layout.act
 
     private fun initObservers() {
         viewModel.selectedRestaurant.observe(this) {
-            with(binding.layoutRestaurantDialog) {
-                layoutRestaurantTabMenu.selectTab(layoutRestaurantTabMenu.getTabAt(0))
-                hashtag.setHashtag(it.tags, HashtagViewType.RESTAURANT_SUMMARY_TYPE)
-            }
+//            with(binding.layoutRestaurantDialog) {
+//                layoutRestaurantTabMenu.selectTab(layoutRestaurantTabMenu.getTabAt(0))
+//                hashtag.setHashtag(it.tags, HashtagViewType.RESTAURANT_SUMMARY_TYPE)
+//            }
         }
 
         viewModel.isReviewTab.observe(this) {
-            binding.layoutRestaurantDialog.layoutReviewBtnBackground.visibility =
-                if (it.peekContent()) View.VISIBLE else View.INVISIBLE
+//            binding.layoutRestaurantDialog.layoutReviewBtnBackground.visibility =
+//                if (it.peekContent()) View.VISIBLE else View.INVISIBLE
         }
 
         viewModel.location.observe(this) { markers ->
@@ -272,11 +272,11 @@ class MapSelectActivity : BindingActivity<ActivityMapSelectBinding>(R.layout.act
         }
 
         viewModel.checkReview.observe(this) {
-            if (viewModel.checkReview.value == false) {
-                binding.layoutRestaurantDialog.btnWriteReview.isEnabled = true
-            } else if (viewModel.checkReview.value == true) {
-                binding.layoutRestaurantDialog.btnWriteReview.isEnabled = false
-            }
+//            if (viewModel.checkReview.value == false) {
+//                binding.layoutRestaurantDialog.btnWriteReview.isEnabled = true
+//            } else if (viewModel.checkReview.value == true) {
+//                binding.layoutRestaurantDialog.btnWriteReview.isEnabled = false
+//            }
         }
     }
 
@@ -291,8 +291,8 @@ class MapSelectActivity : BindingActivity<ActivityMapSelectBinding>(R.layout.act
     override fun onStop() {
         super.onStop()
         behavior.removeBottomSheetCallback(bottomSheetCallback)
-        binding.layoutRestaurantDialog.layoutRestaurantTabMenu.removeOnTabSelectedListener(tabSelectedListener)
-        binding.layoutRestaurantDialog.layoutAppBar.removeOnOffsetChangedListener(appbarOffsetListener)
+//        binding.layoutRestaurantDialog.layoutRestaurantTabMenu.removeOnTabSelectedListener(tabSelectedListener)
+//        binding.layoutRestaurantDialog.layoutAppBar.removeOnOffsetChangedListener(appbarOffsetListener)
     }
 
     private fun initNaverMap() {

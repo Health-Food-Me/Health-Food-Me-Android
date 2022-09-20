@@ -74,13 +74,6 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
             mainViewModel.setReviewTab(tab?.position == 2)
         }
     }
-    private val appbarOffsetListener = AppBarLayout.OnOffsetChangedListener { _, verticalOffset ->
-        binding.layoutRestaurantDialog.tvRestaurantNameInToolbar.visibility = if (verticalOffset == 0) {
-            View.INVISIBLE
-        } else {
-            View.VISIBLE
-        }
-    }
 
     private var markerList: List<Pair<Marker, Pair<String, Boolean>>> = listOf()
 
@@ -175,12 +168,12 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
                 behavior.isDraggable = this
                 binding.isLineVisible = this
 
-                binding.layoutRestaurantDialog.viewSpacing.visibility = when (this) {
-                    true -> View.VISIBLE
-                    else -> View.GONE
-                }
-
-                binding.layoutRestaurantDialog.nvDetail.isNestedScrollingEnabled = false
+//                binding.layoutRestaurantDialog.viewSpacing.visibility = when (this) {
+//                    true -> View.VISIBLE
+//                    else -> View.GONE
+//                }
+//
+//                binding.layoutRestaurantDialog.nvDetail.isNestedScrollingEnabled = false
                 mainViewModel.setExpendedBottomSheetDialog(newState == BottomSheetBehavior.STATE_EXPANDED)
                 behavior.isDraggable = true
                 if (newState == BottomSheetBehavior.STATE_COLLAPSED)
@@ -239,26 +232,26 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
 
     private fun initView() {
         intent.getParcelableArrayListExtra<MarkerInfo>(MARKER_INFO)?.let { mainViewModel.setMapInfo(it) }
-        binding.layoutRestaurantDialog.isSearch = true
+//        binding.layoutRestaurantDialog.isSearch = true
         behavior = BottomSheetBehavior.from(binding.layoutBottomSheet)
         behavior.state = BottomSheetBehavior.STATE_EXPANDED
         behavior.isDraggable = false
 
-        with(binding.layoutRestaurantDialog) {
-            vpRestaurantDetail.adapter = restaurantDetailAdapter
-            TabLayoutMediator(layoutRestaurantTabMenu, vpRestaurantDetail) { tab, position ->
-                tab.text = resources.getStringArray(R.array.restaurant_detail_tab_titles)[position]
-                binding.layoutRestaurantDialog.btnWriteReview.visibility = if (position == 2) View.VISIBLE else View.INVISIBLE
-            }.attach()
-
-            tvNumber.paintFlags = tvNumber.paintFlags or Paint.UNDERLINE_TEXT_FLAG
-
-            btnWriteReview.apply {
-                setOnClickListener {
-                    requestReviewWrite.launch(Intent(this@SearchActivity, ReviewWritingActivity::class.java))
-                }
-            }
-        }
+//        with(binding.layoutRestaurantDialog) {
+//            vpRestaurantDetail.adapter = restaurantDetailAdapter
+//            TabLayoutMediator(layoutRestaurantTabMenu, vpRestaurantDetail) { tab, position ->
+//                tab.text = resources.getStringArray(R.array.restaurant_detail_tab_titles)[position]
+//                binding.layoutRestaurantDialog.btnWriteReview.visibility = if (position == 2) View.VISIBLE else View.INVISIBLE
+//            }.attach()
+//
+//            tvNumber.paintFlags = tvNumber.paintFlags or Paint.UNDERLINE_TEXT_FLAG
+//
+//            btnWriteReview.apply {
+//                setOnClickListener {
+//                    requestReviewWrite.launch(Intent(this@SearchActivity, ReviewWritingActivity::class.java))
+//                }
+//            }
+//        }
     }
 
     private fun initClickEvent() {
@@ -268,9 +261,9 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
                     startSearchModeBackEvent(searchMode.value)
                 }
 
-                layoutRestaurantDialog.btnBack.setOnClickListener {
-                    startSearchModeBackEvent(searchMode.value)
-                }
+//                layoutRestaurantDialog.btnBack.setOnClickListener {
+//                    startSearchModeBackEvent(searchMode.value)
+//                }
 
                 btnDelete.setOnClickListener {
                     when (searchMode.value) {
@@ -547,8 +540,8 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
     override fun onStart() {
         super.onStart()
         behavior.addBottomSheetCallback(bottomSheetCallback)
-        binding.layoutRestaurantDialog.layoutRestaurantTabMenu.addOnTabSelectedListener(tabSelectedListener)
-        binding.layoutRestaurantDialog.layoutAppBar.addOnOffsetChangedListener(appbarOffsetListener)
+//        binding.layoutRestaurantDialog.layoutRestaurantTabMenu.addOnTabSelectedListener(tabSelectedListener)
+//        binding.layoutRestaurantDialog.layoutAppBar.addOnOffsetChangedListener(appbarOffsetListener)
     }
 
     override fun onResume() {
@@ -562,26 +555,26 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
     }
 
     private fun initListeners() {
-        with(binding.layoutRestaurantDialog) {
-            layoutAppBar.setOnClickListener {
-                if (behavior.state == BottomSheetBehavior.STATE_COLLAPSED) {
-                    binding.isFloatingVisible = true
-                    behavior.state = BottomSheetBehavior.STATE_EXPANDED
-                }
-            }
-
-            btnBack.setOnClickListener {
-                behavior.state = BottomSheetBehavior.STATE_COLLAPSED
-            }
-
-            tvNumber.setOnClickListener {
-                startActivity(Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + tvNumber.text)))
-            }
-
-            btnNavi.setOnClickListener {
-                showMapSelectionBottomDialog()
-            }
-        }
+//        with(binding.layoutRestaurantDialog) {
+//            layoutAppBar.setOnClickListener {
+//                if (behavior.state == BottomSheetBehavior.STATE_COLLAPSED) {
+//                    binding.isFloatingVisible = true
+//                    behavior.state = BottomSheetBehavior.STATE_EXPANDED
+//                }
+//            }
+//
+//            btnBack.setOnClickListener {
+//                behavior.state = BottomSheetBehavior.STATE_COLLAPSED
+//            }
+//
+//            tvNumber.setOnClickListener {
+//                startActivity(Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + tvNumber.text)))
+//            }
+//
+//            btnNavi.setOnClickListener {
+//                showMapSelectionBottomDialog()
+//            }
+//        }
     }
 
     private fun showMapSelectionBottomDialog() {
@@ -592,31 +585,31 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
 
     private fun initObservers() {
         mainViewModel.selectedRestaurant.observe(this) {
-            with(binding.layoutRestaurantDialog) {
-                layoutRestaurantTabMenu.selectTab(layoutRestaurantTabMenu.getTabAt(0))
-                hashtag.setHashtag(it.tags, HashtagViewType.RESTAURANT_SUMMARY_TYPE)
-            }
+//            with(binding.layoutRestaurantDialog) {
+//                layoutRestaurantTabMenu.selectTab(layoutRestaurantTabMenu.getTabAt(0))
+//                hashtag.setHashtag(it.tags, HashtagViewType.RESTAURANT_SUMMARY_TYPE)
+//            }
         }
 
         mainViewModel.isReviewTab.observe(this) {
-            binding.layoutRestaurantDialog.layoutReviewBtnBackground.visibility =
-                if (it.peekContent()) View.VISIBLE else View.INVISIBLE
+//            binding.layoutRestaurantDialog.layoutReviewBtnBackground.visibility =
+//                if (it.peekContent()) View.VISIBLE else View.INVISIBLE
         }
 
         mainViewModel.checkReview.observe(this) {
-            if (mainViewModel.checkReview.value == false) {
-                binding.layoutRestaurantDialog.btnWriteReview.isEnabled = true
-            } else if (mainViewModel.checkReview.value == true) {
-                binding.layoutRestaurantDialog.btnWriteReview.isEnabled = false
-            }
+//            if (mainViewModel.checkReview.value == false) {
+//                binding.layoutRestaurantDialog.btnWriteReview.isEnabled = true
+//            } else if (mainViewModel.checkReview.value == true) {
+//                binding.layoutRestaurantDialog.btnWriteReview.isEnabled = false
+//            }
         }
     }
 
     override fun onStop() {
         super.onStop()
         behavior.removeBottomSheetCallback(bottomSheetCallback)
-        binding.layoutRestaurantDialog.layoutRestaurantTabMenu.removeOnTabSelectedListener(tabSelectedListener)
-        binding.layoutRestaurantDialog.layoutAppBar.removeOnOffsetChangedListener(appbarOffsetListener)
+//        binding.layoutRestaurantDialog.layoutRestaurantTabMenu.removeOnTabSelectedListener(tabSelectedListener)
+//        binding.layoutRestaurantDialog.layoutAppBar.removeOnOffsetChangedListener(appbarOffsetListener)
     }
 
     override fun onMapReady(naverMap: NaverMap) {

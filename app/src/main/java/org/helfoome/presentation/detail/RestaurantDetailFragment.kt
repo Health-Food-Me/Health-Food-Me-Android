@@ -23,7 +23,7 @@ import org.helfoome.presentation.type.HashtagViewType
 import org.helfoome.util.binding.BindingFragment
 
 class RestaurantDetailFragment : BindingFragment<FragmentRestaurantDetailBinding>(R.layout.fragment_restaurant_detail) {
-    private val viewModel: MainViewModel by activityViewModels()
+    private val mainViewModel: MainViewModel by activityViewModels()
     private var selectedRestaurantId: String = ""
     private var mapSelectionBottomDialog: MapSelectionBottomDialogFragment? = null
 
@@ -32,16 +32,16 @@ class RestaurantDetailFragment : BindingFragment<FragmentRestaurantDetailBinding
         override fun onTabUnselected(tab: TabLayout.Tab?) = Unit
         override fun onTabSelected(tab: TabLayout.Tab?) {
             // 리뷰 탭에서만 리뷰 작성 버튼 보여주기
-            viewModel.setReviewTab(tab?.position == 2)
+            mainViewModel.setReviewTab(tab?.position == 2)
         }
     }
 
     private val requestReviewWrite =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
             if (activityResult.resultCode == Activity.RESULT_OK) {
-                viewModel.fetchHFMReviewList()
-                viewModel.getReviewCheck(viewModel.restaurantId.value ?: "")
-                viewModel.setReviewWriteSuccess(true)
+                mainViewModel.fetchHFMReviewList()
+                mainViewModel.getReviewCheck(mainViewModel.restaurantId.value ?: "")
+                mainViewModel.setReviewWriteSuccess(true)
                 val data = activityResult.data ?: return@registerForActivityResult
             }
         }
@@ -54,10 +54,11 @@ class RestaurantDetailFragment : BindingFragment<FragmentRestaurantDetailBinding
         }
     }
 
-    private val restaurantDetailAdapter = RestaurantTabAdapter(requireActivity())
+    private lateinit var restaurantDetailAdapter: RestaurantTabAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        restaurantDetailAdapter = RestaurantTabAdapter(requireActivity())
         initView()
         initListeners()
         observeData()
@@ -116,7 +117,7 @@ class RestaurantDetailFragment : BindingFragment<FragmentRestaurantDetailBinding
             }
 
             btnBack.setOnClickListener {
-                viewModel.setBehaviorState(BottomSheetBehavior.STATE_COLLAPSED)
+                mainViewModel.setBehaviorState(BottomSheetBehavior.STATE_COLLAPSED)
             }
 
             tvNumber.setOnClickListener {
@@ -147,7 +148,7 @@ class RestaurantDetailFragment : BindingFragment<FragmentRestaurantDetailBinding
     }
 
     private fun observeData() {
-        viewModel.selectedRestaurant.observe(viewLifecycleOwner) {
+        mainViewModel.selectedRestaurant.observe(viewLifecycleOwner) {
             with(binding) {
                 // 스크랩 시 selectedRestaurant의 스크랩 상태 isScrap을 업데이트하면서 selectedRestaurant가 갱신됨에 따라 스크랩 버튼만 눌러도 메뉴 탭으로 이동하는 버그를 방지하고자 함
                 // TODO Config-Change에 따른 취약점 발생을 방지하고자 selectedRestaurantId 뷰모델에서 관리하도록 수정 필요
@@ -159,15 +160,15 @@ class RestaurantDetailFragment : BindingFragment<FragmentRestaurantDetailBinding
             }
         }
 
-        viewModel.isReviewTab.observe(viewLifecycleOwner) {
+        mainViewModel.isReviewTab.observe(viewLifecycleOwner) {
             binding.layoutReviewBtnBackground.visibility =
                 if (it.peekContent()) View.VISIBLE else View.INVISIBLE
         }
 
-        viewModel.checkReview.observe(viewLifecycleOwner) {
-            if (viewModel.checkReview.value == false) {
+        mainViewModel.checkReview.observe(viewLifecycleOwner) {
+            if (mainViewModel.checkReview.value == false) {
                 binding.btnWriteReview.isEnabled = true
-            } else if (viewModel.checkReview.value == true) {
+            } else if (mainViewModel.checkReview.value == true) {
                 binding.btnWriteReview.isEnabled = false
             }
         }
