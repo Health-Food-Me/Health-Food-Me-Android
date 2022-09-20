@@ -8,5 +8,4 @@ data class ResponseProfile(
     @SerialName("_id")
     val id: String,
     val name: String,
-    val scrapRestaurants: List<String>
 )
