@@ -66,6 +66,7 @@ class RestaurantDetailFragment : BindingFragment<FragmentRestaurantDetailBinding
 
     private fun initView() {
         with(binding) {
+            viewModel = mainViewModel
             binding.nvDetail.isNestedScrollingEnabled = false
             binding.viewModel = viewModel
 
@@ -96,9 +97,7 @@ class RestaurantDetailFragment : BindingFragment<FragmentRestaurantDetailBinding
     private fun initListeners() {
         with(binding) {
             layoutAppBar.setOnClickListener {
-//                if (behavior.state == BottomSheetBehavior.STATE_COLLAPSED) {
-//                    behavior.state = BottomSheetBehavior.STATE_EXPANDED
-//                }
+                mainViewModel.setBehaviorState(BottomSheetBehavior.STATE_EXPANDED)
             }
             btnScrapToolbar.setOnClickListener {
                 if (requireNotNull(viewModel).getIsGuestLogin()) {
