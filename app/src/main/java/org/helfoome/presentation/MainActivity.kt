@@ -396,6 +396,12 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                     SnackBarTopDown.makeSnackBarTopDown(this, binding.snvProfileModify, "리뷰가 작성되었습니다")
             }
             .launchIn(lifecycleScope)
+
+        viewModel.behaviorState.flowWithLifecycle(lifecycle)
+            .onEach {
+                behavior.state = it
+            }
+            .launchIn(lifecycleScope)
     }
 
     override fun onBackPressed() {
