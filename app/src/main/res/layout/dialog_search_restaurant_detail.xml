@@ -138,19 +138,6 @@
                             app:layout_constraintTop_toTopOf="@id/iv_restaurant_image"
                             tools:text="샐러디 태릉입구점" />
 
-                        <TextView
-                            android:id="@+id/tv_restaurant_category"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="5dp"
-                            android:fontFamily="@font/notosanskr_r"
-                            android:text="@{restaurant.category}"
-                            android:textColor="@color/gray_550"
-                            android:textSize="@dimen/size_spacing_10"
-                            app:layout_constraintBottom_toBottomOf="@id/tv_restaurant_name"
-                            app:layout_constraintStart_toEndOf="@id/tv_restaurant_name"
-                            tools:text="샐러드" />
-
                         <org.helfoome.presentation.custom.StarScore
                             android:id="@+id/view_star_rating"
                             android:layout_width="wrap_content"
@@ -171,6 +158,7 @@
                             app:layout_constraintStart_toEndOf="@id/view_star_rating"
                             tools:text="(4.3)" />
 
+                        <!-- TODO need to change to HashtagView -->
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:id="@+id/layout_hashtag"
                             android:layout_width="@dimen/size_spacing_0"
@@ -186,7 +174,7 @@
                                 android:id="@+id/tv_first_hashtag"
                                 style="@style/TextView.Hashtag.Style"
                                 android:layout_width="wrap_content"
-                                android:text="@{String.format(context.getString(R.string.format_hashtag, restaurant.tags.get(0)))}"
+                                android:text="@{String.format(context.getString(R.string.format_hashtag, restaurant.category.get(0)))}"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent"
                                 tools:text="#샐러드" />
@@ -196,7 +184,7 @@
                                 style="@style/TextView.Hashtag.Style"
                                 android:layout_width="wrap_content"
                                 android:layout_marginStart="@dimen/size_spacing_4"
-                                android:text="@{String.format(context.getString(R.string.format_hashtag, restaurant.tags.get(1)))}"
+                                android:text="@{String.format(context.getString(R.string.format_hashtag, restaurant.category.get(1)))}"
                                 app:layout_constraintStart_toEndOf="@id/tv_first_hashtag"
                                 app:layout_constraintTop_toTopOf="@id/tv_first_hashtag"
                                 tools:text="#샌드위치" />
@@ -206,7 +194,7 @@
                                 style="@style/TextView.Hashtag.Style"
                                 android:layout_width="wrap_content"
                                 android:layout_marginStart="@dimen/size_spacing_4"
-                                android:text="@{String.format(context.getString(R.string.format_hashtag, restaurant.tags.get(2)))}"
+                                android:text="@{String.format(context.getString(R.string.format_hashtag, restaurant.category.get(2)))}"
                                 app:layout_constraintStart_toEndOf="@id/tv_second_hashtag"
                                 app:layout_constraintTop_toTopOf="@id/tv_second_hashtag"
                                 tools:text="#랩" />

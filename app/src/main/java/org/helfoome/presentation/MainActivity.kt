@@ -416,7 +416,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                     selectedRestaurantId = it.id
                     layoutRestaurantTabMenu.selectTab(layoutRestaurantTabMenu.getTabAt(0))
                 }
-                hashtag.setHashtag(it.tags, HashtagViewType.RESTAURANT_SUMMARY_TYPE)
+                hashtag.setHashtag(it.category, HashtagViewType.RESTAURANT_SUMMARY_TYPE)
             }
         }
 
