@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:bind="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -10,10 +9,6 @@
 
         <variable
             name="isFloatingNotVisible"
-            type="boolean" />
-
-        <variable
-            name="isMainNotVisible"
             type="boolean" />
 
         <variable
@@ -95,7 +90,6 @@
                     android:layout_marginBottom="@dimen/size_spacing_16"
                     android:backgroundTint="@color/white"
                     android:src="@drawable/ic_currentposition"
-                    android:visibility="@{isMainNotVisible? View.GONE : View.VISIBLE}"
                     app:borderWidth="@dimen/size_spacing_0"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -111,39 +105,14 @@
                 android:fillViewport="true"
                 android:overScrollMode="never"
                 app:behavior_hideable="true"
-                app:behavior_peekHeight="236dp"
+                app:behavior_peekHeight="168dp"
                 app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
                 tools:visibility="visible">
 
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/fab_location"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/size_spacing_20"
-                    android:layout_marginBottom="@dimen/size_spacing_12"
-                    android:backgroundTint="@color/white"
-                    android:src="@drawable/ic_currentposition"
-                    android:visibility="@{isFloatingNotVisible? View.GONE : View.VISIBLE}"
-                    app:borderWidth="@dimen/size_spacing_0"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_dodgeInsetEdges="bottom" />
-
-                <View
-                    android:id="@+id/line"
+                <androidx.fragment.app.FragmentContainerView
+                    android:id="@+id/fragment_container_detail"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/size_spacing_12"
-                    android:visibility="@{isFloatingNotVisible? View.GONE : View.VISIBLE}"
-                    app:layout_constraintTop_toBottomOf="@+id/fab_location" />
-
-                <include
-                    android:id="@+id/layout_restaurant_dialog"
-                    layout="@layout/dialog_restaurant_detail"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/size_spacing_0"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/line"
-                    bind:viewModel="@{viewModel}" />
+                    android:layout_height="match_parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

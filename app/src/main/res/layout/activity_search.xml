@@ -103,23 +103,19 @@
                     android:visibility="@{isFloatingVisible? View.VISIBLE : View.GONE}"
                     app:layout_constraintTop_toBottomOf="@+id/btn_location" />
 
-                <include
-                    android:id="@+id/layout_restaurant_dialog"
-                    layout="@layout/dialog_restaurant_detail"
+                <androidx.fragment.app.FragmentContainerView
+                    android:id="@+id/fragment_container_detail"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/size_spacing_0"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/line"
-                    bind:viewModel="@{viewModel}" />
+                    android:layout_height="match_parent" />
 
                 <include
                     android:id="@+id/layout_restaurant_list_dialog"
                     layout="@layout/dialog_restaurant_list"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/size_spacing_0"
+                    android:visibility="@{isDetail? View.GONE : View.VISIBLE}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/line"
-                    android:visibility="@{isDetail? View.GONE : View.VISIBLE}"
                     bind:isLineVisible="@{isLineVisible}" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>

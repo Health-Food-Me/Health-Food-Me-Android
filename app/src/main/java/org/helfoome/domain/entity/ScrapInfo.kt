@@ -10,8 +10,6 @@ data class ScrapInfo(
     val title: String,
     val location: String,
     val isBookmarked: Boolean,
-    val category: String,
-    val hashtag: List<String>,
     val latitude: Double,
     val longitude: Double,
     val score: Double,

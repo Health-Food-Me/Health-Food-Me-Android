@@ -17,6 +17,8 @@ import org.helfoome.domain.repository.ReviewRepository
 import org.helfoome.domain.usecase.ScrapListUseCase
 import org.helfoome.presentation.type.ReviewType
 import org.helfoome.util.Event
+import org.helfoome.util.EventFlow
+import org.helfoome.util.MutableEventFlow
 import org.helfoome.util.ext.markerFilter
 import timber.log.Timber
 import javax.inject.Inject
@@ -76,6 +78,15 @@ class MainViewModel @Inject constructor(
     private val _eatingOutTips = MutableLiveData<EatingOutTipInfo>()
     val eatingOutTips get() = _eatingOutTips
 
+    // Event
+    private val _isReviewWriteSuccess = MutableEventFlow<Boolean>()
+    val isReviewWriteSuccess: EventFlow<Boolean>
+        get() = _isReviewWriteSuccess
+
+    private val _behaviorState = MutableEventFlow<Int>()
+    val behaviorState: EventFlow<Int>
+        get() = _behaviorState
+
     init {
         fetchHFMReviewList()
         fetchBlogReviewList()
@@ -89,6 +100,18 @@ class MainViewModel @Inject constructor(
 
     fun setRestaurantId(restaurantId: String) {
         _restaurantId.value = restaurantId
+    }
+
+    fun setReviewWriteSuccess(isEnable: Boolean) {
+        viewModelScope.launch {
+            _isReviewWriteSuccess.emit(isEnable)
+        }
+    }
+
+    fun setBehaviorState(behaviorState: Int) {
+        viewModelScope.launch {
+            _behaviorState.emit(behaviorState)
+        }
     }
 
     fun getScrapList() {
