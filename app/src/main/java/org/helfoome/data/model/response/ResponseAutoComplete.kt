@@ -8,12 +8,17 @@ import org.helfoome.domain.entity.AutoCompleteKeywordInfo
 data class ResponseAutoComplete(
     @SerialName("_id")
     val id: String,
-    val isDietRestaurant: Boolean,
-    val name: String
+    val name: String,
+    val isDiet: Boolean,
+    val isCategory: Boolean,
+    val distance: Int,
+    val longitude: Double,
+    val latitude: Double
 ) {
     fun toAutoCompleteKeywordInfo() = AutoCompleteKeywordInfo(
         id,
-        isDietRestaurant,
-        name
+        isDiet,
+        name,
+        isCategory
     )
 }

@@ -31,10 +31,14 @@ class GuestLoginFragmentDialog(context: Context) : DialogFragment() {
     private var _binding: DialogGuestLoginSupportBinding? = null
     private val binding: DialogGuestLoginSupportBinding get() = requireNotNull(_binding)
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        _binding = DialogGuestLoginSupportBinding.inflate(inflater, container, false)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         setStyle(STYLE_NO_TITLE, R.style.dialog_background)
         isCancelable = false
+    }
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        _binding = DialogGuestLoginSupportBinding.inflate(inflater, container, false)
         return binding.root
     }
 

@@ -42,7 +42,7 @@ class SearchViewModel @Inject constructor(
     fun getAutoCompleteKeyword(query: String) {
         viewModelScope.launch {
             delay(150L)
-            searchRepository.getSearchAutoComplete(query)
+            searchRepository.getSearchAutoComplete(127.027610, 37.498095, query)
                 .onSuccess {
                     _searchUiState.value = it.toUiState(query)
                 }
@@ -60,7 +60,23 @@ class SearchViewModel @Inject constructor(
         viewModelScope.launch {
             searchRepository.getSearchRestaurantCard(longtitude, latitude, keyword)
                 .onSuccess {
-                    _searchUiState.value = it.toUiState()
+                    _searchUiState.value = it.toUiState(false)
+                }
+                .onFailure {
+                    _searchUiState.value = SearchUiState.Error(it.message)
+                }
+        }
+    }
+
+    fun getSearchCategoryCardList(
+        longitude: Double,
+        latitude: Double,
+        keyword: String
+    ) {
+        viewModelScope.launch {
+            searchRepository.getSearchCategoryCard(longitude, latitude, keyword)
+                .onSuccess {
+                    _searchUiState.value = it.toUiState(true)
                 }
                 .onFailure {
                     _searchUiState.value = SearchUiState.Error(it.message)
@@ -72,10 +88,10 @@ class SearchViewModel @Inject constructor(
         _isDetail.value = isDetail
     }
 
-    fun insertKeyword(keyword: String) {
+    fun insertKeyword(keyword: String, isCategory: Boolean) {
         viewModelScope.launch {
             searchRepository.insertKeyword(
-                RecentSearchInfo(keyword)
+                RecentSearchInfo(keyword, isCategory)
             )
         }
     }
@@ -83,7 +99,7 @@ class SearchViewModel @Inject constructor(
     fun removeKeyword(keyword: String) {
         viewModelScope.launch {
             searchRepository.removeKeyword(
-                RecentSearchInfo(keyword)
+                keyword
             )
         }
     }
@@ -92,13 +108,13 @@ class SearchViewModel @Inject constructor(
 
     private fun List<AutoCompleteKeywordInfo>.toUiState(keyword: String) = SearchUiState.AutoCompleteSearch(Pair(keyword, this))
 
-    private fun List<SearchResultInfo>.toUiState() = SearchUiState.Result(this)
+    private fun List<SearchResultInfo>.toUiState(isCategory: Boolean) = SearchUiState.Result(isCategory, this)
 
     sealed class SearchUiState {
         object Loading : SearchUiState()
         data class RecentSearch(val data: List<RecentSearchInfo>) : SearchUiState()
         data class AutoCompleteSearch(val data: Pair<String, List<AutoCompleteKeywordInfo>>) : SearchUiState()
-        data class Result(val data: List<SearchResultInfo>) : SearchUiState()
+        data class Result(val isCategory: Boolean, val data: List<SearchResultInfo>) : SearchUiState()
         class Error(val message: String?) : SearchUiState()
     }
 

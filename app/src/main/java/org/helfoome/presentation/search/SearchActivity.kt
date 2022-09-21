@@ -51,6 +51,7 @@ import org.helfoome.util.binding.BindingActivity
 import org.helfoome.util.ext.closeKeyboard
 import org.helfoome.util.ext.markerFilter
 import org.helfoome.util.ext.showKeyboard
+import org.helfoome.util.ext.stringListFrom
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -88,9 +89,9 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
 
     private lateinit var locationSource: FusedLocationSource
     private var mapSelectionBottomDialog: MapSelectionBottomDialogFragment? = null
-    private val autoCompleteAdapter = AutoCompleteAdapter { name, restaurantId ->
+    private val autoCompleteAdapter = AutoCompleteAdapter { name, restaurantId, isCategory ->
         isAutoCompleteResult = true
-        searchViewModel.insertKeyword(name)
+        searchViewModel.insertKeyword(name, isCategory)
         searchViewModel.setDetail(true)
         searchViewModel.setSearchMode(SearchMode.RESULT)
         val location = mainViewModel.location.value?.filter {
@@ -110,10 +111,13 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
         searchViewModel.setDetail(true)
     }
     private val recentAdapter = RecentAdapter(
-        {
+        { keyword, isCategory ->
             // TODO : 서버 통신 주의, 고정 값 위도
-            searchViewModel.getSearchResultCardList(37.498095, 127.027610, it)
-            binding.etSearch.setText(it)
+            if (isCategory)
+                searchViewModel.getSearchCategoryCardList(127.027610, 37.498095, keyword)
+            else
+                searchViewModel.getSearchResultCardList(127.027610, 37.498095, keyword)
+            binding.etSearch.setText(keyword)
             searchViewModel.setSearchMode(SearchMode.RESULT)
         },
     ) {
@@ -348,7 +352,10 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
             setOnKeyListener { _, keyCode, event ->
                 if (event.action == KeyEvent.ACTION_DOWN && keyCode == KEYCODE_ENTER) {
                     // TODO : 최근 검색어 추가 서버 통신 시 수정
-                    searchViewModel.getSearchResultCardList(37.498095, 127.027610, text.toString())
+                    if (stringListFrom(R.array.main_chip_group).contains(text.toString()))
+                        searchViewModel.getSearchCategoryCardList(127.027610, 37.498095, text.toString())
+                    else
+                        searchViewModel.getSearchResultCardList(127.027610, 37.498095, text.toString())
                     closeKeyboard(this)
                     binding.etSearch.clearFocus()
                     searchViewModel.setSearchMode(SearchMode.RESULT)
@@ -407,7 +414,7 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
                         is SearchViewModel.SearchUiState.Result -> {
                             binding.layoutRestaurantListDialog.isResultEmpty = it.data.isEmpty()
                             if (it.data.isNotEmpty())
-                                searchViewModel.insertKeyword(binding.etSearch.text.toString())
+                                searchViewModel.insertKeyword(binding.etSearch.text.toString(), it.isCategory)
                             resultAdapter.submitList(it.data)
 
                             markerList.forEach {
@@ -587,7 +594,7 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
         mainViewModel.selectedRestaurant.observe(this) {
 //            with(binding.layoutRestaurantDialog) {
 //                layoutRestaurantTabMenu.selectTab(layoutRestaurantTabMenu.getTabAt(0))
-//                hashtag.setHashtag(it.tags, HashtagViewType.RESTAURANT_SUMMARY_TYPE)
+//                hashtag.setHashtag(it.category, HashtagViewType.RESTAURANT_SUMMARY_TYPE)
 //            }
         }
 

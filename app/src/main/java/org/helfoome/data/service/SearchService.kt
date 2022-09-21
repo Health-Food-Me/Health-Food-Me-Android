@@ -8,12 +8,23 @@ import retrofit2.http.Query
 
 interface SearchService {
     @GET("/restaurant/search/auto")
-    suspend fun getSearchAutoComplete(@Query("query") query: String): BaseResponse<List<ResponseAutoComplete>>
+    suspend fun getSearchAutoComplete(
+        @Query("longitude") longitude: Double,
+        @Query("latitude") latitude: Double,
+        @Query("query") query: String
+    ): BaseResponse<List<ResponseAutoComplete>>
 
     @GET("/restaurant/search/card")
     suspend fun getSearchRestaurantCard(
         @Query("longitude") longitude: Double,
         @Query("latitude") latitude: Double,
         @Query("keyword") keyword: String
+    ): BaseResponse<List<ResponseSearchCard>>
+
+    @GET("/restaurant/search/category")
+    suspend fun getSearchCategoryCard(
+        @Query("longitude") longitude: Double,
+        @Query("latitude") latitude: Double,
+        @Query("category") category: String
     ): BaseResponse<List<ResponseSearchCard>>
 }

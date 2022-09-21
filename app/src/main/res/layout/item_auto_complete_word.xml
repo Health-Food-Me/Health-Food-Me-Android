@@ -8,10 +8,6 @@
         <variable
             name="data"
             type="org.helfoome.domain.entity.AutoCompleteKeywordInfo" />
-
-        <variable
-            name="vm"
-            type="org.helfoome.presentation.search.SearchViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -34,14 +30,12 @@
 
         <ImageView
             android:id="@+id/iv_pin"
-            android:layout_width="@dimen/size_pin_16"
-            android:layout_height="@dimen/size_spacing_0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/size_spacing_16"
             android:layout_marginBottom="@dimen/size_spacing_16"
-            android:src="@{vm.NORMAL == data.category? @drawable/ic_marker_red : @drawable/ic_marker_green}"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintDimensionRatio="16:20"
-            tools:src="@drawable/ic_marker_green"
+            tools:src="@drawable/ic_normal24"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>

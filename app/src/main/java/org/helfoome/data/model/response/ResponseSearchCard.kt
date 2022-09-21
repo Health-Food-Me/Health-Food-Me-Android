@@ -8,11 +8,13 @@ import org.helfoome.domain.entity.SearchResultInfo
 data class ResponseSearchCard(
     @SerialName("_id")
     val id: String,
-    val category: String,
-    val distance: Int,
-    val logo: String,
     val name: String,
-    val score: Double
+    val category: List<String>,
+    val score: Double,
+    val distance: Int,
+    val longitude: Double,
+    val latitude: Double,
+    val logo: String,
 ) {
     fun toSearchResultInfo(): SearchResultInfo {
         val distance = when (distance >= 1000) {
@@ -23,8 +25,10 @@ data class ResponseSearchCard(
             id,
             logo,
             name,
-            category,
+            category[0],
             score.toFloat(),
+            longitude,
+            latitude,
             distance
         )
     }
