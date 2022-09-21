@@ -7,16 +7,16 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:background="@drawable/rectangle_white_radius_15"
         android:layout_height="wrap_content">
-        
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="288dp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_height="219dp"
+            android:background="@drawable/rectangle_white_radius_15"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_height="219dp">
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
                 android:id="@+id/iv_cancel"
@@ -82,13 +82,13 @@
                 android:id="@+id/iv_naver_login"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="parent"
                 android:layout_marginHorizontal="@dimen/size_spacing_20"
-                android:layout_marginTop="@dimen/size_spacing_8"
+                android:layout_marginTop="@dimen/size_spacing_16"
                 android:layout_marginBottom="@dimen/size_spacing_24"
                 android:background="@drawable/rectangle_border_radius_5"
                 android:backgroundTint="@color/green_500"
                 android:paddingVertical="@dimen/size_spacing_14"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/iv_kakao_login">
 
                 <ImageView

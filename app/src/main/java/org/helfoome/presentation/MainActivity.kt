@@ -372,16 +372,16 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
         )
     }
 
-    private fun showScarpSnackBar() {
+    private fun showScarpSnackBar(snackBarText: String) {
         val view = layoutInflater.inflate(R.layout.view_snackbar, null)
-        view.findViewById<TextView>(R.id.tv_snackBar).text = "스크랩한 식당이 없습니다"
-        val snackbar = Snackbar.make(binding.layoutMain, "", 1000)
-        val layout = snackbar.view as Snackbar.SnackbarLayout
+        view.findViewById<TextView>(R.id.tv_snackBar).text = snackBarText
+        val snackBar = Snackbar.make(binding.layoutMain, "", 1000)
+        val layout = snackBar.view as Snackbar.SnackbarLayout
         layout.setBackgroundColor(ContextCompat.getColor(this, android.R.color.transparent))
-        layout.setPadding(56, 0, 56, 10)
+        layout.setPadding(62, 0, 53, 10)
         layout.addView(view)
-        snackbar.animationMode = ANIMATION_MODE_SLIDE
-        snackbar.show()
+        snackBar.animationMode = ANIMATION_MODE_SLIDE
+        snackBar.show()
     }
 
     private fun sendGmail() {
@@ -427,7 +427,9 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
 
         viewModel.scrapList.observe(this) { markers ->
             if (markers.isEmpty())
-                showScarpSnackBar()
+                showScarpSnackBar("스크랩한 식당이 없습니다")
+            else
+                showScarpSnackBar("N개의 스크랩 식당이 있습니다")
             markerList.forEach {
                 it.first.map = null
             }
