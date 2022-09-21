@@ -594,7 +594,7 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
         mainViewModel.selectedRestaurant.observe(this) {
             with(binding.layoutRestaurantDialog) {
                 layoutRestaurantTabMenu.selectTab(layoutRestaurantTabMenu.getTabAt(0))
-                hashtag.setHashtag(it.tags, HashtagViewType.RESTAURANT_SUMMARY_TYPE)
+                hashtag.setHashtag(it.category, HashtagViewType.RESTAURANT_SUMMARY_TYPE)
             }
         }
 
