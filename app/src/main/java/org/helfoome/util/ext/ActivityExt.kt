@@ -12,3 +12,14 @@ inline fun <reified T : Fragment> AppCompatActivity.replace(@IdRes frameId: Int)
         setReorderingAllowed(true)
     }
 }
+
+fun AppCompatActivity.remove() {
+    with(supportFragmentManager) {
+        if (fragments.isNotEmpty()) {
+            commit {
+                remove(fragments[0])
+                setReorderingAllowed(true)
+            }
+        }
+    }
+}
