@@ -8,7 +8,7 @@ import org.helfoome.databinding.ItemSearchResultBinding
 import org.helfoome.domain.entity.SearchResultInfo
 import org.helfoome.util.ItemDiffCallback
 
-class ResultAdapter(private val cardClickListener: ((String) -> Unit)) : ListAdapter<SearchResultInfo, ResultAdapter.ResultViewHolder>(
+class ResultAdapter(private val cardClickListener: ((String, Double, Double) -> Unit)) : ListAdapter<SearchResultInfo, ResultAdapter.ResultViewHolder>(
     ItemDiffCallback<SearchResultInfo>(
         onContentsTheSame = { old, new -> old == new },
         onItemsTheSame = { old, new -> old.id == new.id }
@@ -30,10 +30,10 @@ class ResultAdapter(private val cardClickListener: ((String) -> Unit)) : ListAda
 
     class ResultViewHolder(private val binding: ItemSearchResultBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun onBind(cardClickListener: (String) -> Unit, data: SearchResultInfo) {
+        fun onBind(cardClickListener: (String, Double, Double) -> Unit, data: SearchResultInfo) {
             binding.data = data
             binding.layoutCard.setOnClickListener {
-                cardClickListener.invoke(data.id)
+                cardClickListener.invoke(data.id, data.latitude, data.longitude)
             }
         }
     }
