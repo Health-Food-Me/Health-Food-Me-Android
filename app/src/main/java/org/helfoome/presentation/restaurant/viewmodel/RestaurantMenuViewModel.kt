@@ -39,9 +39,9 @@ class RestaurantMenuViewModel @Inject constructor(
 //        )
 //    }
 
-    fun fetchEatingOutTips(restaurantId: String) {
-        viewModelScope.launch(Dispatchers.IO) {
-            _eatingOutTips.postValue(restaurantRepository.getEatingOutTips(restaurantId))
-        }
-    }
+//    fun fetchEatingOutTips(restaurantId: String) {
+//        viewModelScope.launch(Dispatchers.IO) {
+//            _eatingOutTips.postValue(restaurantRepository.getEatingOutTips(restaurantId))
+//        }
+//    }
 }

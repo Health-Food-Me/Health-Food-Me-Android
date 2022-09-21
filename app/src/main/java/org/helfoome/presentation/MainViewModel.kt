@@ -161,7 +161,7 @@ class MainViewModel @Inject constructor(
             _selectedRestaurant.postValue(
                 restaurantRepository.fetchRestaurantSummary(restaurantId, hfmSharedPreference.id)
             )
-            _eatingOutTips.value = restaurantRepository.getEatingOutTips(restaurantId)
+//            _eatingOutTips.value = restaurantRepository.getEatingOutTips(restaurantId)
         }
     }
 
@@ -173,7 +173,8 @@ class MainViewModel @Inject constructor(
             restaurantInfo?.let {
                 _selectedRestaurant.postValue(it)
             }
-            _eatingOutTips.value = restaurantRepository.getEatingOutTips(restaurantId)
+            Timber.d("${restaurantRepository.getEatingOutTips(restaurantId)}")
+//            _eatingOutTips.value = restaurantRepository.getEatingOutTips(restaurantId)
             _menu.value = restaurantInfo?.menuList?.sortedByDescending { it.isHealfoomePick }
         }
     }
