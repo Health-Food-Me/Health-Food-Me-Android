@@ -101,7 +101,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/notosanskr_b"
-                    android:text="@{menu.calorie == null ? `-` : Integer.toString(menu.calorie)}"
+                    android:text="@{menu.calorie == -1 ? `-` : Integer.toString(menu.calorie)}"
                     android:textColor="@color/white"
                     android:textSize="@dimen/size_spacing_16"
                     tools:text="219" />
@@ -119,7 +119,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/notosanskr_m"
-                    android:text="@{menu.gramPerPerson == null ? context.getString(R.string.restaurant_detail_gram_per_person_for_empty) : String.format(context.getString(R.string.restaurant_detail_gram_per_person), menu.gramPerPerson)}"
+                    android:text="@{menu.gramPerPerson == -1 ? context.getString(R.string.restaurant_detail_gram_per_person_for_empty) : String.format(context.getString(R.string.restaurant_detail_gram_per_person), menu.gramPerPerson)}"
                     android:textColor="@color/white"
                     android:textSize="@dimen/size_spacing_10"
                     tools:text="(50g당)" />
