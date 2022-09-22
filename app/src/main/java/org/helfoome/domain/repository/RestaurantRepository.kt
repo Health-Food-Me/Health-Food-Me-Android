@@ -11,5 +11,5 @@ interface RestaurantRepository {
     suspend fun updateRestaurantScrap(restaurantId: String, userId: String): Boolean?
     suspend fun getEatingOutTips(restaurantId: String): List<EatingOutTipInfo>?
     suspend fun fetchHFMReview(restaurantId: String): Result<List<HFMReviewInfo>?>
-    suspend fun fetchBlogReview(name: String): Result<List<BlogReviewInfo>?>
+    suspend fun fetchBlogReview(restaurantId: String): Result<List<BlogReviewInfo>?>
 }

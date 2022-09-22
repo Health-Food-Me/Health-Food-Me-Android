@@ -226,7 +226,7 @@ class MainViewModel @Inject constructor(
 
     fun fetchBlogReviewList() {
         viewModelScope.launch(Dispatchers.IO) {
-            _blogReviews.postValue(restaurantRepository.fetchBlogReview(selectedRestaurant.value?.name ?: return@launch).getOrNull())
+            _blogReviews.postValue(restaurantRepository.fetchBlogReview(selectedRestaurant.value?.id ?: return@launch).getOrNull())
         }
     }
 

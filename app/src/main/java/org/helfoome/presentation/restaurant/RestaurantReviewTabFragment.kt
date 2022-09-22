@@ -78,8 +78,12 @@ class RestaurantReviewTabFragment : BindingFragment<FragmentReviewBinding>(R.lay
             binding.layoutReviewTab.selectTab(binding.layoutReviewTab.getTabAt(0))
         }
         viewModel.blogReviews.observe(viewLifecycleOwner) { reviews ->
+            reviews.isNullOrEmpty().let { isEmpty ->
+                showReviewEmptyView(isEmpty)
+                if (isEmpty) return@observe
+            }
+
             restaurantBlogReviewAdapter.submitList(reviews.toMutableList())
-            showReviewEmptyView(reviews.isEmpty())
         }
     }
 

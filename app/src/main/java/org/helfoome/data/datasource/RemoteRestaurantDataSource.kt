@@ -7,5 +7,5 @@ class RemoteRestaurantDataSource @Inject constructor(
     private val restaurantService: RestaurantService,
 ) {
     suspend fun getHFMReview(userId: String) = restaurantService.getHFMReview(userId)
-    suspend fun getBlogReview(name: String) = restaurantService.getBlogReview(name)
+    suspend fun getBlogReview(restaurantId: String) = restaurantService.getBlogReview(restaurantId)
 }
