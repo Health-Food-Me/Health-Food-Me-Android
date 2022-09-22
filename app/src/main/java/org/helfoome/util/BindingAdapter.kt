@@ -54,17 +54,3 @@ fun TextView.setDistance(distance: Int?) {
         "${distance}m"
     }
 }
-
-@BindingAdapter("app:alertTitle")
-fun TextView.setAlertTitle(alertType: AlertType) {
-    when(alertType) {
-        AlertType.LOGOUT -> this.text = resources.getString(R.string.logout_dialog_caution);
-    }
-}
-
-@BindingAdapter("app:alertDescription")
-fun TextView.setAlertDescription(alertType: AlertType) {
-    when(alertType) {
-        AlertType.LOGOUT -> this.text = resources.getString(R.string.logout_dialog_caution_description);
-    }
-}
