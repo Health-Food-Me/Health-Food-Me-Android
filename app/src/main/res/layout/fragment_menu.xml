@@ -4,6 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".presentation.restaurant.RestaurantMenuTabFragment">
 
+    <data>
+
+        <variable
+            name="viewModel"
+            type="org.helfoome.presentation.MainViewModel" />
+    </data>
+
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -15,13 +22,48 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/menu_list"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/size_spacing_20"
                 android:clipToPadding="false"
                 android:paddingTop="5dp"
                 android:paddingBottom="@dimen/size_spacing_20"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintTop_toTopOf="parent"
                 tools:listitem="@layout/item_menu" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layout_menu_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/size_spacing_20"
+                android:paddingBottom="@dimen/size_spacing_30"
+                app:layout_constraintTop_toBottomOf="@id/menu_list">
+
+                <TextView
+                    android:id="@+id/tv_menu_board_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/size_spacing_6"
+                    android:fontFamily="@font/notosanskr_b"
+                    android:text="@string/restuarant_detail_memu_view_all"
+                    android:textColor="@color/gray_800"
+                    android:textSize="14dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_menu_board_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="102dp"
+                    android:layout_marginTop="@dimen/size_spacing_16"
+                    android:clipToPadding="false"
+                    android:orientation="horizontal"
+                    android:paddingEnd="@dimen/size_spacing_12"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintTop_toBottomOf="@id/tv_menu_board_title"
+                    tools:listitem="@layout/item_menu_board" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 </layout>
