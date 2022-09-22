@@ -7,7 +7,6 @@ import android.content.pm.PackageManager
 import android.graphics.Paint
 import android.net.Uri
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
@@ -25,27 +24,23 @@ import com.google.android.material.snackbar.BaseTransientBottomBar.ANIMATION_MOD
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
-import com.kakao.sdk.user.UserApiClient
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.*
 import com.naver.maps.map.overlay.Marker
 import com.naver.maps.map.overlay.OverlayImage
 import com.naver.maps.map.util.FusedLocationSource
-import com.navercorp.nid.NaverIdLoginSDK
 import dagger.hilt.android.AndroidEntryPoint
 import org.helfoome.R
 import org.helfoome.databinding.ActivityMainBinding
-import org.helfoome.databinding.DialogLogoutBinding
 import org.helfoome.presentation.drawer.MyReviewActivity
 import org.helfoome.presentation.drawer.ProfileModifyActivity
 import org.helfoome.presentation.drawer.SettingActivity
-import org.helfoome.presentation.login.GuestLoginFragmentDialog
-import org.helfoome.presentation.login.LoginActivity
 import org.helfoome.presentation.restaurant.MapSelectionBottomDialogFragment
 import org.helfoome.presentation.restaurant.adapter.RestaurantTabAdapter
 import org.helfoome.presentation.review.ReviewWritingActivity
 import org.helfoome.presentation.scrap.MyScrapActivity
 import org.helfoome.presentation.search.SearchActivity
+import org.helfoome.presentation.type.AlertType
 import org.helfoome.presentation.type.FoodType
 import org.helfoome.presentation.type.HashtagViewType
 import org.helfoome.util.*
@@ -54,7 +49,6 @@ import org.helfoome.util.ext.getScreenSize
 import org.helfoome.util.ext.makeTransparentStatusBar
 import org.helfoome.util.ext.startActivity
 import org.helfoome.util.ext.stringListFrom
-import timber.log.Timber
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -338,36 +332,19 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                 controlHamburger.launch(Intent(this@MainActivity, SettingActivity::class.java))
             }
             tvLogout.setOnClickListener {
-                val bind = DialogLogoutBinding.inflate(LayoutInflater.from(this@MainActivity))
-
-                val dialog = DialogUtil.makeDialog(
-                    this@MainActivity,
-                    bind,
+                AlertFragmentDialog(
+                    AlertType.LOGOUT,
                     resolutionMetrics.toPixel(getScreenSize(72).first),
                     resolutionMetrics.toPixel(getScreenSize(447).second)
+                ).show(
+                    supportFragmentManager, "AlertDialog"
                 )
-
-                bind.btnYes.setOnClickListener {
-                    NaverIdLoginSDK.logout()
-                    UserApiClient.instance.logout { error ->
-                        if (error != null) {
-                            Timber.e(error, "로그아웃 실패. SDK에서 토큰 삭제됨")
-                        } else {
-                            Timber.i("로그아웃 성공. SDK에서 토큰 삭제됨")
-                        }
-                    }
-                    startActivity(Intent(this@MainActivity, LoginActivity::class.java))
-                    finish()
-                }
-                bind.btnNo.setOnClickListener {
-                    dialog.dismiss()
-                }
             }
         }
     }
 
     private fun supportGuestLogin() {
-        GuestLoginFragmentDialog(this@MainActivity).show(
+        GuestLoginFragmentDialog().show(
             supportFragmentManager, "GuestLoginDialog"
         )
     }
