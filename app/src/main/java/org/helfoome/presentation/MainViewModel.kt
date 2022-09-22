@@ -73,7 +73,7 @@ class MainViewModel @Inject constructor(
     // Menu
     private val _menu = MutableLiveData<List<MenuInfo>>()
     val menu: LiveData<List<MenuInfo>> = _menu
-    private val _eatingOutTips = MutableLiveData<EatingOutTipInfo>()
+    private val _eatingOutTips = MutableLiveData<List<EatingOutTipInfo>>()
     val eatingOutTips get() = _eatingOutTips
 
     init {
@@ -161,7 +161,7 @@ class MainViewModel @Inject constructor(
             _selectedRestaurant.postValue(
                 restaurantRepository.fetchRestaurantSummary(restaurantId, hfmSharedPreference.id)
             )
-//            _eatingOutTips.value = restaurantRepository.getEatingOutTips(restaurantId)
+            _eatingOutTips.value = restaurantRepository.getEatingOutTips(restaurantId)
         }
     }
 
@@ -173,8 +173,7 @@ class MainViewModel @Inject constructor(
             restaurantInfo?.let {
                 _selectedRestaurant.postValue(it)
             }
-            Timber.d("${restaurantRepository.getEatingOutTips(restaurantId)}")
-//            _eatingOutTips.value = restaurantRepository.getEatingOutTips(restaurantId)
+            _eatingOutTips.value = restaurantRepository.getEatingOutTips(restaurantId)
             _menu.value = restaurantInfo?.menuList?.sortedByDescending { it.isHealfoomePick }
         }
     }
