@@ -37,82 +37,30 @@
 
                     <TextView
                         android:id="@+id/tv_category1"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        style="@style/TextView.EatingOutTip.Category.Style"
                         android:layout_marginEnd="7dp"
-                        android:layout_weight="1"
-                        android:autoSizeMaxTextSize="13dp"
-                        android:autoSizeMinTextSize="11dp"
-                        android:autoSizeTextType="uniform"
-                        android:background="@drawable/rectangle_transparent_radius_20"
-                        android:backgroundTint="@color/green_300"
-                        android:fontFamily="@font/notosanskr_b"
-                        android:maxLines="1"
-                        android:paddingHorizontal="@dimen/size_spacing_14"
-                        android:paddingVertical="@dimen/size_spacing_6"
                         android:text="@{viewModel.eatingOutTips.get(0).category}"
-                        android:textAlignment="center"
-                        android:textColor="@color/white"
-                        tools:text="샤브샤브" />
+                        tools:text="샌드위치" />
 
                     <TextView
                         android:id="@+id/tv_category2"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        style="@style/TextView.EatingOutTip.Category.Style"
                         android:layout_marginEnd="7dp"
-                        android:layout_weight="1"
-                        android:autoSizeMaxTextSize="13dp"
-                        android:autoSizeMinTextSize="12dp"
-                        android:autoSizeTextType="uniform"
-                        android:background="@drawable/rectangle_transparent_radius_20"
-                        android:backgroundTint="@color/green_300"
-                        android:fontFamily="@font/notosanskr_b"
-                        android:maxLines="1"
-                        android:paddingHorizontal="@dimen/size_spacing_14"
-                        android:paddingVertical="@dimen/size_spacing_6"
                         android:text="@{viewModel.eatingOutTips.size() >= 2 ? viewModel.eatingOutTips.get(1).category : ``}"
-                        android:textAlignment="center"
-                        android:textColor="@color/white"
-                        tools:text="샤브샤브" />
+                        tools:text="샐러드" />
 
                     <TextView
                         android:id="@+id/tv_category3"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        style="@style/TextView.EatingOutTip.Category.Style"
                         android:layout_marginEnd="7dp"
-                        android:layout_weight="1"
-                        android:autoSizeMaxTextSize="13dp"
-                        android:autoSizeMinTextSize="12dp"
-                        android:autoSizeTextType="uniform"
-                        android:background="@drawable/rectangle_transparent_radius_20"
-                        android:backgroundTint="@color/green_300"
-                        android:fontFamily="@font/notosanskr_b"
-                        android:maxLines="1"
-                        android:paddingHorizontal="@dimen/size_spacing_14"
-                        android:paddingVertical="@dimen/size_spacing_6"
                         android:text="@{viewModel.eatingOutTips.size() >= 3 ? viewModel.eatingOutTips.get(2).category : ``}"
-                        android:textAlignment="center"
-                        android:textColor="@color/white"
                         tools:text="샤브샤브" />
 
                     <TextView
                         android:id="@+id/tv_category4"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:autoSizeMaxTextSize="13dp"
-                        android:autoSizeMinTextSize="12dp"
-                        android:autoSizeTextType="uniform"
-                        android:background="@drawable/rectangle_transparent_radius_20"
-                        android:backgroundTint="@color/green_300"
-                        android:fontFamily="@font/notosanskr_b"
-                        android:maxLines="1"
-                        android:paddingHorizontal="@dimen/size_spacing_14"
-                        android:paddingVertical="@dimen/size_spacing_6"
+                        style="@style/TextView.EatingOutTip.Category.Style"
                         android:text="@{viewModel.eatingOutTips.size() >= 4 ? viewModel.eatingOutTips.get(3).category : ``}"
-                        android:textAlignment="center"
-                        android:textColor="@color/white"
-                        tools:text="샤브샤브" />
+                        tools:text="키토김밥" />
                 </LinearLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
