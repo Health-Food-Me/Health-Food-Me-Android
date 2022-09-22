@@ -63,6 +63,9 @@ class RestaurantReviewWritingViewModel @Inject constructor(
     private val _hfmReviews = MutableLiveData<HFMReviewInfo>()
     val hfmReviews: LiveData<HFMReviewInfo> = _hfmReviews
 
+    private val _isYesClicked = MutableLiveData<Boolean>()
+    val isYesClicked: LiveData<Boolean> = _isYesClicked
+
     fun setReviewInfo(
         review: MyReviewInfo,
         tasteTag: TasteHashtagType?,
@@ -91,6 +94,10 @@ class RestaurantReviewWritingViewModel @Inject constructor(
         val isSelected = selectedGoodPointTags.value!![tagType] ?: return
         selectedGoodPointTags.value!![tagType] = !isSelected
         selectedGoodPointTags.value = selectedGoodPointTags.value
+    }
+
+    fun setIsYesClicked(isYesClicked: Boolean) {
+        _isYesClicked.value = isYesClicked
     }
 
     fun checkReviewCompletion() {

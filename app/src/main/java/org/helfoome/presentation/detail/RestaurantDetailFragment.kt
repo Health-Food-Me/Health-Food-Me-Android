@@ -141,7 +141,7 @@ class RestaurantDetailFragment : BindingFragment<FragmentRestaurantDetailBinding
     }
 
     private fun supportGuestLogin() {
-        GuestLoginFragmentDialog(requireActivity()).show(
+        GuestLoginFragmentDialog().show(
             parentFragmentManager, "GuestLoginDialog"
         )
     }
