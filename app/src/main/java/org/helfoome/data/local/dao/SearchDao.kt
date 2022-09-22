@@ -12,6 +12,6 @@ interface SearchDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertKeyword(searchData: SearchData)
 
-    @Delete
-    suspend fun deleteKeyword(searchData: SearchData)
+    @Query("DELETE FROM search_data_table WHERE keyword = :keyword")
+    suspend fun deleteKeyword(keyword: String)
 }

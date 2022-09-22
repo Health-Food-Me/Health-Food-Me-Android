@@ -31,7 +31,7 @@ interface RestaurantService {
     @GET("/restaurant/{restaurantId}/prescription")
     suspend fun getEatingOutTips(
         @Path("restaurantId") restaurantId: String,
-    ): Response<BaseResponse<ResponseEatingOutTip>>
+    ): Response<BaseResponse<List<ResponseEatingOutTip>>>
 
     @GET("/review/restaurant/{userId}")
     suspend fun getHFMReview(

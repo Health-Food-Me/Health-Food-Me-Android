@@ -12,6 +12,8 @@ import androidx.databinding.BindingAdapter
 import coil.load
 import org.helfoome.R
 import org.helfoome.presentation.type.AlertType
+import org.helfoome.presentation.custom.EatingOutTipView
+import org.helfoome.presentation.type.EatingOutTipType
 import java.text.DecimalFormat
 
 @BindingAdapter("app:imageUrl")
@@ -53,4 +55,19 @@ fun TextView.setDistance(distance: Int?) {
     } else {
         "${distance}m"
     }
+}
+
+@BindingAdapter("app:eatingTips")
+fun EatingOutTipView.setEatingTips(eatingTipList: List<String>?) {
+    this.setTips(eatingTipList ?: return, EatingOutTipType.EATING_TIP)
+}
+
+@BindingAdapter("app:recommendationTips")
+fun EatingOutTipView.setRecommendationTips(recommendationTipList: List<String>?) {
+    this.setTips(recommendationTipList ?: return, EatingOutTipType.RECOMMENDATION_TIP)
+}
+
+@BindingAdapter("app:textAppearance")
+fun TextView.setTextStyle(styleResId: Int) {
+    this.setTextAppearance(styleResId)
 }

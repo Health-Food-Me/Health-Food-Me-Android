@@ -10,10 +10,10 @@ data class ResponseRestaurantSummary(
     val id: String,
     val name: String,
     val logo: String,
-    val category: String,
+    val category: List<String>,
     val hashtag: List<String>,
     val score: Float,
     val isScrap: Boolean,
 ) {
-    fun toRestaurantInfo(): RestaurantInfo = RestaurantInfo(id, logo, name, category, score, hashtag, isScrap)
+    fun toRestaurantInfo(): RestaurantInfo = RestaurantInfo(id, logo, null, name, category, score, isScrap)
 }

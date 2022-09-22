@@ -15,6 +15,7 @@ class EatingOutTipView(context: Context, attrs: AttributeSet? = null) : LinearLa
     }
 
     fun setTips(tips: List<String>, tipType: EatingOutTipType) {
+        this.removeAllViews()
         for (i in tips.indices) {
             binding = ItemEatingOutTipBinding.inflate(LayoutInflater.from(context), this, false).apply {
                 ivCheck.setImageResource(tipType.imgRes)

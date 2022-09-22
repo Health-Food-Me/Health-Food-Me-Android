@@ -5,8 +5,6 @@ import android.app.Activity
 import android.content.Intent
 import android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP
 import android.content.pm.PackageManager
-import android.graphics.Paint
-import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
@@ -14,16 +12,17 @@ import androidx.activity.viewModels
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.add
 import androidx.fragment.app.commit
-import com.google.android.material.appbar.AppBarLayout
+import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.tabs.TabLayout
-import com.google.android.material.tabs.TabLayoutMediator
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.*
 import com.naver.maps.map.overlay.Marker
 import com.naver.maps.map.overlay.OverlayImage
 import com.naver.maps.map.util.FusedLocationSource
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import org.helfoome.R
 import org.helfoome.databinding.ActivityMapSelectBinding
 import org.helfoome.domain.entity.MarkerInfo
@@ -31,13 +30,12 @@ import org.helfoome.presentation.MainActivity
 import org.helfoome.presentation.MainActivity.Companion.GANGNAM_X
 import org.helfoome.presentation.MainActivity.Companion.GANGNAM_Y
 import org.helfoome.presentation.MainViewModel
-import org.helfoome.presentation.restaurant.MapSelectionBottomDialogFragment
+import org.helfoome.presentation.detail.RestaurantDetailFragment
 import org.helfoome.presentation.restaurant.adapter.RestaurantTabAdapter
-import org.helfoome.presentation.review.ReviewWritingActivity
-import org.helfoome.presentation.type.HashtagViewType
 import org.helfoome.util.ResolutionMetrics
 import org.helfoome.util.SnackBarTopDown
 import org.helfoome.util.binding.BindingActivity
+import org.helfoome.util.ext.replace
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -46,26 +44,9 @@ class MapSelectActivity : BindingActivity<ActivityMapSelectBinding>(R.layout.act
     lateinit var resolutionMetrics: ResolutionMetrics
     private val viewModel: MainViewModel by viewModels()
     private lateinit var behavior: BottomSheetBehavior<ConstraintLayout>
-    private var mapSelectionBottomDialog: MapSelectionBottomDialogFragment? = null
-    private val tabSelectedListener = object : TabLayout.OnTabSelectedListener {
-        override fun onTabReselected(tab: TabLayout.Tab?) = Unit
-        override fun onTabUnselected(tab: TabLayout.Tab?) = Unit
-        override fun onTabSelected(tab: TabLayout.Tab?) {
-            // 리뷰 탭에서만 리뷰 작성 버튼 보여주기
-            viewModel.setReviewTab(tab?.position == 2)
-        }
-    }
-    private val appbarOffsetListener = AppBarLayout.OnOffsetChangedListener { _, verticalOffset ->
-        binding.layoutRestaurantDialog.tvRestaurantNameInToolbar.visibility = if (verticalOffset == 0) {
-            View.INVISIBLE
-        } else {
-            View.VISIBLE
-        }
-    }
 
     private val bottomSheetCallback = object : BottomSheetBehavior.BottomSheetCallback() {
         override fun onStateChanged(bottomSheet: View, newState: Int) {
-            binding.layoutRestaurantDialog.nvDetail.isNestedScrollingEnabled = false
             viewModel.setExpendedBottomSheetDialog(newState == BottomSheetBehavior.STATE_EXPANDED)
             behavior.isDraggable = true
             if (newState == BottomSheetBehavior.STATE_COLLAPSED) {
@@ -79,7 +60,6 @@ class MapSelectActivity : BindingActivity<ActivityMapSelectBinding>(R.layout.act
                 binding.layoutMapSelect.visibility = View.VISIBLE
             }
             if (newState == BottomSheetBehavior.STATE_HIDDEN) {
-                binding.isMainNotVisible = false
                 markerList.forEach {
                     it.first.icon = OverlayImage.fromResource(
                         if (it.second) R.drawable.ic_marker_green_small
@@ -116,6 +96,7 @@ class MapSelectActivity : BindingActivity<ActivityMapSelectBinding>(R.layout.act
 
         locationSource = FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE)
 
+        replace<RestaurantDetailFragment>(R.id.fragment_container_detail)
         initNaverMap()
         initView()
         initListeners()
@@ -125,57 +106,14 @@ class MapSelectActivity : BindingActivity<ActivityMapSelectBinding>(R.layout.act
     override fun onStart() {
         super.onStart()
         behavior.addBottomSheetCallback(bottomSheetCallback)
-        binding.layoutRestaurantDialog.layoutRestaurantTabMenu.addOnTabSelectedListener(tabSelectedListener)
-        binding.layoutRestaurantDialog.layoutAppBar.addOnOffsetChangedListener(appbarOffsetListener)
     }
 
     private fun initView() {
         behavior = BottomSheetBehavior.from(binding.layoutBottomSheet)
         behavior.state = BottomSheetBehavior.STATE_HIDDEN
-
-        with(binding.layoutRestaurantDialog) {
-            vpRestaurantDetail.adapter = restaurantDetailAdapter
-            TabLayoutMediator(layoutRestaurantTabMenu, vpRestaurantDetail) { tab, position ->
-                tab.text = resources.getStringArray(R.array.restaurant_detail_tab_titles)[position]
-                binding.layoutRestaurantDialog.btnWriteReview.visibility = if (position == 2) View.VISIBLE else View.INVISIBLE
-            }.attach()
-
-            tvNumber.paintFlags = tvNumber.paintFlags or Paint.UNDERLINE_TEXT_FLAG
-
-            btnWriteReview.apply {
-                setOnClickListener {
-                    requestReviewWrite.launch(
-                        Intent(this@MapSelectActivity, ReviewWritingActivity::class.java)
-                            .putExtra(ARG_RESTAURANT_ID, viewModel?.selectedRestaurant?.value?.id ?: return@setOnClickListener)
-                            .putExtra(ARG_RESTAURANT_NAME, binding.layoutRestaurantDialog.tvRestaurantName.text.toString())
-                    )
-                }
-            }
-        }
     }
 
     private fun initListeners() {
-        with(binding.layoutRestaurantDialog) {
-            layoutAppBar.setOnClickListener {
-                if (behavior.state == BottomSheetBehavior.STATE_COLLAPSED) {
-                    binding.isFloatingNotVisible = true
-                    behavior.state = BottomSheetBehavior.STATE_EXPANDED
-                }
-            }
-
-            btnBack.setOnClickListener {
-                behavior.state = BottomSheetBehavior.STATE_COLLAPSED
-            }
-
-            tvNumber.setOnClickListener {
-                startActivity(Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + tvNumber.text)))
-            }
-
-            btnNavi.setOnClickListener {
-                showMapSelectionBottomDialog()
-            }
-        }
-
         binding.ibBack.setOnClickListener {
             finish()
         }
@@ -190,25 +128,7 @@ class MapSelectActivity : BindingActivity<ActivityMapSelectBinding>(R.layout.act
         }
     }
 
-    private fun showMapSelectionBottomDialog() {
-        if (mapSelectionBottomDialog?.isAdded == true) return
-        mapSelectionBottomDialog = MapSelectionBottomDialogFragment()
-        mapSelectionBottomDialog?.show(supportFragmentManager, "MapSelectionBottomDialogFragment")
-    }
-
     private fun initObservers() {
-        viewModel.selectedRestaurant.observe(this) {
-            with(binding.layoutRestaurantDialog) {
-                layoutRestaurantTabMenu.selectTab(layoutRestaurantTabMenu.getTabAt(0))
-                hashtag.setHashtag(it.tags, HashtagViewType.RESTAURANT_SUMMARY_TYPE)
-            }
-        }
-
-        viewModel.isReviewTab.observe(this) {
-            binding.layoutRestaurantDialog.layoutReviewBtnBackground.visibility =
-                if (it.peekContent()) View.VISIBLE else View.INVISIBLE
-        }
-
         viewModel.location.observe(this) { markers ->
             markerList.forEach {
                 it.first.map = null
@@ -231,7 +151,6 @@ class MapSelectActivity : BindingActivity<ActivityMapSelectBinding>(R.layout.act
                             )
 
                             behavior.state = BottomSheetBehavior.STATE_COLLAPSED
-                            binding.isMainNotVisible = true
                         } else {
                             icon = OverlayImage.fromResource(
                                 if (marker.isDietRestaurant) R.drawable.ic_marker_green_small
@@ -251,7 +170,6 @@ class MapSelectActivity : BindingActivity<ActivityMapSelectBinding>(R.layout.act
                             )
 
                             behavior.state = BottomSheetBehavior.STATE_COLLAPSED
-                            binding.isMainNotVisible = true
                             markerList.forEach {
                                 it.first.icon = OverlayImage.fromResource(
                                     if (it.second) R.drawable.ic_marker_green_small
@@ -270,14 +188,19 @@ class MapSelectActivity : BindingActivity<ActivityMapSelectBinding>(R.layout.act
                 )
             }
         }
-
-        viewModel.checkReview.observe(this) {
-            if (viewModel.checkReview.value == false) {
-                binding.layoutRestaurantDialog.btnWriteReview.isEnabled = true
-            } else if (viewModel.checkReview.value == true) {
-                binding.layoutRestaurantDialog.btnWriteReview.isEnabled = false
+        viewModel.isReviewWriteSuccess.flowWithLifecycle(lifecycle)
+            .onEach {
+                // TODO : 지금 너무 토스트 띄우는 부분 재사용이 어렵게 되어있습니다.. 넘 보일러 플레이트코드에여.. Event State로 분기처리하는 거 강력 추천합니다;;
+                if (it)
+                    SnackBarTopDown.makeSnackBarTopDown(this, binding.snvProfileModify, "리뷰가 작성되었습니다")
             }
-        }
+            .launchIn(lifecycleScope)
+
+        viewModel.behaviorState.flowWithLifecycle(lifecycle)
+            .onEach {
+                behavior.state = it
+            }
+            .launchIn(lifecycleScope)
     }
 
     override fun onBackPressed() {
@@ -291,8 +214,8 @@ class MapSelectActivity : BindingActivity<ActivityMapSelectBinding>(R.layout.act
     override fun onStop() {
         super.onStop()
         behavior.removeBottomSheetCallback(bottomSheetCallback)
-        binding.layoutRestaurantDialog.layoutRestaurantTabMenu.removeOnTabSelectedListener(tabSelectedListener)
-        binding.layoutRestaurantDialog.layoutAppBar.removeOnOffsetChangedListener(appbarOffsetListener)
+//        binding.layoutRestaurantDialog.layoutRestaurantTabMenu.removeOnTabSelectedListener(tabSelectedListener)
+//        binding.layoutRestaurantDialog.layoutAppBar.removeOnOffsetChangedListener(appbarOffsetListener)
     }
 
     private fun initNaverMap() {
@@ -332,10 +255,6 @@ class MapSelectActivity : BindingActivity<ActivityMapSelectBinding>(R.layout.act
 
         intent.getParcelableArrayListExtra<MarkerInfo>(MainActivity.MARKER_INFO)?.let { viewModel.setMapInfo(it) }
 
-        binding.fabLocation.setOnClickListener {
-            naverMap.cameraPosition =
-                CameraPosition(LatLng(GANGNAM_X, GANGNAM_Y), 14.0)
-        }
         binding.fabLocationMain.setOnClickListener {
             naverMap.cameraPosition =
                 CameraPosition(LatLng(GANGNAM_X, GANGNAM_Y), 14.0)
@@ -358,7 +277,5 @@ class MapSelectActivity : BindingActivity<ActivityMapSelectBinding>(R.layout.act
 
     companion object {
         private const val LOCATION_PERMISSION_REQUEST_CODE = 1000
-        private const val ARG_RESTAURANT_ID = "restaurantId"
-        private const val ARG_RESTAURANT_NAME = "restaurantName"
     }
 }

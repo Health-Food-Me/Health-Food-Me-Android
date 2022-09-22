@@ -1,20 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:bind="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
         <import type="android.view.View" />
-
-        <variable
-            name="isFloatingNotVisible"
-            type="boolean" />
-
-        <variable
-            name="isMainNotVisible"
-            type="boolean" />
 
         <variable
             name="viewModel"
@@ -120,7 +111,6 @@
                         android:background="@drawable/rectangle_border_white"
                         android:elevation="@dimen/size_spacing_4"
                         android:src="@drawable/selector_btn_scrap"
-                        android:visibility="@{isMainNotVisible? View.GONE : View.VISIBLE}"
                         app:layout_constraintBottom_toTopOf="@+id/btn_location_main"
                         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -131,7 +121,6 @@
                         android:layout_marginBottom="@dimen/size_spacing_16"
                         android:backgroundTint="@color/white"
                         android:src="@drawable/ic_currentposition"
-                        android:visibility="@{isMainNotVisible? View.GONE : View.VISIBLE}"
                         app:borderWidth="@dimen/size_spacing_0"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="@id/btn_bookmark_main"
@@ -146,51 +135,14 @@
                     android:fillViewport="true"
                     android:overScrollMode="never"
                     app:behavior_hideable="true"
-                    app:behavior_peekHeight="304dp"
+                    app:behavior_peekHeight="168dp"
                     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
                     tools:visibility="gone">
 
-                    <ImageButton
-                        android:id="@+id/btn_bookmark"
-                        android:layout_width="@dimen/size_spacing_56"
-                        android:layout_height="@dimen/size_spacing_56"
-                        android:layout_marginEnd="@dimen/size_spacing_20"
-                        android:background="@drawable/rectangle_border_white"
-                        android:elevation="@dimen/size_spacing_4"
-                        android:src="@drawable/selector_btn_scrap"
-                        android:visibility="@{isFloatingNotVisible? View.GONE : View.VISIBLE}"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <com.google.android.material.floatingactionbutton.FloatingActionButton
-                        android:id="@+id/btn_location"
-                        android:layout_width="@dimen/size_spacing_56"
-                        android:layout_height="@dimen/size_spacing_56"
-                        android:layout_marginTop="@dimen/size_spacing_12"
-                        android:layout_marginBottom="@dimen/size_spacing_16"
-                        android:backgroundTint="@color/white"
-                        android:src="@drawable/ic_currentposition"
-                        android:visibility="@{isFloatingNotVisible? View.GONE : View.VISIBLE}"
-                        app:borderWidth="@dimen/size_spacing_0"
-                        app:layout_constraintEnd_toEndOf="@+id/btn_bookmark"
-                        app:layout_constraintTop_toBottomOf="@id/btn_bookmark"
-                        app:layout_dodgeInsetEdges="bottom" />
-
-                    <View
-                        android:id="@+id/line"
+                    <androidx.fragment.app.FragmentContainerView
+                        android:id="@+id/fragment_container_detail"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/size_spacing_12"
-                        android:visibility="@{isFloatingNotVisible? View.GONE : View.VISIBLE}"
-                        app:layout_constraintTop_toBottomOf="@+id/btn_location" />
-
-                    <include
-                        android:id="@+id/layout_restaurant_dialog"
-                        layout="@layout/dialog_restaurant_detail"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/size_spacing_0"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/line"
-                        bind:viewModel="@{viewModel}" />
+                        android:layout_height="match_parent" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

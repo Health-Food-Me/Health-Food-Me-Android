@@ -8,13 +8,12 @@ import org.helfoome.domain.entity.ScrapInfo
 data class ResponseScrapData(
     @SerialName("_id")
     val id: String,
-    val category: String,
-    val hashtag: List<String>,
-    val latitude: Double,
-    val logo: String,
-    val longtitude: Double,
     val name: String,
+    val logo: String,
     val score: Double,
+    val category: List<String>,
+    val latitude: Double,
+    val longtitude: Double,
     val address: String,
 ) {
     fun toScrapInfo() = ScrapInfo(
@@ -23,8 +22,6 @@ data class ResponseScrapData(
         name,
         address,
         true,
-        category,
-        hashtag,
         latitude,
         longtitude,
         score

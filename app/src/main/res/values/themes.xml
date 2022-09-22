@@ -115,6 +115,32 @@
         <item name="android:textSize">@dimen/size_spacing_12</item>
     </style>
 
+    <style name="TextView.EatingOutTip.Category.Style" parent="">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:autoSizeTextType">uniform</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:paddingHorizontal">@dimen/size_spacing_14</item>
+        <item name="android:paddingVertical">@dimen/size_spacing_6</item>
+        <item name="android:background">@drawable/selector_eating_out_category_background</item>
+    </style>
+
+    <style name="TextView.EatingOutTip.Category.TextAppearance" parent="">
+        <item name="android:textColor">@color/selector_eating_out_category_text_color</item>
+        <item name="android:autoSizeMaxTextSize">13dp</item>
+        <item name="android:autoSizeMinTextSize">11dp</item>
+    </style>
+
+    <style name="UnSelectedCategory" parent="TextView.EatingOutTip.Category.TextAppearance">
+        <item name="android:fontFamily">@font/notosanskr_m</item>
+    </style>
+
+    <style name="SelectedCategory" parent="TextView.EatingOutTip.Category.TextAppearance">
+        <item name="android:fontFamily">@font/notosanskr_b</item>
+    </style>
+
     <style name="CircleImageView.Radius.8.Style" parent="">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">8%</item>

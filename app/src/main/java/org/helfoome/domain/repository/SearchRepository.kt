@@ -10,12 +10,18 @@ interface SearchRepository {
 
     suspend fun insertKeyword(item: RecentSearchInfo)
 
-    suspend fun removeKeyword(item: RecentSearchInfo)
+    suspend fun removeKeyword(keyword: String)
 
-    suspend fun getSearchAutoComplete(query: String): Result<List<AutoCompleteKeywordInfo>>
+    suspend fun getSearchAutoComplete(longitude: Double, latitude: Double, query: String): Result<List<AutoCompleteKeywordInfo>>
 
     suspend fun getSearchRestaurantCard(
         longtitude: Double,
+        latitude: Double,
+        keyword: String
+    ): Result<List<SearchResultInfo>>
+
+    suspend fun getSearchCategoryCard(
+        longitude: Double,
         latitude: Double,
         keyword: String
     ): Result<List<SearchResultInfo>>

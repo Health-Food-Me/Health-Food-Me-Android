@@ -6,5 +6,7 @@ data class SearchResultInfo(
     val name: String,
     val category: String,
     val score: Float,
+    val longitude: Double,
+    val latitude: Double,
     val distance: String
 )
