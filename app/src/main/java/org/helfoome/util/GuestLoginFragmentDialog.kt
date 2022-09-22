@@ -1,6 +1,5 @@
-package org.helfoome.presentation.login
+package org.helfoome.util
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -19,7 +18,7 @@ import org.helfoome.presentation.MainViewModel
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class GuestLoginFragmentDialog(context: Context) : DialogFragment() {
+class GuestLoginFragmentDialog : DialogFragment() {
 
     @Inject
     lateinit var naverAuthService: NaverAuthService
