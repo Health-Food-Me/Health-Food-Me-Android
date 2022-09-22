@@ -126,10 +126,9 @@
         <item name="android:paddingHorizontal">@dimen/size_spacing_14</item>
         <item name="android:paddingVertical">@dimen/size_spacing_6</item>
         <item name="android:textAlignment">center</item>
-        <item name="android:background">@drawable/rectangle_transparent_radius_20</item>
-        <item name="android:backgroundTint">@color/green_300</item>
+        <item name="android:background">@drawable/selector_eating_out_category_background</item>
         <item name="android:fontFamily">@font/notosanskr_b</item>
-        <item name="android:textColor">@color/white</item>
+        <item name="android:textColor">@color/selector_eating_out_category_text_color</item>
     </style>
 
     <style name="CircleImageView.Radius.8.Style" parent="">
