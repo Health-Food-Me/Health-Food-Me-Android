@@ -6,6 +6,8 @@
 
     <data>
 
+        <import type="org.helfoome.R" />
+
         <variable
             name="viewModel"
             type="org.helfoome.presentation.MainViewModel" />
@@ -42,6 +44,7 @@
                         android:onClick="@{() -> viewModel.setSelectedFoodCategoryIdx(0)}"
                         android:text="@{viewModel.eatingOutTips.size() > 0 ? viewModel.eatingOutTips.get(0).category : ``}"
                         app:isSelected="@{viewModel.selectedFoodCategoryIdx == 0}"
+                        app:textAppearance="@{viewModel.selectedFoodCategoryIdx == 0 ? R.style.SelectedCategory : R.style.UnSelectedCategory}"
                         tools:text="샌드위치" />
 
                     <TextView
@@ -52,6 +55,7 @@
                         android:text="@{viewModel.eatingOutTips.size() > 1 ? viewModel.eatingOutTips.get(1).category : ``}"
                         android:visibility="@{viewModel.eatingOutTips.size() > 1}"
                         app:isSelected="@{viewModel.selectedFoodCategoryIdx == 1}"
+                        app:textAppearance="@{viewModel.selectedFoodCategoryIdx == 1 ? R.style.SelectedCategory : R.style.UnSelectedCategory}"
                         tools:text="샐러드" />
 
                     <TextView
@@ -62,6 +66,7 @@
                         android:text="@{viewModel.eatingOutTips.size() > 2 ? viewModel.eatingOutTips.get(2).category : ``}"
                         android:visibility="@{viewModel.eatingOutTips.size() > 2}"
                         app:isSelected="@{viewModel.selectedFoodCategoryIdx == 2}"
+                        app:textAppearance="@{viewModel.selectedFoodCategoryIdx == 2 ? R.style.SelectedCategory : R.style.UnSelectedCategory}"
                         tools:text="샤브샤브" />
 
                     <TextView
@@ -71,6 +76,7 @@
                         android:text="@{viewModel.eatingOutTips.size() > 3 ? viewModel.eatingOutTips.get(3).category : ``}"
                         android:visibility="@{viewModel.eatingOutTips.size() > 3}"
                         app:isSelected="@{viewModel.selectedFoodCategoryIdx == 3}"
+                        app:textAppearance="@{viewModel.selectedFoodCategoryIdx == 3 ? R.style.SelectedCategory : R.style.UnSelectedCategory}"
                         tools:text="키토김밥" />
                 </LinearLayout>
 

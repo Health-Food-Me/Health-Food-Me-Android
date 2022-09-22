@@ -63,3 +63,8 @@ fun EatingOutTipView.setEatingTips(eatingTipList: List<String>?) {
 fun EatingOutTipView.setRecommendationTips(recommendationTipList: List<String>?) {
     this.setTips(recommendationTipList ?: return, EatingOutTipType.RECOMMENDATION_TIP)
 }
+
+@BindingAdapter("app:textAppearance")
+fun TextView.setTextStyle(styleResId: Int) {
+    this.setTextAppearance(styleResId)
+}
