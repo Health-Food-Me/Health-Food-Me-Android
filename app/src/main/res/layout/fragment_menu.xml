@@ -6,8 +6,6 @@
 
     <data>
 
-        <import type="android.view.View" />
-
         <variable
             name="viewModel"
             type="org.helfoome.presentation.MainViewModel" />
@@ -34,11 +32,11 @@
                 tools:listitem="@layout/item_menu" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layout_menu_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/size_spacing_20"
                 android:paddingBottom="@dimen/size_spacing_30"
-                android:visibility="@{viewModel.menuBoard.size() > 0 ? View.VISIBLE : View.INVISIBLE}"
                 app:layout_constraintTop_toBottomOf="@id/menu_list">
 
                 <TextView

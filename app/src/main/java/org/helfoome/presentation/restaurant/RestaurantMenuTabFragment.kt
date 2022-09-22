@@ -38,8 +38,13 @@ class RestaurantMenuTabFragment : BindingFragment<FragmentMenuBinding>(R.layout.
         }
 
         viewModel.menuBoard.observe(viewLifecycleOwner) { menuBoardList ->
-            if (menuBoardList.isNullOrEmpty()) return@observe
-            restaurantMenuBoardAdapter.menuBoardList = menuBoardList
+            if (menuBoardList.isNullOrEmpty() || menuBoardList == listOf("")) {
+                binding.layoutMenuContainer.visibility = View.INVISIBLE
+                return@observe
+            } else {
+                binding.layoutMenuContainer.visibility = View.VISIBLE
+                restaurantMenuBoardAdapter.menuBoardList = menuBoardList
+            }
         }
     }
 }
