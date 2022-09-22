@@ -233,11 +233,11 @@ class MainViewModel @Inject constructor(
     fun updateRestaurantScrap() {
         viewModelScope.launch(Dispatchers.IO) {
             if (selectedRestaurant.value?.id == null) return@launch
-            val scrappedRestaurantList =
+            val isScrap =
                 restaurantRepository.updateRestaurantScrap(selectedRestaurant.value?.id!!, hfmSharedPreference.id) ?: return@launch
             _selectedRestaurant.postValue(
                 _selectedRestaurant.value?.apply {
-                    this.isScrap = scrappedRestaurantList.contains(selectedRestaurant.value?.id!!)
+                    this.isScrap = isScrap
                 }
             )
         }

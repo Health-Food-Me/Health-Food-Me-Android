@@ -4,5 +4,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class ResponseScrap(
-    val restaurants: List<String>,
+    val userId: String,
+    val restaurantId: String,
+    val isScrap: Boolean,
 )
