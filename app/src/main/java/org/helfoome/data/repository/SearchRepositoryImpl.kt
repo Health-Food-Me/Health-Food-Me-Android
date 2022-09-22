@@ -51,7 +51,7 @@ class SearchRepositoryImpl @Inject constructor(
 
     override suspend fun getSearchCategoryCard(longitude: Double, latitude: Double, keyword: String): Result<List<SearchResultInfo>> =
         runCatching {
-            searchDataSource.getSearchRestaurantCard(
+            searchDataSource.getSearchCategoryCard(
                 longitude,
                 latitude,
                 keyword
