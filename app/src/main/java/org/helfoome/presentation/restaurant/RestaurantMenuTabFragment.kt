@@ -20,6 +20,8 @@ class RestaurantMenuTabFragment : BindingFragment<FragmentMenuBinding>(R.layout.
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.viewModel = viewModel
+
         initView()
         initObservers()
     }
@@ -36,7 +38,7 @@ class RestaurantMenuTabFragment : BindingFragment<FragmentMenuBinding>(R.layout.
         }
 
         viewModel.menuBoard.observe(viewLifecycleOwner) { menuBoardList ->
-            if (menuBoardList == null) return@observe
+            if (menuBoardList.isNullOrEmpty()) return@observe
             restaurantMenuBoardAdapter.menuBoardList = menuBoardList
         }
     }
