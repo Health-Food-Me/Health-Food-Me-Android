@@ -64,7 +64,7 @@ class RestaurantReviewWritingViewModel @Inject constructor(
     val hfmReviews: LiveData<HFMReviewInfo> = _hfmReviews
 
     private val _isYesClicked = MutableLiveData<Boolean>()
-    val isYesClicked : LiveData<Boolean> = _isYesClicked
+    val isYesClicked: LiveData<Boolean> = _isYesClicked
 
     fun setReviewInfo(
         review: MyReviewInfo,

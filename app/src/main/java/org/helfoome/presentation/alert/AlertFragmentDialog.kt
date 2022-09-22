@@ -1,30 +1,17 @@
 package org.helfoome.presentation.alert
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.viewModels
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModel
-import com.kakao.sdk.user.UserApiClient
-import com.navercorp.nid.NaverIdLoginSDK
 import dagger.hilt.android.AndroidEntryPoint
 import org.helfoome.R
-import org.helfoome.data.service.KakaoAuthService
-import org.helfoome.data.service.NaverAuthService
 import org.helfoome.databinding.DialogAlertBinding
-import org.helfoome.presentation.MainActivity
-import org.helfoome.presentation.MainViewModel
-import org.helfoome.presentation.login.LoginActivity
 import org.helfoome.presentation.review.RestaurantReviewWritingViewModel
-import org.helfoome.presentation.review.ReviewWritingActivity
 import org.helfoome.presentation.type.AlertType
-import timber.log.Timber
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class AlertFragmentDialog(private val alertType: AlertType, val width: Int, val height: Int) : DialogFragment() {
