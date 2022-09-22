@@ -53,11 +53,11 @@ class RestaurantRepositoryImpl @Inject constructor(
         })
     }
 
-    override suspend fun getEatingOutTips(restaurantId: String): EatingOutTipInfo? {
+    override suspend fun getEatingOutTips(restaurantId: String): List<EatingOutTipInfo>? {
         runCatching {
             restaurantService.getEatingOutTips(restaurantId)
         }.fold({
-            return it.body()?.data?.toEatingOutTip()
+            return it.body()?.data?.map { it.toEatingOutTip() }
         }, {
             it.printStackTrace()
             return null

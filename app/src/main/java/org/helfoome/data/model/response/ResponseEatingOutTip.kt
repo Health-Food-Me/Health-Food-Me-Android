@@ -6,12 +6,12 @@ import org.helfoome.domain.entity.EatingOutTipInfo
 @Serializable
 data class ResponseEatingOutTip(
     val category: String,
-    val content: Content?,
+    val prescription: Prescription?,
 ) {
     @Serializable
-    data class Content(
+    data class Prescription(
         val recommend: List<String>,
         val tip: List<String>,
     )
-    fun toEatingOutTip(): EatingOutTipInfo = EatingOutTipInfo(category, content?.recommend, content?.tip)
+    fun toEatingOutTip(): EatingOutTipInfo = EatingOutTipInfo(category, prescription?.recommend, prescription?.tip)
 }

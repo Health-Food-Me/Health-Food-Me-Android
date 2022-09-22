@@ -75,8 +75,12 @@ class MainViewModel @Inject constructor(
     // Menu
     private val _menu = MutableLiveData<List<MenuInfo>>()
     val menu: LiveData<List<MenuInfo>> = _menu
-    private val _eatingOutTips = MutableLiveData<EatingOutTipInfo>()
+    private val _eatingOutTips = MutableLiveData<List<EatingOutTipInfo>>()
     val eatingOutTips get() = _eatingOutTips
+
+    // Eating Out Tips
+    private var _selectedFoodCategoryIdx = MutableLiveData<Int>()
+    val selectedFoodCategoryIdx: LiveData<Int> get() = _selectedFoodCategoryIdx
 
     // Event
     private val _isReviewWriteSuccess = MutableEventFlow<Boolean>()
@@ -164,6 +168,10 @@ class MainViewModel @Inject constructor(
         _location.value = markerInfo
     }
 
+    fun setSelectedFoodCategoryIdx(idx: Int) {
+        _selectedFoodCategoryIdx.value = idx
+    }
+
     fun getProfile() {
         viewModelScope.launch {
             runCatching { profileRepository.getProfile(hfmSharedPreference.id) }
@@ -196,6 +204,9 @@ class MainViewModel @Inject constructor(
             restaurantInfo?.let {
                 _selectedRestaurant.postValue(it)
             }
+
+            // 외식대처법 카테고리가 2개 이상인 경우, 인덱스 1이상에 해당하는 카테고리 클릭 후 새 레스토랑 핀을 클릭 할 경우, 선택된 외식대처법 카테고리 인덱스를 디폴트인 0으로 돌려놓기 위함. (새로고침)
+            _selectedFoodCategoryIdx.value = 0
             _eatingOutTips.value = restaurantRepository.getEatingOutTips(restaurantId)
             _menu.value = restaurantInfo?.menuList?.sortedByDescending { it.isHealfoomePick }
         }
