@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.naver.maps.geometry.LatLng
+import com.naver.maps.map.util.FusedLocationSource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -41,6 +42,8 @@ class MainViewModel @Inject constructor(
     val defaultLocation: List<MarkerInfo> = _defaultLocation
     private val _location = MutableLiveData<List<MarkerInfo>>()
     val location: LiveData<List<MarkerInfo>> = _location
+    private var _fusedLocationSource: FusedLocationSource? = null
+    val fusedLocationSource: FusedLocationSource? get() = _fusedLocationSource
     private val _isDietRestaurant = MutableLiveData<Boolean>()
     val isDietRestaurant: LiveData<Boolean> = _isDietRestaurant
     private val _cameraZoom = MutableLiveData<Event<Int>>()
@@ -173,6 +176,10 @@ class MainViewModel @Inject constructor(
 
     fun setSelectedFoodCategoryIdx(idx: Int) {
         _selectedFoodCategoryIdx.value = idx
+    }
+
+    fun setLocationSource(locationSource: FusedLocationSource) {
+        this._fusedLocationSource = locationSource
     }
 
     fun getProfile() {

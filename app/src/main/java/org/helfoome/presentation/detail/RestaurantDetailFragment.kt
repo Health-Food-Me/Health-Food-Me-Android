@@ -132,9 +132,9 @@ class RestaurantDetailFragment : BindingFragment<FragmentRestaurantDetailBinding
     private fun showMapSelectionBottomDialog() {
         if (mapSelectionBottomDialog?.isAdded == true) return
         mapSelectionBottomDialog = MapSelectionBottomDialogFragment().apply {
-//            locationSource.lastLocation?.let {
-//                viewModel.setCurrentLocationPoint(it.latitude, it.longitude)
-//            }
+            mainViewModel.fusedLocationSource?.lastLocation?.let {
+                mainViewModel.setCurrentLocationPoint(it.latitude, it.longitude)
+            }
         }
 
         mapSelectionBottomDialog?.show(parentFragmentManager, "MapSelectionBottomDialogFragment")

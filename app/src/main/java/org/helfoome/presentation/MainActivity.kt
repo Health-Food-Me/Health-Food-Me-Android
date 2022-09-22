@@ -108,6 +108,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
         binding.layoutDrawerHeader.drawerViewModel = viewModel
         window.makeTransparentStatusBar()
         locationSource = FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE)
+        viewModel.setLocationSource(locationSource)
 
         initView()
         initNaverMap()
