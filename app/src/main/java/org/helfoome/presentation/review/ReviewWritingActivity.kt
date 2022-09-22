@@ -17,12 +17,15 @@ import gun0912.tedimagepicker.util.ToastUtil.context
 import org.helfoome.R
 import org.helfoome.databinding.ActivityReviewWritingBinding
 import org.helfoome.domain.entity.MyReviewInfo
+import org.helfoome.presentation.alert.AlertFragmentDialog
+import org.helfoome.presentation.type.AlertType
 import org.helfoome.presentation.type.ReviewImageType
 import org.helfoome.util.HashtagUtil
 import org.helfoome.util.ItemDecorationUtil
 import org.helfoome.util.ResolutionMetrics
 import org.helfoome.util.binding.BindingActivity
 import org.helfoome.util.ext.closeKeyboard
+import org.helfoome.util.ext.getScreenSize
 import org.helfoome.util.ext.showToast
 import java.io.File
 import javax.inject.Inject
@@ -55,7 +58,6 @@ class ReviewWritingActivity : BindingActivity<ActivityReviewWritingBinding>(R.la
         intent.getStringExtra(ARG_RESTAURANT_ID)?.let {
             viewModel.setRestaurantId(it)
         }
-
         // 리뷰 편집 시 기존 리뷰 내용 전달 받기
         intent.getParcelableExtra<MyReviewInfo>(ARG_REVIEW_INFO)?.let { reviewInfo ->
             viewModel.setEditMode(true)
@@ -85,7 +87,7 @@ class ReviewWritingActivity : BindingActivity<ActivityReviewWritingBinding>(R.la
             binding.layoutScrollView.fullScroll(ScrollView.FOCUS_DOWN)
         }
         binding.btnBack.setOnClickListener {
-            onBackPressed()
+            checkEditOrWriteDialog()
         }
         binding.etReview.setOnFocusChangeListener { _, hasFocus ->
             if (hasFocus) {
@@ -114,6 +116,9 @@ class ReviewWritingActivity : BindingActivity<ActivityReviewWritingBinding>(R.la
                 setResult(Activity.RESULT_OK)
                 finish()
             }
+        }
+        viewModel.isYesClicked.observe(this) {
+            finish()
         }
     }
 
@@ -183,6 +188,30 @@ class ReviewWritingActivity : BindingActivity<ActivityReviewWritingBinding>(R.la
     private val cameraLauncher = registerForActivityResult(ActivityResultContracts.TakePicture()) { isSuccess ->
         if (isSuccess)
             galleryImageAdapter.setUriList(listOf(photoUri))
+    }
+
+    override fun onBackPressed() {
+        checkEditOrWriteDialog()
+    }
+
+    private fun checkEditOrWriteDialog() {
+        if (intent.getStringExtra(ARG_RESTAURANT_NAME) == null) {
+            AlertFragmentDialog(
+                AlertType.EDIT_CANCEL,
+                resolutionMetrics.toPixel(getScreenSize(72).first),
+                resolutionMetrics.toPixel(getScreenSize(447).second)
+            ).show(
+                supportFragmentManager, "AlertDialog"
+            )
+        } else {
+            AlertFragmentDialog(
+                AlertType.WRITE_CANCEL,
+                resolutionMetrics.toPixel(getScreenSize(72).first),
+                resolutionMetrics.toPixel(getScreenSize(447).second)
+            ).show(
+                supportFragmentManager, "AlertDialog"
+            )
+        }
     }
 
     companion object {
