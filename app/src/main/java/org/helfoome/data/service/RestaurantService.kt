@@ -38,8 +38,8 @@ interface RestaurantService {
         @Path("userId") userId: String,
     ): BaseResponse<List<ResponseHFMReview>>
 
-    @GET("review/restaurant/{name}/blog")
+    @GET("review/{restaurantId}/blog")
     suspend fun getBlogReview(
-        @Path("name") name: String,
+        @Path("restaurantId") restaurantId: String,
     ): BaseResponse<ResponseBlogReview>
 }
