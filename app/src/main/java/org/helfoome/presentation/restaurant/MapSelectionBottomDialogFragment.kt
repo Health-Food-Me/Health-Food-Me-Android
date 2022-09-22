@@ -18,8 +18,8 @@ class MapSelectionBottomDialogFragment : BottomSheetDialogFragment() {
     private var _binding: DialogMapSelectionBinding? = null
     private val binding: DialogMapSelectionBinding get() = requireNotNull(_binding)
     private val viewModel: MainViewModel by activityViewModels()
-    private lateinit var startPoint: LocationPointInfo
-    private lateinit var endPoint: LocationPointInfo
+    private var startPoint: LocationPointInfo? = null
+    private var endPoint: LocationPointInfo? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,21 +33,23 @@ class MapSelectionBottomDialogFragment : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        startPoint = viewModel.currentPoint.value ?: return
-        endPoint = viewModel.selectedRestaurantPoint.value ?: return
+        startPoint = viewModel.currentPoint.value
+        endPoint = viewModel.selectedRestaurantPoint.value
 
         addListeners()
     }
 
     private fun addListeners() {
         binding.tvKakao.setOnClickListener {
+            if (startPoint == null && endPoint == null) return@setOnClickListener
             val kakaoMapScheme =
-                "kakaomap://route?sp=${startPoint.lat},${startPoint.lng}&ep=${endPoint.lat},${endPoint.lng}&by=PUBLICTRANSIT"
+                "kakaomap://route?sp=${startPoint!!.lat},${startPoint!!.lng}&ep=${endPoint!!.lat},${endPoint!!.lng}&by=PUBLICTRANSIT"
             moveToUrl(kakaoMapScheme, "market://details?id=net.daum.android.map")
         }
         binding.tvNaver.setOnClickListener {
+            if (startPoint == null && endPoint == null) return@setOnClickListener
             val naverMapScheme =
-                "nmap://route/public?slat=${startPoint.lat}&slng=${startPoint.lng}&dlat=${endPoint.lat}&dlng=${endPoint.lng}&appname=org.sopt.healfoomedemo"
+                "nmap://route/public?slat=${startPoint!!.lat}&slng=${startPoint!!.lng}&dlat=${endPoint!!.lat}&dlng=${endPoint!!.lng}&appname=org.sopt.healfoomedemo"
             moveToUrl(naverMapScheme, "market://details?id=com.nhn.android.nmap")
         }
         binding.cancel.setOnClickListener {
