@@ -75,6 +75,9 @@ class MainViewModel @Inject constructor(
     // Menu
     private val _menu = MutableLiveData<List<MenuInfo>>()
     val menu: LiveData<List<MenuInfo>> = _menu
+    private val _menuBoard = MutableLiveData<List<String>>()
+    val menuBoard: LiveData<List<String>> = _menuBoard
+
     private val _eatingOutTips = MutableLiveData<List<EatingOutTipInfo>>()
     val eatingOutTips get() = _eatingOutTips
 
@@ -209,6 +212,7 @@ class MainViewModel @Inject constructor(
             _selectedFoodCategoryIdx.value = 0
             _eatingOutTips.value = restaurantRepository.getEatingOutTips(restaurantId)
             _menu.value = restaurantInfo?.menuList?.sortedByDescending { it.isHealfoomePick }
+            restaurantInfo?.menuImages?.let { _menuBoard.value = it }
         }
     }
 
