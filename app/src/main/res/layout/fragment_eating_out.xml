@@ -36,30 +36,41 @@
                     app:visibility="@{viewModel.eatingOutTips.size() >= 2}">
 
                     <TextView
+                        android:id="@+id/tv_category0"
+                        style="@style/TextView.EatingOutTip.Category.Style"
+                        android:layout_marginEnd="7dp"
+                        android:onClick="@{() -> viewModel.setSelectedFoodCategoryIdx(0)}"
+                        android:text="@{viewModel.eatingOutTips.size() > 0 ? viewModel.eatingOutTips.get(0).category : ``}"
+                        app:isSelected="@{viewModel.selectedFoodCategoryIdx == 0}"
+                        tools:text="샌드위치" />
+
+                    <TextView
                         android:id="@+id/tv_category1"
                         style="@style/TextView.EatingOutTip.Category.Style"
                         android:layout_marginEnd="7dp"
-                        android:text="@{viewModel.eatingOutTips.get(0).category}"
-                        tools:text="샌드위치" />
+                        android:onClick="@{() -> viewModel.setSelectedFoodCategoryIdx(1)}"
+                        android:text="@{viewModel.eatingOutTips.size() > 1 ? viewModel.eatingOutTips.get(1).category : ``}"
+                        android:visibility="@{viewModel.eatingOutTips.size() > 1}"
+                        app:isSelected="@{viewModel.selectedFoodCategoryIdx == 1}"
+                        tools:text="샐러드" />
 
                     <TextView
                         android:id="@+id/tv_category2"
                         style="@style/TextView.EatingOutTip.Category.Style"
                         android:layout_marginEnd="7dp"
-                        android:text="@{viewModel.eatingOutTips.size() >= 2 ? viewModel.eatingOutTips.get(1).category : ``}"
-                        tools:text="샐러드" />
+                        android:onClick="@{() -> viewModel.setSelectedFoodCategoryIdx(2)}"
+                        android:text="@{viewModel.eatingOutTips.size() > 2 ? viewModel.eatingOutTips.get(2).category : ``}"
+                        android:visibility="@{viewModel.eatingOutTips.size() > 2}"
+                        app:isSelected="@{viewModel.selectedFoodCategoryIdx == 2}"
+                        tools:text="샤브샤브" />
 
                     <TextView
                         android:id="@+id/tv_category3"
                         style="@style/TextView.EatingOutTip.Category.Style"
-                        android:layout_marginEnd="7dp"
-                        android:text="@{viewModel.eatingOutTips.size() >= 3 ? viewModel.eatingOutTips.get(2).category : ``}"
-                        tools:text="샤브샤브" />
-
-                    <TextView
-                        android:id="@+id/tv_category4"
-                        style="@style/TextView.EatingOutTip.Category.Style"
-                        android:text="@{viewModel.eatingOutTips.size() >= 4 ? viewModel.eatingOutTips.get(3).category : ``}"
+                        android:onClick="@{() -> viewModel.setSelectedFoodCategoryIdx(3)}"
+                        android:text="@{viewModel.eatingOutTips.size() > 3 ? viewModel.eatingOutTips.get(3).category : ``}"
+                        android:visibility="@{viewModel.eatingOutTips.size() > 3}"
+                        app:isSelected="@{viewModel.selectedFoodCategoryIdx == 3}"
                         tools:text="키토김밥" />
                 </LinearLayout>
 
@@ -90,7 +101,8 @@
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:id="@+id/layout_content"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent">
+                            android:layout_height="match_parent"
+                            app:visibility="@{viewModel.eatingOutTips.size() > 0}">
 
                             <ImageView
                                 android:id="@+id/iv_reason_for_recommendation"
@@ -123,7 +135,8 @@
                                 android:layout_marginTop="@dimen/size_spacing_15"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toBottomOf="@id/tv_recommend_tip_title" />
+                                app:layout_constraintTop_toBottomOf="@id/tv_recommend_tip_title"
+                                app:recommendationTips="@{viewModel.eatingOutTips.get(viewModel.selectedFoodCategoryIdx).recommendTips}" />
 
                             <View
                                 android:id="@+id/line"
@@ -166,6 +179,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginHorizontal="@dimen/size_spacing_30"
                                 android:layout_marginTop="@dimen/size_spacing_15"
+                                app:eatingTips="@{viewModel.eatingOutTips.get(viewModel.selectedFoodCategoryIdx).eatingTips}"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toBottomOf="@id/tv_eating_tip_title" />
@@ -174,6 +188,7 @@
                         <include
                             android:id="@+id/layout_empty_view"
                             layout="@layout/view_eating_out_empty"
+                            app:visibility="@{viewModel.eatingOutTips.size() == 0}"
                             tools:visibility="gone" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -186,7 +201,7 @@
                         android:fontFamily="@font/notosanskr_b"
                         android:paddingHorizontal="@dimen/size_spacing_26"
                         android:paddingVertical="@dimen/size_spacing_6"
-                        android:text="@{@string/format_hashtag(viewModel.eatingOutTips.get(0).category)}"
+                        android:text="@{viewModel.eatingOutTips.size() > 0 ? @string/format_hashtag(viewModel.eatingOutTips.get(0).category) : ``}"
                         android:textColor="@color/white"
                         android:textSize="@dimen/size_spacing_15"
                         app:layout_constraintEnd_toEndOf="parent"

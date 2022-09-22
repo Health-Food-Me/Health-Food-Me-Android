@@ -76,6 +76,10 @@ class MainViewModel @Inject constructor(
     private val _eatingOutTips = MutableLiveData<List<EatingOutTipInfo>>()
     val eatingOutTips get() = _eatingOutTips
 
+    // Eating Out Tips
+    private var _selectedFoodCategoryIdx = MutableLiveData<Int>()
+    val selectedFoodCategoryIdx: LiveData<Int> get() = _selectedFoodCategoryIdx
+
     init {
         fetchHFMReviewList()
         fetchBlogReviewList()
@@ -139,6 +143,10 @@ class MainViewModel @Inject constructor(
 
     fun setMapInfo(markerInfo: ArrayList<MarkerInfo>) {
         _location.value = markerInfo
+    }
+
+    fun setSelectedFoodCategoryIdx(idx: Int) {
+        _selectedFoodCategoryIdx.value = idx
     }
 
     fun getProfile() {
