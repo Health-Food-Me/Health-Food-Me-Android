@@ -9,15 +9,15 @@ import org.helfoome.domain.entity.ReviewImage
 data class ResponseReview(
     @SerialName("_id")
     val id: String,
-    @SerialName("__v")
-    val v: Int,
+    val restaurantId: String,
+    val restaurant: String,
+    val writerId: String,
+    val writer: String,
+    val score: Float,
     val content: String,
     val image: List<Image>,
-    val restaurant: String,
-    val score: Float,
-    val good: List<String>,
     val taste: String,
-    val writer: String,
+    val good: List<String>,
 ) {
     @Serializable
     data class Image(

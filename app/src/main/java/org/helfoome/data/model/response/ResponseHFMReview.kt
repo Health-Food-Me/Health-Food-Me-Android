@@ -6,6 +6,7 @@ import org.helfoome.domain.entity.HFMReviewInfo
 
 @Serializable
 data class ResponseHFMReview(
+    @SerialName("_id")
     val id: String,
     val writer: String,
     val score: Float,

@@ -25,7 +25,7 @@ interface ReviewService {
     ): BaseResponse<List<ResponseMyReviewList>>
 
     @Multipart
-    @POST("/review/user/{userId}/restaurant/{restaurantId}")
+    @POST("/review/{userId}/{restaurantId}")
     suspend fun postHFMReview(
         @Path("userId") userId: String,
         @Path("restaurantId") restaurantId: String,
@@ -53,7 +53,7 @@ interface ReviewService {
         @Part image: List<MultipartBody.Part>
     ): BaseResponse<ResponseMyReviewEdit>
 
-    @GET("/review/check/{userId}/{restaurantId}")
+    @GET("/user/check/{userId}/{restaurantId}")
     suspend fun getReviewCheck(
         @Path("userId") userId: String,
         @Path("restaurantId") restaurantId: String

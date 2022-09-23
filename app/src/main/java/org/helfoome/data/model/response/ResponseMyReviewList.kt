@@ -7,9 +7,10 @@ import org.helfoome.domain.entity.ReviewImage
 
 @Serializable
 data class ResponseMyReviewList(
+    @SerialName("_id")
+    val id: String,
     val content: String,
     val good: List<String>,
-    val id: String,
     val image: List<Image>,
     val restaurant: String,
     val score: Float,
