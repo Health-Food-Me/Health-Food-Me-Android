@@ -32,8 +32,11 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/size_spacing_20"
                     android:layout_marginTop="22dp"
+                    android:gravity="center_horizontal"
                     android:orientation="horizontal"
                     android:weightSum="4"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:visibility="@{viewModel.eatingOutTips.size() >= 2}">
 
@@ -53,9 +56,9 @@
                         android:layout_marginEnd="7dp"
                         android:onClick="@{() -> viewModel.setSelectedFoodCategoryIdx(1)}"
                         android:text="@{viewModel.eatingOutTips.size() > 1 ? viewModel.eatingOutTips.get(1).category : ``}"
-                        android:visibility="@{viewModel.eatingOutTips.size() > 1}"
                         app:isSelected="@{viewModel.selectedFoodCategoryIdx == 1}"
                         app:textAppearance="@{viewModel.selectedFoodCategoryIdx == 1 ? R.style.SelectedCategory : R.style.UnSelectedCategory}"
+                        app:visibility="@{viewModel.eatingOutTips.size() > 1}"
                         tools:text="샐러드" />
 
                     <TextView
@@ -64,9 +67,9 @@
                         android:layout_marginEnd="7dp"
                         android:onClick="@{() -> viewModel.setSelectedFoodCategoryIdx(2)}"
                         android:text="@{viewModel.eatingOutTips.size() > 2 ? viewModel.eatingOutTips.get(2).category : ``}"
-                        android:visibility="@{viewModel.eatingOutTips.size() > 2}"
                         app:isSelected="@{viewModel.selectedFoodCategoryIdx == 2}"
                         app:textAppearance="@{viewModel.selectedFoodCategoryIdx == 2 ? R.style.SelectedCategory : R.style.UnSelectedCategory}"
+                        app:visibility="@{viewModel.eatingOutTips.size() > 2}"
                         tools:text="샤브샤브" />
 
                     <TextView
@@ -74,9 +77,9 @@
                         style="@style/TextView.EatingOutTip.Category.Style"
                         android:onClick="@{() -> viewModel.setSelectedFoodCategoryIdx(3)}"
                         android:text="@{viewModel.eatingOutTips.size() > 3 ? viewModel.eatingOutTips.get(3).category : ``}"
-                        android:visibility="@{viewModel.eatingOutTips.size() > 3}"
                         app:isSelected="@{viewModel.selectedFoodCategoryIdx == 3}"
                         app:textAppearance="@{viewModel.selectedFoodCategoryIdx == 3 ? R.style.SelectedCategory : R.style.UnSelectedCategory}"
+                        app:visibility="@{viewModel.eatingOutTips.size() > 3}"
                         tools:text="키토김밥" />
                 </LinearLayout>
 
