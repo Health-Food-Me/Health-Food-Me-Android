@@ -25,7 +25,7 @@ interface ReviewService {
     ): BaseResponse<List<ResponseMyReviewList>>
 
     @Multipart
-    @POST("/review/user/{userId}/restaurant/{restaurantId}")
+    @POST("/review/{userId}/{restaurantId}")
     suspend fun postHFMReview(
         @Path("userId") userId: String,
         @Path("restaurantId") restaurantId: String,
