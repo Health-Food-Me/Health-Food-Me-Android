@@ -96,10 +96,10 @@ class MyReviewActivity : BindingActivity<ActivityMyReviewBinding>(R.layout.activ
             adapter = myReviewAdapter
             addItemDecoration(
                 ItemDecorationUtil.ItemDecoration(
-                    resolutionMetrics.toDP(1),
+                    resolutionMetrics.toDP(10),
                     resolutionMetrics.toDP(20),
                     context.getColor(R.color.gray_100),
-                    26
+                    0
                 )
             )
         }
