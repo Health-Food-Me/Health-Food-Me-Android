@@ -220,6 +220,7 @@ class MainViewModel @Inject constructor(
             _selectedFoodCategoryIdx.value = 0
             _eatingOutTips.value = restaurantRepository.getEatingOutTips(restaurantId)
             _menu.value = restaurantInfo?.menuList?.sortedByDescending { it.isHealfoomePick }
+            fetchHFMReviewList()
             restaurantInfo?.menuImages?.let { _menuBoard.value = it }
         }
     }
