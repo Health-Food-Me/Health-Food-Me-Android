@@ -101,7 +101,6 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
         super.onCreate(savedInstanceState)
         binding.viewModel = viewModel
         binding.layoutDrawerHeader.drawerViewModel = viewModel
-        window.makeTransparentStatusBar()
         locationSource = FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE)
         viewModel.setLocationSource(locationSource)
 
