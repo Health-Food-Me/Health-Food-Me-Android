@@ -109,7 +109,7 @@ class ReviewWritingActivity : BindingActivity<ActivityReviewWritingBinding>(R.la
             }
         }
         viewModel.isCompletedReviewUpload.observe(this) {
-            if (it) onBackPressed()
+            if (it) finish()
         }
         viewModel.isReviewModify.observe(this) {
             if (it) {
