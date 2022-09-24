@@ -11,6 +11,7 @@ import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.core.os.bundleOf
+import timber.log.Timber
 
 fun Context.showKeyboard(view: View) {
     val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
@@ -28,9 +29,10 @@ fun Context.getScreenSize(resize: Int): Pair<Int, Int> {
             windowMetrics.bounds.height() - insets.bottom - insets.top - resize
         )
     } else {
-        val displayMetrics = DisplayMetrics()
-        wm.defaultDisplay.getMetrics(displayMetrics)
-        Pair(displayMetrics.widthPixels - resize, displayMetrics.heightPixels - resize)
+        val metrics: DisplayMetrics = resources.displayMetrics
+        val displayPixelWidth = metrics.widthPixels
+        val displayPixelHeight = metrics.heightPixels
+        Pair(displayPixelWidth - displayPixelWidth / 5, displayPixelHeight)
     }
 }
 
