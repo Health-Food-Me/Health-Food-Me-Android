@@ -38,6 +38,7 @@
             android:id="@+id/tv_caution_description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="50dp"
             android:layout_marginTop="@dimen/size_spacing_8"
             android:gravity="center"
             android:text='@{alertViewModel.alertType.dialogDescription}'

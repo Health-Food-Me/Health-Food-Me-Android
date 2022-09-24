@@ -226,21 +226,13 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                 controlHamburger.launch(Intent(this@MainActivity, SettingActivity::class.java))
             }
             tvLogout.setOnClickListener {
-                AlertFragmentDialog(
-                    AlertType.LOGOUT,
-                    resolutionMetrics.toPixel(getScreenSize(72).first),
-                    resolutionMetrics.toPixel(getScreenSize(447).second)
-                ).show(
-                    supportFragmentManager, "AlertDialog"
-                )
+                AlertFragmentDialog(AlertType.LOGOUT).show(supportFragmentManager, "AlertDialog")
             }
         }
     }
 
     private fun supportGuestLogin() {
-        GuestLoginFragmentDialog().show(
-            supportFragmentManager, "GuestLoginDialog"
-        )
+        GuestLoginFragmentDialog().show(supportFragmentManager, "GuestLoginDialog")
     }
 
     private fun showScarpSnackBar(snackBarText: String) {

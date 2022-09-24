@@ -28,9 +28,10 @@ fun Context.getScreenSize(resize: Int): Pair<Int, Int> {
             windowMetrics.bounds.height() - insets.bottom - insets.top - resize
         )
     } else {
-        val displayMetrics = DisplayMetrics()
-        wm.defaultDisplay.getMetrics(displayMetrics)
-        Pair(displayMetrics.widthPixels - resize, displayMetrics.heightPixels - resize)
+        val metrics: DisplayMetrics = resources.displayMetrics
+        val displayPixelWidth = metrics.widthPixels
+        val displayPixelHeight = metrics.heightPixels
+        Pair(displayPixelWidth - displayPixelWidth / 5, displayPixelHeight)
     }
 }
 

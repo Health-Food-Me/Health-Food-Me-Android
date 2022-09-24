@@ -25,7 +25,6 @@ import org.helfoome.util.ItemDecorationUtil
 import org.helfoome.util.ResolutionMetrics
 import org.helfoome.util.binding.BindingActivity
 import org.helfoome.util.ext.closeKeyboard
-import org.helfoome.util.ext.getScreenSize
 import org.helfoome.util.ext.showToast
 import java.io.File
 import javax.inject.Inject
@@ -196,21 +195,9 @@ class ReviewWritingActivity : BindingActivity<ActivityReviewWritingBinding>(R.la
 
     private fun checkEditOrWriteDialog() {
         if (intent.getStringExtra(ARG_RESTAURANT_NAME) == null) {
-            AlertFragmentDialog(
-                AlertType.EDIT_CANCEL,
-                resolutionMetrics.toPixel(getScreenSize(72).first),
-                resolutionMetrics.toPixel(getScreenSize(447).second)
-            ).show(
-                supportFragmentManager, "AlertDialog"
-            )
+            AlertFragmentDialog(AlertType.EDIT_CANCEL).show(supportFragmentManager, "AlertDialog")
         } else {
-            AlertFragmentDialog(
-                AlertType.WRITE_CANCEL,
-                resolutionMetrics.toPixel(getScreenSize(72).first),
-                resolutionMetrics.toPixel(getScreenSize(447).second)
-            ).show(
-                supportFragmentManager, "AlertDialog"
-            )
+            AlertFragmentDialog(AlertType.WRITE_CANCEL).show(supportFragmentManager, "AlertDialog")
         }
     }
 
