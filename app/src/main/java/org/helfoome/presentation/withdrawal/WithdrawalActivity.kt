@@ -2,17 +2,13 @@ package org.helfoome.presentation.withdrawal
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
 import androidx.activity.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import org.helfoome.R
 import org.helfoome.databinding.ActivityWithdrawalBinding
-import org.helfoome.databinding.DialogWithdrawBinding
 import org.helfoome.presentation.login.LoginActivity
-import org.helfoome.util.DialogUtil
 import org.helfoome.util.ResolutionMetrics
 import org.helfoome.util.binding.BindingActivity
-import org.helfoome.util.ext.getScreenSize
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -45,21 +41,7 @@ class WithdrawalActivity : BindingActivity<ActivityWithdrawalBinding>(R.layout.a
         }
 
         binding.btConfirm.setOnClickListener {
-            val bind = DialogWithdrawBinding.inflate(LayoutInflater.from(this@WithdrawalActivity))
-            val dialog = DialogUtil.makeDialog(
-                this,
-                bind,
-                resolutionMetrics.toPixel(getScreenSize(72).first),
-                resolutionMetrics.toPixel(getScreenSize(418).second)
-            )
-
-            bind.btnYes.setOnClickListener {
-                withdrawalViewModel.deleteUser()
-                dialog.dismiss()
-            }
-            bind.btnNo.setOnClickListener {
-                dialog.dismiss()
-            }
+            WithdrawFragmentDialog().show(supportFragmentManager, "WithdrawDialog")
         }
     }
 }

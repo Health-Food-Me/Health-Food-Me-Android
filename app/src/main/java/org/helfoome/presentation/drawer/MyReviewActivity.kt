@@ -9,17 +9,14 @@ import androidx.activity.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import org.helfoome.R
 import org.helfoome.databinding.ActivityMyReviewBinding
-import org.helfoome.databinding.DialogMyReviewDeleteBinding
 import org.helfoome.domain.entity.MyReviewInfo
 import org.helfoome.presentation.MainActivity
 import org.helfoome.presentation.drawer.adapter.MyReviewAdapter
 import org.helfoome.presentation.review.ReviewWritingActivity
-import org.helfoome.util.DialogUtil
 import org.helfoome.util.ItemDecorationUtil
 import org.helfoome.util.ResolutionMetrics
 import org.helfoome.util.SnackBarTopDown
 import org.helfoome.util.binding.BindingActivity
-import org.helfoome.util.ext.getScreenSize
 import org.helfoome.util.ext.startActivity
 import javax.inject.Inject
 
@@ -62,20 +59,7 @@ class MyReviewActivity : BindingActivity<ActivityMyReviewBinding>(R.layout.activ
     }
 
     private fun deleteReview(reviewId: String) {
-        val bind = DialogMyReviewDeleteBinding.inflate(layoutInflater)
-        val dialog = DialogUtil.makeDialog(
-            this,
-            bind,
-            resolutionMetrics.toPixel(getScreenSize(72).first),
-            resolutionMetrics.toPixel(getScreenSize(417).second)
-        )
-        bind.btnYes.setOnClickListener {
-            viewModel.deleteReview(reviewId)
-            dialog.dismiss()
-        }
-        bind.btnNo.setOnClickListener {
-            dialog.dismiss()
-        }
+        ReviewDeleteFragmentDialog(reviewId).show(supportFragmentManager, "ReviewDeleteDialog")
     }
 
     private fun editReview(review: MyReviewInfo) {
