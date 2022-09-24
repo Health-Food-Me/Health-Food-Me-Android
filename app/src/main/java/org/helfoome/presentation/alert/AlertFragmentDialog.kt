@@ -1,5 +1,6 @@
 package org.helfoome.presentation.alert
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,11 +11,12 @@ import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import org.helfoome.R
 import org.helfoome.databinding.DialogAlertBinding
+import org.helfoome.presentation.login.LoginActivity
 import org.helfoome.presentation.review.RestaurantReviewWritingViewModel
 import org.helfoome.presentation.type.AlertType
 
 @AndroidEntryPoint
-class AlertFragmentDialog(private val alertType: AlertType, val width: Int, val height: Int) : DialogFragment() {
+class AlertFragmentDialog(private val alertType: AlertType) : DialogFragment() {
 
     private val alertViewModel: AlertViewModel by viewModels()
     private val restaurantReviewWritingViewModel: RestaurantReviewWritingViewModel by activityViewModels()
@@ -38,17 +40,16 @@ class AlertFragmentDialog(private val alertType: AlertType, val width: Int, val 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        dialog?.window?.setLayout(
-            width,
-            height
-        )
         initListener()
     }
 
     private fun initListener() {
         binding.btnYes.setOnClickListener {
             when (alertType) {
-                AlertType.LOGOUT -> alertViewModel.logout()
+                AlertType.LOGOUT -> {
+                    alertViewModel.logout()
+                    startMain()
+                }
                 AlertType.WRITE_CANCEL -> restaurantReviewWritingViewModel.setIsYesClicked(true)
                 AlertType.EDIT_CANCEL -> restaurantReviewWritingViewModel.setIsYesClicked(true)
                 AlertType.DELETE_REVIEW -> {}
@@ -58,6 +59,14 @@ class AlertFragmentDialog(private val alertType: AlertType, val width: Int, val 
         binding.btnNo.setOnClickListener {
             dismiss()
         }
+    }
+
+    private fun startMain() {
+        startActivity(
+            Intent(context, LoginActivity::class.java).apply {
+                addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            }
+        )
     }
 
     override fun onDestroyView() {
