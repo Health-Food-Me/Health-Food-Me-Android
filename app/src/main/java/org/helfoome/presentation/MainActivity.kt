@@ -47,7 +47,6 @@ import org.helfoome.util.ResolutionMetrics
 import org.helfoome.util.SnackBarTopDown
 import org.helfoome.util.binding.BindingActivity
 import org.helfoome.util.ext.*
-import timber.log.Timber
 import javax.inject.Inject
 
 @AndroidEntryPoint
