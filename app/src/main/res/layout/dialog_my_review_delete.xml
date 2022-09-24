@@ -1,55 +1,59 @@
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@drawable/rectangle_white_radius_15">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <TextView
-        android:id="@+id/tv_caution"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/size_spacing_32"
-        android:gravity="center"
-        android:text="@string/my_review_dialog_caution"
-        android:textColor="@color/gray_800"
-        android:textSize="@dimen/size_spacing_16"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_yes"
-        style="@style/Button.Basic.Style"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/size_spacing_20"
-        android:layout_marginTop="@dimen/size_spacing_24"
-        android:background="@drawable/rectangle_red_radius_8"
-        android:paddingVertical="@dimen/size_spacing_15"
-        android:stateListAnimator="@null"
-        android:text="@string/my_review_dialog_yes"
-        android:textColor="@color/white"
-        android:textSize="@dimen/size_spacing_15"
-        android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@id/tv_caution" />
+        android:background="@drawable/rectangle_white_radius_15">
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_no"
-        style="@style/Button.Basic.Style"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/size_spacing_20"
-        android:layout_marginTop="@dimen/size_spacing_8"
-        android:layout_marginBottom="@dimen/size_spacing_24"
-        android:background="@drawable/rectangle_white_radius_8"
-        android:paddingVertical="@dimen/size_spacing_15"
-        android:stateListAnimator="@null"
-        android:text="@string/my_review_dialog_no"
-        android:textColor="@color/gray_600"
-        android:textSize="@dimen/size_spacing_15"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btn_yes" />
+        <TextView
+            android:id="@+id/tv_caution"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="84dp"
+            android:layout_marginTop="@dimen/size_spacing_32"
+            android:gravity="center"
+            android:text="@string/my_review_dialog_caution"
+            android:textColor="@color/gray_800"
+            android:textSize="@dimen/size_spacing_16"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_yes"
+            style="@style/Button.Basic.Style"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/size_spacing_20"
+            android:layout_marginTop="@dimen/size_spacing_24"
+            android:background="@drawable/rectangle_red_radius_8"
+            android:paddingVertical="@dimen/size_spacing_15"
+            android:stateListAnimator="@null"
+            android:text="@string/my_review_dialog_yes"
+            android:textColor="@color/white"
+            android:textSize="@dimen/size_spacing_15"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@id/tv_caution" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_no"
+            style="@style/Button.Basic.Style"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/size_spacing_20"
+            android:layout_marginTop="@dimen/size_spacing_8"
+            android:layout_marginBottom="@dimen/size_spacing_24"
+            android:background="@drawable/rectangle_white_radius_8"
+            android:paddingVertical="@dimen/size_spacing_15"
+            android:stateListAnimator="@null"
+            android:text="@string/my_review_dialog_no"
+            android:textColor="@color/gray_600"
+            android:textSize="@dimen/size_spacing_15"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btn_yes" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
