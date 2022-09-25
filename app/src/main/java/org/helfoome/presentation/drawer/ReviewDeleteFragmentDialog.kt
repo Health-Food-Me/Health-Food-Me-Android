@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import dagger.hilt.android.AndroidEntryPoint
 import org.helfoome.R
 import org.helfoome.databinding.DialogMyReviewDeleteBinding
@@ -13,7 +13,7 @@ import org.helfoome.databinding.DialogMyReviewDeleteBinding
 @AndroidEntryPoint
 class ReviewDeleteFragmentDialog(private val reviewId: String) : DialogFragment() {
 
-    private val myReviewViewModel: MyReviewViewModel by viewModels()
+    private val myReviewViewModel: MyReviewViewModel by activityViewModels()
 
     private var _binding: DialogMyReviewDeleteBinding? = null
     private val binding: DialogMyReviewDeleteBinding get() = requireNotNull(_binding)
