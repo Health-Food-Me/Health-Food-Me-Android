@@ -17,24 +17,6 @@ fun Context.showKeyboard(view: View) {
     inputMethodManager.showSoftInput(view, 0)
 }
 
-fun Context.getScreenSize(resize: Int): Pair<Int, Int> {
-    val wm = getSystemService(Context.WINDOW_SERVICE) as WindowManager
-    return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-        val windowMetrics = wm.currentWindowMetrics
-        val insets = windowMetrics.windowInsets
-            .getInsetsIgnoringVisibility(WindowInsets.Type.systemBars())
-        Pair(
-            windowMetrics.bounds.width() - insets.left - insets.right - resize,
-            windowMetrics.bounds.height() - insets.bottom - insets.top - resize
-        )
-    } else {
-        val metrics: DisplayMetrics = resources.displayMetrics
-        val displayPixelWidth = metrics.widthPixels
-        val displayPixelHeight = metrics.heightPixels
-        Pair(displayPixelWidth - displayPixelWidth / 5, displayPixelHeight)
-    }
-}
-
 fun Context.closeKeyboard(view: View) {
     val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
     inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
