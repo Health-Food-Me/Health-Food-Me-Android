@@ -3,11 +3,7 @@ package org.helfoome.util.ext
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.os.Build
-import android.util.DisplayMetrics
 import android.view.View
-import android.view.WindowInsets
-import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.core.os.bundleOf
