@@ -278,7 +278,6 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                         )
                         map = naverMap
 
-                        isHideCollidedMarkers = true
                         captionText = marker.name
 
                         setOnClickListener {
@@ -325,7 +324,6 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                         )
                         map = naverMap
 
-                        isHideCollidedMarkers = true
                         captionText = marker.name
 
                         setOnClickListener {

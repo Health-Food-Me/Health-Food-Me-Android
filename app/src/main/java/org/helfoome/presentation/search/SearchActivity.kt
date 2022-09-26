@@ -371,7 +371,6 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
                                             )
                                             map = naverMap
 
-                                            isHideCollidedMarkers = true
                                             captionText = marker.name
 
                                             setOnClickListener {
