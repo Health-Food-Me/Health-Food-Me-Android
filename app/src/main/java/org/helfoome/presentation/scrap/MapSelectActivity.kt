@@ -160,6 +160,8 @@ class MapSelectActivity : BindingActivity<ActivityMapSelectBinding>(R.layout.act
                         map = naverMap
                         captionText = marker.name
 
+                        isHideCollidedCaptions = true
+
                         setOnClickListener {
                             viewModel.getReviewCheck(marker.id)
                             viewModel.fetchSelectedRestaurantDetailInfo(
