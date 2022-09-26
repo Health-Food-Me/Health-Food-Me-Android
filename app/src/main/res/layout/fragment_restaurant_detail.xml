@@ -230,21 +230,22 @@
                             android:layout_marginStart="@dimen/size_spacing_16"
                             android:layout_marginTop="@dimen/size_spacing_8"
                             android:text="@{viewModel.selectedRestaurant.time}"
+                            android:visibility="@{viewModel.selectedRestaurant.time != null &amp;&amp; viewModel.selectedRestaurant.time.empty == false ? View.VISIBLE : View.INVISIBLE}"
                             app:layout_constraintStart_toEndOf="@id/iv_time"
                             app:layout_constraintTop_toBottomOf="@id/tv_location"
-                            app:visibility="@{viewModel.selectedRestaurant.time != null &amp;&amp; viewModel.selectedRestaurant.time.empty == false}" />
+                            tools:visibility="invisible" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/size_spacing_16"
-                            android:layout_marginTop="@dimen/size_spacing_8"
                             android:fontFamily="@font/notosanskr_m"
                             android:text="영업정보 없음"
                             android:textColor="@color/gray_600"
                             android:textSize="@dimen/size_spacing_12"
+                            app:layout_constraintBottom_toBottomOf="@+id/view_opening_time"
                             app:layout_constraintStart_toEndOf="@id/iv_time"
-                            app:layout_constraintTop_toBottomOf="@id/tv_location"
+                            app:layout_constraintTop_toTopOf="@id/view_opening_time"
                             app:visibility="@{viewModel.selectedRestaurant.time == null || viewModel.selectedRestaurant.time.empty}" />
 
                         <ImageView
