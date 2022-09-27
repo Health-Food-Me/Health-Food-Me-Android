@@ -54,6 +54,9 @@ class MapSelectActivity : BindingActivity<ActivityMapSelectBinding>(R.layout.act
 
                 binding.layoutMapSelect.visibility = View.VISIBLE
             }
+
+            viewModel.setIsDetailCollapsed(newState == BottomSheetBehavior.STATE_COLLAPSED)
+
             if (newState == BottomSheetBehavior.STATE_DRAGGING) {
                 binding.isFloatingNotVisible = true
 

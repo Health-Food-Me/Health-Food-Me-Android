@@ -32,6 +32,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import org.helfoome.R
 import org.helfoome.databinding.ActivityMainBinding
+import org.helfoome.presentation.alert.AlertFragmentDialog
 import org.helfoome.presentation.detail.RestaurantDetailFragment
 import org.helfoome.presentation.drawer.MyReviewActivity
 import org.helfoome.presentation.drawer.ProfileModifyActivity
@@ -41,12 +42,13 @@ import org.helfoome.presentation.scrap.MyScrapActivity
 import org.helfoome.presentation.search.SearchActivity
 import org.helfoome.presentation.type.AlertType
 import org.helfoome.presentation.type.FoodType
-import org.helfoome.presentation.alert.AlertFragmentDialog
 import org.helfoome.util.ChipFactory
 import org.helfoome.util.ResolutionMetrics
 import org.helfoome.util.SnackBarTopDown
 import org.helfoome.util.binding.BindingActivity
-import org.helfoome.util.ext.*
+import org.helfoome.util.ext.replace
+import org.helfoome.util.ext.startActivity
+import org.helfoome.util.ext.stringListFrom
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -70,6 +72,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                     )
                 }
             }
+            viewModel.setIsDetailCollapsed(newState == BottomSheetBehavior.STATE_COLLAPSED)
         }
 
         override fun onSlide(bottomSheetView: View, slideOffset: Float) = Unit
