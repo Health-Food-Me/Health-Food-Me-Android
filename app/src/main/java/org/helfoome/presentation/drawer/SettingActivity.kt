@@ -46,7 +46,6 @@ class SettingActivity : BindingActivity<ActivitySettingBinding>(R.layout.activit
                 finish()
             }
         }
-
     }
 
     private fun sendGmail() {
