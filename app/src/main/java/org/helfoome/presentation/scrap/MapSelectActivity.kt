@@ -36,7 +36,6 @@ import org.helfoome.util.ResolutionMetrics
 import org.helfoome.util.SnackBarTopDown
 import org.helfoome.util.binding.BindingActivity
 import org.helfoome.util.ext.replace
-import timber.log.Timber
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -71,8 +70,7 @@ class MapSelectActivity : BindingActivity<ActivityMapSelectBinding>(R.layout.act
                     )
                 }
             }
-            if (newState == BottomSheetBehavior.STATE_EXPANDED)
-                binding.layoutMapSelect.visibility = View.GONE
+            if (newState == BottomSheetBehavior.STATE_EXPANDED) binding.layoutMapSelect.visibility = View.GONE
         }
 
         override fun onSlide(bottomSheetView: View, slideOffset: Float) {
@@ -85,14 +83,13 @@ class MapSelectActivity : BindingActivity<ActivityMapSelectBinding>(R.layout.act
 
     private val restaurantDetailAdapter = RestaurantTabAdapter(this)
 
-    private val requestReviewWrite =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
-            if (activityResult.resultCode == Activity.RESULT_OK) {
-                viewModel.fetchHFMReviewList()
-                SnackBarTopDown.makeSnackBarTopDown(this, binding.snvProfileModify, "리뷰가 작성되었습니다")
-                val data = activityResult.data ?: return@registerForActivityResult
-            }
+    private val requestReviewWrite = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
+        if (activityResult.resultCode == Activity.RESULT_OK) {
+            viewModel.fetchHFMReviewList()
+            SnackBarTopDown.makeSnackBarTopDown(this, binding.snvProfileModify, "리뷰가 작성되었습니다")
+            val data = activityResult.data ?: return@registerForActivityResult
         }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -123,12 +120,10 @@ class MapSelectActivity : BindingActivity<ActivityMapSelectBinding>(R.layout.act
         }
 
         binding.ibQuit.setOnClickListener {
-            startActivity(
-                Intent(this, MainActivity::class.java).apply {
-                    // TODO : CLEAR_TOP 말고 다른 인텐트 필터 적용 필요
-                    addFlags(FLAG_ACTIVITY_CLEAR_TOP)
-                }
-            )
+            startActivity(Intent(this, MainActivity::class.java).apply {
+                // TODO : CLEAR_TOP 말고 다른 인텐트 필터 적용 필요
+                addFlags(FLAG_ACTIVITY_CLEAR_TOP)
+            })
         }
     }
 
@@ -188,24 +183,18 @@ class MapSelectActivity : BindingActivity<ActivityMapSelectBinding>(R.layout.act
                             viewModel.markerId(this.position)?.let { id -> }
                             true
                         }
-                    },
-                    marker.isDietRestaurant
+                    }, marker.isDietRestaurant
                 )
             }
         }
-        viewModel.isReviewWriteSuccess.flowWithLifecycle(lifecycle)
-            .onEach {
-                // TODO : 지금 너무 토스트 띄우는 부분 재사용이 어렵게 되어있습니다.. 넘 보일러 플레이트코드에여.. Event State로 분기처리하는 거 강력 추천합니다;;
-                if (it)
-                    SnackBarTopDown.makeSnackBarTopDown(this, binding.snvProfileModify, "리뷰가 작성되었습니다")
-            }
-            .launchIn(lifecycleScope)
+        viewModel.isReviewWriteSuccess.flowWithLifecycle(lifecycle).onEach {
+            // TODO : 지금 너무 토스트 띄우는 부분 재사용이 어렵게 되어있습니다.. 넘 보일러 플레이트코드에여.. Event State로 분기처리하는 거 강력 추천합니다;;
+            if (it) SnackBarTopDown.makeSnackBarTopDown(this, binding.snvProfileModify, "리뷰가 작성되었습니다")
+        }.launchIn(lifecycleScope)
 
-        viewModel.behaviorState.flowWithLifecycle(lifecycle)
-            .onEach {
-                behavior.state = it
-            }
-            .launchIn(lifecycleScope)
+        viewModel.behaviorState.flowWithLifecycle(lifecycle).onEach {
+            behavior.state = it
+        }.launchIn(lifecycleScope)
     }
 
     override fun onBackPressed() {
@@ -225,13 +214,12 @@ class MapSelectActivity : BindingActivity<ActivityMapSelectBinding>(R.layout.act
 
     private fun initNaverMap() {
         val fm = supportFragmentManager
-        val mapFragment = fm.findFragmentById(R.id.fragment_naver_map) as MapFragment?
-            ?: MapFragment.newInstance().also {
-                fm.commit {
-                    add<MapFragment>(R.id.fragment_naver_map)
-                    setReorderingAllowed(true)
-                }
+        val mapFragment = fm.findFragmentById(R.id.fragment_naver_map) as MapFragment? ?: MapFragment.newInstance().also {
+            fm.commit {
+                add<MapFragment>(R.id.fragment_naver_map)
+                setReorderingAllowed(true)
             }
+        }
         mapFragment.getMapAsync(this)
     }
 
@@ -262,13 +250,11 @@ class MapSelectActivity : BindingActivity<ActivityMapSelectBinding>(R.layout.act
         intent.getParcelableArrayListExtra<MarkerInfo>(MainActivity.MARKER_INFO)?.let { viewModel.setMapInfo(it) }
 
         binding.fabLocationMain.setOnClickListener {
-            naverMap.cameraPosition =
-                CameraPosition(
-                    LatLng(
-                        locationSource.lastLocation?.latitude ?: GANGNAM_X,
-                        locationSource.lastLocation?.longitude ?: GANGNAM_Y
-                    ), 14.0
-                )
+            naverMap.cameraPosition = CameraPosition(
+                LatLng(
+                    locationSource.lastLocation?.latitude ?: GANGNAM_X, locationSource.lastLocation?.longitude ?: GANGNAM_Y
+                ), 14.0
+            )
         }
     }
 
@@ -279,7 +265,6 @@ class MapSelectActivity : BindingActivity<ActivityMapSelectBinding>(R.layout.act
     ) {
         if (locationSource.onRequestPermissionsResult(requestCode, permissions, grantResults)) {
             if (!locationSource.isActivated) { // 권한 거부됨
-                Timber.d("여기?")
                 naverMap.locationTrackingMode = LocationTrackingMode.None
             }
             return
