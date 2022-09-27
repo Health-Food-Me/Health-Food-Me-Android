@@ -13,6 +13,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:paddingHorizontal="@dimen/size_spacing_20"
+        android:background="@{data.category? @drawable/rectangle_border_bottom_white_grey : null}"
         android:layout_height="wrap_content">
 
         <TextView
