@@ -2,11 +2,10 @@ package org.helfoome.presentation.drawer
 
 import android.app.Activity
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.KeyEvent
 import androidx.activity.viewModels
-import com.naver.maps.map.app.LegalNoticeActivity
-import com.naver.maps.map.app.OpenSourceLicenseActivity
 import dagger.hilt.android.AndroidEntryPoint
 import org.helfoome.R
 import org.helfoome.databinding.ActivitySettingBinding
@@ -32,18 +31,33 @@ class SettingActivity : BindingActivity<ActivitySettingBinding>(R.layout.activit
 
     private fun initListener() {
 
-        binding.tvWithdrawal.setOnClickListener {
-            startActivity(Intent(this, WithdrawalActivity::class.java))
+        with(binding) {
+            tvWithdrawal.setOnClickListener {
+                startActivity(Intent(this@SettingActivity, WithdrawalActivity::class.java))
+            }
+            tvInquiry.setOnClickListener {
+                sendGmail()
+            }
+            tvDeclaration.setOnClickListener {
+                sendGmail()
+            }
+            ivBack.setOnClickListener {
+                setResult(Activity.RESULT_OK)
+                finish()
+            }
         }
-        binding.tvNaverMapNotice.setOnClickListener {
-            startActivity(Intent(this, LegalNoticeActivity::class.java))
-        }
-        binding.tvNaverMapOpenSource.setOnClickListener {
-            startActivity(Intent(this, OpenSourceLicenseActivity::class.java))
-        }
-        binding.ivBack.setOnClickListener {
-            setResult(Activity.RESULT_OK)
-            finish()
-        }
+
+    }
+
+    private fun sendGmail() {
+        val emailIntent = Intent(
+            Intent.ACTION_SENDTO,
+            Uri.fromParts(
+                "mailto", "abc@gmail.com", null
+            )
+        )
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Subject")
+        emailIntent.putExtra(Intent.EXTRA_TEXT, "Body")
+        startActivity(Intent.createChooser(emailIntent, "Send email..."))
     }
 }
