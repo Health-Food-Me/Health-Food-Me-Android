@@ -8,10 +8,14 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import org.helfoome.R
 import org.helfoome.databinding.FragmentRestaurantDetailBinding
 import org.helfoome.presentation.MainViewModel
@@ -171,6 +175,14 @@ class RestaurantDetailFragment : BindingFragment<FragmentRestaurantDetailBinding
                 binding.btnWriteReview.isEnabled = false
             }
         }
+
+        mainViewModel.isDetailCollapsed
+            .flowWithLifecycle(viewLifecycleOwner.lifecycle)
+            .onEach { isCollapsed ->
+                if (isCollapsed)
+                    binding.layoutAppBar.setExpanded(true, false)
+            }
+            .launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
     override fun onStart() {

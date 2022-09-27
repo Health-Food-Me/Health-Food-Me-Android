@@ -151,6 +151,8 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
                     }
                     binding.isMainNotVisible = false
                 }
+
+                mainViewModel.setIsDetailCollapsed(newState == BottomSheetBehavior.STATE_COLLAPSED)
             }
         }
 
