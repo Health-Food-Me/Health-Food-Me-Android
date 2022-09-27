@@ -264,9 +264,9 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
 
     private fun initObservers() {
         viewModel.scrapList.observe(this) { markers ->
-            if (markers.isEmpty())
+            if (markers.isEmpty()) {
                 showScarpSnackBar("스크랩한 식당이 없습니다", 50)
-            else {
+            } else {
                 showScarpSnackBar("${markers.size}개의 스크랩 식당이 있습니다", 43)
                 markerList.forEach {
                     it.first.map = null
