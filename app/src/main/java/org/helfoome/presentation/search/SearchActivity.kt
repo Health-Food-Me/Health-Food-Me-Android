@@ -559,7 +559,8 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
                     LatLng(
                         locationSource.lastLocation?.latitude ?: MainActivity.GANGNAM_X,
                         locationSource.lastLocation?.longitude ?: MainActivity.GANGNAM_Y
-                    ), 14.0
+                    ),
+                    14.0
                 )
         }
 
@@ -569,7 +570,8 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
                     LatLng(
                         locationSource.lastLocation?.latitude ?: MainActivity.GANGNAM_X,
                         locationSource.lastLocation?.longitude ?: MainActivity.GANGNAM_Y
-                    ), 14.0
+                    ),
+                    14.0
                 )
         }
     }

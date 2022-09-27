@@ -429,7 +429,8 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                     LatLng(
                         locationSource.lastLocation?.latitude ?: GANGNAM_X,
                         locationSource.lastLocation?.longitude ?: GANGNAM_Y
-                    ), 14.0
+                    ),
+                    14.0
                 )
         }
     }
