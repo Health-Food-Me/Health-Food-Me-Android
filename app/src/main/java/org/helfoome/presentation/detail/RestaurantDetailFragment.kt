@@ -179,7 +179,7 @@ class RestaurantDetailFragment : BindingFragment<FragmentRestaurantDetailBinding
         mainViewModel.isDetailCollapsed
             .flowWithLifecycle(viewLifecycleOwner.lifecycle)
             .onEach { isCollapsed ->
-                if(isCollapsed)
+                if (isCollapsed)
                     binding.layoutAppBar.setExpanded(true, false)
             }
             .launchIn(viewLifecycleOwner.lifecycleScope)
