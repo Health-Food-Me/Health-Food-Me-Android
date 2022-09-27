@@ -1,5 +1,5 @@
 [versions]
-androidStudioGradlePlugin = "7.2.1"
+androidStudioGradlePlugin = "7.3.0"
 
 # AndroiX
 fragment = "1.4.1"
