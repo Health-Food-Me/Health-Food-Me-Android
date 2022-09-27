@@ -40,8 +40,12 @@ class MyScrapActivity : BindingActivity<ActivityMyScrapBinding>(R.layout.activit
 
     private fun initView() {
         intent.getParcelableArrayListExtra<MarkerInfo>(MARKER_INFO)?.let { viewModel.setMapInfo(it) }
-        viewModel.getScrapList()
         initAdapter()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        viewModel.getScrapList()
     }
 
     private fun initClickEvent() {
