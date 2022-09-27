@@ -36,6 +36,7 @@ import org.helfoome.util.ResolutionMetrics
 import org.helfoome.util.SnackBarTopDown
 import org.helfoome.util.binding.BindingActivity
 import org.helfoome.util.ext.replace
+import timber.log.Timber
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -243,7 +244,8 @@ class MapSelectActivity : BindingActivity<ActivityMapSelectBinding>(R.layout.act
 
             minZoom = 5.0
             maxZoom = 20.0
-            this.locationSource = this.locationSource
+            this.locationSource = this@MapSelectActivity.locationSource
+            locationTrackingMode = LocationTrackingMode.NoFollow
 
             if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                 cameraPosition = CameraPosition(
@@ -261,7 +263,12 @@ class MapSelectActivity : BindingActivity<ActivityMapSelectBinding>(R.layout.act
 
         binding.fabLocationMain.setOnClickListener {
             naverMap.cameraPosition =
-                CameraPosition(LatLng(GANGNAM_X, GANGNAM_Y), 14.0)
+                CameraPosition(
+                    LatLng(
+                        locationSource.lastLocation?.latitude ?: GANGNAM_X,
+                        locationSource.lastLocation?.longitude ?: GANGNAM_Y
+                    ), 14.0
+                )
         }
     }
 
@@ -272,6 +279,7 @@ class MapSelectActivity : BindingActivity<ActivityMapSelectBinding>(R.layout.act
     ) {
         if (locationSource.onRequestPermissionsResult(requestCode, permissions, grantResults)) {
             if (!locationSource.isActivated) { // 권한 거부됨
+                Timber.d("여기?")
                 naverMap.locationTrackingMode = LocationTrackingMode.None
             }
             return
