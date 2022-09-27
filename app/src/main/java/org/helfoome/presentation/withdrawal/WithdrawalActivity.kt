@@ -7,14 +7,11 @@ import dagger.hilt.android.AndroidEntryPoint
 import org.helfoome.R
 import org.helfoome.databinding.ActivityWithdrawalBinding
 import org.helfoome.presentation.login.LoginActivity
-import org.helfoome.util.ResolutionMetrics
 import org.helfoome.util.binding.BindingActivity
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class WithdrawalActivity : BindingActivity<ActivityWithdrawalBinding>(R.layout.activity_withdrawal) {
-    @Inject
-    lateinit var resolutionMetrics: ResolutionMetrics
+
     private val withdrawalViewModel: WithdrawalViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,12 +33,13 @@ class WithdrawalActivity : BindingActivity<ActivityWithdrawalBinding>(R.layout.a
     }
 
     private fun initListener() {
-        binding.ivBack.setOnClickListener {
-            finish()
-        }
-
-        binding.btConfirm.setOnClickListener {
-            WithdrawFragmentDialog().show(supportFragmentManager, "WithdrawDialog")
+        with(binding) {
+            ivBack.setOnClickListener {
+                finish()
+            }
+            btConfirm.setOnClickListener {
+                WithdrawFragmentDialog().show(supportFragmentManager, "WithdrawDialog")
+            }
         }
     }
 }
