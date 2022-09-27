@@ -243,7 +243,8 @@ class MapSelectActivity : BindingActivity<ActivityMapSelectBinding>(R.layout.act
 
             minZoom = 5.0
             maxZoom = 20.0
-            this.locationSource = this.locationSource
+            this.locationSource = this@MapSelectActivity.locationSource
+            locationTrackingMode = LocationTrackingMode.NoFollow
 
             if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                 cameraPosition = CameraPosition(
@@ -261,7 +262,13 @@ class MapSelectActivity : BindingActivity<ActivityMapSelectBinding>(R.layout.act
 
         binding.fabLocationMain.setOnClickListener {
             naverMap.cameraPosition =
-                CameraPosition(LatLng(GANGNAM_X, GANGNAM_Y), 14.0)
+                CameraPosition(
+                    LatLng(
+                        locationSource.lastLocation?.latitude ?: GANGNAM_X,
+                        locationSource.lastLocation?.longitude ?: GANGNAM_Y
+                    ),
+                    14.0
+                )
         }
     }
 

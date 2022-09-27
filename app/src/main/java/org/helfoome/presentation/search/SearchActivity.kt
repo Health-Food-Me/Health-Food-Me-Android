@@ -538,13 +538,13 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
 
             minZoom = 5.0
             maxZoom = 20.0
-            this.locationSource = this.locationSource
+            this.locationSource = this@SearchActivity.locationSource
 
             if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                 cameraPosition = CameraPosition(
                     LatLng(MainActivity.GANGNAM_X, MainActivity.GANGNAM_Y), 12.0
                 )
-                locationTrackingMode = LocationTrackingMode.Follow
+                locationTrackingMode = LocationTrackingMode.NoFollow
             } else {
                 cameraPosition = CameraPosition(LatLng(MainActivity.GANGNAM_X, MainActivity.GANGNAM_Y), 12.0)
             }
@@ -555,13 +555,24 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
 
         binding.btnLocation.setOnClickListener {
             naverMap.cameraPosition =
-                CameraPosition(LatLng(naverMap.cameraPosition.target.latitude, naverMap.cameraPosition.target.longitude), 14.0)
-            naverMap.locationTrackingMode = LocationTrackingMode.Follow
+                CameraPosition(
+                    LatLng(
+                        locationSource.lastLocation?.latitude ?: MainActivity.GANGNAM_X,
+                        locationSource.lastLocation?.longitude ?: MainActivity.GANGNAM_Y
+                    ),
+                    14.0
+                )
         }
+
         binding.btnLocationMain.setOnClickListener {
             naverMap.cameraPosition =
-                CameraPosition(LatLng(naverMap.cameraPosition.target.latitude, naverMap.cameraPosition.target.longitude), 14.0)
-            naverMap.locationTrackingMode = LocationTrackingMode.Follow
+                CameraPosition(
+                    LatLng(
+                        locationSource.lastLocation?.latitude ?: MainActivity.GANGNAM_X,
+                        locationSource.lastLocation?.longitude ?: MainActivity.GANGNAM_Y
+                    ),
+                    14.0
+                )
         }
     }
 
