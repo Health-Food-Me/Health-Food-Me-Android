@@ -3,13 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
-
-    </data>
-
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="wrap_content"
         android:id="@+id/layout_snackBar"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/rectangle_grey_radius_77"
         tools:context=".presentation.drawer.ProfileModifyActivity">
