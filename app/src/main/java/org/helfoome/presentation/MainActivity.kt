@@ -163,8 +163,10 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
     private fun startScrapEvent(isSelected: Boolean) {
         if (isSelected)
             viewModel.getScrapList()
-        else
+        else {
+            binding.cgFoodTag.clearCheck()
             viewModel.getMapInfo(naverMap.cameraPosition.target)
+        }
     }
 
     private fun initListeners() {
