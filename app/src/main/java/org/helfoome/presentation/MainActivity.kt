@@ -263,7 +263,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
     }
 
     private fun initObservers() {
-        viewModel.scrapList.observe(this) { markers ->
+ viewModel.scrapList.observe(this) { markers ->
             if (markers.isEmpty())
                 showScarpSnackBar("스크랩한 식당이 없습니다", 50)
             else {
@@ -329,8 +329,9 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                         )
                         map = naverMap
 
-                        isHideCollidedMarkers = true
                         captionText = marker.name
+
+                        isHideCollidedCaptions = true
 
                         setOnClickListener {
                             with(viewModel) {
