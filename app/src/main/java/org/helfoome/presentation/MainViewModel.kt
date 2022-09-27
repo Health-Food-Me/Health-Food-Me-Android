@@ -97,6 +97,10 @@ class MainViewModel @Inject constructor(
     val behaviorState: EventFlow<Int>
         get() = _behaviorState
 
+    private val _isDetailCollapsed = MutableEventFlow<Boolean>()
+    val isDetailCollapsed: EventFlow<Boolean>
+        get() = _isDetailCollapsed
+
     init {
         fetchHFMReviewList()
         fetchBlogReviewList()
@@ -121,6 +125,12 @@ class MainViewModel @Inject constructor(
     fun setBehaviorState(behaviorState: Int) {
         viewModelScope.launch {
             _behaviorState.emit(behaviorState)
+        }
+    }
+
+    fun setIsDetailCollapsed(isCollapsed: Boolean) {
+        viewModelScope.launch {
+            _isDetailCollapsed.emit(isCollapsed)
         }
     }
 
