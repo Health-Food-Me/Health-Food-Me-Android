@@ -329,8 +329,9 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                         )
                         map = naverMap
 
-                        isHideCollidedMarkers = true
                         captionText = marker.name
+
+                        isHideCollidedCaptions = true
 
                         setOnClickListener {
                             with(viewModel) {
