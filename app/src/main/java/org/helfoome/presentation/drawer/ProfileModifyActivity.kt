@@ -12,30 +12,28 @@ import org.helfoome.util.binding.BindingActivity
 
 @AndroidEntryPoint
 class ProfileModifyActivity : BindingActivity<ActivityProfileModifyBinding>(R.layout.activity_profile_modify) {
-    private val viewModel: ProfileModifyViewModel by viewModels()
+    private val profileModifyViewModel: ProfileModifyViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding.viewModel = viewModel
+        binding.viewModel = profileModifyViewModel
 
         initListener()
         initObserve()
     }
 
     private fun initObserve() {
-        viewModel.isOverlapNickName.observe(this) {
-            if (viewModel.isOverlapNickName.value == false) {
+        profileModifyViewModel.isOverlapNickName.observe(this) {
+            if (profileModifyViewModel.isOverlapNickName.value == false) {
                 SnackBarTopDown.makeSnackBarTopDown(this, binding.snvProfileModify, "중복된 닉네임 입니다")
             }
         }
-
-        viewModel.isValidNickname.observe(this) {
-            if (viewModel.isValidNickname.value == false) {
+        profileModifyViewModel.isValidNickname.observe(this) {
+            if (profileModifyViewModel.isValidNickname.value == false) {
                 SnackBarTopDown.makeSnackBarTopDown(this, binding.snvProfileModify, "닉네임 설정 기준에 적합하지 않습니다")
             }
         }
-
-        viewModel.isProfileModify.observe(this) {
+        profileModifyViewModel.isProfileModify.observe(this) {
             if (it) {
                 setResult(Activity.RESULT_OK)
                 finish()
@@ -51,9 +49,8 @@ class ProfileModifyActivity : BindingActivity<ActivityProfileModifyBinding>(R.la
         binding.ivBack.setOnClickListener {
             finish()
         }
-
         binding.btModify.setOnClickListener {
-            viewModel.profileModify()
+            profileModifyViewModel.profileModify()
         }
     }
 }
