@@ -10,12 +10,14 @@
     <!-- Main Chip Group -->
     <string name="main_chip_group_salad">샐러드</string>
     <string name="main_chip_group_poke">포케</string>
+    <string name="main_chip_group_sandwich">샌드위치</string>
     <string name="main_chip_group_quito">키토김밥</string>
+    <string name="main_chip_group_lunch_box">도시락</string>
     <string name="main_chip_group_shabu">샤브샤브</string>
     <string name="main_chip_group_bosam">보쌈</string>
-    <string name="main_chip_group_meat">고깃집</string>
+    <string name="main_chip_group_steak">스테이크</string>
     <string name="main_chip_group_ricebowl">덮밥</string>
-    <string name="main_chip_group_sandwich">샌드위치</string>
+    <string name="main_chip_group_meat">고깃집</string>
 
     <!-- Profile -->
     <string name="profile_title">프로필 편집</string>
@@ -54,10 +56,12 @@
     <string-array name="main_chip_group">
         <item>@string/main_chip_group_salad</item>
         <item>@string/main_chip_group_poke</item>
-        <item>@string/main_chip_group_quito</item>
         <item>@string/main_chip_group_sandwich</item>
+        <item>@string/main_chip_group_quito</item>
+        <item>@string/main_chip_group_lunch_box</item>
         <item>@string/main_chip_group_shabu</item>
         <item>@string/main_chip_group_bosam</item>
+        <item>@string/main_chip_group_steak</item>
         <item>@string/main_chip_group_meat</item>
         <item>@string/main_chip_group_ricebowl</item>
     </string-array>
