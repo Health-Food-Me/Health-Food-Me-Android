@@ -240,16 +240,19 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
         GuestLoginFragmentDialog().show(supportFragmentManager, "GuestLoginDialog")
     }
 
-    private fun showScarpSnackBar(snackBarText: String) {
+    private fun showScarpSnackBar(snackBarText: String, padding: Int) {
         val view = layoutInflater.inflate(R.layout.view_snackbar, null)
         view.findViewById<TextView>(R.id.tv_snackBar).text = snackBarText
-        val snackBar = Snackbar.make(binding.layoutMain, "", 1000)
-        val layout = snackBar.view as Snackbar.SnackbarLayout
-        layout.setBackgroundColor(ContextCompat.getColor(this, android.R.color.transparent))
-        layout.setPadding(62, 0, 53, 10)
-        layout.addView(view)
-        snackBar.animationMode = ANIMATION_MODE_SLIDE
-        snackBar.show()
+        val snackBar = Snackbar.make(binding.layoutMain, snackBarText, 1000)
+        with(snackBar.view as Snackbar.SnackbarLayout) {
+            setBackgroundColor(ContextCompat.getColor(this@MainActivity, android.R.color.transparent))
+            setPadding(padding, 0, padding, 10)
+            addView(view)
+        }
+        with(snackBar) {
+            animationMode = ANIMATION_MODE_SLIDE
+            show()
+        }
     }
 
     private fun sendGmail() {
@@ -266,54 +269,54 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
 
     private fun initObservers() {
         viewModel.scrapList.observe(this) { markers ->
-            if (markers.isEmpty())
-                showScarpSnackBar("스크랩한 식당이 없습니다")
-            else
-                showScarpSnackBar("N개의 스크랩 식당이 있습니다")
-            markerList.forEach {
-                it.first.map = null
-            }
-            markerList = markers.map { marker ->
-                Pair(
-                    Marker().apply {
-                        position = LatLng(marker.latitude, marker.longitude)
-                        icon = OverlayImage.fromResource(
-                            if (marker.isDietRestaurant) R.drawable.ic_marker_green_small
-                            else R.drawable.ic_marker_red_small
-                        )
-                        map = naverMap
-
-                        isHideCollidedCaptions = true
-
-                        captionText = marker.name
-
-                        setOnClickListener {
-                            with(viewModel) {
-                                setRestaurantId(marker.id)
-                                getReviewCheck(marker.id)
-                                fetchSelectedRestaurantDetailInfo(
-                                    marker.id,
-                                    locationSource.lastLocation?.latitude ?: marker.latitude,
-                                    locationSource.lastLocation?.longitude ?: marker.longitude
-                                )
-                            }
-                            behavior.state = BottomSheetBehavior.STATE_COLLAPSED
-                            markerList.forEach {
-                                it.first.icon = OverlayImage.fromResource(
-                                    if (it.second) R.drawable.ic_marker_green_small
-                                    else R.drawable.ic_marker_red_small
-                                )
-                            }
+            if (markers.isEmpty()) {
+                showScarpSnackBar("스크랩한 식당이 없습니다", 50)
+            } else {
+                showScarpSnackBar("${markers.size}개의 스크랩 식당이 있습니다", 43)
+                markerList.forEach {
+                    it.first.map = null
+                }
+                markerList = markers.map { marker ->
+                    Pair(
+                        Marker().apply {
+                            position = LatLng(marker.latitude, marker.longitude)
                             icon = OverlayImage.fromResource(
-                                if (marker.isDietRestaurant) R.drawable.ic_marker_green_big
-                                else R.drawable.ic_marker_red_big
+                                if (marker.isDietRestaurant) R.drawable.ic_marker_green_small
+                                else R.drawable.ic_marker_red_small
                             )
-                            viewModel.markerId(this.position)?.let { id -> }
-                            true
-                        }
-                    },
-                    marker.isDietRestaurant
-                )
+                            map = naverMap
+
+                            isHideCollidedMarkers = true
+                            captionText = marker.name
+
+                            setOnClickListener {
+                                with(viewModel) {
+                                    setRestaurantId(marker.id)
+                                    getReviewCheck(marker.id)
+                                    fetchSelectedRestaurantDetailInfo(
+                                        marker.id,
+                                        locationSource.lastLocation?.latitude ?: marker.latitude,
+                                        locationSource.lastLocation?.longitude ?: marker.longitude
+                                    )
+                                }
+                                behavior.state = BottomSheetBehavior.STATE_COLLAPSED
+                                markerList.forEach {
+                                    it.first.icon = OverlayImage.fromResource(
+                                        if (it.second) R.drawable.ic_marker_green_small
+                                        else R.drawable.ic_marker_red_small
+                                    )
+                                }
+                                icon = OverlayImage.fromResource(
+                                    if (marker.isDietRestaurant) R.drawable.ic_marker_green_big
+                                    else R.drawable.ic_marker_red_big
+                                )
+                                viewModel.markerId(this.position)?.let { id -> }
+                                true
+                            }
+                        },
+                        marker.isDietRestaurant
+                    )
+                }
             }
         }
 
