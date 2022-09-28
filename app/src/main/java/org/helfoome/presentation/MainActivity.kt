@@ -200,6 +200,9 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
             btnEdit.setOnClickListener {
                 requestModifyNickname.launch(Intent(this@MainActivity, ProfileModifyActivity::class.java))
             }
+            tvGuestLogin.setOnClickListener {
+                supportGuestLogin()
+            }
             ivLogin.setOnClickListener {
                 supportGuestLogin()
             }

@@ -17,6 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="start"
+        android:layout_marginEnd="104dp"
         android:overScrollMode="never">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -105,7 +106,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/size_spacing_20"
-                    android:layout_marginTop="52dp"
+                    android:layout_marginTop="76dp"
                     android:text="@string/main_drawer_login"
                     android:textColor="@color/gray_800"
                     android:textSize="@dimen/size_spacing_16"
@@ -130,14 +131,14 @@
                 android:layout_height="1dp"
                 android:background="@color/gray_200"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_marginTop="@{drawerViewModel.getIsGuestLogin() ? 111 : 175}" />
+                app:layout_marginTop="@{drawerViewModel.getIsGuestLogin() ? 135 : 175}" />
 
             <TextView
                 android:id="@+id/tv_scrap"
                 style="@style/TextView.Drawer.TextAppearance"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/size_spacing_20"
+                android:layout_marginHorizontal="@dimen/size_spacing_20"
                 android:layout_marginTop="@dimen/size_spacing_24"
                 android:text="@string/main_drawer_scrap"
                 android:textSize="@dimen/size_spacing_15"
@@ -147,9 +148,9 @@
             <TextView
                 android:id="@+id/tv_review"
                 style="@style/TextView.Drawer.TextAppearance"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/size_spacing_20"
+                android:layout_marginHorizontal="@dimen/size_spacing_20"
                 android:layout_marginTop="@dimen/size_spacing_20"
                 android:text="@string/main_drawer_review"
                 android:textSize="@dimen/size_spacing_15"
@@ -167,9 +168,9 @@
             <TextView
                 android:id="@+id/tv_report"
                 style="@style/TextView.Drawer.TextAppearance"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/size_spacing_20"
+                android:layout_marginHorizontal="@dimen/size_spacing_20"
                 android:layout_marginTop="@dimen/size_spacing_24"
                 android:text="@string/main_drawer_report"
                 android:textSize="@dimen/size_spacing_15"
@@ -179,9 +180,9 @@
             <TextView
                 android:id="@+id/tv_modify_report"
                 style="@style/TextView.Drawer.TextAppearance"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/size_spacing_20"
+                android:layout_marginHorizontal="@dimen/size_spacing_20"
                 android:layout_marginTop="@dimen/size_spacing_20"
                 android:text="@string/main_drawer_modify_report"
                 android:textSize="@dimen/size_spacing_15"
@@ -199,9 +200,9 @@
             <TextView
                 android:id="@+id/tv_setting"
                 style="@style/TextView.Drawer.TextAppearance"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/size_spacing_20"
+                android:layout_marginHorizontal="@dimen/size_spacing_20"
                 android:layout_marginTop="@dimen/size_spacing_24"
                 android:text="@string/main_drawer_setting"
                 android:textSize="@dimen/size_spacing_16"
@@ -210,9 +211,9 @@
 
             <TextView
                 android:id="@+id/tv_logout"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/size_spacing_20"
+                android:layout_marginHorizontal="@dimen/size_spacing_20"
                 android:layout_marginBottom="@dimen/size_spacing_28"
                 android:fontFamily="@font/notosanskr_r"
                 android:text="@string/main_drawer_logout"
