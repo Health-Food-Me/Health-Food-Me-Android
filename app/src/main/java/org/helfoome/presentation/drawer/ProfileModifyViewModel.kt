@@ -47,11 +47,9 @@ class ProfileModifyViewModel @Inject constructor(
     }
 
     private fun checkNicknameFormat() {
-
         if (!nickname.value.isNullOrBlank()) {
             val nicknamePattern =
                 Pattern.compile("^[가-힣ㄱ-ㅎa-zA-Z0-9._ -]+\$")
-
             _isValidNickname.value = nicknamePattern.matcher(nickname.value).matches()
         }
     }
