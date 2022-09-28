@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import dagger.hilt.android.AndroidEntryPoint
 import org.helfoome.R
 import org.helfoome.databinding.DialogWithdrawBinding
@@ -13,7 +13,7 @@ import org.helfoome.databinding.DialogWithdrawBinding
 @AndroidEntryPoint
 class WithdrawFragmentDialog : DialogFragment() {
 
-    private val withdrawalViewModel: WithdrawalViewModel by viewModels()
+    private val withdrawalViewModel: WithdrawalViewModel by activityViewModels()
 
     private var _binding: DialogWithdrawBinding? = null
     private val binding: DialogWithdrawBinding get() = requireNotNull(_binding)

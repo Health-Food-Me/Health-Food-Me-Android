@@ -52,7 +52,7 @@
             style="@style/TextView.Setting.TextAppearance_14"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/size_spacing_20"
+            android:layout_marginHorizontal="@dimen/size_spacing_20"
             android:layout_marginTop="@dimen/size_spacing_24"
             android:text="@string/setting_customer_support"
             app:layout_constraintStart_toStartOf="parent"
@@ -61,9 +61,9 @@
         <TextView
             android:id="@+id/tv_inquiry"
             style="@style/TextView.Setting.TextAppearance_16"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/size_spacing_20"
+            android:layout_marginHorizontal="@dimen/size_spacing_20"
             android:layout_marginTop="@dimen/size_spacing_24"
             android:text="@string/setting_inquiry"
             app:layout_constraintStart_toStartOf="parent"
@@ -72,9 +72,9 @@
         <TextView
             android:id="@+id/tv_withdrawal"
             style="@style/TextView.Setting.TextAppearance_16"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/size_spacing_20"
+            android:layout_marginHorizontal="@dimen/size_spacing_20"
             android:layout_marginTop="@dimen/size_spacing_36"
             android:text="@string/setting_withdrawal"
             android:visibility="@{viewModel.getIsGuestLogin() ? View.GONE : View.VISIBLE}"
@@ -84,64 +84,13 @@
         <TextView
             android:id="@+id/tv_declaration"
             style="@style/TextView.Setting.TextAppearance_16"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/size_spacing_20"
+            android:layout_marginHorizontal="@dimen/size_spacing_20"
             android:text="@string/setting_declaration"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_inquiry"
             app:layout_marginTop="@{viewModel.getIsGuestLogin() ? 36 : 88}" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="@{viewModel.getIsGuestLogin() ? View.GONE : View.VISIBLE}"
-            app:layout_constraintTop_toBottomOf="@id/tv_declaration">
-
-            <TextView
-                android:id="@+id/tv_terms_plicies"
-                style="@style/TextView.Setting.TextAppearance_14"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/size_spacing_20"
-                android:layout_marginTop="54dp"
-                android:text="@string/setting_terms_policies"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/tv_open_soruce_info"
-                style="@style/TextView.Setting.TextAppearance_16"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/size_spacing_20"
-                android:layout_marginTop="@dimen/size_spacing_24"
-                android:text="@string/setting_open_source_info"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_terms_plicies" />
-
-            <TextView
-                android:id="@+id/tv_naver_map_notice"
-                style="@style/TextView.Setting.TextAppearance_16"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/size_spacing_20"
-                android:layout_marginTop="@dimen/size_spacing_36"
-                android:text="@string/setting_naver_map_notice"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_open_soruce_info" />
-
-            <TextView
-                android:id="@+id/tv_naver_map_open_source"
-                style="@style/TextView.Setting.TextAppearance_16"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/size_spacing_20"
-                android:layout_marginTop="@dimen/size_spacing_36"
-                android:text="@string/setting_naver_map_open_source"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_naver_map_notice" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
