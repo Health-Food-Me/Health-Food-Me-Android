@@ -85,7 +85,7 @@
 
                     <HorizontalScrollView
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="40dp"
                         android:layout_marginTop="@dimen/size_spacing_4"
                         android:clipToPadding="false"
                         android:overScrollMode="never"
@@ -96,7 +96,7 @@
                         <com.google.android.material.chip.ChipGroup
                             android:id="@+id/cg_food_tag"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_height="34dp"
                             app:chipSpacingHorizontal="@dimen/size_spacing_10"
                             app:singleLine="true"
                             app:singleSelection="true" />

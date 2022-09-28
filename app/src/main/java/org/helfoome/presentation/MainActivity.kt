@@ -98,7 +98,10 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
         }
 
     private val String.toChip: Chip
-        get() = ChipFactory.create(layoutInflater).also { it.text = this }
+        get() = ChipFactory.create(layoutInflater).also {
+            it.text = this
+            it.elevation = 10F
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
