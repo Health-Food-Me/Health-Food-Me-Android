@@ -2,7 +2,6 @@ package org.helfoome.presentation.scrap
 
 import android.Manifest
 import android.app.Activity
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.View
@@ -35,6 +34,7 @@ import org.helfoome.util.ResolutionMetrics
 import org.helfoome.util.SnackBarTopDown
 import org.helfoome.util.binding.BindingActivity
 import org.helfoome.util.ext.replace
+import org.helfoome.util.ext.startActivity
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -121,7 +121,7 @@ class MapSelectActivity : BindingActivity<ActivityMapSelectBinding>(R.layout.act
         }
 
         binding.ibQuit.setOnClickListener {
-            startActivity(Intent(this, MainActivity::class.java))
+            startActivity<MainActivity>()
         }
     }
 
