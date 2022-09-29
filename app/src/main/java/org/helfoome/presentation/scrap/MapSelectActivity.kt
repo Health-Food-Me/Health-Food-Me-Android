@@ -167,6 +167,7 @@ class MapSelectActivity : BindingActivity<ActivityMapSelectBinding>(R.layout.act
                                 locationSource.lastLocation?.longitude ?: marker.longitude
                             )
 
+                            replace<RestaurantDetailFragment>(R.id.fragment_container_detail)
                             behavior.state = BottomSheetBehavior.STATE_COLLAPSED
                             markerList.forEach {
                                 it.first.icon = OverlayImage.fromResource(

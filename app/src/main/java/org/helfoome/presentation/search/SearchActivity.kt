@@ -386,6 +386,7 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
                                                     marker.longitude
                                                 )
 
+                                                replace<RestaurantDetailFragment>(R.id.fragment_container_detail)
                                                 behavior.state = BottomSheetBehavior.STATE_COLLAPSED
                                                 binding.isMainNotVisible = true
                                                 markerList.forEach {

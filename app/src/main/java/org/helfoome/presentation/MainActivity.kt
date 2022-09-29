@@ -114,8 +114,6 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
         initNaverMap()
         initListeners()
         initObservers()
-
-        replace<RestaurantDetailFragment>(R.id.fragment_container_detail)
     }
 
     private fun provideChipClickListener(chip: Chip) =
@@ -310,6 +308,8 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                                         locationSource.lastLocation?.longitude ?: marker.longitude
                                     )
                                 }
+
+                                replace<RestaurantDetailFragment>(R.id.fragment_container_detail)
                                 behavior.state = BottomSheetBehavior.STATE_COLLAPSED
                                 markerList.forEach {
                                     it.first.icon = OverlayImage.fromResource(
@@ -321,6 +321,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                                     if (marker.isDietRestaurant) R.drawable.ic_marker_green_big
                                     else R.drawable.ic_marker_red_big
                                 )
+
                                 viewModel.markerId(this.position)?.let { id -> }
                                 true
                             }
@@ -360,6 +361,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                                 )
                             }
 
+                            replace<RestaurantDetailFragment>(R.id.fragment_container_detail)
                             behavior.state = BottomSheetBehavior.STATE_COLLAPSED
                             markerList.forEach {
                                 it.first.icon = OverlayImage.fromResource(
