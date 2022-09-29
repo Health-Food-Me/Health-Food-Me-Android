@@ -3,10 +3,10 @@ def hasApplicationPlugin = pluginManager.hasPlugin("com.android.application")
 
 if (hasLibraryPlugin || hasApplicationPlugin) {
     android {
-        compileSdk = 32
+        compileSdk = 33
         buildToolsVersion = "30.0.3"
         defaultConfig {
-            targetSdk = 32
+            targetSdk = 33
             minSdk = 26
             if (hasLibraryPlugin) {
                 consumerProguardFiles("consumer-rules.pro")
