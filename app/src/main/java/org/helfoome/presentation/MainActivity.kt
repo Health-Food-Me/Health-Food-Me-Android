@@ -163,6 +163,11 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
         }
     }
 
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        binding.layoutDrawer.close()
+    }
+
     private fun startScrapEvent(isSelected: Boolean) {
         if (isSelected)
             viewModel.getScrapList()
