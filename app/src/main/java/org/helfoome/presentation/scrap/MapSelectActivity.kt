@@ -3,7 +3,6 @@ package org.helfoome.presentation.scrap
 import android.Manifest
 import android.app.Activity
 import android.content.Intent
-import android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.View
@@ -122,12 +121,7 @@ class MapSelectActivity : BindingActivity<ActivityMapSelectBinding>(R.layout.act
         }
 
         binding.ibQuit.setOnClickListener {
-            startActivity(
-                Intent(this, MainActivity::class.java).apply {
-                    // TODO : CLEAR_TOP 말고 다른 인텐트 필터 적용 필요
-                    addFlags(FLAG_ACTIVITY_CLEAR_TOP)
-                }
-            )
+            startActivity(Intent(this, MainActivity::class.java))
         }
     }
 
