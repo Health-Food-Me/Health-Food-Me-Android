@@ -82,7 +82,10 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
                     )
                 }
             }
-            mainViewModel.fetchSelectedRestaurantDetailInfo(restaurantId, it.latitude, it.longitude)
+            mainViewModel.fetchSelectedRestaurantDetailInfo(restaurantId,
+                locationSource.lastLocation?.latitude ?: it.latitude,
+                locationSource.lastLocation?.longitude ?: it.longitude)
+            mainViewModel.setSelectedLocationPoint(it.latitude, it.longitude)
         }
         searchViewModel.setDetail(true)
     }
@@ -106,9 +109,10 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
 
             mainViewModel.fetchSelectedRestaurantDetailInfo(
                 restaurantId,
-                latitude,
-                longitude
+                locationSource.lastLocation?.latitude ?: latitude,
+                locationSource.lastLocation?.longitude ?:longitude
             )
+            mainViewModel.setSelectedLocationPoint(latitude, longitude)
 
             searchViewModel.setDetail(true)
         }
@@ -382,9 +386,10 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
                                                 mainViewModel.getReviewCheck(marker.id)
                                                 mainViewModel.fetchSelectedRestaurantDetailInfo(
                                                     marker.id,
-                                                    marker.latitude,
-                                                    marker.longitude
+                                                    locationSource.lastLocation?.latitude ?: marker.latitude,
+                                                    locationSource.lastLocation?.longitude ?: marker.longitude
                                                 )
+                                                mainViewModel.setSelectedLocationPoint(marker.latitude, marker.longitude)
 
                                                 replace<RestaurantDetailFragment>(R.id.fragment_container_detail)
                                                 behavior.state = BottomSheetBehavior.STATE_COLLAPSED

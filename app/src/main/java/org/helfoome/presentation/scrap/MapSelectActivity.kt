@@ -146,6 +146,7 @@ class MapSelectActivity : BindingActivity<ActivityMapSelectBinding>(R.layout.act
                                 locationSource.lastLocation?.latitude ?: marker.latitude,
                                 locationSource.lastLocation?.longitude ?: marker.longitude
                             )
+                            viewModel.setSelectedLocationPoint(marker.latitude, marker.longitude)
 
                             behavior.state = BottomSheetBehavior.STATE_COLLAPSED
                         } else {
@@ -166,6 +167,7 @@ class MapSelectActivity : BindingActivity<ActivityMapSelectBinding>(R.layout.act
                                 locationSource.lastLocation?.latitude ?: marker.latitude,
                                 locationSource.lastLocation?.longitude ?: marker.longitude
                             )
+                            viewModel.setSelectedLocationPoint(marker.latitude, marker.longitude)
 
                             replace<RestaurantDetailFragment>(R.id.fragment_container_detail)
                             behavior.state = BottomSheetBehavior.STATE_COLLAPSED

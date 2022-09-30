@@ -216,14 +216,17 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    fun fetchSelectedRestaurantDetailInfo(restaurantId: String, latitude: Double, longitude: Double) {
+    /** @param slat : 유저의 위치좌표 중 위도
+     * @param slng : 유저의 위치좌표 중 경도
+     * */
+    fun fetchSelectedRestaurantDetailInfo(restaurantId: String, slat: Double, slng: Double) {
         // TODO 추후 매개변수로 좌표값을 받아 해당 좌표 음식점 정보를 불러오기
         viewModelScope.launch {
             val userId = if (hfmSharedPreference.isGuestLogin) "browsing" else hfmSharedPreference.id
             val restaurantInfo =
-                restaurantRepository.fetchRestaurantDetail(restaurantId, userId, latitude, longitude).getOrNull()
+                restaurantRepository.fetchRestaurantDetail(restaurantId, userId, slat, slng).getOrNull()
             restaurantInfo?.let {
-                _selectedRestaurant.postValue(it)
+                _selectedRestaurant.value = it
             }
 
             // 외식대처법 카테고리가 2개 이상인 경우, 인덱스 1이상에 해당하는 카테고리 클릭 후 새 레스토랑 핀을 클릭 할 경우, 선택된 외식대처법 카테고리 인덱스를 디폴트인 0으로 돌려놓기 위함. (새로고침)
@@ -274,6 +277,10 @@ class MainViewModel @Inject constructor(
         _reviewType.value = Event(reviewType)
     }
 
+    /**
+     * @param latitude : 선택한 레스토랑의 위치정보 중 위도
+     * @param longitude : 선택한 레스토랑의 위치정보 중 경도
+     * */
     fun setSelectedLocationPoint(latitude: Double, longitude: Double) {
         _selectedRestaurantPoint.value = LocationPointInfo(latitude, longitude)
     }

@@ -27,29 +27,37 @@ class MapSelectionBottomDialogFragment : BottomSheetDialogFragment() {
         savedInstanceState: Bundle?,
     ): View {
         _binding = DialogMapSelectionBinding.inflate(inflater, container, false)
+        startPoint = viewModel.currentPoint.value
+        endPoint = viewModel.selectedRestaurantPoint.value
+
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        startPoint = viewModel.currentPoint.value
-        endPoint = viewModel.selectedRestaurantPoint.value
-
         addListeners()
     }
 
     private fun addListeners() {
         binding.tvKakao.setOnClickListener {
-            if (startPoint == null && endPoint == null) return@setOnClickListener
-            val kakaoMapScheme =
+            if (endPoint == null) return@setOnClickListener
+            val kakaoMapScheme = if (startPoint == null) {
+                "kakaomap://route?ep=${endPoint!!.lat},${endPoint!!.lng}&by=PUBLICTRANSIT"
+            } else {
                 "kakaomap://route?sp=${startPoint!!.lat},${startPoint!!.lng}&ep=${endPoint!!.lat},${endPoint!!.lng}&by=PUBLICTRANSIT"
+            }
+
             moveToUrl(kakaoMapScheme, "market://details?id=net.daum.android.map")
         }
         binding.tvNaver.setOnClickListener {
-            if (startPoint == null && endPoint == null) return@setOnClickListener
-            val naverMapScheme =
+            if (endPoint == null) return@setOnClickListener
+            val naverMapScheme = if (startPoint == null) {
+                "nmap://route/public?dlat=${endPoint!!.lat}&dlng=${endPoint!!.lng}&appname=org.sopt.healfoomedemo"
+            } else {
                 "nmap://route/public?slat=${startPoint!!.lat}&slng=${startPoint!!.lng}&dlat=${endPoint!!.lat}&dlng=${endPoint!!.lng}&appname=org.sopt.healfoomedemo"
+            }
+
             moveToUrl(naverMapScheme, "market://details?id=com.nhn.android.nmap")
         }
         binding.cancel.setOnClickListener {

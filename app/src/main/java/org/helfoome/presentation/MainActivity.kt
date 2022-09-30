@@ -307,6 +307,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                                         locationSource.lastLocation?.latitude ?: marker.latitude,
                                         locationSource.lastLocation?.longitude ?: marker.longitude
                                     )
+                                    setSelectedLocationPoint(marker.latitude, marker.longitude)
                                 }
 
                                 replace<RestaurantDetailFragment>(R.id.fragment_container_detail)
@@ -359,6 +360,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                                     locationSource.lastLocation?.latitude ?: marker.latitude,
                                     locationSource.lastLocation?.longitude ?: marker.longitude
                                 )
+                                setSelectedLocationPoint(marker.latitude, marker.longitude)
                             }
 
                             replace<RestaurantDetailFragment>(R.id.fragment_container_detail)
