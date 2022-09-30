@@ -211,4 +211,5 @@
     <string name="friday">금요일</string>
     <string name="saturday">토요일</string>
     <string name="sunday">일요일</string>
+    <string name="setting_privacy_policy">개인정보 취급방침</string>
 </resources>

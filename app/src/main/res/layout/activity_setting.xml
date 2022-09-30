@@ -58,16 +58,28 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/line_first" />
 
+        <!-- TODO 배치 수정 필요 -->
+        <TextView
+            android:id="@+id/tv_privacy_policy"
+            style="@style/TextView.Setting.TextAppearance_16"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_spacing_24"
+            android:layout_marginHorizontal="@dimen/size_spacing_20"
+            android:text="@string/setting_privacy_policy"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_customer_support" />
+
         <TextView
             android:id="@+id/tv_inquiry"
             style="@style/TextView.Setting.TextAppearance_16"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/size_spacing_20"
-            android:layout_marginTop="@dimen/size_spacing_24"
+            android:layout_marginTop="@dimen/size_spacing_36"
             android:text="@string/setting_inquiry"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_customer_support" />
+            app:layout_constraintTop_toBottomOf="@id/tv_privacy_policy" />
 
         <TextView
             android:id="@+id/tv_withdrawal"
