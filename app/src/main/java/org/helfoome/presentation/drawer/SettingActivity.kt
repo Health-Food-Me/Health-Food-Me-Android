@@ -66,8 +66,12 @@ class SettingActivity : BindingActivity<ActivitySettingBinding>(R.layout.activit
 
     private fun goToPrivacyPolicyPage() {
         try {
-            startActivity(Intent(Intent.ACTION_VIEW,
-                Uri.parse("https://chipped-hamburger-edb.notion.site/v-1-0-12ab557bcb7e45fe9308ad17177828d0")))
+            startActivity(
+                Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse("https://chipped-hamburger-edb.notion.site/v-1-0-12ab557bcb7e45fe9308ad17177828d0")
+                )
+            )
             return
         } catch (e: ActivityNotFoundException) {
             e.printStackTrace()
