@@ -82,9 +82,11 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
                     )
                 }
             }
-            mainViewModel.fetchSelectedRestaurantDetailInfo(restaurantId,
+            mainViewModel.fetchSelectedRestaurantDetailInfo(
+                restaurantId,
                 locationSource.lastLocation?.latitude ?: it.latitude,
-                locationSource.lastLocation?.longitude ?: it.longitude)
+                locationSource.lastLocation?.longitude ?: it.longitude
+            )
             mainViewModel.setSelectedLocationPoint(it.latitude, it.longitude)
         }
         searchViewModel.setDetail(true)
@@ -110,7 +112,7 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
             mainViewModel.fetchSelectedRestaurantDetailInfo(
                 restaurantId,
                 locationSource.lastLocation?.latitude ?: latitude,
-                locationSource.lastLocation?.longitude ?:longitude
+                locationSource.lastLocation?.longitude ?: longitude
             )
             mainViewModel.setSelectedLocationPoint(latitude, longitude)
 
