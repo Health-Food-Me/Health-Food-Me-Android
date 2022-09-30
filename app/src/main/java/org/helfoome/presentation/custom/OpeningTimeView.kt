@@ -29,17 +29,17 @@ class OpeningTimeView(context: Context, attrs: AttributeSet? = null) : Constrain
 
     private fun initListeners() {
         binding.btnDropdown.setOnClickListener {
-            controlVisibility()
+            controlViewAttr()
         }
         binding.layoutNextday.setOnClickListener {
-            controlVisibility()
+            controlViewAttr()
         }
         binding.tvToday.setOnClickListener {
-            controlVisibility()
+            controlViewAttr()
         }
     }
 
-    private fun controlVisibility() {
+    private fun controlViewAttr() {
         with(binding) {
             btnDropdown.isSelected = !btnDropdown.isSelected
             tvToday.typeface = resources.getFont(if (btnDropdown.isSelected) R.font.notosanskr_b else R.font.notosanskr_m)
