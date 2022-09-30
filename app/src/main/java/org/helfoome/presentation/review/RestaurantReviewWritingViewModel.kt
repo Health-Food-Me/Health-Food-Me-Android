@@ -18,7 +18,6 @@ import org.helfoome.presentation.type.GoodPointHashtagType
 import org.helfoome.presentation.type.TasteHashtagType
 import org.helfoome.util.ContentUriRequestBody
 import org.helfoome.util.Event
-import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
