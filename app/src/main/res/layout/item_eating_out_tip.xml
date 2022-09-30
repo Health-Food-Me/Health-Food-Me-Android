@@ -18,13 +18,14 @@
 
         <TextView
             android:id="@+id/tv_advise"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/size_spacing_10"
             android:layout_marginTop="1dp"
             android:fontFamily="@font/notosanskr_r"
             android:textColor="@color/gray_800"
             android:textSize="@dimen/size_spacing_12"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/iv_check"
             app:layout_constraintTop_toTopOf="@id/iv_check"
             tools:text="먹는 속도가 자연스럽게 느려져요" />
