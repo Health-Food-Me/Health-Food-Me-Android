@@ -19,7 +19,7 @@ plugins {
 android {
     defaultConfig {
         applicationId = "org.helfoome"
-        versionCode = 1
+        versionCode = 2
         versionName = "1.0.0"
         buildConfigField("String", "NAVER_CLIENT_ID", properties.getProperty("NAVER_CLIENT_ID"))
         buildConfigField("String", "NAVER_CLIENT_SECRET", properties.getProperty("NAVER_CLIENT_SECRET"))
