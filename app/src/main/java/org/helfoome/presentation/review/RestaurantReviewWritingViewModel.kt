@@ -17,6 +17,8 @@ import org.helfoome.domain.entity.MyReviewInfo
 import org.helfoome.presentation.type.GoodPointHashtagType
 import org.helfoome.presentation.type.TasteHashtagType
 import org.helfoome.util.ContentUriRequestBody
+import org.helfoome.util.Event
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -36,7 +38,7 @@ class RestaurantReviewWritingViewModel @Inject constructor(
     private val _restaurantId = MutableLiveData<String>()
     val restaurantId get() = _restaurantId
 
-    private val _reviewContent = MutableLiveData<String>()
+    private val _reviewContent = MutableLiveData<String?>()
     val reviewContent get() = _reviewContent
 
     private val _isEditMode = MutableLiveData<Boolean>()
@@ -54,8 +56,8 @@ class RestaurantReviewWritingViewModel @Inject constructor(
     private val _selectedImageList = MutableLiveData<List<Bitmap>>()
     val selectedImageList: LiveData<List<Bitmap>> get() = _selectedImageList
 
-    private val _isEnabledWritingCompleteButton = MediatorLiveData<Boolean>()
-    val isEnabledWritingCompleteButton: LiveData<Boolean> get() = _isEnabledWritingCompleteButton
+    private val _isEnabledWritingCompleteButton = MutableLiveData<Event<Boolean>>()
+    val isEnabledWritingCompleteButton: LiveData<Event<Boolean>> get() = _isEnabledWritingCompleteButton
 
     private val _isCompletedReviewUpload = MutableLiveData<Boolean>()
     val isCompletedReviewUpload: LiveData<Boolean> get() = _isCompletedReviewUpload
@@ -101,9 +103,7 @@ class RestaurantReviewWritingViewModel @Inject constructor(
     }
 
     fun checkReviewCompletion() {
-        val review = reviewContent.value?.trim()
-        _isEnabledWritingCompleteButton.value =
-            selectedTasteTag.value != null && selectedGoodPointTags.value?.containsValue(true) == true && !(review.isNullOrBlank())
+        _isEnabledWritingCompleteButton.value = Event(selectedTasteTag.value != null)
     }
 
     // TODO delete
@@ -129,7 +129,7 @@ class RestaurantReviewWritingViewModel @Inject constructor(
         image: List<Uri?>,
     ) {
         val scoreRequestBody = score.toString().toPlainRequestBody()
-        val contentRequestBody = reviewContent.value.toPlainRequestBody()
+        val contentRequestBody = (if (reviewContent.value.isNullOrBlank()) " " else reviewContent.value).toPlainRequestBody()
         val tasteRequestBody = context.getString(selectedTasteTag.value?.strRes ?: return).toPlainRequestBody()
         val goodListMultipartBody = mutableListOf<MultipartBody.Part>()
         val goodList = selectedGoodPointTags.value?.filter { it.value }?.keys?.map {
@@ -178,7 +178,7 @@ class RestaurantReviewWritingViewModel @Inject constructor(
         image: List<Uri?>,
     ) {
         val scoreRequestBody = score.toString().toPlainRequestBody()
-        val contentRequestBody = reviewContent.value.toPlainRequestBody()
+        val contentRequestBody = (if (reviewContent.value.isNullOrBlank()) " " else reviewContent.value).toPlainRequestBody()
         val tasteRequestBody = context.getString(selectedTasteTag.value?.strRes ?: return).toPlainRequestBody()
         val imageListMultipartBody = mutableListOf<MultipartBody.Part>()
 

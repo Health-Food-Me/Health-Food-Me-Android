@@ -100,7 +100,7 @@ class ReviewWritingActivity : BindingActivity<ActivityReviewWritingBinding>(R.la
 
     private fun initObservers() {
         viewModel.isEnabledWritingCompleteButton.observe(this) { isEnabled ->
-            if (isEnabled) {
+            if (isEnabled.peekContent()) {
                 setResult(Activity.RESULT_OK)
                 viewModel.uploadReview(context, binding.ratingBar.rating, galleryImageAdapter.imageList)
             } else {
