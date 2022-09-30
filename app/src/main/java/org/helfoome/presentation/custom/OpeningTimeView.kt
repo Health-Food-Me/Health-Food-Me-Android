@@ -5,6 +5,7 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
+import org.helfoome.R
 import org.helfoome.databinding.ViewOpeningTimeBinding
 import org.helfoome.util.DateUtil
 
@@ -41,6 +42,7 @@ class OpeningTimeView(context: Context, attrs: AttributeSet? = null) : Constrain
     private fun controlVisibility() {
         with(binding) {
             btnDropdown.isSelected = !btnDropdown.isSelected
+            tvToday.typeface = resources.getFont(if (btnDropdown.isSelected) R.font.notosanskr_b else R.font.notosanskr_m)
             layoutNextday.visibility = if (btnDropdown.isSelected) {
                 View.VISIBLE
             } else {
