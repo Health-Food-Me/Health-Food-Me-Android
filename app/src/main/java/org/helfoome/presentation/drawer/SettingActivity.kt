@@ -1,6 +1,7 @@
 package org.helfoome.presentation.drawer
 
 import android.app.Activity
+import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -45,6 +46,9 @@ class SettingActivity : BindingActivity<ActivitySettingBinding>(R.layout.activit
                 setResult(Activity.RESULT_OK)
                 finish()
             }
+            tvPrivacyPolicy.setOnClickListener {
+                goToPrivacyPolicyPage()
+            }
         }
     }
 
@@ -58,5 +62,15 @@ class SettingActivity : BindingActivity<ActivitySettingBinding>(R.layout.activit
         emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Subject")
         emailIntent.putExtra(Intent.EXTRA_TEXT, "Body")
         startActivity(Intent.createChooser(emailIntent, "Send email..."))
+    }
+
+    private fun goToPrivacyPolicyPage() {
+        try {
+            startActivity(Intent(Intent.ACTION_VIEW,
+                Uri.parse("https://chipped-hamburger-edb.notion.site/v-1-0-12ab557bcb7e45fe9308ad17177828d0")))
+            return
+        } catch (e: ActivityNotFoundException) {
+            e.printStackTrace()
+        }
     }
 }
