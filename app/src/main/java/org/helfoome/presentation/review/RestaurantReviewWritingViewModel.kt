@@ -101,8 +101,8 @@ class RestaurantReviewWritingViewModel @Inject constructor(
         _isYesClicked.value = isYesClicked
     }
 
-    fun checkReviewCompletion() {
-        _isEnabledWritingCompleteButton.value = Event(selectedTasteTag.value != null)
+    fun checkReviewCompletion(score: Float) {
+        _isEnabledWritingCompleteButton.value = Event(selectedTasteTag.value != null && score > 0.0f)
     }
 
     // TODO delete
