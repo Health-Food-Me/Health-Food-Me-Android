@@ -29,5 +29,7 @@
     <dimen name="size_spacing_30">30dp</dimen>
     <dimen name="size_spacing_32">32dp</dimen>
     <dimen name="size_spacing_36">36dp</dimen>
+    <dimen name="size_spacing_38">38dp</dimen>
+    <dimen name="size_spacing_48">48dp</dimen>
     <dimen name="size_spacing_56">56dp</dimen>
 </resources>

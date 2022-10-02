@@ -26,24 +26,34 @@
                 android:layout_marginHorizontal="@dimen/size_spacing_20"
                 android:clipToPadding="false"
                 android:paddingTop="5dp"
-                android:paddingBottom="@dimen/size_spacing_20"
+                android:paddingBottom="@dimen/size_spacing_10"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintTop_toTopOf="parent"
+                app:visibility="@{viewModel.menu.size() > 0}"
                 tools:listitem="@layout/item_menu" />
+
+            <View
+                android:id="@+id/view_empty_spacing"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_spacing_38"
+                app:layout_constraintTop_toBottomOf="@id/menu_list"
+                app:visibility="@{!viewModel.isExistMenuBoard()}"
+                tools:visibility="gone" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/layout_menu_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/size_spacing_20"
-                android:paddingBottom="@dimen/size_spacing_30"
-                app:layout_constraintTop_toBottomOf="@id/menu_list">
+                android:paddingBottom="@dimen/size_spacing_48"
+                app:layout_constraintTop_toBottomOf="@id/view_empty_spacing"
+                app:visibility="@{viewModel.isExistMenuBoard()}">
 
                 <TextView
                     android:id="@+id/tv_menu_board_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/size_spacing_6"
+                    android:layout_marginTop="@dimen/size_spacing_16"
                     android:fontFamily="@font/notosanskr_b"
                     android:text="@string/restuarant_detail_memu_view_all"
                     android:textColor="@color/gray_800"
