@@ -94,7 +94,7 @@ class ReviewWritingActivity : BindingActivity<ActivityReviewWritingBinding>(R.la
             }
         }
         binding.btnWriteReview.setOnClickListener {
-            viewModel.checkReviewCompletion()
+            viewModel.checkReviewCompletion(binding.ratingBar.rating)
         }
     }
 
