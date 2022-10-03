@@ -42,12 +42,15 @@
             android:layout_marginHorizontal="@dimen/size_spacing_20"
             android:layout_marginTop="@dimen/size_spacing_24"
             android:background="@drawable/rectangle_red_radius_8"
+            android:paddingHorizontal="103dp"
             android:paddingVertical="@dimen/size_spacing_15"
             android:stateListAnimator="@null"
             android:text="@string/withdraw_dialog_no"
             android:textColor="@color/white"
             android:textSize="@dimen/size_spacing_15"
             android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_caution_description" />
 
         <TextView
