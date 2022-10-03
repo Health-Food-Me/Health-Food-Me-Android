@@ -25,6 +25,7 @@ import org.helfoome.util.ItemDecorationUtil
 import org.helfoome.util.ResolutionMetrics
 import org.helfoome.util.binding.BindingActivity
 import org.helfoome.util.ext.closeKeyboard
+import org.helfoome.util.ext.setOnSingleClickListener
 import org.helfoome.util.ext.showToast
 import java.io.File
 import javax.inject.Inject
@@ -93,7 +94,7 @@ class ReviewWritingActivity : BindingActivity<ActivityReviewWritingBinding>(R.la
                 binding.layoutScrollView.smoothScrollBy(0, 1200)
             }
         }
-        binding.btnWriteReview.setOnClickListener {
+        binding.btnWriteReview.setOnSingleClickListener {
             viewModel.checkReviewCompletion(binding.ratingBar.rating)
         }
     }
