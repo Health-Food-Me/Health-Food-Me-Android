@@ -57,15 +57,17 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/size_spacing_20"
             android:background="@drawable/rectangle_red_radius_8"
+            android:paddingHorizontal="117dp"
             android:paddingVertical="@dimen/size_spacing_15"
             android:stateListAnimator="@null"
             android:text="@string/logout_dialog_yes"
             android:textColor="@color/white"
             android:textSize="@dimen/size_spacing_15"
             android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_caution"
             app:layout_marginTop='@{String.valueOf(alertViewModel.alertType) == "DELETE_REVIEW" ? 24 : 66}'
-
             tools:layout_marginTop="@dimen/size_spacing_56" />
 
         <androidx.appcompat.widget.AppCompatButton
@@ -77,6 +79,7 @@
             android:layout_marginTop="@dimen/size_spacing_8"
             android:layout_marginBottom="@dimen/size_spacing_24"
             android:background="@drawable/rectangle_white_radius_8"
+            android:paddingHorizontal="103dp"
             android:paddingVertical="@dimen/size_spacing_15"
             android:stateListAnimator="@null"
             android:text="@string/logout_dialog_no"
@@ -84,6 +87,8 @@
             android:textSize="@dimen/size_spacing_15"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/btn_yes" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
