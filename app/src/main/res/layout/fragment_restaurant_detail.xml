@@ -365,7 +365,7 @@
             android:layout_height="wrap_content"
             android:background="@color/white"
             android:paddingTop="@dimen/size_spacing_6"
-            android:paddingBottom="@dimen/size_spacing_28"
+            android:paddingBottom="@dimen/size_spacing_12"
             app:layout_constraintBottom_toBottomOf="parent">
 
             <androidx.appcompat.widget.AppCompatButton

@@ -80,6 +80,8 @@ class MainViewModel @Inject constructor(
     val menu: LiveData<List<MenuInfo>> = _menu
     private val _menuBoard = MutableLiveData<List<String>>()
     val menuBoard: LiveData<List<String>> = _menuBoard
+    private val _isExistMenuBoard = MutableLiveData<Boolean>()
+    val isExistMenuBoard: LiveData<Boolean> get() = _isExistMenuBoard
 
     private val _eatingOutTips = MutableLiveData<List<EatingOutTipInfo>>()
     val eatingOutTips get() = _eatingOutTips
@@ -234,8 +236,15 @@ class MainViewModel @Inject constructor(
             _eatingOutTips.value = restaurantRepository.getEatingOutTips(restaurantId)
             _menu.value = restaurantInfo?.menuList?.sortedByDescending { it.isHealfoomePick }
             fetchHFMReviewList()
-            restaurantInfo?.menuImages?.let { _menuBoard.value = it }
+            restaurantInfo?.menuImages.let {
+                if (it != null) _menuBoard.value = it
+                _isExistMenuBoard.value = isExistMenuBoard(it)
+            }
         }
+    }
+
+    fun isExistMenuBoard(boardList: List<String>?): Boolean {
+        return !(boardList.isNullOrEmpty() || boardList == listOf(""))
     }
 
     fun fetchHFMReviewList() {

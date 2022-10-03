@@ -88,7 +88,7 @@
                     android:layout_height="match_parent"
                     android:clipToPadding="false"
                     android:paddingTop="@dimen/size_spacing_20"
-                    android:paddingBottom="22dp">
+                    android:paddingBottom="@dimen/size_spacing_48">
 
                     <View
                         android:id="@+id/view_empty_spacing"
