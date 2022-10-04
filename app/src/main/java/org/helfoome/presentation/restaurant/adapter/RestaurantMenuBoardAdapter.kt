@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import org.helfoome.databinding.ItemMenuBoardBinding
 
-class RestaurantMenuBoardAdapter(private val itemClickListener: (List<String>) -> (Unit)) :
+class RestaurantMenuBoardAdapter(private val itemClickListener: (List<String>, Int) -> (Unit)) :
     RecyclerView.Adapter<RestaurantMenuBoardAdapter.MenuBoardViewHolder>() {
     private lateinit var inflater: LayoutInflater
     private val _menuBoardList = mutableListOf<String>()
@@ -19,10 +19,10 @@ class RestaurantMenuBoardAdapter(private val itemClickListener: (List<String>) -
 
     class MenuBoardViewHolder(private val binding: ItemMenuBoardBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(menuBoardImgUrl: String, menuBoardList: List<String>, itemClickListener: (List<String>) -> (Unit)) {
+        fun bind(menuBoardImgUrl: String, menuBoardList: List<String>, position: Int, itemClickListener: (List<String>, Int) -> (Unit)) {
             binding.ivImage.load(menuBoardImgUrl)
             binding.root.setOnClickListener {
-                itemClickListener(menuBoardList)
+                itemClickListener(menuBoardList, position)
             }
         }
     }
@@ -37,7 +37,7 @@ class RestaurantMenuBoardAdapter(private val itemClickListener: (List<String>) -
     }
 
     override fun onBindViewHolder(viewHolder: MenuBoardViewHolder, position: Int) {
-        viewHolder.bind(menuBoardList[position], menuBoardList, itemClickListener)
+        viewHolder.bind(menuBoardList[position], menuBoardList, position, itemClickListener)
     }
 
     override fun getItemCount(): Int = menuBoardList.size

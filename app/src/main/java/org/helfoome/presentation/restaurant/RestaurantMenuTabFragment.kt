@@ -46,16 +46,17 @@ class RestaurantMenuTabFragment : BindingFragment<FragmentMenuBinding>(R.layout.
         }
     }
 
-    private fun moveToImageViewer(menuBoardList: List<String>) {
+    private fun moveToImageViewer(menuBoardList: List<String>, position: Int) {
         Intent(requireContext(), ImageViewerActivity::class.java).apply {
             putExtra(ARG_IMAGE_LIST, menuBoardList.toTypedArray())
+            putExtra(ARG_IMAGE_POSITION, position)
         }.also {
             startActivity(it)
         }
     }
 
-
     companion object {
         private const val ARG_IMAGE_LIST = "imageList"
+        private const val ARG_IMAGE_POSITION = "imagePosition"
     }
 }

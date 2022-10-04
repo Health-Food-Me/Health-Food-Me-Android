@@ -15,8 +15,9 @@ class ImageViewerActivity : BindingActivity<ActivityImageViewerBinding>(R.layout
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        intent.getStringArrayExtra(ARG_IMAGE_LIST)?.let {
-            adapter.submitList(it.toMutableList())
+        intent.let {
+            it.getStringArrayExtra(ARG_IMAGE_LIST)?.let { adapter.submitList(it.toMutableList()) }
+            it.getIntExtra(ARG_IMAGE_POSITION, 0).let { position = it }
         }
 
         initView()
@@ -53,5 +54,6 @@ class ImageViewerActivity : BindingActivity<ActivityImageViewerBinding>(R.layout
 
     companion object {
         private const val ARG_IMAGE_LIST = "imageList"
+        private const val ARG_IMAGE_POSITION = "imagePosition"
     }
 }
