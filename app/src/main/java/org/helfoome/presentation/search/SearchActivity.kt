@@ -11,7 +11,6 @@ import android.view.View
 import android.widget.EditText
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
-import androidx.annotation.UiThread
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.add
@@ -40,7 +39,6 @@ import org.helfoome.util.ResolutionMetrics
 import org.helfoome.util.SnackBarTopDown
 import org.helfoome.util.binding.BindingActivity
 import org.helfoome.util.ext.*
-import timber.log.Timber
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -472,11 +470,11 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
     private fun initNaverMap() {
         val fm = supportFragmentManager
         val mapFragment = MapFragment.newInstance().also {
-                fm.commit {
-                    add<MapFragment>(R.id.fragment_naver_map)
-                    setReorderingAllowed(true)
-                }
+            fm.commit {
+                add<MapFragment>(R.id.fragment_naver_map)
+                setReorderingAllowed(true)
             }
+        }
 
         mapFragment.getMapAsync(this)
     }
@@ -519,7 +517,6 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
     }
 
     override fun onMapReady(naverMap: NaverMap) {
-        Timber.d("완완완완완")
         this.naverMap = naverMap.apply {
             uiSettings.isZoomControlEnabled = false
             setOnMapClickListener { _, _ ->
