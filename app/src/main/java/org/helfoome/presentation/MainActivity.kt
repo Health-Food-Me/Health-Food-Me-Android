@@ -33,6 +33,7 @@ import kotlinx.coroutines.flow.onEach
 import org.helfoome.R
 import org.helfoome.databinding.ActivityMainBinding
 import org.helfoome.presentation.alert.AlertFragmentDialog
+import org.helfoome.presentation.alert.ConfirmFragmentDialog
 import org.helfoome.presentation.detail.RestaurantDetailFragment
 import org.helfoome.presentation.drawer.MyReviewActivity
 import org.helfoome.presentation.drawer.ProfileModifyActivity
@@ -41,6 +42,7 @@ import org.helfoome.presentation.login.GuestLoginFragmentDialog
 import org.helfoome.presentation.scrap.MyScrapActivity
 import org.helfoome.presentation.search.SearchActivity
 import org.helfoome.presentation.type.AlertType
+import org.helfoome.presentation.type.ConfirmType
 import org.helfoome.presentation.type.FoodType
 import org.helfoome.util.ChipFactory
 import org.helfoome.util.ResolutionMetrics
@@ -431,12 +433,10 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
             this.locationSource = this@MainActivity.locationSource
             naverMap.locationTrackingMode = LocationTrackingMode.NoFollow
 
-            if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-                cameraPosition = CameraPosition(
-                    LatLng(GANGNAM_X, GANGNAM_Y), 12.0
-                )
+            cameraPosition = if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                CameraPosition(LatLng(GANGNAM_X, GANGNAM_Y), 12.0)
             } else {
-                cameraPosition = CameraPosition(LatLng(GANGNAM_X, GANGNAM_Y), 12.0)
+                CameraPosition(LatLng(GANGNAM_X, GANGNAM_Y), 12.0)
             }
 
             addOnCameraChangeListener { reason, _ ->
@@ -444,14 +444,11 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
         }
         viewModel.getMapInfo(naverMap.cameraPosition.target)
         binding.btnLocationMain.setOnClickListener {
-            naverMap.cameraPosition =
-                CameraPosition(
-                    LatLng(
-                        locationSource.lastLocation?.latitude ?: GANGNAM_X,
-                        locationSource.lastLocation?.longitude ?: GANGNAM_Y
-                    ),
-                    14.0
-                )
+            if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                naverMap.cameraPosition = CameraPosition(LatLng(locationSource.lastLocation?.latitude ?: GANGNAM_X, locationSource.lastLocation?.longitude ?: GANGNAM_Y), 14.0)
+            } else {
+                ConfirmFragmentDialog(ConfirmType.LOCATION_CONFIRM).show(supportFragmentManager, "ConfirmDialog")
+            }
         }
     }
 
