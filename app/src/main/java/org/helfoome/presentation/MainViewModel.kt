@@ -20,7 +20,6 @@ import org.helfoome.presentation.type.ReviewType
 import org.helfoome.util.Event
 import org.helfoome.util.EventFlow
 import org.helfoome.util.MutableEventFlow
-import org.helfoome.util.ext.markerFilter
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -140,11 +139,7 @@ class MainViewModel @Inject constructor(
         viewModelScope.launch {
             scrapListUseCase.execute(hfmSharedPreference.id)
                 .onSuccess {
-                    _scrapList.value = _location.value?.markerFilter(
-                        it.map {
-                            it.id
-                        }
-                    )
+                    _scrapList.value
                 }
                 .onFailure { }
         }

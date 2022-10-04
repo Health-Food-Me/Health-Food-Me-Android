@@ -13,7 +13,6 @@ import org.helfoome.data.local.HFMSharedPreference
 import org.helfoome.domain.entity.MarkerInfo
 import org.helfoome.domain.entity.ScrapInfo
 import org.helfoome.domain.repository.ScrapRepository
-import org.helfoome.util.ext.markerFilter
 import javax.inject.Inject
 
 @HiltViewModel
@@ -42,23 +41,13 @@ class ScrapViewModel @Inject constructor(
                         _scrapUiState.value = ScrapUiState.Empty
                     else {
                         _scrapUiState.value = it.toScrapUiState()
-                        _location.value?.let { markerInfoList ->
-                            _scrapMarkerList.value = markerInfoList.markerFilter(
-                                it.map {
-                                    it.id
-                                }
-                            )
-                        }
+                        _scrapMarkerList.value = it.map { scrapInfo -> scrapInfo.toMakerInfo() }
                     }
                 }
                 .onFailure {
                     _scrapUiState.value = ScrapUiState.Error(it.message)
                 }
         }
-    }
-
-    fun setMapInfo(markerInfo: ArrayList<MarkerInfo>) {
-        _location.value = markerInfo
     }
 
     fun putScrap(restaurantId: String) {
