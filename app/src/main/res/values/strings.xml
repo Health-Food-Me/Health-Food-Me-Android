@@ -90,6 +90,13 @@
     <string name="logout_dialog_yes">네</string>
     <string name="logout_dialog_no">아니요</string>
 
+    <!-- Confirm Dialog -->
+    <string name="confirm_dialog_confirm">확인</string>
+    <string name="confirm_dialog_network_caution">네트워킹 연결이 불안정합니다</string>
+    <string name="confirm_dialog_login_caution">로그인에 실패했습니다\n다시 시도해 주세요!</string>
+    <string name="confirm_dialog_location_caution">위치 서비스를 사용할 수 없습니다</string>
+    <string name="confirm_dialog_location_caution_description">내 주변 헬푸미 추천 식당을 보기 위해\n\'위치 접근 허용\'을 해주세요</string>
+
     <!-- Withdraw -->
     <string name="withdraw_description">탈퇴하면 내 앱 모든 데이터가 사라집니다\n서비스를 탈퇴하려면 닉네임을 입력해주세요</string>
     <string name="withdraw_nickname">푸밍이</string>
