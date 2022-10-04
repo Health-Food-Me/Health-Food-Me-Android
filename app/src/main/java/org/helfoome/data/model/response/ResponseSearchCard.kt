@@ -15,6 +15,7 @@ data class ResponseSearchCard(
     val longitude: Double,
     val latitude: Double,
     val logo: String,
+    val isDiet: Boolean
 ) {
     fun toSearchResultInfo(): SearchResultInfo {
         val distance = when (distance >= 1000) {
@@ -29,7 +30,8 @@ data class ResponseSearchCard(
             score.toFloat(),
             longitude,
             latitude,
-            distance
+            distance,
+            isDiet
         )
     }
 }
