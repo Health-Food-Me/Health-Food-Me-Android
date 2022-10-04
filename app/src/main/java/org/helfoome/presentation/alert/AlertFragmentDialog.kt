@@ -30,6 +30,11 @@ class AlertFragmentDialog(private val alertType: AlertType) : DialogFragment() {
         isCancelable = false
     }
 
+    override fun onResume() {
+        super.onResume()
+        dialog?.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = DialogAlertBinding.inflate(inflater, container, false)
         binding.alertViewModel = alertViewModel
