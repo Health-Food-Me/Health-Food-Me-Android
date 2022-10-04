@@ -10,7 +10,7 @@ import org.helfoome.presentation.type.HashtagViewType
 import org.helfoome.util.ItemDecorationUtil
 import org.helfoome.util.ItemDiffCallback
 
-class RestaurantGeneralReviewAdapter :
+class RestaurantGeneralReviewAdapter(private val itemClickListener: (List<String>, Int) -> Unit) :
     ListAdapter<HFMReviewInfo, RestaurantGeneralReviewAdapter.ReviewViewHolder>(
         ItemDiffCallback<HFMReviewInfo>(
             onContentsTheSame = { old, new -> old == new },
@@ -20,13 +20,13 @@ class RestaurantGeneralReviewAdapter :
     private lateinit var inflater: LayoutInflater
 
     class ReviewViewHolder(
-        private val binding: ItemGeneralReviewBinding
+        private val binding: ItemGeneralReviewBinding,
     ) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(review: HFMReviewInfo) {
+        fun bind(review: HFMReviewInfo, itemClickListener: (List<String>, Int) -> Unit) {
             binding.review = review
             binding.hashtag.setHashtag(review.tags, HashtagViewType.REVIEW_TAB_TYPE)
-            val adapter = RestaurantImageAdapter().apply {
+            val adapter = RestaurantImageAdapter(itemClickListener).apply {
                 imageList = review.photoList
             }
             binding.rvPhotoList.apply {
@@ -46,6 +46,6 @@ class RestaurantGeneralReviewAdapter :
     }
 
     override fun onBindViewHolder(viewHolder: ReviewViewHolder, position: Int) {
-        viewHolder.bind(getItem(position))
+        viewHolder.bind(getItem(position), itemClickListener)
     }
 }
