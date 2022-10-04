@@ -31,7 +31,6 @@ import org.helfoome.R
 import org.helfoome.databinding.ActivitySearchBinding
 import org.helfoome.domain.entity.MarkerInfo
 import org.helfoome.presentation.MainActivity
-import org.helfoome.presentation.MainActivity.Companion.MARKER_INFO
 import org.helfoome.presentation.MainViewModel
 import org.helfoome.presentation.detail.RestaurantDetailFragment
 import org.helfoome.presentation.search.adapter.*
@@ -55,7 +54,7 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
 
     private val mainViewModel: MainViewModel by viewModels()
 
-    private var markerList: List<Pair<Marker, Pair<String, Boolean>>> = listOf()
+    private var markerList: List<Pair<Marker, MarkerInfo>> = listOf()
 
     private val requestReviewWrite =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
@@ -70,27 +69,25 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
         searchViewModel.insertKeyword(name, isCategory)
         searchViewModel.setDetail(true)
         searchViewModel.setSearchMode(SearchMode.RESULT)
-        val location = mainViewModel.location.value?.filter {
-            it.id == restaurantId
-        }?.get(0)
-        location?.let {
-            markerList.forEach { marker ->
-                if (marker.second.first == it.name) {
-                    marker.first.icon = OverlayImage.fromResource(
-                        if (marker.second.second) R.drawable.ic_marker_green_big
-                        else R.drawable.ic_marker_red_big
-                    )
-                }
+
+        markerList.forEach { marker ->
+            if (marker.second.id == restaurantId) {
+                marker.first.icon = OverlayImage.fromResource(
+                    if (marker.second.isDietRestaurant) R.drawable.ic_marker_green_big
+                    else R.drawable.ic_marker_red_big
+                )
+
+                mainViewModel.fetchSelectedRestaurantDetailInfo(
+                    restaurantId,
+                    locationSource.lastLocation?.latitude ?: marker.second.latitude,
+                    locationSource.lastLocation?.longitude ?: marker.second.longitude
+                )
+                mainViewModel.setSelectedLocationPoint(marker.second.latitude, marker.second.longitude)
+                searchViewModel.setDetail(true)
             }
-            mainViewModel.fetchSelectedRestaurantDetailInfo(
-                restaurantId,
-                locationSource.lastLocation?.latitude ?: it.latitude,
-                locationSource.lastLocation?.longitude ?: it.longitude
-            )
-            mainViewModel.setSelectedLocationPoint(it.latitude, it.longitude)
         }
-        searchViewModel.setDetail(true)
     }
+
     private val recentAdapter = RecentAdapter(
         { keyword, isCategory ->
             // TODO : 서버 통신 주의, 고정 값 위도
@@ -151,7 +148,7 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
                 if (newState == BottomSheetBehavior.STATE_HIDDEN) {
                     markerList.forEach {
                         it.first.icon = OverlayImage.fromResource(
-                            if (it.second.second) R.drawable.ic_marker_green_small
+                            if (it.second.isDietRestaurant) R.drawable.ic_marker_green_small
                             else R.drawable.ic_marker_red_small
                         )
                     }
@@ -180,6 +177,7 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
         initView()
         locationSource =
             FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE)
+        mainViewModel.setLocationSource(locationSource)
         initNaverMap()
         openKeyboard()
         initClickEvent()
@@ -188,9 +186,6 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
         initTextChangeEvent()
         observeData()
         binding.viewModel = mainViewModel
-
-        locationSource = FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE)
-
         initObservers()
     }
 
@@ -200,7 +195,6 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
     }
 
     private fun initView() {
-        intent.getParcelableArrayListExtra<MarkerInfo>(MARKER_INFO)?.let { mainViewModel.setMapInfo(it) }
         behavior = BottomSheetBehavior.from(binding.layoutBottomSheet)
         behavior.state = BottomSheetBehavior.STATE_EXPANDED
         behavior.isDraggable = false
@@ -361,61 +355,53 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
                                 searchViewModel.insertKeyword(binding.etSearch.text.toString(), it.isCategory)
                             resultAdapter.submitList(it.data)
 
-                            markerList.forEach {
-                                it.first.map = null
+                            markerList.forEach { marker ->
+                                marker.first.map = null
                             }
-                            mainViewModel.location.value?.let { locationList ->
-                                markerList = locationList.markerFilter(
-                                    it.data.map { data ->
-                                        data.id
-                                    }
-                                ).map { marker ->
-                                    Pair(
-                                        Marker().apply {
-                                            position = LatLng(marker.latitude, marker.longitude)
-                                            icon = OverlayImage.fromResource(
-                                                if (marker.isDietRestaurant) R.drawable.ic_marker_green_small
-                                                else R.drawable.ic_marker_red_small
-                                            )
-                                            map = naverMap
 
-                                            isHideCollidedCaptions = true
-
-                                            captionText = marker.name
-
-                                            setOnClickListener {
-                                                searchViewModel.setDetail(true)
-                                                mainViewModel.getReviewCheck(marker.id)
-                                                mainViewModel.fetchSelectedRestaurantDetailInfo(
-                                                    marker.id,
-                                                    locationSource.lastLocation?.latitude ?: marker.latitude,
-                                                    locationSource.lastLocation?.longitude ?: marker.longitude
-                                                )
-                                                mainViewModel.setSelectedLocationPoint(marker.latitude, marker.longitude)
-
-                                                replace<RestaurantDetailFragment>(R.id.fragment_container_detail)
-                                                behavior.state = BottomSheetBehavior.STATE_COLLAPSED
-                                                binding.isMainNotVisible = true
-                                                markerList.forEach {
-                                                    it.first.icon = OverlayImage.fromResource(
-                                                        if (it.second.second) R.drawable.ic_marker_green_small
-                                                        else R.drawable.ic_marker_red_small
-                                                    )
-                                                }
-                                                icon = OverlayImage.fromResource(
-                                                    if (marker.isDietRestaurant) R.drawable.ic_marker_green_big
-                                                    else R.drawable.ic_marker_red_big
-                                                )
-                                                mainViewModel.markerId(this.position)?.let { id -> }
-                                                true
-                                            }
-                                        },
-                                        Pair(
-                                            marker.name,
-                                            marker.isDietRestaurant
+                            markerList = it.data.map { searchResultInfo -> searchResultInfo.toMakerInfo() }.map { markerInfo ->
+                                Pair(
+                                    Marker().apply {
+                                        position = LatLng(markerInfo.latitude, markerInfo.longitude)
+                                        icon = OverlayImage.fromResource(
+                                            if (markerInfo.isDietRestaurant) R.drawable.ic_marker_green_small
+                                            else R.drawable.ic_marker_red_small
                                         )
-                                    )
-                                }
+                                        map = naverMap
+
+                                        isHideCollidedCaptions = true
+
+                                        captionText = markerInfo.name
+
+                                        setOnClickListener {
+                                            searchViewModel.setDetail(true)
+                                            mainViewModel.getReviewCheck(markerInfo.id)
+                                            mainViewModel.fetchSelectedRestaurantDetailInfo(
+                                                markerInfo.id,
+                                                locationSource.lastLocation?.latitude ?: markerInfo.latitude,
+                                                locationSource.lastLocation?.longitude ?: markerInfo.longitude
+                                            )
+                                            mainViewModel.setSelectedLocationPoint(markerInfo.latitude, markerInfo.longitude)
+
+                                            replace<RestaurantDetailFragment>(R.id.fragment_container_detail)
+                                            behavior.state = BottomSheetBehavior.STATE_COLLAPSED
+                                            binding.isMainNotVisible = true
+                                            markerList.forEach { marker ->
+                                                marker.first.icon = OverlayImage.fromResource(
+                                                    if (marker.second.isDietRestaurant) R.drawable.ic_marker_green_small
+                                                    else R.drawable.ic_marker_red_small
+                                                )
+                                            }
+                                            icon = OverlayImage.fromResource(
+                                                if (markerInfo.isDietRestaurant) R.drawable.ic_marker_green_big
+                                                else R.drawable.ic_marker_red_big
+                                            )
+                                            mainViewModel.markerId(this.position)?.let { id -> }
+                                            true
+                                        }
+                                    },
+                                    markerInfo
+                                )
                             }
                         }
                         else -> {
@@ -483,13 +469,13 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
 
     private fun initNaverMap() {
         val fm = supportFragmentManager
-        val mapFragment = fm.findFragmentById(R.id.fragment_naver_map) as MapFragment?
-            ?: MapFragment.newInstance().also {
-                fm.commit {
-                    add<MapFragment>(R.id.fragment_naver_map)
-                    setReorderingAllowed(true)
-                }
+        val mapFragment = MapFragment.newInstance().also {
+            fm.commit {
+                add<MapFragment>(R.id.fragment_naver_map)
+                setReorderingAllowed(true)
             }
+        }
+
         mapFragment.getMapAsync(this)
     }
 
@@ -538,7 +524,7 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
                     behavior.state = BottomSheetBehavior.STATE_HIDDEN
                 markerList.forEach {
                     it.first.icon = OverlayImage.fromResource(
-                        if (it.second.second) R.drawable.ic_marker_green_small
+                        if (it.second.isDietRestaurant) R.drawable.ic_marker_green_small
                         else R.drawable.ic_marker_red_small
                     )
                 }

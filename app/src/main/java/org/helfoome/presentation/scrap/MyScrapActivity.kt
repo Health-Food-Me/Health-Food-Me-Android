@@ -11,7 +11,6 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import org.helfoome.R
 import org.helfoome.databinding.ActivityMyScrapBinding
-import org.helfoome.domain.entity.MarkerInfo
 import org.helfoome.presentation.MainActivity.Companion.MARKER_INFO
 import org.helfoome.presentation.scrap.adapter.MyScrapAdapter
 import org.helfoome.util.binding.BindingActivity
@@ -24,7 +23,7 @@ class MyScrapActivity : BindingActivity<ActivityMyScrapBinding>(R.layout.activit
     private val myScrapAdapter = MyScrapAdapter(
         {
             // TODO : 다음 액티비티에서 받아서 그려줌
-            startActivity<MapSelectActivity>(Pair("RESTAURANT_ID", it), Pair(MARKER_INFO, viewModel.scrapMarkerList.value))
+            startActivity<MapSelectActivity>("RESTAURANT_ID" to it, MARKER_INFO to viewModel.scrapMarkerList.value)
         }
     ) {
         viewModel.putScrap(it)
@@ -39,7 +38,6 @@ class MyScrapActivity : BindingActivity<ActivityMyScrapBinding>(R.layout.activit
     }
 
     private fun initView() {
-        intent.getParcelableArrayListExtra<MarkerInfo>(MARKER_INFO)?.let { viewModel.setMapInfo(it) }
         initAdapter()
     }
 
