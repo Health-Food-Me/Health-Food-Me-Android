@@ -15,6 +15,7 @@ data class ResponseScrapData(
     val latitude: Double,
     val longtitude: Double,
     val address: String,
+    val isDiet: Boolean
 ) {
     fun toScrapInfo() = ScrapInfo(
         id,
@@ -24,6 +25,7 @@ data class ResponseScrapData(
         true,
         latitude,
         longtitude,
-        score
+        score,
+        isDiet
     )
 }
