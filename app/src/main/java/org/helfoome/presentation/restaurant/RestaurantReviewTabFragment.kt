@@ -101,7 +101,7 @@ class RestaurantReviewTabFragment : BindingFragment<FragmentReviewBinding>(R.lay
         if (!Patterns.WEB_URL.matcher(review.url).matches()) return
         startActivity(
             Intent(requireContext(), WebViewActivity::class.java).apply {
-                addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
                 putExtra(ARG_WEB_VIEW_LINK, review.url)
             }
         )
