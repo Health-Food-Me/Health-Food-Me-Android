@@ -21,20 +21,20 @@
             android:id="@+id/iv_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/size_spacing_20"
-            android:layout_marginTop="@dimen/size_spacing_13"
+            android:layout_marginStart="5dp"
+            android:padding="@dimen/size_spacing_15"
             android:src="@drawable/ic_before"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tv_setting_title"
-            style="@style/TextView.Setting.TextAppearance_16"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/size_spacing_18"
+            android:layout_marginTop="@dimen/size_spacing_15"
+            android:fontFamily="@font/notosanskr_b"
             android:text="@string/setting_title"
-            android:textStyle="bold"
+            android:textAppearance="@style/TextView.Setting.TextAppearance_16"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -43,66 +43,79 @@
             android:id="@+id/line_first"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_marginTop="@dimen/size_spacing_13"
             android:background="@color/gray_200"
             app:layout_constraintTop_toBottomOf="@id/iv_back" />
 
         <TextView
             android:id="@+id/tv_customer_support"
-            style="@style/TextView.Setting.TextAppearance_14"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/size_spacing_20"
-            android:layout_marginTop="@dimen/size_spacing_24"
+            android:layout_marginTop="32dp"
             android:text="@string/setting_customer_support"
+            android:textAppearance="@style/TextView.Setting.TextAppearance_14"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/line_first" />
 
-        <!-- TODO 배치 수정 필요 -->
         <TextView
-            android:id="@+id/tv_privacy_policy"
-            style="@style/TextView.Setting.TextAppearance_16"
+            android:id="@+id/tv_inquiry"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/size_spacing_24"
             android:layout_marginHorizontal="@dimen/size_spacing_20"
-            android:text="@string/setting_privacy_policy"
+            android:layout_marginTop="@dimen/size_spacing_12"
+            android:paddingVertical="@dimen/size_spacing_12"
+            android:text="@string/setting_inquiry"
+            android:textAppearance="@style/TextView.Setting.TextAppearance_16"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_customer_support" />
 
         <TextView
-            android:id="@+id/tv_inquiry"
-            style="@style/TextView.Setting.TextAppearance_16"
+            android:id="@+id/tv_declaration"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/size_spacing_20"
-            android:layout_marginTop="@dimen/size_spacing_36"
-            android:text="@string/setting_inquiry"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_privacy_policy" />
-
-        <TextView
-            android:id="@+id/tv_withdrawal"
-            style="@style/TextView.Setting.TextAppearance_16"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/size_spacing_20"
-            android:layout_marginTop="@dimen/size_spacing_36"
-            android:text="@string/setting_withdrawal"
-            android:visibility="@{viewModel.getIsGuestLogin() ? View.GONE : View.VISIBLE}"
+            android:layout_marginTop="@dimen/size_spacing_12"
+            android:paddingVertical="@dimen/size_spacing_12"
+            android:text="@string/setting_declaration"
+            android:textAppearance="@style/TextView.Setting.TextAppearance_16"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_inquiry" />
 
         <TextView
-            android:id="@+id/tv_declaration"
-            style="@style/TextView.Setting.TextAppearance_16"
+            android:id="@+id/tv_withdrawal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/size_spacing_20"
-            android:text="@string/setting_declaration"
+            android:layout_marginTop="@dimen/size_spacing_12"
+            android:paddingVertical="@dimen/size_spacing_12"
+            android:text="@string/setting_withdrawal"
+            android:textAppearance="@style/TextView.Setting.TextAppearance_16"
+            android:visibility="@{viewModel.getIsGuestLogin() ? View.GONE : View.VISIBLE}"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_inquiry"
-            app:layout_marginTop="@{viewModel.getIsGuestLogin() ? 36 : 88}" />
+            app:layout_constraintTop_toBottomOf="@id/tv_declaration" />
+
+        <TextView
+            android:id="@+id/tv_terms_policies"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/size_spacing_20"
+            android:layout_marginTop="76dp"
+            android:text="@string/setting_terms_policies"
+            android:textAppearance="@style/TextView.Setting.TextAppearance_14"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_withdrawal" />
+
+        <TextView
+            android:id="@+id/tv_privacy_policy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/size_spacing_20"
+            android:layout_marginTop="@dimen/size_spacing_12"
+            android:paddingVertical="@dimen/size_spacing_12"
+            android:text="@string/setting_privacy_policy"
+            android:textAppearance="@style/TextView.Setting.TextAppearance_16"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_terms_policies" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
