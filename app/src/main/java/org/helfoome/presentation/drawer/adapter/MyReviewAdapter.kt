@@ -15,6 +15,7 @@ class MyReviewAdapter(
     private val startRestaurant: (() -> Unit),
     private val deleteReview: (String) -> Unit,
     private val editReview: (MyReviewInfo) -> Unit,
+    private val itemClickListener: (List<String>, Int) -> Unit,
 ) :
     ListAdapter<MyReviewInfo, MyReviewAdapter.MyReviewViewHolder>(
         ItemDiffCallback<MyReviewInfo>(
@@ -33,7 +34,7 @@ class MyReviewAdapter(
     }
 
     override fun onBindViewHolder(holder: MyReviewViewHolder, position: Int) {
-        holder.onBind(getItem(position), startRestaurant, deleteReview, editReview)
+        holder.onBind(getItem(position), startRestaurant, deleteReview, editReview, itemClickListener)
     }
 
     class MyReviewViewHolder(private val binding: ItemGeneralMyReviewBinding) : RecyclerView.ViewHolder(binding.root) {
@@ -42,9 +43,10 @@ class MyReviewAdapter(
             startRestaurant: () -> Unit,
             deleteClickListener: (String) -> Unit,
             editClickListener: (MyReviewInfo) -> Unit,
+            itemClickListener: (List<String>, Int) -> Unit,
         ) {
             with(binding) {
-                val adapter = RestaurantImageAdapter().apply {
+                val adapter = RestaurantImageAdapter(itemClickListener).apply {
                     imageList = myReviewData.photoList
                 }
                 rvPhotoList.apply {

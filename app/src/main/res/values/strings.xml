@@ -6,6 +6,7 @@
     <!-- Global -->
     <string name="cancel">취소</string>
     <string name="health_food_me">헬푸미</string>
+    <string name="save">저장</string>
 
     <!-- Main Chip Group -->
     <string name="main_chip_group_salad">샐러드</string>
@@ -200,6 +201,7 @@
 
     <string name="review_writing_image_upload_toast_text">사진첨부는 최대 3장만 가능합니다</string>
     <string name="review_writing_complete_condition_toast_text">별점과 맛 평가는 필수입니다.</string>
+    <string name="image_viewer_page_format">%d/3</string>
 
     <!-- Gallery -->
     <string name="tv_photo_shoot">사진 찍기</string>

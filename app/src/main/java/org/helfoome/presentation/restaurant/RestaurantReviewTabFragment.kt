@@ -11,6 +11,7 @@ import org.helfoome.R
 import org.helfoome.databinding.FragmentReviewBinding
 import org.helfoome.domain.entity.BlogReviewInfo
 import org.helfoome.presentation.MainViewModel
+import org.helfoome.presentation.common.ImageViewerActivity
 import org.helfoome.presentation.common.WebViewActivity
 import org.helfoome.presentation.restaurant.adapter.RestaurantBlogReviewAdapter
 import org.helfoome.presentation.restaurant.adapter.RestaurantGeneralReviewAdapter
@@ -25,7 +26,7 @@ class RestaurantReviewTabFragment : BindingFragment<FragmentReviewBinding>(R.lay
     @Inject
     lateinit var resolutionMetrics: ResolutionMetrics
     private val viewModel: MainViewModel by activityViewModels()
-    private val restaurantGeneralReviewAdapter = RestaurantGeneralReviewAdapter()
+    private val restaurantGeneralReviewAdapter = RestaurantGeneralReviewAdapter(::moveToImageViewer)
     private val restaurantBlogReviewAdapter = RestaurantBlogReviewAdapter(::moveToBlog)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -105,7 +106,18 @@ class RestaurantReviewTabFragment : BindingFragment<FragmentReviewBinding>(R.lay
         )
     }
 
+    private fun moveToImageViewer(reviewImageList: List<String>, position: Int) {
+        Intent(requireContext(), ImageViewerActivity::class.java).apply {
+            putExtra(ARG_IMAGE_LIST, reviewImageList.toTypedArray())
+            putExtra(ARG_IMAGE_POSITION, position)
+        }.also {
+            startActivity(it)
+        }
+    }
+
     companion object {
         private const val ARG_WEB_VIEW_LINK = "link"
+        private const val ARG_IMAGE_LIST = "imageList"
+        private const val ARG_IMAGE_POSITION = "imagePosition"
     }
 }

@@ -7,7 +7,7 @@ import coil.load
 import org.helfoome.databinding.ItemReviewImageBinding
 import org.helfoome.domain.entity.ReviewImage
 
-class RestaurantImageAdapter :
+class RestaurantImageAdapter(private val itemClickListener: (List<String>, Int) -> Unit) :
     RecyclerView.Adapter<RestaurantImageAdapter.ReviewImageViewHolder>() {
     private lateinit var inflater: LayoutInflater
     private val _imageList = mutableListOf<ReviewImage>()
@@ -20,8 +20,11 @@ class RestaurantImageAdapter :
 
     class ReviewImageViewHolder(private val binding: ItemReviewImageBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(imageUrl: String) {
+        fun bind(imageUrl: String, images: List<String>, position: Int, itemClickListener: (List<String>, Int) -> Unit) {
             binding.ivImage.load(imageUrl)
+            binding.root.setOnClickListener {
+                itemClickListener(images, position)
+            }
         }
     }
 
@@ -35,7 +38,7 @@ class RestaurantImageAdapter :
     }
 
     override fun onBindViewHolder(viewHolder: ReviewImageViewHolder, position: Int) {
-        viewHolder.bind(imageList[position].url)
+        viewHolder.bind(imageList[position].url, imageList.map { it.url }, position, itemClickListener)
     }
 
     override fun getItemCount(): Int = imageList.size

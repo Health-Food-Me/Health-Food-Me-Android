@@ -114,6 +114,10 @@
             android:name=".presentation.common.WebViewActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".presentation.common.ImageViewerActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

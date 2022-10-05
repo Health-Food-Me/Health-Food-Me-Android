@@ -11,6 +11,7 @@ import org.helfoome.R
 import org.helfoome.databinding.ActivityMyReviewBinding
 import org.helfoome.domain.entity.MyReviewInfo
 import org.helfoome.presentation.MainActivity
+import org.helfoome.presentation.common.ImageViewerActivity
 import org.helfoome.presentation.drawer.adapter.MyReviewAdapter
 import org.helfoome.presentation.review.ReviewWritingActivity
 import org.helfoome.util.ItemDecorationUtil
@@ -35,7 +36,7 @@ class MyReviewActivity : BindingActivity<ActivityMyReviewBinding>(R.layout.activ
         }
 
     private val myReviewAdapter = MyReviewAdapter(
-        ::startRestaurant, ::deleteReview, ::editReview
+        ::startRestaurant, ::deleteReview, ::editReview, ::moveToImageViewer
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -100,7 +101,18 @@ class MyReviewActivity : BindingActivity<ActivityMyReviewBinding>(R.layout.activ
         }
     }
 
+    private fun moveToImageViewer(menuBoardList: List<String>, position: Int) {
+        Intent(this, ImageViewerActivity::class.java).apply {
+            putExtra(ARG_IMAGE_LIST, menuBoardList.toTypedArray())
+            putExtra(ARG_IMAGE_POSITION, position)
+        }.also {
+            startActivity(it)
+        }
+    }
+
     companion object {
         private const val ARG_REVIEW_INFO = "reviewInfo"
+        private const val ARG_IMAGE_LIST = "imageList"
+        private const val ARG_IMAGE_POSITION = "imagePosition"
     }
 }
