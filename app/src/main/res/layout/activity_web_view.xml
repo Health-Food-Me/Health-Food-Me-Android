@@ -6,12 +6,56 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white"
-        tools:context=".presentation.common.WebViewActivity">
+        tools:background="@color/gray_550_alpha_80">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:background="@drawable/background_dialog_top_corner"
+            android:paddingHorizontal="@dimen/size_spacing_4"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:context=".presentation.common.WebViewActivity">
+
+            <ImageButton
+                android:id="@+id/btn_refresh"
+                style="@style/Button.Basic.Style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/white"
+                android:padding="@dimen/size_spacing_16"
+                android:src="@drawable/ic_refresh"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/btn_complete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/notosanskr_b"
+                android:padding="@dimen/size_spacing_16"
+                android:text="@string/complete"
+                android:textColor="@color/gray_600"
+                android:textSize="16dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <View
+            android:id="@+id/view_divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/gray_200"
+            app:layout_constraintTop_toBottomOf="@id/layout_toolbar" />
 
         <WebView
             android:id="@+id/web_view"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/view_divider" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
