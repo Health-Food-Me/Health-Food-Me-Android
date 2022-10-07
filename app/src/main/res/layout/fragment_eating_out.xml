@@ -111,7 +111,7 @@
                             android:id="@+id/layout_content"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            app:visibility="@{viewModel.eatingOutTips.size() > 0}">
+                            app:visibility="@{viewModel.eatingOutTips.size() > 0 &amp;&amp; viewModel.isExistEatingOutTips(viewModel.eatingOutTips.get(viewModel.selectedFoodCategoryIdx))}">
 
                             <ImageView
                                 android:id="@+id/iv_reason_for_recommendation"
@@ -197,7 +197,7 @@
                         <include
                             android:id="@+id/layout_empty_view"
                             layout="@layout/view_eating_out_empty"
-                            app:visibility="@{viewModel.eatingOutTips.size() == 0}"
+                            app:visibility="@{!viewModel.isExistEatingOutTips(viewModel.eatingOutTips.get(viewModel.selectedFoodCategoryIdx))}"
                             tools:visibility="gone" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
