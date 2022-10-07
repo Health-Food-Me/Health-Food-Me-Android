@@ -58,6 +58,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
     @Inject
     lateinit var resolutionMetrics: ResolutionMetrics
 
+    private var checkedChip: String? = null
     private val viewModel: MainViewModel by viewModels()
     private var category: String? = null
     private lateinit var behavior: BottomSheetBehavior<ConstraintLayout>
@@ -121,12 +122,20 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
     private fun provideChipClickListener(chip: Chip) =
         View.OnClickListener {
             if (!chip.isChecked) {
+                checkedChip = null
                 binding.cgFoodTag.clearCheck()
-                viewModel.getMapInfo(naverMap.cameraPosition.target)
+                if (!binding.btnBookmarkMain.isSelected)
+                    viewModel.getMapInfo(naverMap.cameraPosition.target)
+                else
+                    viewModel.getScrapList()
             } else {
+                checkedChip = chip.text.toString()
                 binding.cgFoodTag.clearCheck()
                 chip.isChecked = true
-                viewModel.getMapInfo(naverMap.cameraPosition.target, chip.text.toString())
+                if (!binding.btnBookmarkMain.isSelected)
+                    viewModel.getMapInfo(naverMap.cameraPosition.target, chip.text.toString())
+                else
+                    viewModel.getScrapList(checkedChip)
             }
         }
 
@@ -169,9 +178,10 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
     }
 
     private fun startScrapEvent(isSelected: Boolean) {
-        if (isSelected)
-            viewModel.getScrapList()
-        else {
+        if (isSelected) {
+            viewModel.getScrapList(checkedChip)
+        } else {
+            checkedChip = null
             binding.cgFoodTag.clearCheck()
             viewModel.getMapInfo(naverMap.cameraPosition.target)
         }
@@ -282,6 +292,9 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
         viewModel.scrapList.observe(this) { markers ->
             if (markers.isEmpty()) {
                 showScarpSnackBar("스크랩한 식당이 없습니다", 50)
+                markerList.forEach {
+                    it.first.map = null
+                }
             } else {
                 showScarpSnackBar("${markers.size}개의 스크랩 식당이 있습니다", 43)
                 markerList.forEach {
@@ -434,9 +447,9 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
             naverMap.locationTrackingMode = LocationTrackingMode.NoFollow
 
             cameraPosition = if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-                CameraPosition(LatLng(GANGNAM_X, GANGNAM_Y), 12.0)
+                CameraPosition(LatLng(EOUNJU_X, EOUNJU_Y), 12.0)
             } else {
-                CameraPosition(LatLng(GANGNAM_X, GANGNAM_Y), 12.0)
+                CameraPosition(LatLng(EOUNJU_X, EOUNJU_Y), 12.0)
             }
 
             addOnCameraChangeListener { reason, _ ->
@@ -445,7 +458,13 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
         viewModel.getMapInfo(naverMap.cameraPosition.target)
         binding.btnLocationMain.setOnClickListener {
             if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-                naverMap.cameraPosition = CameraPosition(LatLng(locationSource.lastLocation?.latitude ?: GANGNAM_X, locationSource.lastLocation?.longitude ?: GANGNAM_Y), 14.0)
+                naverMap.cameraPosition = CameraPosition(
+                    LatLng(
+                        locationSource.lastLocation?.latitude ?: EOUNJU_X,
+                        locationSource.lastLocation?.longitude ?: EOUNJU_Y
+                    ),
+                    14.0
+                )
             } else {
                 ConfirmFragmentDialog(ConfirmType.LOCATION_CONFIRM).show(supportFragmentManager, "ConfirmDialog")
             }
@@ -468,6 +487,8 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
 
     companion object {
         const val MARKER_INFO = "MARKER_INFO"
+        const val EOUNJU_X = 37.507317
+        const val EOUNJU_Y = 127.033943
         const val GANGNAM_X = 37.498095
         const val GANGNAM_Y = 127.027610
         private const val LOCATION_PERMISSION_REQUEST_CODE = 1000

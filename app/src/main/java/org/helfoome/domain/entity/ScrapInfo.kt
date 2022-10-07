@@ -7,6 +7,7 @@ data class ScrapInfo(
     val location: String,
     val isBookmarked: Boolean,
     val latitude: Double,
+    val category: List<String>,
     val longitude: Double,
     val score: Double,
     val isDiet: Boolean

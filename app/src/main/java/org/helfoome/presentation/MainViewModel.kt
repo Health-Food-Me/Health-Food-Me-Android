@@ -135,11 +135,12 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    fun getScrapList() {
+    fun getScrapList(category: String? = null) {
         viewModelScope.launch {
             scrapListUseCase.execute(hfmSharedPreference.id)
                 .onSuccess {
-                    _scrapList.value
+                    _scrapList.value = it.filter { scrapInfo -> if (category == null) true else scrapInfo.category.contains(category) }
+                        .map { scrapInfo -> scrapInfo.toMakerInfo() }
                 }
                 .onFailure { }
         }
