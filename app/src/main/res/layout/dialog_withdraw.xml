@@ -27,6 +27,7 @@
             android:layout_marginHorizontal="65dp"
             android:layout_marginTop="@dimen/size_spacing_8"
             android:gravity="center"
+            android:lineSpacingExtra="1dp"
             android:text="@string/withdraw_dialog_caution_description"
             android:textColor="@color/gray_800"
             android:textSize="@dimen/size_spacing_12"
