@@ -31,6 +31,8 @@ import org.helfoome.R
 import org.helfoome.databinding.ActivitySearchBinding
 import org.helfoome.domain.entity.MarkerInfo
 import org.helfoome.presentation.MainActivity
+import org.helfoome.presentation.MainActivity.Companion.GANGNAM_X
+import org.helfoome.presentation.MainActivity.Companion.GANGNAM_Y
 import org.helfoome.presentation.MainViewModel
 import org.helfoome.presentation.detail.RestaurantDetailFragment
 import org.helfoome.presentation.search.adapter.*
@@ -67,8 +69,15 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
     private val autoCompleteAdapter = AutoCompleteAdapter { name, restaurantId, isCategory ->
         isAutoCompleteResult = true
         searchViewModel.insertKeyword(name, isCategory)
-        searchViewModel.setDetail(true)
+        if (!isCategory)
+            searchViewModel.setDetail(true)
         searchViewModel.setSearchMode(SearchMode.RESULT)
+
+        mainViewModel.fetchSelectedRestaurantDetailInfo(
+            restaurantId,
+            locationSource.lastLocation?.latitude ?: GANGNAM_X,
+            locationSource.lastLocation?.longitude ?: GANGNAM_Y
+        )
 
         markerList.forEach { marker ->
             if (marker.second.id == restaurantId) {
@@ -83,7 +92,6 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
                     locationSource.lastLocation?.longitude ?: marker.second.longitude
                 )
                 mainViewModel.setSelectedLocationPoint(marker.second.latitude, marker.second.longitude)
-                searchViewModel.setDetail(true)
             }
         }
     }
@@ -338,6 +346,7 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
                     when (it) {
                         is SearchViewModel.SearchUiState.RecentSearch -> {
                             recentAdapter.submitList(it.data)
+                            remove()
                         }
                         is SearchViewModel.SearchUiState.AutoCompleteSearch -> {
                             with(autoCompleteAdapter) {
@@ -347,6 +356,7 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
                                 submitList(it.data.second)
                                 // TODO : 추후 더 좋은 데이터 갱신 요망
                                 autoCompleteAdapter.notifyDataSetChanged()
+                                remove()
                             }
                         }
                         is SearchViewModel.SearchUiState.Result -> {
@@ -367,7 +377,7 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
                                             if (markerInfo.isDietRestaurant) R.drawable.ic_marker_green_small
                                             else R.drawable.ic_marker_red_small
                                         )
-                                        map = naverMap
+//                                        map = naverMap
 
                                         isHideCollidedCaptions = true
 
@@ -548,25 +558,25 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
         }
 
         binding.btnLocation.setOnClickListener {
-            naverMap.cameraPosition =
-                CameraPosition(
-                    LatLng(
-                        locationSource.lastLocation?.latitude ?: MainActivity.GANGNAM_X,
-                        locationSource.lastLocation?.longitude ?: MainActivity.GANGNAM_Y
-                    ),
-                    14.0
-                )
+//            naverMap.cameraPosition =
+//                CameraPosition(
+//                    LatLng(
+//                        locationSource.lastLocation?.latitude ?: MainActivity.GANGNAM_X,
+//                        locationSource.lastLocation?.longitude ?: MainActivity.GANGNAM_Y
+//                    ),
+//                    14.0
+//                )
         }
 
         binding.btnLocationMain.setOnClickListener {
-            naverMap.cameraPosition =
-                CameraPosition(
-                    LatLng(
-                        locationSource.lastLocation?.latitude ?: MainActivity.GANGNAM_X,
-                        locationSource.lastLocation?.longitude ?: MainActivity.GANGNAM_Y
-                    ),
-                    14.0
-                )
+//            naverMap.cameraPosition =
+//                CameraPosition(
+//                    LatLng(
+//                        locationSource.lastLocation?.latitude ?: MainActivity.GANGNAM_X,
+//                        locationSource.lastLocation?.longitude ?: MainActivity.GANGNAM_Y
+//                    ),
+//                    14.0
+//                )
         }
     }
 
@@ -577,7 +587,7 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
     ) {
         if (locationSource.onRequestPermissionsResult(requestCode, permissions, grantResults)) {
             if (!locationSource.isActivated) { // 권한 거부됨
-                naverMap.locationTrackingMode = LocationTrackingMode.None
+//                naverMap.locationTrackingMode = LocationTrackingMode.None
             }
             return
         }
