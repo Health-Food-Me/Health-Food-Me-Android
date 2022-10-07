@@ -242,6 +242,10 @@ class MainViewModel @Inject constructor(
         return !(boardList.isNullOrEmpty() || boardList == listOf(""))
     }
 
+    fun isExistEatingOutTips(eatingOutTip: EatingOutTipInfo): Boolean {
+        return !(eatingOutTip.recommendTips.isNullOrEmpty() || eatingOutTip.eatingTips == listOf(""))
+    }
+
     fun fetchHFMReviewList() {
         viewModelScope.launch(Dispatchers.IO) {
             _hfmReviews.postValue(

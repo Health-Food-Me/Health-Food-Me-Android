@@ -74,7 +74,11 @@ class RestaurantDetailFragment : BindingFragment<FragmentRestaurantDetailBinding
             binding.nvDetail.isNestedScrollingEnabled = false
             binding.viewModel = viewModel
 
-            vpRestaurantDetail.adapter = restaurantDetailAdapter
+            vpRestaurantDetail.apply {
+                isUserInputEnabled = false
+                adapter = restaurantDetailAdapter
+            }
+
             TabLayoutMediator(layoutRestaurantTabMenu, vpRestaurantDetail) { tab, position ->
                 tab.text = resources.getStringArray(R.array.restaurant_detail_tab_titles)[position]
                 binding.btnWriteReview.visibility = if (position == 2) View.VISIBLE else View.INVISIBLE
