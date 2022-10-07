@@ -113,7 +113,8 @@
         <activity
             android:name=".presentation.common.WebViewActivity"
             android:exported="false"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Transparent" />
         <activity
             android:name=".presentation.common.ImageViewerActivity"
             android:exported="false"
