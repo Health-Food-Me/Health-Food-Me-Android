@@ -14,6 +14,7 @@
             android:layout_marginTop="@dimen/size_spacing_32"
             android:fontFamily="@font/notosanskr_m"
             android:gravity="center"
+            android:lineSpacingExtra="1dp"
             android:text="@string/my_review_dialog_caution"
             android:textColor="@color/gray_800"
             android:textSize="@dimen/size_spacing_16"
