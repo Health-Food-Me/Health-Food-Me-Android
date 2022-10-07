@@ -116,7 +116,7 @@ class ImageViewerActivity : BindingActivity<ActivityImageViewerBinding>(R.layout
         }
         fos?.use {
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, it)
-            showToast("이미지 다운이 완료되었습니다")
+            showToast("사진이 저장되었습니다")
         }
     }
 
