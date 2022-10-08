@@ -50,9 +50,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <fragment
-                    android:id="@+id/fragment_naver_map"
-                    android:name="com.naver.maps.map.MapFragment"
+                <com.naver.maps.map.MapView
+                    android:id="@+id/map_view"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
 
@@ -90,7 +89,7 @@
                     android:layout_marginEnd="@dimen/size_spacing_20"
                     android:backgroundTint="@color/white"
                     android:src="@drawable/ic_currentposition"
-                    android:visibility="@{isFloatingVisible? View.VISIBLE : View.GONE}"
+                    android:visibility="gone"
                     app:borderWidth="@dimen/size_spacing_0"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"

@@ -13,8 +13,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.widget.addTextChangedListener
-import androidx.fragment.app.add
-import androidx.fragment.app.commit
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.ConcatAdapter
@@ -30,7 +28,6 @@ import kotlinx.coroutines.flow.onEach
 import org.helfoome.R
 import org.helfoome.databinding.ActivitySearchBinding
 import org.helfoome.domain.entity.MarkerInfo
-import org.helfoome.presentation.MainActivity
 import org.helfoome.presentation.MainActivity.Companion.EOUNJU_X
 import org.helfoome.presentation.MainActivity.Companion.EOUNJU_Y
 import org.helfoome.presentation.MainViewModel
@@ -52,6 +49,7 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
     lateinit var resolutionMetrics: ResolutionMetrics
     private lateinit var behavior: BottomSheetBehavior<ConstraintLayout>
     private val searchViewModel: SearchViewModel by viewModels()
+    private lateinit var mapView: MapView
     private lateinit var naverMap: NaverMap
 
     private val mainViewModel: MainViewModel by viewModels()
@@ -69,8 +67,15 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
     private val autoCompleteAdapter = AutoCompleteAdapter { name, restaurantId, isCategory ->
         isAutoCompleteResult = true
         searchViewModel.insertKeyword(name, isCategory)
-        searchViewModel.setDetail(true)
+        if (!isCategory)
+            searchViewModel.setDetail(true)
         searchViewModel.setSearchMode(SearchMode.RESULT)
+
+        mainViewModel.fetchSelectedRestaurantDetailInfo(
+            restaurantId,
+            locationSource.lastLocation?.latitude ?: EOUNJU_X,
+            locationSource.lastLocation?.longitude ?: EOUNJU_Y
+        )
 
         markerList.forEach { marker ->
             if (marker.second.id == restaurantId) {
@@ -85,7 +90,6 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
                     locationSource.lastLocation?.longitude ?: marker.second.longitude
                 )
                 mainViewModel.setSelectedLocationPoint(marker.second.latitude, marker.second.longitude)
-                searchViewModel.setDetail(true)
             }
         }
     }
@@ -125,7 +129,7 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
             behavior.state = BottomSheetBehavior.STATE_EXPANDED
             behavior.isDraggable = false
         } else {
-            behavior.peekHeight = resolutionMetrics.toPixel(203)
+            behavior.peekHeight = resolutionMetrics.toPixel(135)
             behavior.state = BottomSheetBehavior.STATE_COLLAPSED
             behavior.isDraggable = true
         }
@@ -176,6 +180,8 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        mapView = binding.mapView
+        mapView.onCreate(savedInstanceState)
         initView()
         locationSource =
             FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE)
@@ -340,6 +346,7 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
                     when (it) {
                         is SearchViewModel.SearchUiState.RecentSearch -> {
                             recentAdapter.submitList(it.data)
+                            remove()
                         }
                         is SearchViewModel.SearchUiState.AutoCompleteSearch -> {
                             with(autoCompleteAdapter) {
@@ -349,9 +356,11 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
                                 submitList(it.data.second)
                                 // TODO : 추후 더 좋은 데이터 갱신 요망
                                 autoCompleteAdapter.notifyDataSetChanged()
+                                remove()
                             }
                         }
                         is SearchViewModel.SearchUiState.Result -> {
+                            remove()
                             binding.layoutRestaurantListDialog.isResultEmpty = it.data.isEmpty()
                             if (it.data.isNotEmpty())
                                 searchViewModel.insertKeyword(binding.etSearch.text.toString(), it.isCategory)
@@ -425,7 +434,7 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
                         true -> {
                             binding.etSearch.isEnabled = false
                             binding.isDetail = true
-                            behavior.peekHeight = resolutionMetrics.toPixel(236)
+                            behavior.peekHeight = resolutionMetrics.toPixel(168)
                             behavior.isDraggable = true
                             behavior.isHideable = true
                             replace<RestaurantDetailFragment>(R.id.fragment_container_detail)
@@ -470,25 +479,29 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
     }
 
     private fun initNaverMap() {
-        val fm = supportFragmentManager
-        val mapFragment = MapFragment.newInstance().also {
-            fm.commit {
-                add<MapFragment>(R.id.fragment_naver_map)
-                setReorderingAllowed(true)
-            }
-        }
-
-        mapFragment.getMapAsync(this)
+        mapView.getMapAsync(this)
     }
 
     override fun onStart() {
         super.onStart()
+        mapView.onStart()
         behavior.addBottomSheetCallback(bottomSheetCallback)
     }
 
     override fun onResume() {
         super.onResume()
+        mapView.onResume()
         mainViewModel.getProfile()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        mapView.onPause()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        mapView.onSaveInstanceState(outState)
     }
 
     override fun onRestart() {
@@ -516,6 +529,17 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
     override fun onStop() {
         super.onStop()
         behavior.removeBottomSheetCallback(bottomSheetCallback)
+        mapView.onStop()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mapView.onDestroy()
+    }
+
+    override fun onLowMemory() {
+        super.onLowMemory()
+        mapView.onLowMemory()
     }
 
     override fun onMapReady(naverMap: NaverMap) {
@@ -553,8 +577,8 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
             naverMap.cameraPosition =
                 CameraPosition(
                     LatLng(
-                        locationSource.lastLocation?.latitude ?: MainActivity.GANGNAM_X,
-                        locationSource.lastLocation?.longitude ?: MainActivity.GANGNAM_Y
+                        locationSource.lastLocation?.latitude ?: EOUNJU_X,
+                        locationSource.lastLocation?.longitude ?: EOUNJU_Y
                     ),
                     14.0
                 )
@@ -564,8 +588,8 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
             naverMap.cameraPosition =
                 CameraPosition(
                     LatLng(
-                        locationSource.lastLocation?.latitude ?: MainActivity.GANGNAM_X,
-                        locationSource.lastLocation?.longitude ?: MainActivity.GANGNAM_Y
+                        locationSource.lastLocation?.latitude ?: EOUNJU_X,
+                        locationSource.lastLocation?.longitude ?: EOUNJU_Y
                     ),
                     14.0
                 )
