@@ -8,6 +8,9 @@ import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.util.FusedLocationSource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import org.helfoome.data.local.HFMSharedPreference
 import org.helfoome.domain.entity.*
@@ -98,9 +101,9 @@ class MainViewModel @Inject constructor(
     val behaviorState: EventFlow<Int>
         get() = _behaviorState
 
-    private val _isDetailCollapsed = MutableEventFlow<Boolean>()
-    val isDetailCollapsed: EventFlow<Boolean>
-        get() = _isDetailCollapsed
+    private val _isDetailCollapsed = MutableStateFlow<Boolean>(true)
+    val isDetailCollapsed: StateFlow<Boolean>
+        get() = _isDetailCollapsed.asStateFlow()
 
     init {
         fetchHFMReviewList()
