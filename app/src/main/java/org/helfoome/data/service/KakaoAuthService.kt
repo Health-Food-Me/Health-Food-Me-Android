@@ -39,7 +39,7 @@ class KakaoAuthService @Inject constructor(
                         )
                     }
                         .onSuccess {
-                            sharedPreferences.isGuestLogin = false
+                            sharedPreferences.isLogin = true
                             val response = it.data
                             with(sharedPreferences) {
                                 accessToken = response.accessToken
@@ -84,7 +84,7 @@ class KakaoAuthService @Inject constructor(
                             )
                         }
                             .onSuccess {
-                                sharedPreferences.isGuestLogin = false
+                                sharedPreferences.isLogin = true
                                 val response = it.data
                                 with(sharedPreferences) {
                                     accessToken = response.accessToken
