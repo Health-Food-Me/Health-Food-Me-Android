@@ -125,6 +125,7 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
 
     private val searchMapTopAdapter = SearchMapTopAdapter {
         if (behavior.state == BottomSheetBehavior.STATE_COLLAPSED) {
+            remove()
             binding.isFloatingVisible = false
             behavior.state = BottomSheetBehavior.STATE_EXPANDED
             behavior.isDraggable = false
@@ -146,7 +147,6 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
                 behavior.isDraggable = this
                 binding.isLineVisible = this
                 mainViewModel.setExpendedBottomSheetDialog(newState == BottomSheetBehavior.STATE_EXPANDED)
-                behavior.isDraggable = true
                 if (newState == BottomSheetBehavior.STATE_COLLAPSED)
                     binding.isFloatingVisible = true
                 if (newState == BottomSheetBehavior.STATE_DRAGGING || newState == BottomSheetBehavior.STATE_EXPANDED)
@@ -522,7 +522,6 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
         mainViewModel.behaviorState.flowWithLifecycle(lifecycle)
             .onEach {
                 behavior.state = it
-                startSearchModeBackEvent(searchViewModel.searchMode.value)
             }
             .launchIn(lifecycleScope)
     }
