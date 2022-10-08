@@ -107,10 +107,10 @@ class MainViewModel @Inject constructor(
         fetchBlogReviewList()
     }
 
-    fun getIsGuestLogin() = hfmSharedPreference.isGuestLogin
+    fun getIsLogin() = hfmSharedPreference.isLogin
 
-    fun setIsGuestLogin(isGuestLogin: Boolean) {
-        hfmSharedPreference.isGuestLogin = isGuestLogin
+    fun setIsLogin(isLogin: Boolean) {
+        hfmSharedPreference.isLogin = isLogin
     }
 
     fun setRestaurantId(restaurantId: String) {
@@ -220,7 +220,7 @@ class MainViewModel @Inject constructor(
     fun fetchSelectedRestaurantDetailInfo(restaurantId: String, slat: Double, slng: Double) {
         // TODO 추후 매개변수로 좌표값을 받아 해당 좌표 음식점 정보를 불러오기
         viewModelScope.launch {
-            val userId = if (hfmSharedPreference.isGuestLogin) "browsing" else hfmSharedPreference.id
+            val userId = if (!hfmSharedPreference.isLogin) "browsing" else hfmSharedPreference.id
             val restaurantInfo =
                 restaurantRepository.fetchRestaurantDetail(restaurantId, userId, slat, slng).getOrNull()
             restaurantInfo?.let {
