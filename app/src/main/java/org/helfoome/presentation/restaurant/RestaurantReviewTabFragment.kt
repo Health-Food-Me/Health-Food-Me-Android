@@ -4,9 +4,14 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Patterns
 import android.view.View
+import android.widget.ScrollView
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.tabs.TabLayout
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import org.helfoome.R
 import org.helfoome.databinding.FragmentReviewBinding
 import org.helfoome.domain.entity.BlogReviewInfo
@@ -85,6 +90,14 @@ class RestaurantReviewTabFragment : BindingFragment<FragmentReviewBinding>(R.lay
 
             restaurantBlogReviewAdapter.submitList(reviews.toMutableList())
         }
+
+        viewModel.isDetailCollapsed
+            .flowWithLifecycle(viewLifecycleOwner.lifecycle)
+            .onEach { isCollapsed ->
+                if (isCollapsed)
+                    binding.svReview.fullScroll(ScrollView.FOCUS_UP)
+            }
+            .launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
     private fun showReviewEmptyView(isShown: Boolean) {
