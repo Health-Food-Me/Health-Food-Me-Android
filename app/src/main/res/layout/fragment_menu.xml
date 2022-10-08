@@ -12,7 +12,9 @@
     </data>
 
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/sv_menu"
         android:layout_width="match_parent"
+        android:overScrollMode="never"
         android:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -25,6 +27,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/size_spacing_20"
                 android:clipToPadding="false"
+                android:overScrollMode="never"
                 android:paddingTop="5dp"
                 android:paddingBottom="@dimen/size_spacing_10"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
@@ -68,6 +71,7 @@
                     android:layout_marginTop="@dimen/size_spacing_16"
                     android:clipToPadding="false"
                     android:orientation="horizontal"
+                    android:overScrollMode="never"
                     android:paddingEnd="@dimen/size_spacing_12"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintTop_toBottomOf="@id/tv_menu_board_title"
