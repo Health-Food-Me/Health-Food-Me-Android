@@ -8,7 +8,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import okhttp3.Interceptor
-import okhttp3.Request
 import okhttp3.Response
 import org.helfoome.BuildConfig
 import org.helfoome.R
