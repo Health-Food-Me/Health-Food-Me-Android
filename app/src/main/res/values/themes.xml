@@ -17,6 +17,14 @@
         <item name="bottomSheetDialogTheme">@style/BottomSheetDialog.Style</item>
     </style>
 
+    <style name="Theme.Transparent" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:backgroundDimEnabled">true</item>
+    </style>
+
     <style name="Button.Basic.Style" parent="">
         <item name="android:background">@android:color/transparent</item>
         <item name="android:minWidth">@dimen/size_spacing_0</item>

@@ -7,6 +7,7 @@
     <string name="cancel">취소</string>
     <string name="health_food_me">헬푸미</string>
     <string name="save">저장</string>
+    <string name="complete">완료</string>
 
     <!-- Main Chip Group -->
     <string name="main_chip_group_salad">샐러드</string>

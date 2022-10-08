@@ -24,6 +24,7 @@ data class ResponseScrapData(
         address,
         true,
         latitude,
+        category,
         longtitude,
         score,
         isDiet

@@ -20,7 +20,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="43dp"
+            android:layout_marginHorizontal="36dp"
             android:background="@drawable/rectangle_white_radius_15"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -31,10 +31,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/size_spacing_32"
+                android:fontFamily="@font/notosanskr_m"
                 android:text="@{alertViewModel.alertType.dialogTitle}"
                 android:textColor="@color/gray_800"
                 android:textSize="@dimen/size_spacing_16"
-                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -47,6 +47,7 @@
                 android:layout_marginHorizontal="50dp"
                 android:layout_marginTop="@dimen/size_spacing_8"
                 android:gravity="center"
+                android:lineSpacingExtra="1dp"
                 android:text='@{alertViewModel.alertType.dialogDescription}'
                 android:textColor="@color/gray_800"
                 android:textSize="@dimen/size_spacing_12"
@@ -73,8 +74,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_caution"
-                app:layout_marginTop='@{String.valueOf(alertViewModel.alertType) == "DELETE_REVIEW" ? 24 : 66}'
-                tools:layout_marginTop="@dimen/size_spacing_56" />
+                app:layout_marginTop='@{String.valueOf(alertViewModel.alertType) == "DELETE_REVIEW" ? 24 : 67}'
+                tools:layout_marginTop="67dp" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_no"

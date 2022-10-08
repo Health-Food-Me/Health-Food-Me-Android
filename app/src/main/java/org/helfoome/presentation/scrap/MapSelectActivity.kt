@@ -25,8 +25,8 @@ import org.helfoome.R
 import org.helfoome.databinding.ActivityMapSelectBinding
 import org.helfoome.domain.entity.MarkerInfo
 import org.helfoome.presentation.MainActivity
-import org.helfoome.presentation.MainActivity.Companion.GANGNAM_X
-import org.helfoome.presentation.MainActivity.Companion.GANGNAM_Y
+import org.helfoome.presentation.MainActivity.Companion.EOUNJU_X
+import org.helfoome.presentation.MainActivity.Companion.EOUNJU_Y
 import org.helfoome.presentation.MainViewModel
 import org.helfoome.presentation.detail.RestaurantDetailFragment
 import org.helfoome.presentation.restaurant.adapter.RestaurantTabAdapter
@@ -245,10 +245,10 @@ class MapSelectActivity : BindingActivity<ActivityMapSelectBinding>(R.layout.act
 
             if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                 cameraPosition = CameraPosition(
-                    LatLng(GANGNAM_X, GANGNAM_Y), 12.0
+                    LatLng(EOUNJU_X, EOUNJU_Y), 12.0
                 )
             } else {
-                cameraPosition = CameraPosition(LatLng(GANGNAM_X, GANGNAM_Y), 12.0)
+                cameraPosition = CameraPosition(LatLng(EOUNJU_X, EOUNJU_Y), 12.0)
             }
 
             addOnCameraChangeListener { reason, _ ->
@@ -261,8 +261,8 @@ class MapSelectActivity : BindingActivity<ActivityMapSelectBinding>(R.layout.act
             naverMap.cameraPosition =
                 CameraPosition(
                     LatLng(
-                        locationSource.lastLocation?.latitude ?: GANGNAM_X,
-                        locationSource.lastLocation?.longitude ?: GANGNAM_Y
+                        locationSource.lastLocation?.latitude ?: EOUNJU_X,
+                        locationSource.lastLocation?.longitude ?: EOUNJU_Y
                     ),
                     14.0
                 )

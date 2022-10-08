@@ -33,6 +33,10 @@ class ScrapViewModel @Inject constructor(
     val scrapUiState: StateFlow<ScrapUiState>
         get() = _scrapUiState.asStateFlow()
 
+    private val _originalScrapList = MutableStateFlow<List<ScrapInfo>>(listOf())
+    val originalScrapList: StateFlow<List<ScrapInfo>>
+        get() = _originalScrapList.asStateFlow()
+
     fun getScrapList() {
         viewModelScope.launch {
             scrapRepository.getScrapList(storage.id)
@@ -41,8 +45,23 @@ class ScrapViewModel @Inject constructor(
                         _scrapUiState.value = ScrapUiState.Empty
                     else {
                         _scrapUiState.value = it.toScrapUiState()
+                        _originalScrapList.value = it
                         _scrapMarkerList.value = it.map { scrapInfo -> scrapInfo.toMakerInfo() }
                     }
+                }
+                .onFailure {
+                    _scrapUiState.value = ScrapUiState.Error(it.message)
+                }
+        }
+    }
+
+    fun getFilteredScrapList() {
+        viewModelScope.launch {
+            scrapRepository.getScrapList(storage.id)
+                .onSuccess {
+                    _scrapUiState.value = _originalScrapList.value.map { scrapInfo ->
+                        if (!it.contains(scrapInfo)) scrapInfo.copy(isBookmarked = false) else scrapInfo
+                    }.toScrapUiState()
                 }
                 .onFailure {
                     _scrapUiState.value = ScrapUiState.Error(it.message)

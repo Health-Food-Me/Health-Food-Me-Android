@@ -99,7 +99,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/size_spacing_20"
-            android:layout_marginTop="76dp"
+            android:layout_marginTop="54dp"
             android:text="@string/setting_terms_policies"
             android:textAppearance="@style/TextView.Setting.TextAppearance_14"
             app:layout_constraintStart_toStartOf="parent"

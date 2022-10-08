@@ -30,9 +30,8 @@ import kotlinx.coroutines.flow.onEach
 import org.helfoome.R
 import org.helfoome.databinding.ActivitySearchBinding
 import org.helfoome.domain.entity.MarkerInfo
-import org.helfoome.presentation.MainActivity
-import org.helfoome.presentation.MainActivity.Companion.GANGNAM_X
-import org.helfoome.presentation.MainActivity.Companion.GANGNAM_Y
+import org.helfoome.presentation.MainActivity.Companion.EOUNJU_X
+import org.helfoome.presentation.MainActivity.Companion.EOUNJU_Y
 import org.helfoome.presentation.MainViewModel
 import org.helfoome.presentation.detail.RestaurantDetailFragment
 import org.helfoome.presentation.search.adapter.*
@@ -75,8 +74,8 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
 
         mainViewModel.fetchSelectedRestaurantDetailInfo(
             restaurantId,
-            locationSource.lastLocation?.latitude ?: GANGNAM_X,
-            locationSource.lastLocation?.longitude ?: GANGNAM_Y
+            locationSource.lastLocation?.latitude ?: EOUNJU_X,
+            locationSource.lastLocation?.longitude ?: EOUNJU_Y
         )
 
         markerList.forEach { marker ->
@@ -546,11 +545,11 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
 
             if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                 cameraPosition = CameraPosition(
-                    LatLng(MainActivity.GANGNAM_X, MainActivity.GANGNAM_Y), 12.0
+                    LatLng(EOUNJU_X, EOUNJU_Y), 12.0
                 )
                 locationTrackingMode = LocationTrackingMode.NoFollow
             } else {
-                cameraPosition = CameraPosition(LatLng(MainActivity.GANGNAM_X, MainActivity.GANGNAM_Y), 12.0)
+                cameraPosition = CameraPosition(LatLng(EOUNJU_X, EOUNJU_Y), 12.0)
             }
 
             addOnCameraChangeListener { reason, _ ->

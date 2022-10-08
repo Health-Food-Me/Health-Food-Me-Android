@@ -39,11 +39,12 @@ class MyScrapActivity : BindingActivity<ActivityMyScrapBinding>(R.layout.activit
 
     private fun initView() {
         initAdapter()
+        viewModel.getScrapList()
     }
 
     override fun onStart() {
         super.onStart()
-        viewModel.getScrapList()
+        viewModel.getFilteredScrapList()
     }
 
     private fun initClickEvent() {
