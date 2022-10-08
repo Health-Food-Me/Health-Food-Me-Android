@@ -72,7 +72,7 @@
                 app:layout_constraintBottom_toBottomOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <org.helfoome.util.NestedCoordinatorLayout
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:id="@+id/nv_Detail"
             android:layout_width="match_parent"
             android:layout_height="@dimen/size_spacing_0"
@@ -291,18 +291,10 @@
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </com.google.android.material.appbar.CollapsingToolbarLayout>
 
-            </com.google.android.material.appbar.AppBarLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
                 <com.google.android.material.tabs.TabLayout
                     android:id="@+id/layout_restaurant_tab_menu"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toTopOf="parent"
                     app:tabIndicator="@drawable/rectangle_border_radius_10"
                     app:tabIndicatorColor="@color/red_500"
                     app:tabIndicatorHeight="2dp"
@@ -333,19 +325,17 @@
                     android:layout_height="1dp"
                     android:background="@color/gray_200"
                     app:layout_constraintTop_toBottomOf="@id/layout_restaurant_tab_menu" />
+            </com.google.android.material.appbar.AppBarLayout>
 
-                <androidx.viewpager2.widget.ViewPager2
-                    android:id="@+id/vp_restaurant_detail"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/size_spacing_0"
-                    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/layout_restaurant_tab_menu"
-                    app:layout_constraintVertical_bias="0.0"
-                    tools:layout_editor_absoluteX="42dp" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/vp_restaurant_detail"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="parent" />
 
-        </org.helfoome.util.NestedCoordinatorLayout>
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
         <!-- TODO 확정된 뷰 나온 이후 속성 수정 필요 -->
         <View
             android:id="@+id/line"
