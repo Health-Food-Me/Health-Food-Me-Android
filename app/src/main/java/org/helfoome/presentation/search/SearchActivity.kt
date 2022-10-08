@@ -203,6 +203,7 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
     }
 
     private fun initView() {
+        binding.layoutRestaurantListDialog.rvSearch.itemAnimator = null
         behavior = BottomSheetBehavior.from(binding.layoutBottomSheet)
         behavior.state = BottomSheetBehavior.STATE_EXPANDED
         behavior.isDraggable = false
