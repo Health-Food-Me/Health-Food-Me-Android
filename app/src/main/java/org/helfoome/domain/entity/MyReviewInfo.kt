@@ -6,6 +6,7 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class MyReviewInfo(
     val id: String,
+    val restaurantId: String,
     val restaurant: String,
     val score: Float,
     val taste: String,
