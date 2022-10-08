@@ -8,17 +8,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.viewModels
-import dagger.hilt.android.AndroidEntryPoint
 import org.helfoome.R
 import org.helfoome.databinding.DialogConfirmBinding
 import org.helfoome.presentation.type.ConfirmType
 
-@AndroidEntryPoint
-class ConfirmFragmentDialog(private val confirmType: ConfirmType) : DialogFragment() {
-
-    private val confirmViewModel: ConfirmViewModel by viewModels()
-
+class ConfirmFragmentDialog : DialogFragment() {
     private var _binding: DialogConfirmBinding? = null
     private val binding: DialogConfirmBinding get() = requireNotNull(_binding)
 
@@ -35,14 +29,13 @@ class ConfirmFragmentDialog(private val confirmType: ConfirmType) : DialogFragme
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = DialogConfirmBinding.inflate(inflater, container, false)
-        binding.confirmViewModel = confirmViewModel
         binding.lifecycleOwner = viewLifecycleOwner
-        confirmViewModel.setConfirmType(confirmType)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.confirmType = confirmType
         initListener()
     }
 
@@ -71,5 +64,15 @@ class ConfirmFragmentDialog(private val confirmType: ConfirmType) : DialogFragme
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    companion object {
+        const val TAG = "ConfirmFragmentDialog"
+        private lateinit var confirmType: ConfirmType
+
+        fun newInstance(confirmType: ConfirmType): ConfirmFragmentDialog {
+            this.confirmType = confirmType
+            return ConfirmFragmentDialog()
+        }
     }
 }

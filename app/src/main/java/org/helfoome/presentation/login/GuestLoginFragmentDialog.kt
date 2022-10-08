@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.activityViewModels
 import com.navercorp.nid.NaverIdLoginSDK
 import dagger.hilt.android.AndroidEntryPoint
 import org.helfoome.R
@@ -14,7 +13,6 @@ import org.helfoome.data.service.KakaoAuthService
 import org.helfoome.data.service.NaverAuthService
 import org.helfoome.databinding.DialogGuestLoginSupportBinding
 import org.helfoome.presentation.MainActivity
-import org.helfoome.presentation.MainViewModel
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -25,7 +23,6 @@ class GuestLoginFragmentDialog : DialogFragment() {
 
     @Inject
     lateinit var kakaoAuthService: KakaoAuthService
-    private val viewModel: MainViewModel by activityViewModels()
 
     private var _binding: DialogGuestLoginSupportBinding? = null
     private val binding: DialogGuestLoginSupportBinding get() = requireNotNull(_binding)
@@ -57,13 +54,11 @@ class GuestLoginFragmentDialog : DialogFragment() {
             dismiss()
         }
         binding.ivKakaoLogin.setOnClickListener {
-            viewModel.setIsGuestLogin(false)
             kakaoAuthService.kakaoLogin(
                 ::startMain
             )
         }
         binding.ivNaverLogin.setOnClickListener {
-            viewModel.setIsGuestLogin(false)
             NaverIdLoginSDK.authenticate(
                 requireContext(),
                 naverAuthService.apply {

@@ -90,7 +90,7 @@
             android:paddingVertical="@dimen/size_spacing_12"
             android:text="@string/setting_withdrawal"
             android:textAppearance="@style/TextView.Setting.TextAppearance_16"
-            android:visibility="@{viewModel.getIsGuestLogin() ? View.GONE : View.VISIBLE}"
+            android:visibility="@{!viewModel.getIsLogin() ? View.GONE : View.VISIBLE}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_declaration" />
 

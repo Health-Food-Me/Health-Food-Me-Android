@@ -16,8 +16,7 @@ import org.helfoome.presentation.review.RestaurantReviewWritingViewModel
 import org.helfoome.presentation.type.AlertType
 
 @AndroidEntryPoint
-class AlertFragmentDialog(private val alertType: AlertType) : DialogFragment() {
-
+class AlertFragmentDialog : DialogFragment() {
     private val alertViewModel: AlertViewModel by viewModels()
     private val restaurantReviewWritingViewModel: RestaurantReviewWritingViewModel by activityViewModels()
 
@@ -53,7 +52,7 @@ class AlertFragmentDialog(private val alertType: AlertType) : DialogFragment() {
             when (alertType) {
                 AlertType.LOGOUT -> {
                     alertViewModel.logout()
-                    startMain()
+                    startLogin()
                 }
                 AlertType.WRITE_CANCEL -> restaurantReviewWritingViewModel.setIsYesClicked(true)
                 AlertType.EDIT_CANCEL -> restaurantReviewWritingViewModel.setIsYesClicked(true)
@@ -66,16 +65,23 @@ class AlertFragmentDialog(private val alertType: AlertType) : DialogFragment() {
         }
     }
 
-    private fun startMain() {
-        startActivity(
-            Intent(context, LoginActivity::class.java).apply {
-                addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-            }
-        )
+    private fun startLogin() {
+        startActivity(Intent(context, LoginActivity::class.java))
+        requireActivity().finish()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    companion object {
+        const val TAG = "AlertFragmentDialog"
+        private lateinit var alertType: AlertType
+
+        fun newInstance(alertType: AlertType): AlertFragmentDialog {
+            this.alertType = alertType
+            return AlertFragmentDialog()
+        }
     }
 }

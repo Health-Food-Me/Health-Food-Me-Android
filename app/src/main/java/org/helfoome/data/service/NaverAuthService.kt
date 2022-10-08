@@ -50,7 +50,7 @@ class NaverAuthService @Inject constructor(
             }
                 .onSuccess {
                     with(sharedPreferences) {
-                        isGuestLogin = false
+                        isLogin = true
                         accessToken = it.data.accessToken
                         refreshToken = it.data.refreshToken
                         id = it.data.user.id

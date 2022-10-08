@@ -189,7 +189,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
 
     private fun initListeners() {
         binding.btnBookmarkMain.setOnClickListener {
-            if (viewModel.getIsGuestLogin()) {
+            if (!viewModel.getIsLogin()) {
                 supportGuestLogin()
             } else {
                 it.isSelected = !it.isSelected
@@ -225,14 +225,14 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                 supportGuestLogin()
             }
             tvReview.setOnClickListener {
-                if (viewModel.getIsGuestLogin()) {
+                if (!viewModel.getIsLogin()) {
                     supportGuestLogin()
                 } else {
                     controlHamburger.launch(Intent(this@MainActivity, MyReviewActivity::class.java))
                 }
             }
             tvScrap.setOnClickListener {
-                if (viewModel.getIsGuestLogin()) {
+                if (!viewModel.getIsLogin()) {
                     supportGuestLogin()
                 } else {
                     controlHamburger.launch(
@@ -252,7 +252,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                 controlHamburger.launch(Intent(this@MainActivity, SettingActivity::class.java))
             }
             tvLogout.setOnClickListener {
-                AlertFragmentDialog(AlertType.LOGOUT).show(supportFragmentManager, "AlertDialog")
+                AlertFragmentDialog.newInstance(AlertType.LOGOUT).show(supportFragmentManager, AlertFragmentDialog.TAG)
             }
         }
     }
@@ -466,7 +466,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                     14.0
                 )
             } else {
-                ConfirmFragmentDialog(ConfirmType.LOCATION_CONFIRM).show(supportFragmentManager, "ConfirmDialog")
+                ConfirmFragmentDialog.newInstance(ConfirmType.LOCATION_CONFIRM).show(supportFragmentManager, ConfirmFragmentDialog.TAG)
             }
         }
     }

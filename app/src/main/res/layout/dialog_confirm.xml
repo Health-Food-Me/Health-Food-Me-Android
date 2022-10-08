@@ -8,8 +8,8 @@
         <import type="android.view.View" />
 
         <variable
-            name="confirmViewModel"
-            type="org.helfoome.presentation.alert.ConfirmViewModel" />
+            name="confirmType"
+            type="org.helfoome.presentation.type.ConfirmType" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -32,7 +32,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/size_spacing_32"
                 android:fontFamily="@font/notosanskr_m"
-                android:text="@{confirmViewModel.confirmType.dialogTitle}"
+                android:text="@{confirmType.dialogTitle}"
                 android:textColor="@color/gray_800"
                 android:textSize="@dimen/size_spacing_16"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -48,10 +48,10 @@
                 android:layout_marginTop="@dimen/size_spacing_8"
                 android:gravity="center"
                 android:lineSpacingExtra="1dp"
-                android:text='@{confirmViewModel.confirmType.dialogDescription}'
+                android:text='@{confirmType.dialogDescription}'
                 android:textColor="@color/gray_800"
                 android:textSize="@dimen/size_spacing_12"
-                android:visibility="@{confirmViewModel.confirmType.dialogDescription == 0 ? View.GONE : View.VISIBLE}"
+                android:visibility="@{confirmType.dialogDescription == 0 ? View.GONE : View.VISIBLE}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_caution"
@@ -76,7 +76,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_caution"
-                app:layout_marginTop='@{confirmViewModel.confirmType.dialogDescription == 0 ? 24 : 67}'
+                app:layout_marginTop='@{confirmType.dialogDescription == 0 ? 24 : 67}'
                 tools:layout_marginTop="67dp" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

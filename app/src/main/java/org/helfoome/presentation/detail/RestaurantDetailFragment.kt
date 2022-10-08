@@ -88,7 +88,7 @@ class RestaurantDetailFragment : BindingFragment<FragmentRestaurantDetailBinding
 
             btnWriteReview.apply {
                 setOnClickListener {
-                    if (requireNotNull(viewModel).getIsGuestLogin()) {
+                    if (!mainViewModel.getIsLogin()) {
                         supportGuestLogin()
                     } else {
                         requestReviewWrite.launch(
@@ -108,7 +108,7 @@ class RestaurantDetailFragment : BindingFragment<FragmentRestaurantDetailBinding
                 mainViewModel.setBehaviorState(BottomSheetBehavior.STATE_EXPANDED)
             }
             btnScrapToolbar.setOnClickListener {
-                if (requireNotNull(viewModel).getIsGuestLogin()) {
+                if (!mainViewModel.getIsLogin()) {
                     supportGuestLogin()
                 } else {
                     viewModel?.updateRestaurantScrap()
@@ -116,7 +116,7 @@ class RestaurantDetailFragment : BindingFragment<FragmentRestaurantDetailBinding
             }
 
             btnScrap.setOnClickListener {
-                if (requireNotNull(viewModel).getIsGuestLogin()) {
+                if (!mainViewModel.getIsLogin()) {
                     supportGuestLogin()
                 } else {
                     viewModel?.updateRestaurantScrap()

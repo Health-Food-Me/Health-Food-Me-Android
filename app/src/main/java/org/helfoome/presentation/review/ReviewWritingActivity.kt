@@ -196,9 +196,9 @@ class ReviewWritingActivity : BindingActivity<ActivityReviewWritingBinding>(R.la
 
     private fun checkEditOrWriteDialog() {
         if (intent.getStringExtra(ARG_RESTAURANT_NAME) == null) {
-            AlertFragmentDialog(AlertType.EDIT_CANCEL).show(supportFragmentManager, "AlertDialog")
+            AlertFragmentDialog.newInstance(AlertType.EDIT_CANCEL).show(supportFragmentManager, AlertFragmentDialog.TAG)
         } else {
-            AlertFragmentDialog(AlertType.WRITE_CANCEL).show(supportFragmentManager, "AlertDialog")
+            AlertFragmentDialog.newInstance(AlertType.WRITE_CANCEL).show(supportFragmentManager, AlertFragmentDialog.TAG)
         }
     }
 
