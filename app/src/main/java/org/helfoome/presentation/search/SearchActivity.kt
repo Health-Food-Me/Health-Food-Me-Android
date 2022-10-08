@@ -12,9 +12,8 @@ import android.widget.EditText
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
-import androidx.fragment.app.add
-import androidx.fragment.app.commit
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.ConcatAdapter
@@ -51,6 +50,7 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
     lateinit var resolutionMetrics: ResolutionMetrics
     private lateinit var behavior: BottomSheetBehavior<ConstraintLayout>
     private val searchViewModel: SearchViewModel by viewModels()
+    private lateinit var mapView: MapView
     private lateinit var naverMap: NaverMap
 
     private val mainViewModel: MainViewModel by viewModels()
@@ -130,7 +130,7 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
             behavior.state = BottomSheetBehavior.STATE_EXPANDED
             behavior.isDraggable = false
         } else {
-            behavior.peekHeight = resolutionMetrics.toPixel(203)
+            behavior.peekHeight = resolutionMetrics.toPixel(135)
             behavior.state = BottomSheetBehavior.STATE_COLLAPSED
             behavior.isDraggable = true
         }
@@ -181,6 +181,8 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        mapView = binding.mapView
+        mapView.onCreate(savedInstanceState)
         initView()
         locationSource =
             FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE)
@@ -359,6 +361,7 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
                             }
                         }
                         is SearchViewModel.SearchUiState.Result -> {
+                            remove()
                             binding.layoutRestaurantListDialog.isResultEmpty = it.data.isEmpty()
                             if (it.data.isNotEmpty())
                                 searchViewModel.insertKeyword(binding.etSearch.text.toString(), it.isCategory)
@@ -376,7 +379,7 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
                                             if (markerInfo.isDietRestaurant) R.drawable.ic_marker_green_small
                                             else R.drawable.ic_marker_red_small
                                         )
-//                                        map = naverMap
+                                        map = naverMap
 
                                         isHideCollidedCaptions = true
 
@@ -432,7 +435,7 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
                         true -> {
                             binding.etSearch.isEnabled = false
                             binding.isDetail = true
-                            behavior.peekHeight = resolutionMetrics.toPixel(236)
+                            behavior.peekHeight = resolutionMetrics.toPixel(168)
                             behavior.isDraggable = true
                             behavior.isHideable = true
                             replace<RestaurantDetailFragment>(R.id.fragment_container_detail)
@@ -477,25 +480,29 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
     }
 
     private fun initNaverMap() {
-        val fm = supportFragmentManager
-        val mapFragment = MapFragment.newInstance().also {
-            fm.commit {
-                add<MapFragment>(R.id.fragment_naver_map)
-                setReorderingAllowed(true)
-            }
-        }
-
-        mapFragment.getMapAsync(this)
+        mapView.getMapAsync(this)
     }
 
     override fun onStart() {
         super.onStart()
+        mapView.onStart()
         behavior.addBottomSheetCallback(bottomSheetCallback)
     }
 
     override fun onResume() {
         super.onResume()
+        mapView.onResume()
         mainViewModel.getProfile()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        mapView.onPause()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        mapView.onSaveInstanceState(outState)
     }
 
     override fun onRestart() {
@@ -523,6 +530,17 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
     override fun onStop() {
         super.onStop()
         behavior.removeBottomSheetCallback(bottomSheetCallback)
+        mapView.onStop()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mapView.onDestroy()
+    }
+
+    override fun onLowMemory() {
+        super.onLowMemory()
+        mapView.onLowMemory()
     }
 
     override fun onMapReady(naverMap: NaverMap) {
@@ -557,25 +575,25 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
         }
 
         binding.btnLocation.setOnClickListener {
-//            naverMap.cameraPosition =
-//                CameraPosition(
-//                    LatLng(
-//                        locationSource.lastLocation?.latitude ?: MainActivity.GANGNAM_X,
-//                        locationSource.lastLocation?.longitude ?: MainActivity.GANGNAM_Y
-//                    ),
-//                    14.0
-//                )
+            naverMap.cameraPosition =
+                CameraPosition(
+                    LatLng(
+                        locationSource.lastLocation?.latitude ?: MainActivity.GANGNAM_X,
+                        locationSource.lastLocation?.longitude ?: MainActivity.GANGNAM_Y
+                    ),
+                    14.0
+                )
         }
 
         binding.btnLocationMain.setOnClickListener {
-//            naverMap.cameraPosition =
-//                CameraPosition(
-//                    LatLng(
-//                        locationSource.lastLocation?.latitude ?: MainActivity.GANGNAM_X,
-//                        locationSource.lastLocation?.longitude ?: MainActivity.GANGNAM_Y
-//                    ),
-//                    14.0
-//                )
+            naverMap.cameraPosition =
+                CameraPosition(
+                    LatLng(
+                        locationSource.lastLocation?.latitude ?: MainActivity.GANGNAM_X,
+                        locationSource.lastLocation?.longitude ?: MainActivity.GANGNAM_Y
+                    ),
+                    14.0
+                )
         }
     }
 
@@ -586,7 +604,7 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
     ) {
         if (locationSource.onRequestPermissionsResult(requestCode, permissions, grantResults)) {
             if (!locationSource.isActivated) { // 권한 거부됨
-//                naverMap.locationTrackingMode = LocationTrackingMode.None
+                naverMap.locationTrackingMode = LocationTrackingMode.None
             }
             return
         }
