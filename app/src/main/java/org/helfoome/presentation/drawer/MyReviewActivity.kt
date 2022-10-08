@@ -10,15 +10,16 @@ import dagger.hilt.android.AndroidEntryPoint
 import org.helfoome.R
 import org.helfoome.databinding.ActivityMyReviewBinding
 import org.helfoome.domain.entity.MyReviewInfo
-import org.helfoome.presentation.MainActivity
+import org.helfoome.presentation.MainViewModel
 import org.helfoome.presentation.common.ImageViewerActivity
+import org.helfoome.presentation.detail.RestaurantDetailFragment
 import org.helfoome.presentation.drawer.adapter.MyReviewAdapter
 import org.helfoome.presentation.review.ReviewWritingActivity
 import org.helfoome.util.ItemDecorationUtil
 import org.helfoome.util.ResolutionMetrics
 import org.helfoome.util.SnackBarTopDown
 import org.helfoome.util.binding.BindingActivity
-import org.helfoome.util.ext.startActivity
+import org.helfoome.util.ext.replace
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -26,6 +27,7 @@ class MyReviewActivity : BindingActivity<ActivityMyReviewBinding>(R.layout.activ
     @Inject
     lateinit var resolutionMetrics: ResolutionMetrics
     private val viewModel by viewModels<MyReviewViewModel>()
+    private val mainViewModel: MainViewModel by viewModels()
 
     private val requestModifyReview =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
@@ -55,8 +57,17 @@ class MyReviewActivity : BindingActivity<ActivityMyReviewBinding>(R.layout.activ
         }
     }
 
-    private fun startRestaurant() {
-        startActivity<MainActivity>()
+    private fun startRestaurant(restaurantId: String) {
+        with(mainViewModel) {
+            setRestaurantId(restaurantId)
+            getReviewCheck(restaurantId)
+            fetchSelectedRestaurantDetailInfo(
+                restaurantId,
+                127.02836155,
+                37.49648606
+            )
+        }
+        replace<RestaurantDetailFragment>(R.id.fragment_container_detail)
     }
 
     private fun deleteReview(reviewId: String) {
