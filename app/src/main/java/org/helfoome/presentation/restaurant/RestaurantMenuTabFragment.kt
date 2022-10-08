@@ -3,8 +3,13 @@ package org.helfoome.presentation.restaurant
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.ScrollView
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import org.helfoome.R
 import org.helfoome.databinding.FragmentMenuBinding
 import org.helfoome.presentation.MainViewModel
@@ -44,6 +49,14 @@ class RestaurantMenuTabFragment : BindingFragment<FragmentMenuBinding>(R.layout.
                 restaurantMenuBoardAdapter.menuBoardList = menuBoardList
             }
         }
+
+        viewModel.isDetailCollapsed
+            .flowWithLifecycle(viewLifecycleOwner.lifecycle)
+            .onEach { isCollapsed ->
+                if (isCollapsed)
+                    binding.svMenu.fullScroll(ScrollView.FOCUS_UP)
+            }
+            .launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
     private fun moveToImageViewer(menuBoardList: List<String>, position: Int) {
