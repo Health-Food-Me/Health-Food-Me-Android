@@ -29,7 +29,7 @@
                 android:id="@+id/layout_nickname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="@{!drawerViewModel.getIsLogin() ? View.GONE : View.VISIBLE}"
+                android:visibility="@{!drawerViewModel.isGuestLogin ? View.GONE : View.VISIBLE}"
                 app:layout_constraintTop_toTopOf="@id/layout_drawer">
 
                 <TextView
@@ -98,7 +98,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="@{!drawerViewModel.getIsLogin() ? View.VISIBLE : View.GONE}"
+                android:visibility="@{!drawerViewModel.isGuestLogin ? View.VISIBLE : View.GONE}"
                 app:layout_constraintTop_toTopOf="@id/layout_drawer"
                 tools:visibility="invisible">
 
@@ -133,7 +133,7 @@
                 android:layout_height="1dp"
                 android:background="@color/gray_200"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_marginTop="@{!drawerViewModel.getIsLogin() ? 159 : 199}"
+                app:layout_marginTop="@{!drawerViewModel.isGuestLogin ? 159 : 199}"
                 tools:layout_marginTop="199dp" />
 
             <TextView
@@ -222,7 +222,7 @@
                 android:text="@string/main_drawer_logout"
                 android:textColor="@color/gray_600"
                 android:textSize="@dimen/size_spacing_12"
-                android:visibility="@{!drawerViewModel.getIsLogin() ? View.INVISIBLE : View.VISIBLE}"
+                android:visibility="@{!drawerViewModel.isGuestLogin ? View.INVISIBLE : View.VISIBLE}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>

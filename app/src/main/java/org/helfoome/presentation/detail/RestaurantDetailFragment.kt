@@ -19,6 +19,7 @@ import kotlinx.coroutines.flow.onEach
 import org.helfoome.R
 import org.helfoome.databinding.FragmentRestaurantDetailBinding
 import org.helfoome.presentation.MainViewModel
+import org.helfoome.presentation.drawer.MyReviewActivity
 import org.helfoome.presentation.login.GuestLoginFragmentDialog
 import org.helfoome.presentation.restaurant.MapSelectionBottomDialogFragment
 import org.helfoome.presentation.restaurant.adapter.RestaurantTabAdapter
@@ -75,7 +76,6 @@ class RestaurantDetailFragment : BindingFragment<FragmentRestaurantDetailBinding
             binding.viewModel = viewModel
 
             vpRestaurantDetail.apply {
-                isUserInputEnabled = false
                 adapter = restaurantDetailAdapter
             }
 
@@ -124,7 +124,13 @@ class RestaurantDetailFragment : BindingFragment<FragmentRestaurantDetailBinding
             }
 
             btnBack.setOnClickListener {
-                mainViewModel.setBehaviorState(BottomSheetBehavior.STATE_COLLAPSED)
+                if (mainViewModel.isReviewActivity.value == true) {
+                    startActivity(Intent(activity, MyReviewActivity::class.java))
+                    activity?.finish()
+                    activity?.overridePendingTransition(0, 0)
+                } else {
+                    mainViewModel.setBehaviorState(BottomSheetBehavior.STATE_COLLAPSED)
+                }
             }
 
             tvNumber.setOnClickListener {

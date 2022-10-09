@@ -119,6 +119,11 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
         initObservers()
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.setIsGuestLogin()
+    }
+
     private fun provideChipClickListener(chip: Chip) =
         View.OnClickListener {
             if (!chip.isChecked) {
@@ -452,7 +457,9 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                 CameraPosition(LatLng(EOUNJU_X, EOUNJU_Y), 12.0)
             }
 
-            addOnCameraChangeListener { reason, _ ->
+            addOnCameraChangeListener { _, _ ->
+                if (!binding.btnBookmarkMain.isSelected)
+                    viewModel.getMapInfo(naverMap.cameraPosition.target, checkedChip)
             }
         }
         viewModel.getMapInfo(naverMap.cameraPosition.target)

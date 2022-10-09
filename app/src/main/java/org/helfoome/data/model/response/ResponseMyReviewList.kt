@@ -26,6 +26,7 @@ data class ResponseMyReviewList(
     )
     fun toMyReviewListInfo() = MyReviewInfo(
         id,
+        restaurantId,
         restaurant,
         score,
         taste,
