@@ -128,7 +128,7 @@ class RestaurantDetailFragment : BindingFragment<FragmentRestaurantDetailBinding
                 if (mainViewModel.isReviewActivity.value == true) {
                     startActivity(Intent(activity, MyReviewActivity::class.java))
                     activity?.finish()
-                    activity?.overridePendingTransition(0, 0);
+                    activity?.overridePendingTransition(0, 0)
                 } else {
                     mainViewModel.setBehaviorState(BottomSheetBehavior.STATE_COLLAPSED)
                 }
