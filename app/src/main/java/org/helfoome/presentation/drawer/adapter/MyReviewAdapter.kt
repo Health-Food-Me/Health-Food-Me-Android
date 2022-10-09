@@ -54,14 +54,14 @@ class MyReviewAdapter(
                     addItemDecoration(ItemDecorationUtil.ItemDecoration(padding = 20, isVertical = false))
                 }
                 tvTitle.setOnClickListener {
-                    startRestaurant.invoke(myReviewData.restaurantId)
+                    startRestaurant(myReviewData.restaurantId)
                 }
                 data = myReviewData
                 tvDelete.setOnClickListener {
-                    deleteClickListener.invoke(myReviewData.id)
+                    deleteClickListener(myReviewData.id)
                 }
                 tvEdit.setOnClickListener {
-                    editClickListener.invoke(myReviewData)
+                    editClickListener(myReviewData)
                 }
                 binding.hashtag.setHashtag(listOf(myReviewData.taste) + myReviewData.good, HashtagViewType.REVIEW_TAB_TYPE)
             }
