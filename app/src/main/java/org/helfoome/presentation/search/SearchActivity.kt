@@ -44,7 +44,6 @@ import javax.inject.Inject
 class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_search), OnMapReadyCallback {
     // TODO : Inject 로직 수정 요망
     private var isAutoCompleteResult = false
-    // TODO : 기존에 찍힌 핀 계속 호출 시 리플레이스 중첩되는 버그 수정
 
     @Inject
     lateinit var resolutionMetrics: ResolutionMetrics
@@ -150,10 +149,24 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
             remove()
             binding.isFloatingVisible = false
             behavior.state = BottomSheetBehavior.STATE_EXPANDED
+            if(markerList.size > 1) {
+                markerList.forEach {
+                    it.first.icon = OverlayImage.fromResource(
+                        if (it.second.isDietRestaurant) R.drawable.ic_marker_green_small
+                        else R.drawable.ic_marker_red_small
+                    )
+                }
+            }
             behavior.isDraggable = false
         } else {
             behavior.peekHeight = resolutionMetrics.toPixel(135)
             behavior.state = BottomSheetBehavior.STATE_COLLAPSED
+            with(resultAdapter.currentList[0]) {
+                naverMap.cameraPosition = CameraPosition(
+                    LatLng(latitude, longitude),
+                    12.0
+                )
+            }
             behavior.isDraggable = true
         }
     }
@@ -285,6 +298,14 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
                             searchViewModel.setDetail(false)
                             remove()
                             searchViewModel.setSearchMode(SearchMode.RESULT)
+                            if(markerList.size > 1) {
+                                markerList.forEach {
+                                    it.first.icon = OverlayImage.fromResource(
+                                        if (it.second.isDietRestaurant) R.drawable.ic_marker_green_small
+                                        else R.drawable.ic_marker_red_small
+                                    )
+                                }
+                            }
                             behavior.state = BottomSheetBehavior.STATE_EXPANDED
                         }
                     } else {
@@ -584,10 +605,8 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
         this.naverMap = naverMap.apply {
             uiSettings.isZoomControlEnabled = false
             setOnMapClickListener { _, _ ->
-                if (searchViewModel.isDetail.value) {
+                if (searchViewModel.isDetail.value)
                     behavior.state = BottomSheetBehavior.STATE_HIDDEN
-                    remove()
-                }
                 markerList.forEach {
                     it.first.icon = OverlayImage.fromResource(
                         if (it.second.isDietRestaurant) R.drawable.ic_marker_green_small
