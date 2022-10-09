@@ -149,7 +149,7 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
             remove()
             binding.isFloatingVisible = false
             behavior.state = BottomSheetBehavior.STATE_EXPANDED
-            if(markerList.size > 1) {
+            if (markerList.size > 1) {
                 markerList.forEach {
                     it.first.icon = OverlayImage.fromResource(
                         if (it.second.isDietRestaurant) R.drawable.ic_marker_green_small
@@ -298,7 +298,7 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
                             searchViewModel.setDetail(false)
                             remove()
                             searchViewModel.setSearchMode(SearchMode.RESULT)
-                            if(markerList.size > 1) {
+                            if (markerList.size > 1) {
                                 markerList.forEach {
                                     it.first.icon = OverlayImage.fromResource(
                                         if (it.second.isDietRestaurant) R.drawable.ic_marker_green_small
