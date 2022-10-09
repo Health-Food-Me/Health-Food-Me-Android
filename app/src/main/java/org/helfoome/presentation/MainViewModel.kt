@@ -241,6 +241,7 @@ class MainViewModel @Inject constructor(
                 if (it != null) _menuBoard.value = it
                 _isExistMenuBoard.value = isExistMenuBoard(it)
             }
+            _isReviewTab.value = Event(false)
         }
     }
 
