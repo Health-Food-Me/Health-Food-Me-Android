@@ -44,6 +44,8 @@ import javax.inject.Inject
 class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_search), OnMapReadyCallback {
     // TODO : Inject 로직 수정 요망
     private var isAutoCompleteResult = false
+    private var selectedRestaurantId: String? = null
+    // TODO : 기존에 찍힌 핀 계속 호출 시 리플레이스 중첩되는 버그 수정
 
     @Inject
     lateinit var resolutionMetrics: ResolutionMetrics
@@ -65,33 +67,25 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
 
     private lateinit var locationSource: FusedLocationSource
     private val autoCompleteAdapter = AutoCompleteAdapter { name, restaurantId, isCategory ->
-        isAutoCompleteResult = true
         searchViewModel.insertKeyword(name, isCategory)
-        if (!isCategory)
+        binding.etSearch.setText(name)
+        if (!isCategory) {
+            isAutoCompleteResult = true
             searchViewModel.setDetail(true)
-        searchViewModel.setSearchMode(SearchMode.RESULT)
 
-        mainViewModel.fetchSelectedRestaurantDetailInfo(
-            restaurantId,
-            locationSource.lastLocation?.latitude ?: EOUNJU_X,
-            locationSource.lastLocation?.longitude ?: EOUNJU_Y
-        )
+            mainViewModel.fetchSelectedRestaurantDetailInfo(
+                restaurantId,
+                locationSource.lastLocation?.latitude ?: EOUNJU_X,
+                locationSource.lastLocation?.longitude ?: EOUNJU_Y
+            )
 
-        markerList.forEach { marker ->
-            if (marker.second.id == restaurantId) {
-                marker.first.icon = OverlayImage.fromResource(
-                    if (marker.second.isDietRestaurant) R.drawable.ic_marker_green_big
-                    else R.drawable.ic_marker_red_big
-                )
+            selectedRestaurantId = restaurantId
 
-                mainViewModel.fetchSelectedRestaurantDetailInfo(
-                    restaurantId,
-                    locationSource.lastLocation?.latitude ?: marker.second.latitude,
-                    locationSource.lastLocation?.longitude ?: marker.second.longitude
-                )
-                mainViewModel.setSelectedLocationPoint(marker.second.latitude, marker.second.longitude)
-            }
+            searchViewModel.getSearchResultCardList(127.027610, 37.498095, name)
+        } else {
+            searchViewModel.getSearchCategoryCardList(127.027610, 37.498095, name)
         }
+        searchViewModel.setSearchMode(SearchMode.RESULT)
     }
 
     private val recentAdapter = RecentAdapter(
@@ -118,6 +112,20 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
                 locationSource.lastLocation?.longitude ?: longitude
             )
             mainViewModel.setSelectedLocationPoint(latitude, longitude)
+
+            markerList.forEach { marker ->
+                marker.first.icon = if (marker.second.id == restaurantId) {
+                    OverlayImage.fromResource(
+                        if (marker.second.isDietRestaurant) R.drawable.ic_marker_green_big
+                        else R.drawable.ic_marker_red_big
+                    )
+                } else {
+                    OverlayImage.fromResource(
+                        if (marker.second.isDietRestaurant) R.drawable.ic_marker_green_small
+                        else R.drawable.ic_marker_red_small
+                    )
+                }
+            }
 
             searchViewModel.setDetail(true)
         }
@@ -245,9 +253,11 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
             if (behavior.state == BottomSheetBehavior.STATE_EXPANDED && searchViewModel.isDetail.value)
                 behavior.state = BottomSheetBehavior.STATE_COLLAPSED
             else {
+                remove()
                 searchViewModel.setDetail(false)
                 searchViewModel.setSearchMode(SearchMode.RECENT)
                 behavior.state = BottomSheetBehavior.STATE_EXPANDED
+                selectedRestaurantId = null
                 isAutoCompleteResult = false
             }
         } else {
@@ -256,10 +266,11 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
                     if (searchViewModel.isDetail.value) {
                         if (behavior.state == BottomSheetBehavior.STATE_EXPANDED) {
                             binding.isLineVisible = true
-                            behavior.peekHeight = resolutionMetrics.toPixel(236)
+                            behavior.peekHeight = resolutionMetrics.toPixel(168)
                             behavior.state = BottomSheetBehavior.STATE_COLLAPSED
                         } else {
                             searchViewModel.setDetail(false)
+                            remove()
                             searchViewModel.setSearchMode(SearchMode.RESULT)
                             behavior.state = BottomSheetBehavior.STATE_EXPANDED
                         }
@@ -357,11 +368,9 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
                                 submitList(it.data.second)
                                 // TODO : 추후 더 좋은 데이터 갱신 요망
                                 autoCompleteAdapter.notifyDataSetChanged()
-                                remove()
                             }
                         }
                         is SearchViewModel.SearchUiState.Result -> {
-                            remove()
                             binding.layoutRestaurantListDialog.isResultEmpty = it.data.isEmpty()
                             if (it.data.isNotEmpty())
                                 searchViewModel.insertKeyword(binding.etSearch.text.toString(), it.isCategory)
@@ -379,6 +388,13 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
                                             if (markerInfo.isDietRestaurant) R.drawable.ic_marker_green_small
                                             else R.drawable.ic_marker_red_small
                                         )
+                                        selectedRestaurantId?.let {
+                                            icon = OverlayImage.fromResource(
+                                                if (markerInfo.isDietRestaurant) R.drawable.ic_marker_green_big
+                                                else R.drawable.ic_marker_red_big
+                                            )
+                                            selectedRestaurantId = null
+                                        }
                                         map = naverMap
 
                                         isHideCollidedCaptions = true
@@ -395,6 +411,7 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
                                             )
                                             mainViewModel.setSelectedLocationPoint(markerInfo.latitude, markerInfo.longitude)
 
+                                            remove()
                                             replace<RestaurantDetailFragment>(R.id.fragment_container_detail)
                                             behavior.state = BottomSheetBehavior.STATE_COLLAPSED
                                             binding.isMainNotVisible = true
@@ -438,6 +455,7 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
                             behavior.peekHeight = resolutionMetrics.toPixel(168)
                             behavior.isDraggable = true
                             behavior.isHideable = true
+                            remove()
                             replace<RestaurantDetailFragment>(R.id.fragment_container_detail)
                             behavior.state = BottomSheetBehavior.STATE_COLLAPSED
                         }
@@ -546,8 +564,10 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
         this.naverMap = naverMap.apply {
             uiSettings.isZoomControlEnabled = false
             setOnMapClickListener { _, _ ->
-                if (searchViewModel.isDetail.value)
+                if (searchViewModel.isDetail.value) {
                     behavior.state = BottomSheetBehavior.STATE_HIDDEN
+                    remove()
+                }
                 markerList.forEach {
                     it.first.icon = OverlayImage.fromResource(
                         if (it.second.isDietRestaurant) R.drawable.ic_marker_green_small
