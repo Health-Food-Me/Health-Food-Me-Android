@@ -81,9 +81,17 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
 
             selectedRestaurantId = restaurantId
 
-            searchViewModel.getSearchResultCardList(127.027610, 37.498095, name)
+            searchViewModel.getSearchResultCardList(
+                locationSource.lastLocation?.longitude ?: EOUNJU_X,
+                locationSource.lastLocation?.latitude ?: EOUNJU_Y,
+                name
+            )
         } else {
-            searchViewModel.getSearchCategoryCardList(127.027610, 37.498095, name)
+            searchViewModel.getSearchCategoryCardList(
+                locationSource.lastLocation?.longitude ?: EOUNJU_X,
+                locationSource.lastLocation?.latitude ?: EOUNJU_Y,
+                name
+            )
         }
         searchViewModel.setSearchMode(SearchMode.RESULT)
     }
@@ -91,10 +99,19 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
     private val recentAdapter = RecentAdapter(
         { keyword, isCategory ->
             // TODO : 서버 통신 주의, 고정 값 위도
-            if (isCategory)
-                searchViewModel.getSearchCategoryCardList(127.027610, 37.498095, keyword)
-            else
-                searchViewModel.getSearchResultCardList(127.027610, 37.498095, keyword)
+            if (isCategory) {
+                searchViewModel.getSearchCategoryCardList(
+                    locationSource.lastLocation?.longitude ?: EOUNJU_X,
+                    locationSource.lastLocation?.latitude ?: EOUNJU_Y,
+                    keyword
+                )
+            } else {
+                searchViewModel.getSearchResultCardList(
+                    locationSource.lastLocation?.longitude ?: EOUNJU_X,
+                    locationSource.lastLocation?.latitude ?: EOUNJU_Y,
+                    keyword
+                )
+            }
             binding.etSearch.setText(keyword)
             searchViewModel.setSearchMode(SearchMode.RESULT)
         },
@@ -310,10 +327,19 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
             setOnKeyListener { _, keyCode, event ->
                 if (event.action == KeyEvent.ACTION_DOWN && keyCode == KEYCODE_ENTER) {
                     // TODO : 최근 검색어 추가 서버 통신 시 수정
-                    if (stringListFrom(R.array.main_chip_group).contains(text.toString()))
-                        searchViewModel.getSearchCategoryCardList(127.027610, 37.498095, text.toString())
-                    else
-                        searchViewModel.getSearchResultCardList(127.027610, 37.498095, text.toString())
+                    if (stringListFrom(R.array.main_chip_group).contains(text.toString())) {
+                        searchViewModel.getSearchCategoryCardList(
+                            locationSource.lastLocation?.longitude ?: EOUNJU_X,
+                            locationSource.lastLocation?.latitude ?: EOUNJU_Y,
+                            text.toString()
+                        )
+                    } else {
+                        searchViewModel.getSearchResultCardList(
+                            locationSource.lastLocation?.longitude ?: EOUNJU_X,
+                            locationSource.lastLocation?.latitude ?: EOUNJU_Y,
+                            text.toString()
+                        )
+                    }
                     closeKeyboard(this)
                     binding.etSearch.clearFocus()
                     searchViewModel.setSearchMode(SearchMode.RESULT)
