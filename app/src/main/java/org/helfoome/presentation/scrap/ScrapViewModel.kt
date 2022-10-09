@@ -78,7 +78,8 @@ class ScrapViewModel @Inject constructor(
         }
     }
 
-    private fun List<ScrapInfo>.toScrapUiState() = ScrapUiState.Success(this)
+    private fun List<ScrapInfo>.toScrapUiState() =
+        if (this.isEmpty()) ScrapUiState.Empty else ScrapUiState.Success(this)
 
     sealed class ScrapUiState {
         object Loading : ScrapUiState()
