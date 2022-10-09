@@ -44,6 +44,8 @@ class MyReviewActivity : BindingActivity<ActivityMyReviewBinding>(R.layout.activ
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel.getMyReviewList()
+        // 리뷰 아이템에서 레스토랑 명 클릭 시 상세화면으로 넘어갈 때 상단 회색 라인이 보이지 않도록 하기 위함. 해당 속성으로 상단 회색 라인의 visibility 조절하고 있기 때문
+        mainViewModel.setExpendedBottomSheetDialog(true)
 
         initAdapter()
         initObservers()
