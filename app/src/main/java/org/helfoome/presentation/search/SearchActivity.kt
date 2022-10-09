@@ -411,8 +411,6 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
                                             )
                                             mainViewModel.setSelectedLocationPoint(markerInfo.latitude, markerInfo.longitude)
 
-                                            remove()
-                                            replace<RestaurantDetailFragment>(R.id.fragment_container_detail)
                                             behavior.state = BottomSheetBehavior.STATE_COLLAPSED
                                             binding.isMainNotVisible = true
                                             markerList.forEach { marker ->
