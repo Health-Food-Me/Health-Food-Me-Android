@@ -59,6 +59,7 @@ class MyReviewActivity : BindingActivity<ActivityMyReviewBinding>(R.layout.activ
 
     private fun startRestaurant(restaurantId: String) {
         with(mainViewModel) {
+            setIsReviewActivity(true)
             setRestaurantId(restaurantId)
             getReviewCheck(restaurantId)
             fetchSelectedRestaurantDetailInfo(
