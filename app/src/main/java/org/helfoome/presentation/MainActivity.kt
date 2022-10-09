@@ -236,7 +236,16 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                 if (!viewModel.getIsLogin()) {
                     supportGuestLogin()
                 } else {
-                    controlHamburger.launch(Intent(this@MainActivity, MyReviewActivity::class.java))
+                    controlHamburger.launch(
+                        Intent(this@MainActivity, MyReviewActivity::class.java).apply {
+                            putExtras(
+                                bundleOf(
+                                    LATITUDE to locationSource.lastLocation?.latitude,
+                                    LONGITUDE to locationSource.lastLocation?.longitude
+                                )
+                            )
+                        }
+                    )
                 }
             }
             tvScrap.setOnClickListener {
@@ -503,6 +512,8 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
         const val GANGNAM_X = 37.498095
         const val GANGNAM_Y = 127.027610
         const val GO_EOUNJU = 100
+        const val LATITUDE = "latitude"
+        const val LONGITUDE = "longitude"
         private const val LOCATION_PERMISSION_REQUEST_CODE = 1000
     }
 }
