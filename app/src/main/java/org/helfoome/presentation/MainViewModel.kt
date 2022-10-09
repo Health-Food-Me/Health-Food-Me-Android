@@ -152,44 +152,40 @@ class MainViewModel @Inject constructor(
 
     fun getScrapList(category: String? = null) {
         viewModelScope.launch {
-            scrapListUseCase.execute(hfmSharedPreference.id)
-                .onSuccess {
-                    _scrapList.value = it.filter { scrapInfo -> if (category == null) true else scrapInfo.category.contains(category) }
-                        .map { scrapInfo -> scrapInfo.toMakerInfo() }
-                }
-                .onFailure { }
+            scrapListUseCase.execute(hfmSharedPreference.id).onSuccess {
+                _scrapList.value = it.filter { scrapInfo -> if (category == null) true else scrapInfo.category.contains(category) }
+                    .map { scrapInfo -> scrapInfo.toMakerInfo() }
+            }.onFailure { }
         }
     }
 
     fun getReviewCheck(restaurantId: String) {
         viewModelScope.launch {
-            runCatching { reviewRepository.getReviewCheck(hfmSharedPreference.id, restaurantId) }
-                .onSuccess {
-                    _checkReview.value = it.data.hasReview
-                }.onFailure {
-                    Timber.d(it.message)
-                }
+            runCatching { reviewRepository.getReviewCheck(hfmSharedPreference.id, restaurantId) }.onSuccess {
+                _checkReview.value = it.data.hasReview
+            }.onFailure {
+                Timber.d(it.message)
+            }
         }
     }
 
     fun getMapInfo(latLng: LatLng, keyword: String? = null) {
         viewModelScope.launch(Dispatchers.IO) {
-            runCatching { mapRepository.getMap(latLng.longitude, latLng.latitude, 1000, keyword) }
-                .onSuccess {
-                    _location.postValue(
-                        it.data.map { marker ->
-                            marker.toMakerInfo()
-                        }
-                    )
-                    if (keyword == null) {
-                        with(_defaultLocation) {
-                            clear()
-                            addAll(it.data.map { marker -> marker.toMakerInfo() })
-                        }
+            runCatching { mapRepository.getMap(latLng.longitude, latLng.latitude, 1000, keyword) }.onSuccess {
+                _location.postValue(
+                    it.data.map { marker ->
+                        marker.toMakerInfo()
                     }
-                }.onFailure {
-                    Timber.d(it.message)
+                )
+                if (keyword == null) {
+                    with(_defaultLocation) {
+                        clear()
+                        addAll(it.data.map { marker -> marker.toMakerInfo() })
+                    }
                 }
+            }.onFailure {
+                Timber.d(it.message)
+            }
         }
     }
 
@@ -207,12 +203,9 @@ class MainViewModel @Inject constructor(
 
     fun getProfile() {
         viewModelScope.launch {
-            runCatching { profileRepository.getProfile(hfmSharedPreference.id) }
-                .onSuccess {
-                    _nickname.value = it.data.name
-                }
-                .onFailure {
-                }
+            runCatching { profileRepository.getProfile(hfmSharedPreference.id) }.onSuccess {
+                _nickname.value = it.data.name
+            }.onFailure {}
         }
     }
 
@@ -222,9 +215,7 @@ class MainViewModel @Inject constructor(
     fun fetchSelectedRestaurantInfo(restaurantId: String) {
         // TODO 추후 매개변수로 좌표값을 받아 해당 좌표 음식점 정보를 불러오기
         viewModelScope.launch {
-            _selectedRestaurant.postValue(
-                restaurantRepository.fetchRestaurantSummary(restaurantId, hfmSharedPreference.id)
-            )
+            _selectedRestaurant.postValue(restaurantRepository.fetchRestaurantSummary(restaurantId, hfmSharedPreference.id))
             _eatingOutTips.value = restaurantRepository.getEatingOutTips(restaurantId)
         }
     }
@@ -236,8 +227,7 @@ class MainViewModel @Inject constructor(
         // TODO 추후 매개변수로 좌표값을 받아 해당 좌표 음식점 정보를 불러오기
         viewModelScope.launch {
             val userId = if (!hfmSharedPreference.isLogin) "browsing" else hfmSharedPreference.id
-            val restaurantInfo =
-                restaurantRepository.fetchRestaurantDetail(restaurantId, userId, slat, slng).getOrNull()
+            val restaurantInfo = restaurantRepository.fetchRestaurantDetail(restaurantId, userId, slat, slng).getOrNull()
             restaurantInfo?.let {
                 _selectedRestaurant.value = it
             }
@@ -265,7 +255,8 @@ class MainViewModel @Inject constructor(
     fun fetchHFMReviewList() {
         viewModelScope.launch(Dispatchers.IO) {
             _hfmReviews.postValue(
-                restaurantRepository.fetchHFMReview(selectedRestaurant.value?.id ?: return@launch).getOrNull()?.toMutableList()
+                restaurantRepository.fetchHFMReview(selectedRestaurant.value?.id ?: return@launch).getOrNull()?.reversed()
+                    ?.toMutableList()
             )
         }
     }
