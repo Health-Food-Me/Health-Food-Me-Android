@@ -458,7 +458,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
             }
 
             addOnCameraChangeListener { _, _ ->
-                if(!binding.btnBookmarkMain.isSelected)
+                if (!binding.btnBookmarkMain.isSelected)
                     viewModel.getMapInfo(naverMap.cameraPosition.target, checkedChip)
             }
         }
