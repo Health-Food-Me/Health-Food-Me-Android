@@ -76,7 +76,6 @@ class RestaurantDetailFragment : BindingFragment<FragmentRestaurantDetailBinding
             binding.viewModel = viewModel
 
             vpRestaurantDetail.apply {
-                isUserInputEnabled = false
                 adapter = restaurantDetailAdapter
             }
 
