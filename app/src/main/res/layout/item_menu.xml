@@ -7,6 +7,8 @@
 
         <import type="org.helfoome.R" />
 
+        <import type="android.view.View" />
+
         <variable
             name="menu"
             type="org.helfoome.domain.entity.MenuInfo" />
@@ -91,7 +93,7 @@
                 android:background="@drawable/rectangle_green_right_radius_15"
                 android:gravity="center"
                 android:orientation="vertical"
-                android:visibility="@{menu.healfoomePick == true || menu.calorie != null}"
+                android:visibility="@{menu.healfoomePick == false &amp;&amp; menu.calorie == -1 ? View.INVISIBLE : View.VISIBLE}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
