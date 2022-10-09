@@ -248,10 +248,10 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                 }
             }
             tvReport.setOnClickListener {
-                sendGmail()
+                sendGmail(R.string.main_drawer_report, R.string.mail_content_restuarant_report)
             }
             tvModifyReport.setOnClickListener {
-                sendGmail()
+                sendGmail(R.string.main_drawer_modify_report, R.string.mail_content_modify_report)
             }
             tvSetting.setOnClickListener {
                 controlHamburger.launch(Intent(this@MainActivity, SettingActivity::class.java))
@@ -281,15 +281,16 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
         }
     }
 
-    private fun sendGmail() {
+    // TODO need refactoring 설정 화면에서도 동일 함수 사용됨. 함수 분리 필요
+    private fun sendGmail(titleResId: Int, contentResId: Int) {
         val emailIntent = Intent(
             Intent.ACTION_SENDTO,
             Uri.fromParts(
-                "mailto", "abc@gmail.com", null
+                "mailto", getString(R.string.healfoome_mail), null
             )
         )
-        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Subject")
-        emailIntent.putExtra(Intent.EXTRA_TEXT, "Body")
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, getString(titleResId))
+        emailIntent.putExtra(Intent.EXTRA_TEXT, getString(contentResId))
         startActivity(Intent.createChooser(emailIntent, "Send email..."))
     }
 

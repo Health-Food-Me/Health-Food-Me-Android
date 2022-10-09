@@ -3,6 +3,9 @@
     <string name="login_logo">헬푸미</string>
     <string name="login_description">샐러드부터 일반식까지\n다이어터를 위한 식당 추천 지도앱</string>
 
+    <!-- Healfoome -->
+    <string name="healfoome_mail">hfmlove5252@gmail.com</string>
+
     <!-- Global -->
     <string name="cancel">취소</string>
     <string name="health_food_me">헬푸미</string>
@@ -223,4 +226,10 @@
     <string name="friday">금요일</string>
     <string name="saturday">토요일</string>
     <string name="sunday">일요일</string>
+
+    <!-- Mail -->
+    <string name="mail_content_restuarant_report">제보할 가게를 작성해 주세요.</string>
+    <string name="mail_content_inquiry">문의할 내용을 작성해 주세요.</string>
+    <string name="mail_content_declaration">부적절한 리뷰를 알려주세요.\n식당이름, 닉네임을 작성해 주시면 접수 후 처리할 예정입니다.</string>
+    <string name="mail_content_modify_report">제보할 수정 사항을 작성해 주세요.</string>
 </resources>

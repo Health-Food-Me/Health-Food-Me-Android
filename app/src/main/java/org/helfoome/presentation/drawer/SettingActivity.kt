@@ -37,10 +37,10 @@ class SettingActivity : BindingActivity<ActivitySettingBinding>(R.layout.activit
                 startActivity(Intent(this@SettingActivity, WithdrawalActivity::class.java))
             }
             tvInquiry.setOnClickListener {
-                sendGmail()
+                sendGmail(R.string.setting_inquiry, R.string.mail_content_inquiry)
             }
             tvDeclaration.setOnClickListener {
-                sendGmail()
+                sendGmail(R.string.setting_declaration, R.string.mail_content_declaration)
             }
             ivBack.setOnClickListener {
                 setResult(Activity.RESULT_OK)
@@ -52,15 +52,15 @@ class SettingActivity : BindingActivity<ActivitySettingBinding>(R.layout.activit
         }
     }
 
-    private fun sendGmail() {
+    private fun sendGmail(titleResId: Int, contentResId: Int) {
         val emailIntent = Intent(
             Intent.ACTION_SENDTO,
             Uri.fromParts(
-                "mailto", "abc@gmail.com", null
+                "mailto", getString(R.string.healfoome_mail), null
             )
         )
-        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Subject")
-        emailIntent.putExtra(Intent.EXTRA_TEXT, "Body")
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, getString(titleResId))
+        emailIntent.putExtra(Intent.EXTRA_TEXT, getString(contentResId))
         startActivity(Intent.createChooser(emailIntent, "Send email..."))
     }
 
