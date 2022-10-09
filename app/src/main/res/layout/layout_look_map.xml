@@ -37,12 +37,11 @@
             android:layout_width="@dimen/size_pin_12"
             android:layout_height="@dimen/size_spacing_0"
             android:layout_marginEnd="@dimen/size_spacing_8"
-            android:src="@{isCollapsed? @drawable/ic_menu : @drawable/ic_marker_mini}"
+            android:src="@{isCollapsed? @drawable/ic_menu_search : @drawable/ic_marker_mini}"
             app:layout_constraintBottom_toBottomOf="@+id/tv_recent_word"
             app:layout_constraintDimensionRatio="10:13"
             app:layout_constraintEnd_toStartOf="@+id/tv_recent_word"
             app:layout_constraintTop_toTopOf="@+id/tv_recent_word"
-            app:tint="@color/red_500"
-            tools:src="@drawable/ic_menu" />
+            tools:src="@drawable/ic_menu_search" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
