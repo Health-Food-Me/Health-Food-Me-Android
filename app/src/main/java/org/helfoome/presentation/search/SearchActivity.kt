@@ -44,8 +44,6 @@ import javax.inject.Inject
 class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_search), OnMapReadyCallback {
     // TODO : Inject 로직 수정 요망
     private var isAutoCompleteResult = false
-    private var selectedRestaurantId: String? = null
-    // TODO : 기존에 찍힌 핀 계속 호출 시 리플레이스 중첩되는 버그 수정
 
     @Inject
     lateinit var resolutionMetrics: ResolutionMetrics
@@ -79,11 +77,17 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
                 locationSource.lastLocation?.longitude ?: EOUNJU_Y
             )
 
-            selectedRestaurantId = restaurantId
-
-            searchViewModel.getSearchResultCardList(127.027610, 37.498095, name)
+            searchViewModel.getSearchResultCardList(
+                locationSource.lastLocation?.longitude ?: EOUNJU_X,
+                locationSource.lastLocation?.latitude ?: EOUNJU_Y,
+                name
+            )
         } else {
-            searchViewModel.getSearchCategoryCardList(127.027610, 37.498095, name)
+            searchViewModel.getSearchCategoryCardList(
+                locationSource.lastLocation?.longitude ?: EOUNJU_X,
+                locationSource.lastLocation?.latitude ?: EOUNJU_Y,
+                name
+            )
         }
         searchViewModel.setSearchMode(SearchMode.RESULT)
     }
@@ -91,10 +95,19 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
     private val recentAdapter = RecentAdapter(
         { keyword, isCategory ->
             // TODO : 서버 통신 주의, 고정 값 위도
-            if (isCategory)
-                searchViewModel.getSearchCategoryCardList(127.027610, 37.498095, keyword)
-            else
-                searchViewModel.getSearchResultCardList(127.027610, 37.498095, keyword)
+            if (isCategory) {
+                searchViewModel.getSearchCategoryCardList(
+                    locationSource.lastLocation?.longitude ?: EOUNJU_X,
+                    locationSource.lastLocation?.latitude ?: EOUNJU_Y,
+                    keyword
+                )
+            } else {
+                searchViewModel.getSearchResultCardList(
+                    locationSource.lastLocation?.longitude ?: EOUNJU_X,
+                    locationSource.lastLocation?.latitude ?: EOUNJU_Y,
+                    keyword
+                )
+            }
             binding.etSearch.setText(keyword)
             searchViewModel.setSearchMode(SearchMode.RESULT)
         },
@@ -136,10 +149,24 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
             remove()
             binding.isFloatingVisible = false
             behavior.state = BottomSheetBehavior.STATE_EXPANDED
+            if (markerList.size > 1) {
+                markerList.forEach {
+                    it.first.icon = OverlayImage.fromResource(
+                        if (it.second.isDietRestaurant) R.drawable.ic_marker_green_small
+                        else R.drawable.ic_marker_red_small
+                    )
+                }
+            }
             behavior.isDraggable = false
         } else {
             behavior.peekHeight = resolutionMetrics.toPixel(135)
             behavior.state = BottomSheetBehavior.STATE_COLLAPSED
+            with(resultAdapter.currentList[0]) {
+                naverMap.cameraPosition = CameraPosition(
+                    LatLng(latitude, longitude),
+                    12.0
+                )
+            }
             behavior.isDraggable = true
         }
     }
@@ -257,7 +284,6 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
                 searchViewModel.setDetail(false)
                 searchViewModel.setSearchMode(SearchMode.RECENT)
                 behavior.state = BottomSheetBehavior.STATE_EXPANDED
-                selectedRestaurantId = null
                 isAutoCompleteResult = false
             }
         } else {
@@ -272,6 +298,14 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
                             searchViewModel.setDetail(false)
                             remove()
                             searchViewModel.setSearchMode(SearchMode.RESULT)
+                            if (markerList.size > 1) {
+                                markerList.forEach {
+                                    it.first.icon = OverlayImage.fromResource(
+                                        if (it.second.isDietRestaurant) R.drawable.ic_marker_green_small
+                                        else R.drawable.ic_marker_red_small
+                                    )
+                                }
+                            }
                             behavior.state = BottomSheetBehavior.STATE_EXPANDED
                         }
                     } else {
@@ -310,10 +344,19 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
             setOnKeyListener { _, keyCode, event ->
                 if (event.action == KeyEvent.ACTION_DOWN && keyCode == KEYCODE_ENTER) {
                     // TODO : 최근 검색어 추가 서버 통신 시 수정
-                    if (stringListFrom(R.array.main_chip_group).contains(text.toString()))
-                        searchViewModel.getSearchCategoryCardList(127.027610, 37.498095, text.toString())
-                    else
-                        searchViewModel.getSearchResultCardList(127.027610, 37.498095, text.toString())
+                    if (stringListFrom(R.array.main_chip_group).contains(text.toString())) {
+                        searchViewModel.getSearchCategoryCardList(
+                            locationSource.lastLocation?.longitude ?: EOUNJU_X,
+                            locationSource.lastLocation?.latitude ?: EOUNJU_Y,
+                            text.toString()
+                        )
+                    } else {
+                        searchViewModel.getSearchResultCardList(
+                            locationSource.lastLocation?.longitude ?: EOUNJU_X,
+                            locationSource.lastLocation?.latitude ?: EOUNJU_Y,
+                            text.toString()
+                        )
+                    }
                     closeKeyboard(this)
                     binding.etSearch.clearFocus()
                     searchViewModel.setSearchMode(SearchMode.RESULT)
@@ -384,16 +427,16 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
                                 Pair(
                                     Marker().apply {
                                         position = LatLng(markerInfo.latitude, markerInfo.longitude)
-                                        icon = OverlayImage.fromResource(
-                                            if (markerInfo.isDietRestaurant) R.drawable.ic_marker_green_small
-                                            else R.drawable.ic_marker_red_small
-                                        )
-                                        selectedRestaurantId?.let {
-                                            icon = OverlayImage.fromResource(
+                                        icon = if (it.data.size > 1) {
+                                            OverlayImage.fromResource(
+                                                if (markerInfo.isDietRestaurant) R.drawable.ic_marker_green_small
+                                                else R.drawable.ic_marker_red_small
+                                            )
+                                        } else {
+                                            OverlayImage.fromResource(
                                                 if (markerInfo.isDietRestaurant) R.drawable.ic_marker_green_big
                                                 else R.drawable.ic_marker_red_big
                                             )
-                                            selectedRestaurantId = null
                                         }
                                         map = naverMap
 
@@ -411,8 +454,6 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
                                             )
                                             mainViewModel.setSelectedLocationPoint(markerInfo.latitude, markerInfo.longitude)
 
-                                            remove()
-                                            replace<RestaurantDetailFragment>(R.id.fragment_container_detail)
                                             behavior.state = BottomSheetBehavior.STATE_COLLAPSED
                                             binding.isMainNotVisible = true
                                             markerList.forEach { marker ->
@@ -564,10 +605,8 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
         this.naverMap = naverMap.apply {
             uiSettings.isZoomControlEnabled = false
             setOnMapClickListener { _, _ ->
-                if (searchViewModel.isDetail.value) {
+                if (searchViewModel.isDetail.value)
                     behavior.state = BottomSheetBehavior.STATE_HIDDEN
-                    remove()
-                }
                 markerList.forEach {
                     it.first.icon = OverlayImage.fromResource(
                         if (it.second.isDietRestaurant) R.drawable.ic_marker_green_small
