@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import org.helfoome.R
 import org.helfoome.databinding.ActivityMyScrapBinding
+import org.helfoome.presentation.MainActivity.Companion.GO_EOUNJU
 import org.helfoome.presentation.MainActivity.Companion.MARKER_INFO
 import org.helfoome.presentation.scrap.adapter.MyScrapAdapter
 import org.helfoome.util.binding.BindingActivity
@@ -50,22 +51,21 @@ class MyScrapActivity : BindingActivity<ActivityMyScrapBinding>(R.layout.activit
     private fun initClickEvent() {
         with(binding) {
             toolbarScrap.setNavigationOnClickListener {
-                finishMyScrap()
+                finishMyScrap(Activity.RESULT_OK)
             }
 
             layoutEmpty.btnScrap.setOnClickListener {
-                // TODO : 홈으로 가서 지도 띄워주기
-                finishMyScrap()
+                finishMyScrap(GO_EOUNJU)
             }
 
             btnQuit.setOnClickListener {
-                finishMyScrap()
+                finishMyScrap(Activity.RESULT_OK)
             }
         }
     }
 
-    private fun finishMyScrap() {
-        setResult(Activity.RESULT_OK)
+    private fun finishMyScrap(statusCode: Int) {
+        setResult(statusCode)
         finish()
     }
 

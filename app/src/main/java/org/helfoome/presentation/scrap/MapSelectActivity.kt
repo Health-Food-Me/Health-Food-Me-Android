@@ -139,6 +139,7 @@ class MapSelectActivity : BindingActivity<ActivityMapSelectBinding>(R.layout.act
                                 if (marker.isDietRestaurant) R.drawable.ic_marker_green_big
                                 else R.drawable.ic_marker_red_big
                             )
+                            naverMap.cameraPosition = CameraPosition(position, 12.0)
 
                             viewModel.getReviewCheck(marker.id)
                             viewModel.fetchSelectedRestaurantDetailInfo(

@@ -97,6 +97,9 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
             if (activityResult.resultCode == Activity.RESULT_OK) {
                 binding.layoutDrawer.close()
+            } else {
+                binding.layoutDrawer.close()
+                naverMap.cameraPosition = CameraPosition(LatLng(EOUNJU_X, EOUNJU_Y), 12.0)
             }
         }
 
@@ -499,6 +502,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
         const val EOUNJU_Y = 127.033943
         const val GANGNAM_X = 37.498095
         const val GANGNAM_Y = 127.027610
+        const val GO_EOUNJU = 100
         private const val LOCATION_PERMISSION_REQUEST_CODE = 1000
     }
 }
