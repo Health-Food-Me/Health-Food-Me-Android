@@ -74,6 +74,7 @@ class GuestLoginFragmentDialog : DialogFragment() {
                 addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
             }
         )
+        dismiss()
     }
 
     override fun onDestroyView() {
