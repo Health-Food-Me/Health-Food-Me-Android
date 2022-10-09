@@ -44,7 +44,6 @@ import javax.inject.Inject
 class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_search), OnMapReadyCallback {
     // TODO : Inject 로직 수정 요망
     private var isAutoCompleteResult = false
-    private var selectedRestaurantId: String? = null
     // TODO : 기존에 찍힌 핀 계속 호출 시 리플레이스 중첩되는 버그 수정
 
     @Inject
@@ -78,8 +77,6 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
                 locationSource.lastLocation?.latitude ?: EOUNJU_X,
                 locationSource.lastLocation?.longitude ?: EOUNJU_Y
             )
-
-            selectedRestaurantId = restaurantId
 
             searchViewModel.getSearchResultCardList(
                 locationSource.lastLocation?.longitude ?: EOUNJU_X,
@@ -274,7 +271,6 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
                 searchViewModel.setDetail(false)
                 searchViewModel.setSearchMode(SearchMode.RECENT)
                 behavior.state = BottomSheetBehavior.STATE_EXPANDED
-                selectedRestaurantId = null
                 isAutoCompleteResult = false
             }
         } else {
@@ -410,16 +406,16 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
                                 Pair(
                                     Marker().apply {
                                         position = LatLng(markerInfo.latitude, markerInfo.longitude)
-                                        icon = OverlayImage.fromResource(
-                                            if (markerInfo.isDietRestaurant) R.drawable.ic_marker_green_small
-                                            else R.drawable.ic_marker_red_small
-                                        )
-                                        selectedRestaurantId?.let {
-                                            icon = OverlayImage.fromResource(
+                                        icon = if (it.data.size > 1) {
+                                            OverlayImage.fromResource(
+                                                if (markerInfo.isDietRestaurant) R.drawable.ic_marker_green_small
+                                                else R.drawable.ic_marker_red_small
+                                            )
+                                        } else {
+                                            OverlayImage.fromResource(
                                                 if (markerInfo.isDietRestaurant) R.drawable.ic_marker_green_big
                                                 else R.drawable.ic_marker_red_big
                                             )
-                                            selectedRestaurantId = null
                                         }
                                         map = naverMap
 
