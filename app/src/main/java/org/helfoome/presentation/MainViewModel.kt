@@ -172,9 +172,11 @@ class MainViewModel @Inject constructor(
     fun getMapInfo(latLng: LatLng, keyword: String? = null) {
         viewModelScope.launch(Dispatchers.IO) {
             runCatching { mapRepository.getMap(latLng.longitude, latLng.latitude, 1000, keyword) }.onSuccess {
-                _location.postValue(it.data.map { marker ->
-                    marker.toMakerInfo()
-                })
+                _location.postValue(
+                    it.data.map { marker ->
+                        marker.toMakerInfo()
+                    }
+                )
                 if (keyword == null) {
                     with(_defaultLocation) {
                         clear()
@@ -252,8 +254,10 @@ class MainViewModel @Inject constructor(
 
     fun fetchHFMReviewList() {
         viewModelScope.launch(Dispatchers.IO) {
-            _hfmReviews.postValue(restaurantRepository.fetchHFMReview(selectedRestaurant.value?.id ?: return@launch).getOrNull()?.reversed()
-                ?.toMutableList())
+            _hfmReviews.postValue(
+                restaurantRepository.fetchHFMReview(selectedRestaurant.value?.id ?: return@launch).getOrNull()?.reversed()
+                    ?.toMutableList()
+            )
         }
     }
 
@@ -268,9 +272,11 @@ class MainViewModel @Inject constructor(
             if (selectedRestaurant.value?.id == null) return@launch
             val isScrap =
                 restaurantRepository.updateRestaurantScrap(selectedRestaurant.value?.id!!, hfmSharedPreference.id) ?: return@launch
-            _selectedRestaurant.postValue(_selectedRestaurant.value?.apply {
-                this.isScrap = isScrap
-            })
+            _selectedRestaurant.postValue(
+                _selectedRestaurant.value?.apply {
+                    this.isScrap = isScrap
+                }
+            )
         }
     }
 
