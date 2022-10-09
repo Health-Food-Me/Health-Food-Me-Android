@@ -119,6 +119,11 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
         initObservers()
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.setIsGuestLogin()
+    }
+
     private fun provideChipClickListener(chip: Chip) =
         View.OnClickListener {
             if (!chip.isChecked) {

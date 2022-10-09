@@ -56,6 +56,8 @@ class MainViewModel @Inject constructor(
     val selectedRestaurant get() = _selectedRestaurant
     private val _restaurantId = MutableLiveData<String>()
     val restaurantId: LiveData<String> get() = _restaurantId
+    private val _isGuestLogin = MutableLiveData<Boolean>()
+    val isGuestLogin: LiveData<Boolean> get() = _isGuestLogin
 
     private var _selectedRestaurantPoint = MutableLiveData<LocationPointInfo>()
     val selectedRestaurantPoint: LiveData<LocationPointInfo> get() = _selectedRestaurantPoint
@@ -116,6 +118,10 @@ class MainViewModel @Inject constructor(
 
     fun setIsLogin(isLogin: Boolean) {
         hfmSharedPreference.isLogin = isLogin
+    }
+
+    fun setIsGuestLogin() {
+        _isGuestLogin.value = hfmSharedPreference.isLogin
     }
 
     fun setIsReviewActivity(isReviewActivity: Boolean) {
