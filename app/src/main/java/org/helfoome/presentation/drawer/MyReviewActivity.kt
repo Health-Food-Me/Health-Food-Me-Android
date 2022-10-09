@@ -10,7 +10,11 @@ import dagger.hilt.android.AndroidEntryPoint
 import org.helfoome.R
 import org.helfoome.databinding.ActivityMyReviewBinding
 import org.helfoome.domain.entity.MyReviewInfo
+import org.helfoome.presentation.MainActivity.Companion.EOUNJU_X
+import org.helfoome.presentation.MainActivity.Companion.EOUNJU_Y
 import org.helfoome.presentation.MainActivity.Companion.GO_EOUNJU
+import org.helfoome.presentation.MainActivity.Companion.LATITUDE
+import org.helfoome.presentation.MainActivity.Companion.LONGITUDE
 import org.helfoome.presentation.MainViewModel
 import org.helfoome.presentation.common.ImageViewerActivity
 import org.helfoome.presentation.detail.RestaurantDetailFragment
@@ -65,11 +69,13 @@ class MyReviewActivity : BindingActivity<ActivityMyReviewBinding>(R.layout.activ
             setIsReviewActivity(true)
             setRestaurantId(restaurantId)
             getReviewCheck(restaurantId)
-            fetchSelectedRestaurantDetailInfo(
-                restaurantId,
-                127.02836155,
-                37.49648606
-            )
+            with(intent) {
+                fetchSelectedRestaurantDetailInfo(
+                    restaurantId,
+                    getDoubleExtra(LATITUDE, EOUNJU_X),
+                    getDoubleExtra(LONGITUDE, EOUNJU_Y)
+                )
+            }
         }
         replace<RestaurantDetailFragment>(R.id.fragment_container_detail)
     }
