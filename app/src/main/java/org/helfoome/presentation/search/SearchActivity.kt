@@ -44,6 +44,7 @@ import javax.inject.Inject
 class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_search), OnMapReadyCallback {
     // TODO : Inject 로직 수정 요망
     private var isAutoCompleteResult = false
+    private var prevResultCollapsed = false
 
     @Inject
     lateinit var resolutionMetrics: ResolutionMetrics
@@ -157,7 +158,6 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
                     )
                 }
             }
-            behavior.isDraggable = false
         } else {
             behavior.peekHeight = resolutionMetrics.toPixel(135)
             behavior.state = BottomSheetBehavior.STATE_COLLAPSED
@@ -167,7 +167,6 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
                     12.0
                 )
             }
-            behavior.isDraggable = true
         }
     }
     private val searchRecentTopAdapter = SearchRecentTopAdapter()
@@ -179,7 +178,8 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
                 else
                     binding.layoutSearch.visibility = View.VISIBLE
                 searchMapTopAdapter.setVisible(this)
-                behavior.isDraggable = this
+                if (searchViewModel.searchMode.value != SearchMode.RESULT)
+                    behavior.isDraggable = this
                 binding.isLineVisible = this
                 mainViewModel.setExpendedBottomSheetDialog(newState == BottomSheetBehavior.STATE_EXPANDED)
                 if (newState == BottomSheetBehavior.STATE_COLLAPSED)
@@ -241,7 +241,7 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
         binding.layoutRestaurantListDialog.rvSearch.itemAnimator = null
         behavior = BottomSheetBehavior.from(binding.layoutBottomSheet)
         behavior.state = BottomSheetBehavior.STATE_EXPANDED
-        behavior.isDraggable = false
+        behavior.isHideable = false
     }
 
     private fun initClickEvent() {
@@ -445,6 +445,8 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
                                         captionText = markerInfo.name
 
                                         setOnClickListener {
+                                            if (behavior.state == BottomSheetBehavior.STATE_COLLAPSED && !searchViewModel.isDetail.value)
+                                                prevResultCollapsed = true
                                             searchViewModel.setDetail(true)
                                             mainViewModel.getReviewCheck(markerInfo.id)
                                             mainViewModel.fetchSelectedRestaurantDetailInfo(
@@ -501,9 +503,11 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
                             behavior.state = BottomSheetBehavior.STATE_COLLAPSED
                         }
                         else -> {
+                            behavior.peekHeight = resolutionMetrics.toPixel(135)
                             binding.etSearch.isEnabled = true
-                            behavior.isHideable = false
                             binding.isDetail = false
+                            behavior.isHideable = false
+                            prevResultCollapsed = false
                             remove()
                         }
                     }
@@ -605,8 +609,12 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
         this.naverMap = naverMap.apply {
             uiSettings.isZoomControlEnabled = false
             setOnMapClickListener { _, _ ->
-                if (searchViewModel.isDetail.value)
-                    behavior.state = BottomSheetBehavior.STATE_HIDDEN
+                if (searchViewModel.isDetail.value) {
+                    if (prevResultCollapsed)
+                        searchViewModel.setDetail(false)
+                    else
+                        behavior.state = BottomSheetBehavior.STATE_HIDDEN
+                }
                 markerList.forEach {
                     it.first.icon = OverlayImage.fromResource(
                         if (it.second.isDietRestaurant) R.drawable.ic_marker_green_small
