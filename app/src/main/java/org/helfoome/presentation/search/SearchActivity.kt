@@ -178,7 +178,7 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
                 else
                     binding.layoutSearch.visibility = View.VISIBLE
                 searchMapTopAdapter.setVisible(this)
-                if(searchViewModel.searchMode.value != SearchMode.RESULT)
+                if (searchViewModel.searchMode.value != SearchMode.RESULT)
                     behavior.isDraggable = this
                 binding.isLineVisible = this
                 mainViewModel.setExpendedBottomSheetDialog(newState == BottomSheetBehavior.STATE_EXPANDED)
@@ -445,7 +445,7 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
                                         captionText = markerInfo.name
 
                                         setOnClickListener {
-                                            if(behavior.state == BottomSheetBehavior.STATE_COLLAPSED && !searchViewModel.isDetail.value)
+                                            if (behavior.state == BottomSheetBehavior.STATE_COLLAPSED && !searchViewModel.isDetail.value)
                                                 prevResultCollapsed = true
                                             searchViewModel.setDetail(true)
                                             mainViewModel.getReviewCheck(markerInfo.id)
@@ -610,7 +610,7 @@ class SearchActivity : BindingActivity<ActivitySearchBinding>(R.layout.activity_
             uiSettings.isZoomControlEnabled = false
             setOnMapClickListener { _, _ ->
                 if (searchViewModel.isDetail.value) {
-                    if(prevResultCollapsed)
+                    if (prevResultCollapsed)
                         searchViewModel.setDetail(false)
                     else
                         behavior.state = BottomSheetBehavior.STATE_HIDDEN
