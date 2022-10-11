@@ -5,13 +5,17 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import org.helfoome.R
+import org.helfoome.data.local.HFMSharedPreference
 import org.helfoome.databinding.ActivityWithdrawalBinding
-import org.helfoome.presentation.login.LoginActivity
+import org.helfoome.presentation.splash.SplashActivity
 import org.helfoome.util.binding.BindingActivity
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class WithdrawalActivity : BindingActivity<ActivityWithdrawalBinding>(R.layout.activity_withdrawal) {
 
+    @Inject
+    lateinit var storage: HFMSharedPreference
     private val withdrawalViewModel: WithdrawalViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,7 +31,8 @@ class WithdrawalActivity : BindingActivity<ActivityWithdrawalBinding>(R.layout.a
             withdrawalViewModel.compareNickname(nickname)
         }
         withdrawalViewModel.withdrawSuccess.observe(this) {
-            startActivity(Intent(this@WithdrawalActivity, LoginActivity::class.java))
+            storage.clear()
+            startActivity(Intent(this@WithdrawalActivity, SplashActivity::class.java))
             finishAffinity()
         }
     }
@@ -38,7 +43,7 @@ class WithdrawalActivity : BindingActivity<ActivityWithdrawalBinding>(R.layout.a
                 finish()
             }
             btConfirm.setOnClickListener {
-                WithdrawFragmentDialog().show(supportFragmentManager, "WithdrawDialog")
+                WithdrawFragmentDialog().show(supportFragmentManager, "WithdrawalDialog")
             }
         }
     }
