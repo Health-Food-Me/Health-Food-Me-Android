@@ -43,7 +43,7 @@ class WithdrawalActivity : BindingActivity<ActivityWithdrawalBinding>(R.layout.a
                 finish()
             }
             btConfirm.setOnClickListener {
-                WithdrawFragmentDialog().show(supportFragmentManager, "WithdrawDialog")
+                WithdrawFragmentDialog().show(supportFragmentManager, "WithdrawalDialog")
             }
         }
     }
