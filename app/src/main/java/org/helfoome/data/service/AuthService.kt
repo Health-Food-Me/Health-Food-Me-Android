@@ -12,13 +12,15 @@ interface AuthService {
 
     @DELETE("/auth/withdrawal/{userId}")
     suspend fun withdrawal(
-        @Path("userId") userId: String,
-        @Header("token") token: String
+        @Path("userId") userId: String
     ): EmptyResponse
 
     @GET("/user/{userId}/profile")
     suspend fun getProfile(@Path("userId") userId: String): BaseResponse<ResponseProfile>
 
     @PUT("/user/{userId}/profile")
-    suspend fun modifyProfile(@Body requestProfileModify: RequestProfileModify, @Path("userId") userId: String): BaseResponse<ResponseProfileModify>
+    suspend fun modifyProfile(
+        @Body requestProfileModify: RequestProfileModify,
+        @Path("userId") userId: String
+    ): BaseResponse<ResponseProfileModify>
 }
