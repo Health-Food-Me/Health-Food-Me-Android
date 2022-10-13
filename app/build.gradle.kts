@@ -59,7 +59,7 @@ dependencies {
     implementation(libs.okhttp.bom)
     implementation(libs.okhttp.loggingInterceptor)
     implementation(libs.timber)
-    implementation(libs.leakCanary)
+    debugImplementation(libs.leakCanary)
     implementation(libs.lottie)
     implementation(libs.kotlin.serialization.converter)
     implementation(libs.junit)
