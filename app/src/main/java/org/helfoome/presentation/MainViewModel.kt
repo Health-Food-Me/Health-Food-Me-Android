@@ -64,6 +64,8 @@ class MainViewModel @Inject constructor(
     private var _currentPoint = MutableLiveData<LocationPointInfo>()
     val currentPoint: LiveData<LocationPointInfo> get() = _currentPoint
 
+    private val _isShownEmptyView = MutableLiveData<Boolean>()
+    val isShownEmptyView: LiveData<Boolean> get() = _isShownEmptyView
     private val _isExpandedDialog = MutableLiveData<Event<Boolean>>()
     val isExpandedDialog: LiveData<Event<Boolean>> get() = _isExpandedDialog
     private val storeIdHash = HashMap<LatLng, Int>()
@@ -72,10 +74,10 @@ class MainViewModel @Inject constructor(
     val nickname get() = _nickname
 
     // Review
-    private val _hfmReviews = MutableLiveData<MutableList<HFMReviewInfo>>(mutableListOf())
-    val hfmReviews: LiveData<MutableList<HFMReviewInfo>> = _hfmReviews
-    private val _blogReviews = MutableLiveData<List<BlogReviewInfo>>()
-    val blogReviews: LiveData<List<BlogReviewInfo>> = _blogReviews
+    private val _hfmReviews = MutableLiveData<List<HFMReviewInfo>?>()
+    val hfmReviews: LiveData<List<HFMReviewInfo>?> get() = _hfmReviews
+    private val _blogReviews = MutableLiveData<List<BlogReviewInfo>?>()
+    val blogReviews: LiveData<List<BlogReviewInfo>?> get() = _blogReviews
     private val _isReviewTab = MutableLiveData(Event(false))
     val isReviewTab: LiveData<Event<Boolean>> get() = _isReviewTab
     private val _reviewType = MutableLiveData(Event(ReviewType.HFM_REVIEW))
@@ -108,11 +110,6 @@ class MainViewModel @Inject constructor(
     private val _isDetailCollapsed = MutableStateFlow<Boolean>(true)
     val isDetailCollapsed: StateFlow<Boolean>
         get() = _isDetailCollapsed.asStateFlow()
-
-    init {
-        fetchHFMReviewList()
-        fetchBlogReviewList()
-    }
 
     fun getIsLogin() = hfmSharedPreference.isLogin
 
@@ -236,7 +233,6 @@ class MainViewModel @Inject constructor(
             _selectedFoodCategoryIdx.value = 0
             _eatingOutTips.value = restaurantRepository.getEatingOutTips(restaurantId)
             _menu.value = restaurantInfo?.menuList?.sortedWith(compareBy<MenuInfo> { !it.isHealfoomePick }.thenBy { it.calorie == -1 })
-            fetchHFMReviewList()
             restaurantInfo?.menuImages.let {
                 if (it != null) _menuBoard.value = it
                 _isExistMenuBoard.value = isExistMenuBoard(it)
@@ -253,18 +249,25 @@ class MainViewModel @Inject constructor(
         return !(eatingOutTip.recommendTips.isNullOrEmpty() || eatingOutTip.eatingTips == listOf(""))
     }
 
+    private fun isShownEmptyView(isShown: Boolean) {
+        _isShownEmptyView.value = isShown
+    }
+
     fun fetchHFMReviewList() {
-        viewModelScope.launch(Dispatchers.IO) {
-            _hfmReviews.postValue(
-                restaurantRepository.fetchHFMReview(selectedRestaurant.value?.id ?: return@launch).getOrNull()?.reversed()
-                    ?.toMutableList()
-            )
+        viewModelScope.launch {
+            restaurantRepository.fetchHFMReview(selectedRestaurant.value?.id ?: return@launch).getOrNull()?.reversed().let {
+                _hfmReviews.value = it
+                isShownEmptyView(it.isNullOrEmpty())
+            }
         }
     }
 
     fun fetchBlogReviewList() {
-        viewModelScope.launch(Dispatchers.IO) {
-            _blogReviews.postValue(restaurantRepository.fetchBlogReview(selectedRestaurant.value?.id ?: return@launch).getOrNull())
+        viewModelScope.launch {
+            restaurantRepository.fetchBlogReview(selectedRestaurant.value?.id ?: return@launch).getOrNull().let {
+                _blogReviews.value = it
+                isShownEmptyView(it.isNullOrEmpty())
+            }
         }
     }
 
@@ -305,8 +308,8 @@ class MainViewModel @Inject constructor(
         _currentPoint.value = LocationPointInfo(latitude, longitude)
     }
 
-    fun addHFMReviewList(review: HFMReviewInfo) {
-        _hfmReviews.value?.add(0, review)
-        _hfmReviews.value = hfmReviews.value
-    }
+//    fun addHFMReviewList(review: HFMReviewInfo) {
+//        _hfmReviews.value?.add(0, review)
+//        _hfmReviews.value = hfmReviews.value
+//    }
 }

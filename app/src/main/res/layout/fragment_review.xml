@@ -4,6 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".presentation.restaurant.RestaurantReviewTabFragment">
 
+    <data>
+
+        <variable
+            name="viewModel"
+            type="org.helfoome.presentation.MainViewModel" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -66,6 +73,7 @@
                     android:paddingBottom="48dp"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintTop_toBottomOf="@id/layout_tab_menu_background"
+                    app:visibility="@{!viewModel.isShownEmptyView()}"
                     tools:listitem="@layout/item_general_review" />
 
                 <include
@@ -74,6 +82,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     app:layout_constraintTop_toBottomOf="@id/layout_tab_menu_background"
+                    app:visibility="@{viewModel.isShownEmptyView()}"
                     tools:visibility="gone" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>

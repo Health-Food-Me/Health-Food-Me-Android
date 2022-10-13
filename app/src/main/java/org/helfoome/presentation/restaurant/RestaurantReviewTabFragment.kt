@@ -36,7 +36,8 @@ class RestaurantReviewTabFragment : BindingFragment<FragmentReviewBinding>(R.lay
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        binding.viewModel = viewModel
+        viewModel.fetchHFMReviewList()
         initView()
         initObservers()
     }
@@ -77,20 +78,16 @@ class RestaurantReviewTabFragment : BindingFragment<FragmentReviewBinding>(R.lay
     private fun initObservers() {
         viewModel.hfmReviews.observe(viewLifecycleOwner) { reviews ->
             reviews?.let {
-                restaurantGeneralReviewAdapter.submitList(it)
-                showReviewEmptyView(it.isEmpty())
+                restaurantGeneralReviewAdapter.submitList(it.toMutableList())
             }
             binding.layoutReviewTab.selectTab(binding.layoutReviewTab.getTabAt(0))
         }
+
         viewModel.blogReviews.observe(viewLifecycleOwner) { reviews ->
-            reviews.isNullOrEmpty().let { isEmpty ->
-                showReviewEmptyView(isEmpty)
-                if (isEmpty) return@observe
+            reviews?.let {
+                restaurantBlogReviewAdapter.submitList(it.toMutableList())
             }
-
-            restaurantBlogReviewAdapter.submitList(reviews.toMutableList())
         }
-
         viewModel.isDetailCollapsed
             .flowWithLifecycle(viewLifecycleOwner.lifecycle)
             .onEach { isCollapsed ->
@@ -98,16 +95,6 @@ class RestaurantReviewTabFragment : BindingFragment<FragmentReviewBinding>(R.lay
                     binding.svReview.fullScroll(ScrollView.FOCUS_UP)
             }
             .launchIn(viewLifecycleOwner.lifecycleScope)
-    }
-
-    private fun showReviewEmptyView(isShown: Boolean) {
-        if (isShown) {
-            binding.reviewList.visibility = View.INVISIBLE
-            binding.layoutEmptyView.layoutContainer.visibility = View.VISIBLE
-        } else {
-            binding.reviewList.visibility = View.VISIBLE
-            binding.layoutEmptyView.layoutContainer.visibility = View.INVISIBLE
-        }
     }
 
     private fun moveToBlog(review: BlogReviewInfo) {
