@@ -470,7 +470,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                 CameraPosition(LatLng(EOUNJU_X, EOUNJU_Y), 12.0)
             }
 
-            addOnCameraChangeListener { _, _ ->
+            addOnCameraIdleListener {
                 if (!binding.btnBookmarkMain.isSelected)
                     viewModel.getMapInfo(naverMap.cameraPosition.target, checkedChip)
             }
