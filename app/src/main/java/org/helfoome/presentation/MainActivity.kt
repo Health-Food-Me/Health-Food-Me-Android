@@ -39,6 +39,7 @@ import org.helfoome.presentation.drawer.MyReviewActivity
 import org.helfoome.presentation.drawer.ProfileModifyActivity
 import org.helfoome.presentation.drawer.SettingActivity
 import org.helfoome.presentation.login.GuestLoginFragmentDialog
+import org.helfoome.presentation.login.LoginActivity
 import org.helfoome.presentation.scrap.MyScrapActivity
 import org.helfoome.presentation.search.SearchActivity
 import org.helfoome.presentation.type.AlertType
@@ -227,10 +228,10 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                 requestModifyNickname.launch(Intent(this@MainActivity, ProfileModifyActivity::class.java))
             }
             tvGuestLogin.setOnClickListener {
-                supportGuestLogin()
+                startActivity<LoginActivity>()
             }
             ivLogin.setOnClickListener {
-                supportGuestLogin()
+                startActivity<LoginActivity>()
             }
             tvReview.setOnClickListener {
                 if (!viewModel.getIsLogin()) {
