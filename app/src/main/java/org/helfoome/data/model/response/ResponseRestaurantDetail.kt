@@ -36,7 +36,7 @@ data class ResponseRestaurantDetail(
         val image: String,
         val price: Int,
         val isPick: Boolean,
-        val kcal: Int? = null,
+        val kcal: Float? = null,
         val per: Int? = null,
     )
 
@@ -52,7 +52,7 @@ data class ResponseRestaurantDetail(
         contact = restaurant.contact,
         distance = restaurant.distance,
         menuList = menuList?.map { menu ->
-            MenuInfo(menu.id, menu.name, menu.image, menu.price, menu.kcal, menu.per, menu.isPick)
+            MenuInfo(menu.id, menu.name, menu.image, menu.price, menu.kcal?.toInt(), menu.per, menu.isPick)
         },
         score = restaurant.score
     )
